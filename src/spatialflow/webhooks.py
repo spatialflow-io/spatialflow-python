@@ -76,7 +76,7 @@ def verify_webhook_signature(
     # Parse the signature header
     # Format: t=<timestamp>,v1=<signature>
     try:
-        parts = dict(part.split("=", 1) for part in signature.split(","))
+        parts = dict(part.strip().split("=", 1) for part in signature.split(","))
         timestamp_str = parts.get("t")
         sig_hash = parts.get("v1")
 

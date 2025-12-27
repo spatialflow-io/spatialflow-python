@@ -770,7 +770,7 @@ class PublicApi:
     ) -> Dict[str, object]:
         """Signup
 
-        Register for SpatialFlow.io
+        Register for SpatialFlow.io  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
 
         :param signup_request: (required)
         :type signup_request: SignupRequest
@@ -839,7 +839,7 @@ class PublicApi:
     ) -> ApiResponse[Dict[str, object]]:
         """Signup
 
-        Register for SpatialFlow.io
+        Register for SpatialFlow.io  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
 
         :param signup_request: (required)
         :type signup_request: SignupRequest
@@ -908,7 +908,7 @@ class PublicApi:
     ) -> RESTResponseType:
         """Signup
 
-        Register for SpatialFlow.io
+        Register for SpatialFlow.io  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
 
         :param signup_request: (required)
         :type signup_request: SignupRequest

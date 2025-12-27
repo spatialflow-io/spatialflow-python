@@ -55,7 +55,9 @@ class TestUploadGeofencesValidation:
             await upload_geofences(mock_client, "/nonexistent/file.geojson")
 
     async def test_unsupported_file_type(self):
-        """Test that unsupported file types raise ValueError."""
+        """Test that unsupported file types raise ValidationError."""
+        from spatialflow import ValidationError
+
         mock_client = MagicMock()
 
         with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as f:
@@ -63,7 +65,7 @@ class TestUploadGeofencesValidation:
             temp_path = f.name
 
         try:
-            with pytest.raises(ValueError, match="Unsupported file type"):
+            with pytest.raises(ValidationError, match="Unsupported file type"):
                 await upload_geofences(mock_client, temp_path)
         finally:
             os.unlink(temp_path)
@@ -94,7 +96,9 @@ class TestUploadGeofencesMocked:
     """Test upload_geofences with mocked dependencies."""
 
     async def test_presigned_url_missing_upload_url(self):
-        """Test that missing upload_url raises ValueError."""
+        """Test that missing upload_url raises SpatialFlowError."""
+        from spatialflow import SpatialFlowError
+
         mock_client = MagicMock()
 
         # Return dict without upload_url
@@ -107,13 +111,15 @@ class TestUploadGeofencesMocked:
             temp_path = f.name
 
         try:
-            with pytest.raises(ValueError, match="missing 'upload_url'"):
+            with pytest.raises(SpatialFlowError, match="missing 'upload_url'"):
                 await upload_geofences(mock_client, temp_path)
         finally:
             os.unlink(temp_path)
 
     async def test_presigned_url_missing_file_id(self):
-        """Test that missing file_id raises ValueError."""
+        """Test that missing file_id raises SpatialFlowError."""
+        from spatialflow import SpatialFlowError
+
         mock_client = MagicMock()
 
         # Return dict without file_id
@@ -126,7 +132,7 @@ class TestUploadGeofencesMocked:
             temp_path = f.name
 
         try:
-            with pytest.raises(ValueError, match="missing 'file_id'"):
+            with pytest.raises(SpatialFlowError, match="missing 'file_id'"):
                 await upload_geofences(mock_client, temp_path)
         finally:
             os.unlink(temp_path)

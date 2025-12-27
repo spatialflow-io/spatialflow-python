@@ -17,21 +17,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional
 from .geofence_test_result import GeofenceTestResult
+from .matched_geofence_item import MatchedGeofenceItem
 from typing import Optional, Set
 from typing_extensions import Self
 
 class TestPointResponse(BaseModel):
     """
-    Schema for test point response
+    Schema for test point response.  Provides both the legacy `results` array (unchanged for backward compatibility) and the new `matched_geofences` array with enhanced group information.
     """ # noqa: E501
     point: Dict[str, Any]
     inside_geofences: StrictInt
     total_geofences: StrictInt
     results: List[GeofenceTestResult]
-    __properties: ClassVar[List[str]] = ["point", "inside_geofences", "total_geofences", "results"]
+    matched_geofences: Optional[List[MatchedGeofenceItem]] = Field(default=None, description="Geofences containing the test point, with group info. Ordered by distance_meters ASC, then geofence_id ASC.")
+    request_metadata: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["point", "inside_geofences", "total_geofences", "results", "matched_geofences", "request_metadata"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,6 +82,18 @@ class TestPointResponse(BaseModel):
                 if _item_results:
                     _items.append(_item_results.to_dict())
             _dict['results'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in matched_geofences (list)
+        _items = []
+        if self.matched_geofences:
+            for _item_matched_geofences in self.matched_geofences:
+                if _item_matched_geofences:
+                    _items.append(_item_matched_geofences.to_dict())
+            _dict['matched_geofences'] = _items
+        # set to None if request_metadata (nullable) is None
+        # and model_fields_set contains the field
+        if self.request_metadata is None and "request_metadata" in self.model_fields_set:
+            _dict['request_metadata'] = None
+
         return _dict
 
     @classmethod
@@ -94,7 +109,9 @@ class TestPointResponse(BaseModel):
             "point": obj.get("point"),
             "inside_geofences": obj.get("inside_geofences"),
             "total_geofences": obj.get("total_geofences"),
-            "results": [GeofenceTestResult.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
+            "results": [GeofenceTestResult.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None,
+            "matched_geofences": [MatchedGeofenceItem.from_dict(_item) for _item in obj["matched_geofences"]] if obj.get("matched_geofences") is not None else None,
+            "request_metadata": obj.get("request_metadata")
         })
         return _obj
 

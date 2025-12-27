@@ -1,9 +1,10 @@
 # spatialflow_generated.WorkflowsApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**apps_workflows_api_activate_workflow**](WorkflowsApi.md#apps_workflows_api_activate_workflow) | **POST** /api/v1/workflows/{workflow_id}/activate | Activate Workflow
 [**apps_workflows_api_create_workflow**](WorkflowsApi.md#apps_workflows_api_create_workflow) | **POST** /api/v1/workflows | Create Workflow
 [**apps_workflows_api_create_workflow_from_template**](WorkflowsApi.md#apps_workflows_api_create_workflow_from_template) | **POST** /api/v1/workflows/templates/{template_id}/use | Create Workflow From Template
 [**apps_workflows_api_delete_workflow**](WorkflowsApi.md#apps_workflows_api_delete_workflow) | **DELETE** /api/v1/workflows/{workflow_id} | Delete Workflow
@@ -36,6 +37,95 @@ Method | HTTP request | Description
 [**apps_workflows_api_update_workflow_retry_policy**](WorkflowsApi.md#apps_workflows_api_update_workflow_retry_policy) | **PUT** /api/v1/workflows/{workflow_id}/retry-policy | Update Workflow Retry Policy
 
 
+# **apps_workflows_api_activate_workflow**
+> WorkflowOut apps_workflows_api_activate_workflow(workflow_id)
+
+Activate Workflow
+
+Activate a draft workflow for production use.
+
+Transitions a workflow from draft status to active status.
+Idempotent: Returns 200 if workflow is already active.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.workflow_out import WorkflowOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+
+    try:
+        # Activate Workflow
+        api_response = await api_instance.apps_workflows_api_activate_workflow(workflow_id)
+        print("The response of WorkflowsApi->apps_workflows_api_activate_workflow:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_activate_workflow: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **UUID**|  | 
+
+### Return type
+
+[**WorkflowOut**](WorkflowOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_workflows_api_create_workflow**
 > WorkflowOut apps_workflows_api_create_workflow(workflow_in)
 
@@ -55,10 +145,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -143,10 +233,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -169,7 +259,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    template_id = 'template_id_example' # str | 
+    template_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     create_from_template_in = spatialflow_generated.CreateFromTemplateIn() # CreateFromTemplateIn | 
 
     try:
@@ -188,7 +278,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **template_id** | **str**|  | 
+ **template_id** | **UUID**|  | 
  **create_from_template_in** | [**CreateFromTemplateIn**](CreateFromTemplateIn.md)|  | 
 
 ### Return type
@@ -230,10 +320,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -256,7 +346,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Delete Workflow
@@ -274,7 +364,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -316,10 +406,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -342,7 +432,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     name = 'name_example' # str | 
 
     try:
@@ -361,7 +451,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **name** | **str**|  | 
 
 ### Return type
@@ -403,10 +493,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -429,7 +519,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     test_data = None # Dict[str, object] |  (optional)
 
     try:
@@ -448,7 +538,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **test_data** | [**Dict[str, object]**](object.md)|  | [optional] 
 
 ### Return type
@@ -491,10 +581,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -517,7 +607,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Export Workflow
@@ -535,7 +625,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -576,10 +666,10 @@ from spatialflow_generated.models.retry_policy_response_schema import RetryPolic
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -656,10 +746,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -682,7 +772,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    execution_id = 'execution_id_example' # str | 
+    execution_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Execution Details
@@ -700,7 +790,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **execution_id** | **str**|  | 
+ **execution_id** | **UUID**|  | 
 
 ### Return type
 
@@ -740,10 +830,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -808,7 +898,9 @@ This endpoint does not need any parameter.
 
 Get Version Diff
 
-Compare a specific version with the current workflow state.  Returns a diff showing what changed between the version and current state.
+Compare a specific version with the current workflow state.
+
+Returns a diff showing what changed between the version and current state.
 
 ### Example
 
@@ -820,10 +912,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -846,7 +938,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     version_number = 56 # int | 
 
     try:
@@ -865,7 +957,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **version_number** | **int**|  | 
 
 ### Return type
@@ -907,10 +999,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -933,7 +1025,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow
@@ -951,7 +1043,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -975,7 +1067,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_bottlenecks**
-> List[Dict[str, object]] apps_workflows_api_get_workflow_bottlenecks(workflow_id)
+> List[Optional[Dict[str, object]]] apps_workflows_api_get_workflow_bottlenecks(workflow_id)
 
 Get Workflow Bottlenecks
 
@@ -991,10 +1083,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1017,7 +1109,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow Bottlenecks
@@ -1035,11 +1127,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -1075,10 +1167,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1101,8 +1193,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
-    execution_id = 'execution_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    execution_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow Execution Detail
@@ -1120,8 +1212,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
- **execution_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
+ **execution_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1162,10 +1254,10 @@ from spatialflow_generated.models.execution_out import ExecutionOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1188,7 +1280,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     status = 'status_example' # str |  (optional)
     limit = 50 # int |  (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
@@ -1209,7 +1301,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **status** | **str**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
@@ -1252,10 +1344,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1278,7 +1370,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     start_date = '2013-10-20T19:20:30+01:00' # datetime |  (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime |  (optional)
 
@@ -1298,7 +1390,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **start_date** | **datetime**|  | [optional] 
  **end_date** | **datetime**|  | [optional] 
 
@@ -1340,10 +1432,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1366,7 +1458,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow Retry Policy
@@ -1384,7 +1476,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1424,10 +1516,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1450,7 +1542,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow Statistics
@@ -1468,7 +1560,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1492,7 +1584,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_step_performance**
-> List[Dict[str, object]] apps_workflows_api_get_workflow_step_performance(workflow_id)
+> List[Optional[Dict[str, object]]] apps_workflows_api_get_workflow_step_performance(workflow_id)
 
 Get Workflow Step Performance
 
@@ -1508,10 +1600,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1534,7 +1626,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow Step Performance
@@ -1552,11 +1644,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -1592,10 +1684,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1618,7 +1710,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    template_id = 'template_id_example' # str | 
+    template_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Workflow Template
@@ -1636,7 +1728,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **template_id** | **str**|  | 
+ **template_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1674,10 +1766,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -1739,10 +1831,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1824,10 +1916,10 @@ from spatialflow_generated.models.execution_out import ExecutionOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1850,7 +1942,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str |  (optional)
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID |  (optional)
     status = 'status_example' # str |  (optional)
     limit = 50 # int |  (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
@@ -1871,7 +1963,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | [optional] 
+ **workflow_id** | **UUID**|  | [optional] 
  **status** | **str**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
@@ -1915,10 +2007,10 @@ from spatialflow_generated.models.template_out import TemplateOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1987,7 +2079,9 @@ Name | Type | Description  | Notes
 
 List Workflow Versions
 
-List all versions of a workflow.  Returns versions in descending order (newest first).
+List all versions of a workflow.
+
+Returns versions in descending order (newest first).
 
 ### Example
 
@@ -1999,10 +2093,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2025,7 +2119,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # List Workflow Versions
@@ -2043,7 +2137,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -2084,10 +2178,10 @@ from spatialflow_generated.models.workflow_list_response import WorkflowListResp
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2164,7 +2258,9 @@ Name | Type | Description  | Notes
 
 Restore Workflow Version
 
-Restore a workflow to a previous version.  This creates a new version with the snapshot data from the specified version.
+Restore a workflow to a previous version.
+
+This creates a new version with the snapshot data from the specified version.
 
 ### Example
 
@@ -2177,10 +2273,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2203,7 +2299,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     version_number = 56 # int | 
 
     try:
@@ -2222,7 +2318,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **version_number** | **int**|  | 
 
 ### Return type
@@ -2264,10 +2360,10 @@ from spatialflow_generated.models.test_workflow_in import TestWorkflowIn
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2290,7 +2386,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     test_workflow_in = spatialflow_generated.TestWorkflowIn() # TestWorkflowIn | 
 
     try:
@@ -2309,7 +2405,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **test_workflow_in** | [**TestWorkflowIn**](TestWorkflowIn.md)|  | 
 
 ### Return type
@@ -2352,10 +2448,10 @@ from spatialflow_generated.models.workflow_out import WorkflowOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2378,7 +2474,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Toggle Workflow
@@ -2396,7 +2492,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
 
 ### Return type
 
@@ -2439,10 +2535,10 @@ from spatialflow_generated.models.workflow_update import WorkflowUpdate
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2465,7 +2561,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     workflow_update = spatialflow_generated.WorkflowUpdate() # WorkflowUpdate | 
 
     try:
@@ -2484,7 +2580,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **workflow_update** | [**WorkflowUpdate**](WorkflowUpdate.md)|  | 
 
 ### Return type
@@ -2528,10 +2624,10 @@ from spatialflow_generated.models.workflow_retry_policy_update_schema import Wor
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2554,7 +2650,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
-    workflow_id = 'workflow_id_example' # str | 
+    workflow_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     workflow_retry_policy_update_schema = spatialflow_generated.WorkflowRetryPolicyUpdateSchema() # WorkflowRetryPolicyUpdateSchema | 
 
     try:
@@ -2573,7 +2669,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **workflow_id** | **str**|  | 
+ **workflow_id** | **UUID**|  | 
  **workflow_retry_policy_update_schema** | [**WorkflowRetryPolicyUpdateSchema**](WorkflowRetryPolicyUpdateSchema.md)|  | 
 
 ### Return type

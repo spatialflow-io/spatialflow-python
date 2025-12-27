@@ -1,6 +1,6 @@
 # spatialflow_generated.SubscriptionsApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -32,10 +32,10 @@ from spatialflow_generated.models.subscription_action_response import Subscripti
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -111,10 +111,10 @@ from spatialflow_generated.models.checkout_session_response import CheckoutSessi
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -193,10 +193,10 @@ from spatialflow_generated.models.portal_session_response import PortalSessionRe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -274,10 +274,10 @@ from spatialflow_generated.models.subscription_response import SubscriptionRespo
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -348,10 +348,10 @@ from spatialflow_generated.models.plan_response import PlanResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -414,10 +414,10 @@ from spatialflow_generated.models.usage_response import UsageResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -477,7 +477,10 @@ This endpoint does not need any parameter.
 
 Handle Stripe Webhook
 
-Handle Stripe webhook events.  Note: This endpoint doesn't use standard Django Ninja response handling because it needs to work with raw request body for signature verification.
+Handle Stripe webhook events.
+
+Note: This endpoint doesn't use standard Django Ninja response handling
+because it needs to work with raw request body for signature verification.
 
 ### Example
 
@@ -487,10 +490,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -549,10 +552,10 @@ from spatialflow_generated.models.health_response import HealthResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -614,10 +617,10 @@ from spatialflow_generated.models.subscription_action_response import Subscripti
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters

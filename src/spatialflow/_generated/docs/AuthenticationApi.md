@@ -1,9 +1,10 @@
 # spatialflow_generated.AuthenticationApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**apps_authentication_api_accept_invitation**](AuthenticationApi.md#apps_authentication_api_accept_invitation) | **POST** /api/v1/auth/accept-invite | Accept Invitation
 [**apps_authentication_api_change_password**](AuthenticationApi.md#apps_authentication_api_change_password) | **POST** /api/v1/auth/change-password | Change Password
 [**apps_authentication_api_confirm_password_reset**](AuthenticationApi.md#apps_authentication_api_confirm_password_reset) | **POST** /api/v1/auth/password-reset/confirm | Confirm Password Reset
 [**apps_authentication_api_forgot_password**](AuthenticationApi.md#apps_authentication_api_forgot_password) | **POST** /api/v1/auth/forgot-password | Forgot Password
@@ -22,7 +23,97 @@ Method | HTTP request | Description
 [**apps_authentication_api_test_jwt_auth**](AuthenticationApi.md#apps_authentication_api_test_jwt_auth) | **GET** /api/v1/auth/test-auth | Test Jwt Auth
 [**apps_authentication_api_verify_email**](AuthenticationApi.md#apps_authentication_api_verify_email) | **GET** /api/v1/auth/verify-email | Verify Email
 [**apps_authentication_api_verify_email_path**](AuthenticationApi.md#apps_authentication_api_verify_email_path) | **GET** /api/v1/auth/verify-email/{token} | Verify Email Path
+[**apps_authentication_api_verify_email_post**](AuthenticationApi.md#apps_authentication_api_verify_email_post) | **POST** /api/v1/auth/verify-email | Verify Email Post
 
+
+# **apps_authentication_api_accept_invitation**
+> Dict[str, object] apps_authentication_api_accept_invitation(accept_invite_schema)
+
+Accept Invitation
+
+Accept a workspace invitation and optionally set password.
+
+Security features (Issue #67):
+- Uses Invitation model with hashed token storage
+- Atomic transaction prevents race conditions on double-accept
+- Token validated via SHA256 hash comparison
+- Single-use enforcement (used_at timestamp)
+- Sibling invites auto-revoked on acceptance
+- Clears stale verification tokens on acceptance
+
+Args:
+    data.token: Invitation token (plaintext, will be hashed for lookup)
+    data.invite_id: Invitation ID (UUID)
+    data.password: New password (optional for existing users with password)
+
+Returns:
+    200: Success with access/refresh tokens
+    400: Invalid state (already used, revoked, expired, invalid password)
+    404: Invalid token/invite_id combination
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.accept_invite_schema import AcceptInviteSchema
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    accept_invite_schema = spatialflow_generated.AcceptInviteSchema() # AcceptInviteSchema | 
+
+    try:
+        # Accept Invitation
+        api_response = await api_instance.apps_authentication_api_accept_invitation(accept_invite_schema)
+        print("The response of AuthenticationApi->apps_authentication_api_accept_invitation:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_api_accept_invitation: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accept_invite_schema** | [**AcceptInviteSchema**](AcceptInviteSchema.md)|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**429** | Too Many Requests |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_authentication_api_change_password**
 > Dict[str, object] apps_authentication_api_change_password(change_password_schema)
@@ -41,10 +132,10 @@ from spatialflow_generated.models.change_password_schema import ChangePasswordSc
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -108,7 +199,13 @@ Name | Type | Description  | Notes
 
 Confirm Password Reset
 
-Confirm password reset with token (simpler API for backwards compatibility).  This endpoint uses the token stored directly in the user model (password_reset_token) rather than Django's default_token_generator with UID encoding.  Security: Tokens are stored as SHA256 hashes, so we hash the incoming token before comparison. This prevents database compromise from exposing usable tokens.
+Confirm password reset with token (simpler API for backwards compatibility).
+
+This endpoint uses the token stored directly in the user model (password_reset_token)
+rather than Django's default_token_generator with UID encoding.
+
+Security: Tokens are stored as SHA256 hashes, so we hash the incoming token
+before comparison. This prevents database compromise from exposing usable tokens.
 
 ### Example
 
@@ -119,10 +216,10 @@ from spatialflow_generated.models.confirm_password_reset_schema import ConfirmPa
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -179,6 +276,8 @@ Forgot Password
 
 Request password reset email.
 
+Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
+
 ### Example
 
 
@@ -188,10 +287,10 @@ from spatialflow_generated.models.forgot_password_schema import ForgotPasswordSc
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -238,6 +337,7 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**429** | Too Many Requests |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -246,7 +346,8 @@ No authorization required
 
 Get Current User
 
-Get current authenticated user. Requires JWT authentication.
+Get current authenticated user.
+Requires JWT authentication.
 
 ### Example
 
@@ -258,10 +359,10 @@ from spatialflow_generated.models.user_response import UserResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -331,10 +432,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -403,10 +504,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -454,7 +555,10 @@ No authorization required
 
 Login
 
-User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.
+User login endpoint.
+Returns JWT access and refresh tokens, and sets HttpOnly cookies.
+
+Rate limited: 20/min per IP, 5/min per email (Issue #67 security hardening).
 
 ### Example
 
@@ -466,10 +570,10 @@ from spatialflow_generated.models.login_schema import LoginSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -516,6 +620,7 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**429** | Too Many Requests |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -535,10 +640,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -606,10 +711,10 @@ from spatialflow_generated.models.forgot_password_schema import ForgotPasswordSc
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -664,7 +769,8 @@ No authorization required
 
 Refresh Token
 
-Refresh access token using refresh token. Supports both body payload and HttpOnly cookie for refresh token.
+Refresh access token using refresh token.
+Supports both body payload and HttpOnly cookie for refresh token.
 
 ### Example
 
@@ -676,10 +782,10 @@ from spatialflow_generated.models.refresh_token_schema import RefreshTokenSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -734,7 +840,15 @@ No authorization required
 
 Register
 
-DEPRECATED: User registration endpoint.  This endpoint is deprecated and will be removed in a future version. Please use /api/v1/public/signup instead, which includes: - Beta mode support with admin approval workflow - Proper admin notifications - Enhanced tracking and analytics  This endpoint remains for backward compatibility but lacks beta features.
+DEPRECATED: User registration endpoint.
+
+This endpoint is deprecated and will be removed in a future version.
+Please use /api/v1/public/signup instead, which includes:
+- Beta mode support with admin approval workflow
+- Proper admin notifications
+- Enhanced tracking and analytics
+
+This endpoint remains for backward compatibility but lacks beta features.
 
 ### Example
 
@@ -746,10 +860,10 @@ from spatialflow_generated.models.user_response import UserResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -815,10 +929,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -877,7 +991,15 @@ This endpoint does not need any parameter.
 
 Resend Verification Email
 
-Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email. Rate limited to 3 requests per hour per email to prevent abuse.
+Resend verification email (unauthenticated endpoint with rate limiting).
+Allows users who haven't verified their email to request a new verification email.
+
+Security (Issue #67):
+- Generates new token (invalidates previous)
+- Token stored as SHA256 hash
+- Token expires per settings.EMAIL_VERIFICATION_TTL_HOURS (default 24h)
+
+Rate limited to 3 requests per hour per email to prevent abuse.
 
 ### Example
 
@@ -888,10 +1010,10 @@ from spatialflow_generated.models.resend_verification_schema import ResendVerifi
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -947,7 +1069,12 @@ No authorization required
 
 Reset Password
 
-DEPRECATED: This endpoint used Django's default_token_generator with UID encoding.  This flow is no longer supported. All password reset links now use the simpler /password-reset/confirm endpoint with hashed token storage.  If you have an old reset link, please request a new one via /forgot-password.
+DEPRECATED: This endpoint used Django's default_token_generator with UID encoding.
+
+This flow is no longer supported. All password reset links now use the simpler
+/password-reset/confirm endpoint with hashed token storage.
+
+If you have an old reset link, please request a new one via /forgot-password.
 
 ### Example
 
@@ -958,10 +1085,10 @@ from spatialflow_generated.models.reset_password_schema import ResetPasswordSche
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -1024,10 +1151,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1096,10 +1223,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1156,7 +1283,11 @@ void (empty response body)
 
 Verify Email
 
-Verify email address (query parameter format).
+Verify email address (GET method, backwards compatible).
+
+Note: This endpoint accepts plaintext tokens for backwards compatibility with
+existing verification links. New tokens are stored hashed, so it tries both
+plaintext lookup (for old tokens) and hash lookup (for new tokens).
 
 ### Example
 
@@ -1166,10 +1297,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -1234,10 +1365,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -1284,6 +1415,90 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_api_verify_email_post**
+> Dict[str, object] apps_authentication_api_verify_email_post(verify_email_schema)
+
+Verify Email Post
+
+Verify email address (POST method with enhanced security).
+
+Security features (Issue #67):
+- Token stored as SHA256 hash (not plaintext)
+- Token has configurable expiration (default 24h via settings.EMAIL_VERIFICATION_TTL_HOURS)
+- Single-use: token cleared after successful verification
+- Dual rate limiting: 20/hour per IP, 5/hour per token
+
+Args:
+    data.token: Verification token (plaintext, will be hashed for lookup)
+
+Returns:
+    200: Success with verification status
+    400: Invalid, expired, or already used token
+    429: Rate limit exceeded
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.verify_email_schema import VerifyEmailSchema
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    verify_email_schema = spatialflow_generated.VerifyEmailSchema() # VerifyEmailSchema | 
+
+    try:
+        # Verify Email Post
+        api_response = await api_instance.apps_authentication_api_verify_email_post(verify_email_schema)
+        print("The response of AuthenticationApi->apps_authentication_api_verify_email_post:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_api_verify_email_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **verify_email_schema** | [**VerifyEmailSchema**](VerifyEmailSchema.md)|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**429** | Too Many Requests |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

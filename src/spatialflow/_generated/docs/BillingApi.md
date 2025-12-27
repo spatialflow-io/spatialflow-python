@@ -1,6 +1,6 @@
 # spatialflow_generated.BillingApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -34,10 +34,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -109,10 +109,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -184,10 +184,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -260,10 +260,10 @@ from spatialflow_generated.models.setup_intent_response import SetupIntentRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -333,10 +333,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -409,10 +409,10 @@ from spatialflow_generated.models.invoice_response import InvoiceResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -487,10 +487,10 @@ from spatialflow_generated.models.invoice_list_response import InvoiceListRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -567,10 +567,10 @@ from spatialflow_generated.models.payment_method_response import PaymentMethodRe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -641,10 +641,10 @@ from spatialflow_generated.models.plan_change_preview_response import PlanChange
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -718,10 +718,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -789,10 +789,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -864,10 +864,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters

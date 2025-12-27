@@ -19,6 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Any, Dict, Optional
 from typing_extensions import Annotated
+from uuid import UUID
 from ..models.async_upload_geofences_response import AsyncUploadGeofencesResponse
 from ..models.bulk_geofence_request import BulkGeofenceRequest
 from ..models.create_geofence_request import CreateGeofenceRequest
@@ -68,7 +69,7 @@ class GeofencesApi:
     ) -> Dict[str, object]:
         """Bulk Create Geofences
 
-        Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple  geofences in a single request. Maximum 100 geofences per request.
+        Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple geofences in a single request. Maximum 100 geofences per request.
 
         :param bulk_geofence_request: (required)
         :type bulk_geofence_request: BulkGeofenceRequest
@@ -137,7 +138,7 @@ class GeofencesApi:
     ) -> ApiResponse[Dict[str, object]]:
         """Bulk Create Geofences
 
-        Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple  geofences in a single request. Maximum 100 geofences per request.
+        Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple geofences in a single request. Maximum 100 geofences per request.
 
         :param bulk_geofence_request: (required)
         :type bulk_geofence_request: BulkGeofenceRequest
@@ -206,7 +207,7 @@ class GeofencesApi:
     ) -> RESTResponseType:
         """Bulk Create Geofences
 
-        Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple  geofences in a single request. Maximum 100 geofences per request.
+        Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple geofences in a single request. Maximum 100 geofences per request.
 
         :param bulk_geofence_request: (required)
         :type bulk_geofence_request: BulkGeofenceRequest
@@ -632,7 +633,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_delete_geofence(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -651,7 +652,7 @@ class GeofencesApi:
         Delete (deactivate) geofence.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -706,7 +707,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_delete_geofence_with_http_info(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -725,7 +726,7 @@ class GeofencesApi:
         Delete (deactivate) geofence.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -780,7 +781,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_delete_geofence_without_preload_content(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -799,7 +800,7 @@ class GeofencesApi:
         Delete (deactivate) geofence.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1407,7 +1408,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_geofence(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1426,7 +1427,7 @@ class GeofencesApi:
         Get a specific geofence by its ID.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1481,7 +1482,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_geofence_with_http_info(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1500,7 +1501,7 @@ class GeofencesApi:
         Get a specific geofence by its ID.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1555,7 +1556,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_geofence_without_preload_content(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1574,7 +1575,7 @@ class GeofencesApi:
         Get a specific geofence by its ID.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1690,7 +1691,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_test_event_history(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
         _request_timeout: Union[
@@ -1711,7 +1712,7 @@ class GeofencesApi:
         Get test event history for a geofence.  Args:     geofence_id: ID of the geofence     limit: Maximum number of events to return (default 50, max 100)     offset: Number of events to skip (for pagination)  Returns:     List of test events with execution details
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param limit:
         :type limit: int
         :param offset:
@@ -1765,7 +1766,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_test_event_history_with_http_info(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
         _request_timeout: Union[
@@ -1786,7 +1787,7 @@ class GeofencesApi:
         Get test event history for a geofence.  Args:     geofence_id: ID of the geofence     limit: Maximum number of events to return (default 50, max 100)     offset: Number of events to skip (for pagination)  Returns:     List of test events with execution details
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param limit:
         :type limit: int
         :param offset:
@@ -1840,7 +1841,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_test_event_history_without_preload_content(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
         _request_timeout: Union[
@@ -1861,7 +1862,7 @@ class GeofencesApi:
         Get test event history for a geofence.  Args:     geofence_id: ID of the geofence     limit: Maximum number of events to return (default 50, max 100)     offset: Number of events to skip (for pagination)  Returns:     List of test events with execution details
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param limit:
         :type limit: int
         :param offset:
@@ -1979,7 +1980,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_upload_job_status(
         self,
-        job_id: StrictStr,
+        job_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1998,7 +1999,7 @@ class GeofencesApi:
         Get the status of a geofence upload job.  Returns current status, progress, and results (when completed) of the upload job.
 
         :param job_id: (required)
-        :type job_id: str
+        :type job_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2053,7 +2054,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_upload_job_status_with_http_info(
         self,
-        job_id: StrictStr,
+        job_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2072,7 +2073,7 @@ class GeofencesApi:
         Get the status of a geofence upload job.  Returns current status, progress, and results (when completed) of the upload job.
 
         :param job_id: (required)
-        :type job_id: str
+        :type job_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2127,7 +2128,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_get_upload_job_status_without_preload_content(
         self,
-        job_id: StrictStr,
+        job_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2146,7 +2147,7 @@ class GeofencesApi:
         Get the status of a geofence upload job.  Returns current status, progress, and results (when completed) of the upload job.
 
         :param job_id: (required)
-        :type job_id: str
+        :type job_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2828,7 +2829,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_list_group_geofences(
         self,
-        group_id: StrictStr,
+        group_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2847,7 +2848,7 @@ class GeofencesApi:
         List all geofences in a specific group.
 
         :param group_id: (required)
-        :type group_id: str
+        :type group_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2895,7 +2896,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_list_group_geofences_with_http_info(
         self,
-        group_id: StrictStr,
+        group_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2914,7 +2915,7 @@ class GeofencesApi:
         List all geofences in a specific group.
 
         :param group_id: (required)
-        :type group_id: str
+        :type group_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2962,7 +2963,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_list_group_geofences_without_preload_content(
         self,
-        group_id: StrictStr,
+        group_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2981,7 +2982,7 @@ class GeofencesApi:
         List all geofences in a specific group.
 
         :param group_id: (required)
-        :type group_id: str
+        :type group_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3090,7 +3091,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_test_group_point(
         self,
-        group_id: StrictStr,
+        group_id: UUID,
         test_point_request: TestPointRequest,
         _request_timeout: Union[
             None,
@@ -3110,7 +3111,7 @@ class GeofencesApi:
         Test a point against all geofences in a group.
 
         :param group_id: (required)
-        :type group_id: str
+        :type group_id: UUID
         :param test_point_request: (required)
         :type test_point_request: TestPointRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -3161,7 +3162,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_test_group_point_with_http_info(
         self,
-        group_id: StrictStr,
+        group_id: UUID,
         test_point_request: TestPointRequest,
         _request_timeout: Union[
             None,
@@ -3181,7 +3182,7 @@ class GeofencesApi:
         Test a point against all geofences in a group.
 
         :param group_id: (required)
-        :type group_id: str
+        :type group_id: UUID
         :param test_point_request: (required)
         :type test_point_request: TestPointRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -3232,7 +3233,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_test_group_point_without_preload_content(
         self,
-        group_id: StrictStr,
+        group_id: UUID,
         test_point_request: TestPointRequest,
         _request_timeout: Union[
             None,
@@ -3252,7 +3253,7 @@ class GeofencesApi:
         Test a point against all geofences in a group.
 
         :param group_id: (required)
-        :type group_id: str
+        :type group_id: UUID
         :param test_point_request: (required)
         :type test_point_request: TestPointRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -3679,7 +3680,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_trigger_test_event(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         event_type: StrictStr,
         test_event_request: Optional[TestEventRequest] = None,
         _request_timeout: Union[
@@ -3700,7 +3701,7 @@ class GeofencesApi:
         Trigger a simulated test event for a geofence.  This allows users to test their webhooks and workflows without physically entering or exiting the geofence.  Args:     geofence_id: ID of the geofence     event_type: Type of event to simulate ('enter' or 'exit')     test_metadata: Optional metadata to include in the test event  Returns:     Test event details including triggered webhooks and workflows
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param event_type: (required)
         :type event_type: str
         :param test_event_request:
@@ -3762,7 +3763,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_trigger_test_event_with_http_info(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         event_type: StrictStr,
         test_event_request: Optional[TestEventRequest] = None,
         _request_timeout: Union[
@@ -3783,7 +3784,7 @@ class GeofencesApi:
         Trigger a simulated test event for a geofence.  This allows users to test their webhooks and workflows without physically entering or exiting the geofence.  Args:     geofence_id: ID of the geofence     event_type: Type of event to simulate ('enter' or 'exit')     test_metadata: Optional metadata to include in the test event  Returns:     Test event details including triggered webhooks and workflows
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param event_type: (required)
         :type event_type: str
         :param test_event_request:
@@ -3845,7 +3846,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_trigger_test_event_without_preload_content(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         event_type: StrictStr,
         test_event_request: Optional[TestEventRequest] = None,
         _request_timeout: Union[
@@ -3866,7 +3867,7 @@ class GeofencesApi:
         Trigger a simulated test event for a geofence.  This allows users to test their webhooks and workflows without physically entering or exiting the geofence.  Args:     geofence_id: ID of the geofence     event_type: Type of event to simulate ('enter' or 'exit')     test_metadata: Optional metadata to include in the test event  Returns:     Test event details including triggered webhooks and workflows
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param event_type: (required)
         :type event_type: str
         :param test_event_request:
@@ -4010,7 +4011,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_update_geofence(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         update_geofence_request: UpdateGeofenceRequest,
         _request_timeout: Union[
             None,
@@ -4030,7 +4031,7 @@ class GeofencesApi:
         Update existing polygon geofence.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param update_geofence_request: (required)
         :type update_geofence_request: UpdateGeofenceRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4089,7 +4090,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_update_geofence_with_http_info(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         update_geofence_request: UpdateGeofenceRequest,
         _request_timeout: Union[
             None,
@@ -4109,7 +4110,7 @@ class GeofencesApi:
         Update existing polygon geofence.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param update_geofence_request: (required)
         :type update_geofence_request: UpdateGeofenceRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4168,7 +4169,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_update_geofence_without_preload_content(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         update_geofence_request: UpdateGeofenceRequest,
         _request_timeout: Union[
             None,
@@ -4188,7 +4189,7 @@ class GeofencesApi:
         Update existing polygon geofence.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param update_geofence_request: (required)
         :type update_geofence_request: UpdateGeofenceRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4324,7 +4325,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_update_geofence_group(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         group_name: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -4344,7 +4345,7 @@ class GeofencesApi:
         Assign or update a geofence's group.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param group_name:
         :type group_name: str
         :param _request_timeout: timeout setting for this request. If one
@@ -4395,7 +4396,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_update_geofence_group_with_http_info(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         group_name: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -4415,7 +4416,7 @@ class GeofencesApi:
         Assign or update a geofence's group.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param group_name:
         :type group_name: str
         :param _request_timeout: timeout setting for this request. If one
@@ -4466,7 +4467,7 @@ class GeofencesApi:
     @validate_call
     async def apps_geofences_api_update_geofence_group_without_preload_content(
         self,
-        geofence_id: StrictStr,
+        geofence_id: UUID,
         group_name: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -4486,7 +4487,7 @@ class GeofencesApi:
         Assign or update a geofence's group.
 
         :param geofence_id: (required)
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param group_name:
         :type group_name: str
         :param _request_timeout: timeout setting for this request. If one

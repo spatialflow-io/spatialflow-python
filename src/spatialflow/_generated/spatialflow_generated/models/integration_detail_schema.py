@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +27,7 @@ class IntegrationDetailSchema(BaseModel):
     """
     Detailed integration response with masked config
     """ # noqa: E501
-    id: StrictStr
+    id: UUID
     name: StrictStr
     type: StrictStr
     description: StrictStr

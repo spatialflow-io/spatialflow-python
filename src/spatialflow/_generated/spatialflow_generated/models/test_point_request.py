@@ -33,7 +33,8 @@ class TestPointRequest(BaseModel):
     lng: Optional[Union[Annotated[float, Field(le=180, strict=True, ge=-180)], Annotated[int, Field(le=180, strict=True, ge=-180)]]] = None
     geofence_ids: Optional[List[StrictStr]] = None
     metadata: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["geometry", "lat", "lng", "geofence_ids", "metadata"]
+    request_metadata: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["geometry", "lat", "lng", "geofence_ids", "metadata", "request_metadata"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,6 +103,11 @@ class TestPointRequest(BaseModel):
         if self.metadata is None and "metadata" in self.model_fields_set:
             _dict['metadata'] = None
 
+        # set to None if request_metadata (nullable) is None
+        # and model_fields_set contains the field
+        if self.request_metadata is None and "request_metadata" in self.model_fields_set:
+            _dict['request_metadata'] = None
+
         return _dict
 
     @classmethod
@@ -118,7 +124,8 @@ class TestPointRequest(BaseModel):
             "lat": obj.get("lat"),
             "lng": obj.get("lng"),
             "geofence_ids": obj.get("geofence_ids"),
-            "metadata": obj.get("metadata")
+            "metadata": obj.get("metadata"),
+            "request_metadata": obj.get("request_metadata")
         })
         return _obj
 

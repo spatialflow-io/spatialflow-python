@@ -12,15 +12,15 @@
 """  # noqa: E501
 
 
+import base64
 import copy
 import http.client as httplib
 import logging
 from logging import FileHandler
 import sys
-from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict
+from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict, Union
 from typing_extensions import NotRequired, Self
 
-import urllib3
 
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {
@@ -112,8 +112,8 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
-        "APIKeyBearer": APIKeyAuthSetting,
         "JWTBearer": BearerAuthSetting,
+        "APIKeyBearer": APIKeyAuthSetting,
     },
     total=False,
 )
@@ -161,6 +161,10 @@ class Configuration:
     :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
       in PEM format.
     :param retries: Number of retries for API requests.
+    :param ca_cert_data: verify the peer using concatenated CA certificate data
+      in PEM (str) or DER (bytes) format.
+    :param cert_file: the path to a client certificate file, for mTLS.
+    :param key_file: the path to a client key file, for mTLS.
 
     :Example:
 
@@ -194,19 +198,22 @@ conf = spatialflow_generated.Configuration(
         username: Optional[str]=None,
         password: Optional[str]=None,
         access_token: Optional[str]=None,
-        server_index: Optional[int]=None, 
+        server_index: Optional[int]=None,
         server_variables: Optional[ServerVariablesT]=None,
         server_operation_index: Optional[Dict[int, int]]=None,
         server_operation_variables: Optional[Dict[int, ServerVariablesT]]=None,
         ignore_operation_servers: bool=False,
         ssl_ca_cert: Optional[str]=None,
         retries: Optional[int] = None,
+        ca_cert_data: Optional[Union[str, bytes]] = None,
+        cert_file: Optional[str]=None,
+        key_file: Optional[str]=None,
         *,
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor
         """
-        self._base_path = "https://api.spatialflow.io" if host is None else host
+        self._base_path = "http://localhost" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -250,7 +257,6 @@ conf = spatialflow_generated.Configuration(
         """Logging Settings
         """
         self.logger["package_logger"] = logging.getLogger("spatialflow_generated")
-        self.logger["urllib3_logger"] = logging.getLogger("urllib3")
         self.logger_format = '%(asctime)s %(levelname)s %(message)s'
         """Log format
         """
@@ -278,10 +284,14 @@ conf = spatialflow_generated.Configuration(
         self.ssl_ca_cert = ssl_ca_cert
         """Set this to customize the certificate file to verify the peer.
         """
-        self.cert_file = None
+        self.ca_cert_data = ca_cert_data
+        """Set this to verify the peer using PEM (str) or DER (bytes)
+           certificate data.
+        """
+        self.cert_file = cert_file
         """client certificate file
         """
-        self.key_file = None
+        self.key_file = key_file
         """client key file
         """
         self.assert_hostname = None
@@ -491,9 +501,10 @@ conf = spatialflow_generated.Configuration(
         password = ""
         if self.password is not None:
             password = self.password
-        return urllib3.util.make_headers(
-            basic_auth=username + ':' + password
-        ).get('authorization')
+
+        return "Basic " + base64.b64encode(
+            (username + ":" + password).encode('utf-8')
+        ).decode('utf-8')
 
     def auth_settings(self)-> AuthSettings:
         """Gets Auth Settings dict for api client.
@@ -501,6 +512,13 @@ conf = spatialflow_generated.Configuration(
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
+        if self.access_token is not None:
+            auth['JWTBearer'] = {
+                'type': 'bearer',
+                'in': 'header',
+                'key': 'Authorization',
+                'value': 'Bearer ' + self.access_token
+            }
         if 'APIKeyBearer' in self.api_key:
             auth['APIKeyBearer'] = {
                 'type': 'api_key',
@@ -509,13 +527,6 @@ conf = spatialflow_generated.Configuration(
                 'value': self.get_api_key_with_prefix(
                     'APIKeyBearer',
                 ),
-            }
-        if self.access_token is not None:
-            auth['JWTBearer'] = {
-                'type': 'bearer',
-                'in': 'header',
-                'key': 'Authorization',
-                'value': 'Bearer ' + self.access_token
             }
         return auth
 
@@ -538,8 +549,8 @@ conf = spatialflow_generated.Configuration(
         """
         return [
             {
-                'url': "https://api.spatialflow.io",
-                'description': "Production",
+                'url': "",
+                'description': "No description provided",
             }
         ]
 
@@ -576,6 +587,7 @@ conf = spatialflow_generated.Configuration(
                 variable_name, variable['default_value'])
 
             if 'enum_values' in variable \
+                    and variable['enum_values'] \
                     and used_value not in variable['enum_values']:
                 raise ValueError(
                     "The variable `{0}` in the host URL has invalid value "

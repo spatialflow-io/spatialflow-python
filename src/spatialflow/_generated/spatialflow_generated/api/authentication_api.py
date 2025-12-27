@@ -18,6 +18,7 @@ from typing_extensions import Annotated
 
 from pydantic import StrictStr
 from typing import Any, Dict, Optional
+from ..models.accept_invite_schema import AcceptInviteSchema
 from ..models.change_password_schema import ChangePasswordSchema
 from ..models.confirm_password_reset_schema import ConfirmPasswordResetSchema
 from ..models.forgot_password_schema import ForgotPasswordSchema
@@ -28,6 +29,7 @@ from ..models.register_schema import RegisterSchema
 from ..models.resend_verification_schema import ResendVerificationSchema
 from ..models.reset_password_schema import ResetPasswordSchema
 from ..models.user_response import UserResponse
+from ..models.verify_email_schema import VerifyEmailSchema
 
 from ..api_client import ApiClient, RequestSerialized
 from ..api_response import ApiResponse
@@ -45,6 +47,288 @@ class AuthenticationApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    async def apps_authentication_api_accept_invitation(
+        self,
+        accept_invite_schema: AcceptInviteSchema,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, object]:
+        """Accept Invitation
+
+        Accept a workspace invitation and optionally set password.  Security features (Issue #67): - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination
+
+        :param accept_invite_schema: (required)
+        :type accept_invite_schema: AcceptInviteSchema
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_authentication_api_accept_invitation_serialize(
+            accept_invite_schema=accept_invite_schema,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+            '429': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_authentication_api_accept_invitation_with_http_info(
+        self,
+        accept_invite_schema: AcceptInviteSchema,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, object]]:
+        """Accept Invitation
+
+        Accept a workspace invitation and optionally set password.  Security features (Issue #67): - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination
+
+        :param accept_invite_schema: (required)
+        :type accept_invite_schema: AcceptInviteSchema
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_authentication_api_accept_invitation_serialize(
+            accept_invite_schema=accept_invite_schema,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+            '429': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_authentication_api_accept_invitation_without_preload_content(
+        self,
+        accept_invite_schema: AcceptInviteSchema,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Accept Invitation
+
+        Accept a workspace invitation and optionally set password.  Security features (Issue #67): - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination
+
+        :param accept_invite_schema: (required)
+        :type accept_invite_schema: AcceptInviteSchema
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_authentication_api_accept_invitation_serialize(
+            accept_invite_schema=accept_invite_schema,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+            '429': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_authentication_api_accept_invitation_serialize(
+        self,
+        accept_invite_schema,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if accept_invite_schema is not None:
+            _body_params = accept_invite_schema
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/auth/accept-invite',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
@@ -619,7 +903,7 @@ class AuthenticationApi:
     ) -> Dict[str, object]:
         """Forgot Password
 
-        Request password reset email.
+        Request password reset email.  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
 
         :param forgot_password_schema: (required)
         :type forgot_password_schema: ForgotPasswordSchema
@@ -656,6 +940,7 @@ class AuthenticationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
             '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -687,7 +972,7 @@ class AuthenticationApi:
     ) -> ApiResponse[Dict[str, object]]:
         """Forgot Password
 
-        Request password reset email.
+        Request password reset email.  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
 
         :param forgot_password_schema: (required)
         :type forgot_password_schema: ForgotPasswordSchema
@@ -724,6 +1009,7 @@ class AuthenticationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
             '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -755,7 +1041,7 @@ class AuthenticationApi:
     ) -> RESTResponseType:
         """Forgot Password
 
-        Request password reset email.
+        Request password reset email.  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
 
         :param forgot_password_schema: (required)
         :type forgot_password_schema: ForgotPasswordSchema
@@ -792,6 +1078,7 @@ class AuthenticationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
             '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1625,7 +1912,7 @@ class AuthenticationApi:
     ) -> LoginResponse:
         """Login
 
-        User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.
+        User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 20/min per IP, 5/min per email (Issue #67 security hardening).
 
         :param login_schema: (required)
         :type login_schema: LoginSchema
@@ -1662,6 +1949,7 @@ class AuthenticationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LoginResponse",
             '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1693,7 +1981,7 @@ class AuthenticationApi:
     ) -> ApiResponse[LoginResponse]:
         """Login
 
-        User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.
+        User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 20/min per IP, 5/min per email (Issue #67 security hardening).
 
         :param login_schema: (required)
         :type login_schema: LoginSchema
@@ -1730,6 +2018,7 @@ class AuthenticationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LoginResponse",
             '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1761,7 +2050,7 @@ class AuthenticationApi:
     ) -> RESTResponseType:
         """Login
 
-        User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.
+        User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 20/min per IP, 5/min per email (Issue #67 security hardening).
 
         :param login_schema: (required)
         :type login_schema: LoginSchema
@@ -1798,6 +2087,7 @@ class AuthenticationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LoginResponse",
             '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -3214,7 +3504,7 @@ class AuthenticationApi:
     ) -> Dict[str, object]:
         """Resend Verification Email
 
-        Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email. Rate limited to 3 requests per hour per email to prevent abuse.
+        Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email.  Security (Issue #67): - Generates new token (invalidates previous) - Token stored as SHA256 hash - Token expires per settings.EMAIL_VERIFICATION_TTL_HOURS (default 24h)  Rate limited to 3 requests per hour per email to prevent abuse.
 
         :param resend_verification_schema: (required)
         :type resend_verification_schema: ResendVerificationSchema
@@ -3283,7 +3573,7 @@ class AuthenticationApi:
     ) -> ApiResponse[Dict[str, object]]:
         """Resend Verification Email
 
-        Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email. Rate limited to 3 requests per hour per email to prevent abuse.
+        Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email.  Security (Issue #67): - Generates new token (invalidates previous) - Token stored as SHA256 hash - Token expires per settings.EMAIL_VERIFICATION_TTL_HOURS (default 24h)  Rate limited to 3 requests per hour per email to prevent abuse.
 
         :param resend_verification_schema: (required)
         :type resend_verification_schema: ResendVerificationSchema
@@ -3352,7 +3642,7 @@ class AuthenticationApi:
     ) -> RESTResponseType:
         """Resend Verification Email
 
-        Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email. Rate limited to 3 requests per hour per email to prevent abuse.
+        Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email.  Security (Issue #67): - Generates new token (invalidates previous) - Token stored as SHA256 hash - Token expires per settings.EMAIL_VERIFICATION_TTL_HOURS (default 24h)  Rate limited to 3 requests per hour per email to prevent abuse.
 
         :param resend_verification_schema: (required)
         :type resend_verification_schema: ResendVerificationSchema
@@ -4244,7 +4534,7 @@ class AuthenticationApi:
     ) -> Dict[str, object]:
         """Verify Email
 
-        Verify email address (query parameter format).
+        Verify email address (GET method, backwards compatible).  Note: This endpoint accepts plaintext tokens for backwards compatibility with existing verification links. New tokens are stored hashed, so it tries both plaintext lookup (for old tokens) and hash lookup (for new tokens).
 
         :param token: (required)
         :type token: str
@@ -4312,7 +4602,7 @@ class AuthenticationApi:
     ) -> ApiResponse[Dict[str, object]]:
         """Verify Email
 
-        Verify email address (query parameter format).
+        Verify email address (GET method, backwards compatible).  Note: This endpoint accepts plaintext tokens for backwards compatibility with existing verification links. New tokens are stored hashed, so it tries both plaintext lookup (for old tokens) and hash lookup (for new tokens).
 
         :param token: (required)
         :type token: str
@@ -4380,7 +4670,7 @@ class AuthenticationApi:
     ) -> RESTResponseType:
         """Verify Email
 
-        Verify email address (query parameter format).
+        Verify email address (GET method, backwards compatible).  Note: This endpoint accepts plaintext tokens for backwards compatibility with existing verification links. New tokens are stored hashed, so it tries both plaintext lookup (for old tokens) and hash lookup (for new tokens).
 
         :param token: (required)
         :type token: str
@@ -4738,6 +5028,285 @@ class AuthenticationApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/auth/verify-email/{token}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_authentication_api_verify_email_post(
+        self,
+        verify_email_schema: VerifyEmailSchema,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, object]:
+        """Verify Email Post
+
+        Verify email address (POST method with enhanced security).  Security features (Issue #67): - Token stored as SHA256 hash (not plaintext) - Token has configurable expiration (default 24h via settings.EMAIL_VERIFICATION_TTL_HOURS) - Single-use: token cleared after successful verification - Dual rate limiting: 20/hour per IP, 5/hour per token  Args:     data.token: Verification token (plaintext, will be hashed for lookup)  Returns:     200: Success with verification status     400: Invalid, expired, or already used token     429: Rate limit exceeded
+
+        :param verify_email_schema: (required)
+        :type verify_email_schema: VerifyEmailSchema
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_authentication_api_verify_email_post_serialize(
+            verify_email_schema=verify_email_schema,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_authentication_api_verify_email_post_with_http_info(
+        self,
+        verify_email_schema: VerifyEmailSchema,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, object]]:
+        """Verify Email Post
+
+        Verify email address (POST method with enhanced security).  Security features (Issue #67): - Token stored as SHA256 hash (not plaintext) - Token has configurable expiration (default 24h via settings.EMAIL_VERIFICATION_TTL_HOURS) - Single-use: token cleared after successful verification - Dual rate limiting: 20/hour per IP, 5/hour per token  Args:     data.token: Verification token (plaintext, will be hashed for lookup)  Returns:     200: Success with verification status     400: Invalid, expired, or already used token     429: Rate limit exceeded
+
+        :param verify_email_schema: (required)
+        :type verify_email_schema: VerifyEmailSchema
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_authentication_api_verify_email_post_serialize(
+            verify_email_schema=verify_email_schema,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_authentication_api_verify_email_post_without_preload_content(
+        self,
+        verify_email_schema: VerifyEmailSchema,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Verify Email Post
+
+        Verify email address (POST method with enhanced security).  Security features (Issue #67): - Token stored as SHA256 hash (not plaintext) - Token has configurable expiration (default 24h via settings.EMAIL_VERIFICATION_TTL_HOURS) - Single-use: token cleared after successful verification - Dual rate limiting: 20/hour per IP, 5/hour per token  Args:     data.token: Verification token (plaintext, will be hashed for lookup)  Returns:     200: Success with verification status     400: Invalid, expired, or already used token     429: Rate limit exceeded
+
+        :param verify_email_schema: (required)
+        :type verify_email_schema: VerifyEmailSchema
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_authentication_api_verify_email_post_serialize(
+            verify_email_schema=verify_email_schema,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '429': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_authentication_api_verify_email_post_serialize(
+        self,
+        verify_email_schema,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if verify_email_schema is not None:
+            _body_params = verify_email_schema
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/auth/verify-email',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

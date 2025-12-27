@@ -232,3 +232,107 @@ def raise_for_status(
         raise ServerError(message, **kwargs)
     elif status_code >= 400:
         raise SpatialFlowError(message, **kwargs)
+
+
+def translate_exception(exc: Exception) -> SpatialFlowError:
+    """
+    Translate generated OpenAPI exceptions to SDK exceptions.
+
+    This provides a consistent exception interface for users, regardless
+    of whether they use wrapper methods or call the generated API directly.
+
+    Args:
+        exc: The original exception from the generated client
+
+    Returns:
+        An appropriate SpatialFlowError subclass
+    """
+    # Import here to avoid circular imports
+    from ._generated.spatialflow_generated.exceptions import (
+        ApiException,
+        UnauthorizedException,
+        ForbiddenException,
+        NotFoundException,
+        BadRequestException,
+        ServiceException,
+    )
+
+    # Extract message and details from the exception
+    message = str(exc)
+    status_code = None
+    detail = None
+    headers = None
+    body = None
+
+    if isinstance(exc, ApiException):
+        status_code = exc.status
+        message = exc.reason or message
+        headers = dict(exc.headers) if exc.headers else None
+        body = exc.body
+
+    if isinstance(exc, UnauthorizedException):
+        return AuthenticationError(
+            message, status_code=status_code or 401, detail=detail, headers=headers
+        )
+    if isinstance(exc, ForbiddenException):
+        return PermissionError(
+            message, status_code=status_code or 403, detail=detail, headers=headers
+        )
+    if isinstance(exc, NotFoundException):
+        return NotFoundError(
+            message, status_code=status_code or 404, detail=detail, headers=headers
+        )
+    if isinstance(exc, BadRequestException):
+        return ValidationError(
+            message, status_code=status_code or 400, detail=detail, headers=headers
+        )
+    if isinstance(exc, ServiceException):
+        return ServerError(
+            message, status_code=status_code or 500, detail=detail, headers=headers
+        )
+    if isinstance(exc, ApiException):
+        # Generic API exception - use raise_for_status logic
+        if status_code:
+            try:
+                raise_for_status(status_code, message, headers=headers, body=body)
+            except SpatialFlowError as e:
+                return e
+        return SpatialFlowError(message, status_code=status_code, headers=headers)
+
+    # Non-API exceptions (connection errors, timeouts, etc.)
+    # Handle Python built-in exceptions
+    if isinstance(exc, TimeoutError):
+        return TimeoutError(message)
+    if isinstance(exc, ConnectionError):
+        return ConnectionError(message)
+
+    # Handle asyncio timeouts
+    import asyncio
+
+    if isinstance(exc, asyncio.TimeoutError):
+        return TimeoutError(f"Request timed out: {message}")
+
+    # Handle aiohttp-specific exceptions
+    try:
+        import aiohttp
+
+        if isinstance(exc, aiohttp.ClientError):
+            if isinstance(exc, aiohttp.ServerTimeoutError):
+                return TimeoutError(f"Server timeout: {message}")
+            if isinstance(exc, aiohttp.ClientConnectorError):
+                return ConnectionError(f"Connection failed: {message}")
+            if isinstance(exc, aiohttp.ClientResponseError):
+                # Map HTTP status codes to SDK exceptions
+                status = getattr(exc, "status", None)
+                if status:
+                    try:
+                        raise_for_status(status, message)
+                    except SpatialFlowError as e:
+                        return e
+            # Generic aiohttp client error
+            return ConnectionError(f"HTTP client error: {message}")
+    except ImportError:
+        pass  # aiohttp not available
+
+    # Fallback for unknown exceptions
+    return SpatialFlowError(message)

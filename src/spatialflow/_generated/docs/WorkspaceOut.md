@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
+**id** | **UUID** |  | [optional] 
 **name** | **str** |  | 
 **slug** | **str** |  | 
 **logo_url** | **str** |  | [optional] 

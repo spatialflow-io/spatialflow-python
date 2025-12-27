@@ -18,6 +18,7 @@ from typing_extensions import Annotated
 
 from pydantic import StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional, Tuple, Union
+from uuid import UUID
 from ..models.batch_location_update_in import BatchLocationUpdateIn
 from ..models.device_in import DeviceIn
 from ..models.device_out import DeviceOut
@@ -2802,7 +2803,7 @@ class DevicesApi:
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         device_id: Optional[StrictStr] = None,
-        geofence_id: Optional[StrictStr] = None,
+        geofence_id: Optional[UUID] = None,
         event_type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2828,7 +2829,7 @@ class DevicesApi:
         :param device_id:
         :type device_id: str
         :param geofence_id:
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param event_type:
         :type event_type: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2885,7 +2886,7 @@ class DevicesApi:
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         device_id: Optional[StrictStr] = None,
-        geofence_id: Optional[StrictStr] = None,
+        geofence_id: Optional[UUID] = None,
         event_type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2911,7 +2912,7 @@ class DevicesApi:
         :param device_id:
         :type device_id: str
         :param geofence_id:
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param event_type:
         :type event_type: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2968,7 +2969,7 @@ class DevicesApi:
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         device_id: Optional[StrictStr] = None,
-        geofence_id: Optional[StrictStr] = None,
+        geofence_id: Optional[UUID] = None,
         event_type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2994,7 +2995,7 @@ class DevicesApi:
         :param device_id:
         :type device_id: str
         :param geofence_id:
-        :type geofence_id: str
+        :type geofence_id: UUID
         :param event_type:
         :type event_type: str
         :param _request_timeout: timeout setting for this request. If one

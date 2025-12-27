@@ -21,6 +21,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +29,7 @@ class WorkspaceOut(BaseModel):
     """
     WorkspaceOut
     """ # noqa: E501
-    id: Optional[StrictStr] = None
+    id: Optional[UUID] = None
     name: Annotated[str, Field(strict=True, max_length=255)]
     slug: Annotated[str, Field(strict=True, max_length=255)]
     logo_url: Optional[StrictStr] = None

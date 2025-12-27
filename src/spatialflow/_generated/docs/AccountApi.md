@@ -1,6 +1,6 @@
 # spatialflow_generated.AccountApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -42,10 +42,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -107,10 +107,10 @@ from spatialflow_generated.models.api_key_create_response import ApiKeyCreateRes
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -181,7 +181,37 @@ Name | Type | Description  | Notes
 
 Create Erasure Job
 
-Create a privacy data erasure job (GDPR compliance).  This endpoint allows workspace owners and admins to delete location and event data for GDPR Article 17 (Right to be Forgotten) compliance.  **Authentication:** JWT token required **Authorization:** Owner or Admin role only  **Scope Options:** - `workspace`: Delete all data for the workspace - `device`: Delete data for specific devices (requires device_ids) - `date_range`: Delete data within a time range (requires from_date and to_date) - `tag`: Delete data with specific tags (requires tags)  **Dry Run Mode:** Set `dry_run: true` to estimate deletions without actually deleting data. Always run dry-run first to verify the scope.  **Example:** ```json {     \"scope\": \"device\",     \"device_ids\": [\"truck-005\", \"truck-009\"],     \"from_date\": \"2024-01-01T00:00:00Z\",     \"to_date\": \"2024-12-31T23:59:59Z\",     \"dry_run\": true } ```  **PRD Reference:** §4.5 Privacy Erasure API **Roadmap:** Phase 2, Task 2.1
+Create a privacy data erasure job (GDPR compliance).
+
+This endpoint allows workspace owners and admins to delete location
+and event data for GDPR Article 17 (Right to be Forgotten) compliance.
+
+**Authentication:** JWT token required
+**Authorization:** Owner or Admin role only
+
+**Scope Options:**
+- `workspace`: Delete all data for the workspace
+- `device`: Delete data for specific devices (requires device_ids)
+- `date_range`: Delete data within a time range (requires from_date and to_date)
+- `tag`: Delete data with specific tags (requires tags)
+
+**Dry Run Mode:**
+Set `dry_run: true` to estimate deletions without actually deleting data.
+Always run dry-run first to verify the scope.
+
+**Example:**
+```json
+{
+    "scope": "device",
+    "device_ids": ["truck-005", "truck-009"],
+    "from_date": "2024-01-01T00:00:00Z",
+    "to_date": "2024-12-31T23:59:59Z",
+    "dry_run": true
+}
+```
+
+**PRD Reference:** §4.5 Privacy Erasure API
+**Roadmap:** Phase 2, Task 2.1
 
 ### Example
 
@@ -194,10 +224,10 @@ from spatialflow_generated.models.privacy_erasure_response import PrivacyErasure
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -274,10 +304,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -347,7 +377,12 @@ Name | Type | Description  | Notes
 
 Dismiss Onboarding
 
-Dismiss the onboarding checklist.  Permanently hides the onboarding checklist card for the user. This action cannot be undone via API.  **Authentication:** JWT token required
+Dismiss the onboarding checklist.
+
+Permanently hides the onboarding checklist card for the user.
+This action cannot be undone via API.
+
+**Authentication:** JWT token required
 
 ### Example
 
@@ -359,10 +394,10 @@ from spatialflow_generated.models.onboarding_progress_response import Onboarding
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -434,10 +469,10 @@ from spatialflow_generated.models.api_key_response import ApiKeyResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -520,10 +555,10 @@ from spatialflow_generated.models.api_key_response import ApiKeyResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -588,7 +623,32 @@ This endpoint does not need any parameter.
 
 Get Dashboard Metrics
 
-Get dashboard KPI metrics for the authenticated user.  Returns key performance indicators for the dashboard: - **Active Workflows**: Workflows that are active and were created or executed in the period - **Events Total**: Total geofence entry/exit events triggered in the period - **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)  **Time Ranges:** - `today`: From midnight to now - `7d`: Last 7 days - `30d`: Last 30 days - `custom`: Custom date range (requires start_date and end_date)  **Formulas:** - Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100 - Returns `null` when total_attempts = 0 (UI should show \"—\")  **Authentication:** JWT token required  **Example:** ``` GET /api/v1/accounts/dashboard/metrics?time_range=7d GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z ```  **Dashboard UX:** Ticket #2 - Global Time-Range Control + KPI Formulas
+Get dashboard KPI metrics for the authenticated user.
+
+Returns key performance indicators for the dashboard:
+- **Active Workflows**: Workflows that are active and were created or executed in the period
+- **Events Total**: Total geofence entry/exit events triggered in the period
+- **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)
+
+**Time Ranges:**
+- `today`: From midnight to now
+- `7d`: Last 7 days
+- `30d`: Last 30 days
+- `custom`: Custom date range (requires start_date and end_date)
+
+**Formulas:**
+- Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100
+- Returns `null` when total_attempts = 0 (UI should show "—")
+
+**Authentication:** JWT token required
+
+**Example:**
+```
+GET /api/v1/accounts/dashboard/metrics?time_range=7d
+GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z
+```
+
+**Dashboard UX:** Ticket #2 - Global Time-Range Control + KPI Formulas
 
 ### Example
 
@@ -600,10 +660,10 @@ from spatialflow_generated.models.dashboard_metrics_response import DashboardMet
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -673,7 +733,21 @@ Name | Type | Description  | Notes
 
 Get Erasure Job
 
-Get status of a privacy erasure job.  Returns the current status, progress, and results of an erasure job. Poll this endpoint to track job execution.  **Authentication:** JWT token required **Authorization:** Must be in the same workspace as the job  **Job Statuses:** - `pending`: Job queued, not yet started - `running`: Job is executing - `completed`: Job finished successfully - `failed`: Job encountered an error  **PRD Reference:** §4.5 Privacy Erasure API
+Get status of a privacy erasure job.
+
+Returns the current status, progress, and results of an erasure job.
+Poll this endpoint to track job execution.
+
+**Authentication:** JWT token required
+**Authorization:** Must be in the same workspace as the job
+
+**Job Statuses:**
+- `pending`: Job queued, not yet started
+- `running`: Job is executing
+- `completed`: Job finished successfully
+- `failed`: Job encountered an error
+
+**PRD Reference:** §4.5 Privacy Erasure API
 
 ### Example
 
@@ -685,10 +759,10 @@ from spatialflow_generated.models.privacy_erasure_response import PrivacyErasure
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -764,10 +838,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -834,7 +908,12 @@ void (empty response body)
 
 Get Onboarding Progress
 
-Get current user's onboarding checklist progress.  Returns the user's progress through the onboarding checklist steps, including which steps are complete and overall completion percentage.  **Authentication:** JWT token required
+Get current user's onboarding checklist progress.
+
+Returns the user's progress through the onboarding checklist steps,
+including which steps are complete and overall completion percentage.
+
+**Authentication:** JWT token required
 
 ### Example
 
@@ -846,10 +925,10 @@ from spatialflow_generated.models.onboarding_progress_response import Onboarding
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -921,10 +1000,10 @@ from spatialflow_generated.models.user_profile_response import UserProfileRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -989,7 +1068,9 @@ This endpoint does not need any parameter.
 
 List Expiring Api Keys
 
-List API keys expiring within the specified number of days.  Default: 30 days
+List API keys expiring within the specified number of days.
+
+Default: 30 days
 
 ### Example
 
@@ -1001,10 +1082,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1085,10 +1166,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1165,10 +1246,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1251,10 +1332,10 @@ from spatialflow_generated.models.api_key_create_response import ApiKeyCreateRes
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1324,7 +1405,10 @@ Name | Type | Description  | Notes
 
 Rotate Api Key
 
-Rotate an API key.  Creates a new API key with the same permissions and marks the old one for expiration. The old key remains active for the grace period (default 7 days).
+Rotate an API key.
+
+Creates a new API key with the same permissions and marks the old one for expiration.
+The old key remains active for the grace period (default 7 days).
 
 ### Example
 
@@ -1337,10 +1421,10 @@ from spatialflow_generated.models.api_key_create_response import ApiKeyCreateRes
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1412,7 +1496,9 @@ Name | Type | Description  | Notes
 
 Set Api Key Expiration
 
-Set or update expiration date for an API key.  Pass expires_at as ISO 8601 datetime string or null to remove expiration.
+Set or update expiration date for an API key.
+
+Pass expires_at as ISO 8601 datetime string or null to remove expiration.
 
 ### Example
 
@@ -1424,10 +1510,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1512,10 +1598,10 @@ from spatialflow_generated.models.api_key_update_request import ApiKeyUpdateRequ
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1588,7 +1674,19 @@ Name | Type | Description  | Notes
 
 Update Onboarding Progress
 
-Update onboarding progress by marking a step as complete.  Marks the specified onboarding step as complete. If all steps are complete, automatically sets the completed_at timestamp.  **Authentication:** JWT token required  **Example:** ```json {     \"step\": \"created_workflow\" } ```
+Update onboarding progress by marking a step as complete.
+
+Marks the specified onboarding step as complete. If all steps are complete,
+automatically sets the completed_at timestamp.
+
+**Authentication:** JWT token required
+
+**Example:**
+```json
+{
+    "step": "created_workflow"
+}
+```
 
 ### Example
 
@@ -1601,10 +1699,10 @@ from spatialflow_generated.models.update_onboarding_progress_request import Upda
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1680,10 +1778,10 @@ from spatialflow_generated.models.update_profile_request import UpdateProfileReq
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters

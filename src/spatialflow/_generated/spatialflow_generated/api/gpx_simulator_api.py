@@ -18,6 +18,7 @@ from typing_extensions import Annotated
 
 from pydantic import StrictBytes, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional, Tuple, Union
+from uuid import UUID
 from ..models.gpx_playback_out import GPXPlaybackOut
 from ..models.gpx_route_out import GPXRouteOut
 from ..models.start_playback_request import StartPlaybackRequest
@@ -43,7 +44,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_cancel_gpx_playback(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,7 +63,7 @@ class GPXSimulatorApi:
         Cancel an active or paused playback.  The playback cannot be resumed after cancellation.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -110,7 +111,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_cancel_gpx_playback_with_http_info(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,7 +130,7 @@ class GPXSimulatorApi:
         Cancel an active or paused playback.  The playback cannot be resumed after cancellation.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -177,7 +178,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_cancel_gpx_playback_without_preload_content(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -196,7 +197,7 @@ class GPXSimulatorApi:
         Cancel an active or paused playback.  The playback cannot be resumed after cancellation.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -305,7 +306,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_delete_gpx_route(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -324,7 +325,7 @@ class GPXSimulatorApi:
         Delete (deactivate) a GPX route.
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -372,7 +373,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_delete_gpx_route_with_http_info(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -391,7 +392,7 @@ class GPXSimulatorApi:
         Delete (deactivate) a GPX route.
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -439,7 +440,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_delete_gpx_route_without_preload_content(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -458,7 +459,7 @@ class GPXSimulatorApi:
         Delete (deactivate) a GPX route.
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -567,7 +568,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_get_gpx_playback(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -586,7 +587,7 @@ class GPXSimulatorApi:
         Get details of a specific playback session.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -634,7 +635,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_get_gpx_playback_with_http_info(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -653,7 +654,7 @@ class GPXSimulatorApi:
         Get details of a specific playback session.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -701,7 +702,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_get_gpx_playback_without_preload_content(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -720,7 +721,7 @@ class GPXSimulatorApi:
         Get details of a specific playback session.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -829,7 +830,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_get_gpx_route(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -848,7 +849,7 @@ class GPXSimulatorApi:
         Get details of a specific GPX route.
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -896,7 +897,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_get_gpx_route_with_http_info(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -915,7 +916,7 @@ class GPXSimulatorApi:
         Get details of a specific GPX route.
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -963,7 +964,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_get_gpx_route_without_preload_content(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -982,7 +983,7 @@ class GPXSimulatorApi:
         Get details of a specific GPX route.
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1687,7 +1688,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_pause_gpx_playback(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1706,7 +1707,7 @@ class GPXSimulatorApi:
         Pause an active playback.  The playback will stop at the current point and can be resumed later.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1754,7 +1755,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_pause_gpx_playback_with_http_info(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1773,7 +1774,7 @@ class GPXSimulatorApi:
         Pause an active playback.  The playback will stop at the current point and can be resumed later.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1821,7 +1822,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_pause_gpx_playback_without_preload_content(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1840,7 +1841,7 @@ class GPXSimulatorApi:
         Pause an active playback.  The playback will stop at the current point and can be resumed later.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1949,7 +1950,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_resume_gpx_playback(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1968,7 +1969,7 @@ class GPXSimulatorApi:
         Resume a paused playback.  Continues from the point where it was paused.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2016,7 +2017,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_resume_gpx_playback_with_http_info(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2035,7 +2036,7 @@ class GPXSimulatorApi:
         Resume a paused playback.  Continues from the point where it was paused.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2083,7 +2084,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_resume_gpx_playback_without_preload_content(
         self,
-        playback_id: StrictStr,
+        playback_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2102,7 +2103,7 @@ class GPXSimulatorApi:
         Resume a paused playback.  Continues from the point where it was paused.
 
         :param playback_id: (required)
-        :type playback_id: str
+        :type playback_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2211,7 +2212,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_start_gpx_playback(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         start_playback_request: StartPlaybackRequest,
         _request_timeout: Union[
             None,
@@ -2231,7 +2232,7 @@ class GPXSimulatorApi:
         Start playback of a GPX route.  Creates a playback session and starts the Celery task to simulate device movement along the route.  Args:     route_id: ID of the route to play     data: Playback configuration (speed, loop)  Returns:     201: Created playback session     400: Invalid request or playback already active     404: Route not found
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param start_playback_request: (required)
         :type start_playback_request: StartPlaybackRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -2282,7 +2283,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_start_gpx_playback_with_http_info(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         start_playback_request: StartPlaybackRequest,
         _request_timeout: Union[
             None,
@@ -2302,7 +2303,7 @@ class GPXSimulatorApi:
         Start playback of a GPX route.  Creates a playback session and starts the Celery task to simulate device movement along the route.  Args:     route_id: ID of the route to play     data: Playback configuration (speed, loop)  Returns:     201: Created playback session     400: Invalid request or playback already active     404: Route not found
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param start_playback_request: (required)
         :type start_playback_request: StartPlaybackRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -2353,7 +2354,7 @@ class GPXSimulatorApi:
     @validate_call
     async def apps_devices_api_gpx_start_gpx_playback_without_preload_content(
         self,
-        route_id: StrictStr,
+        route_id: UUID,
         start_playback_request: StartPlaybackRequest,
         _request_timeout: Union[
             None,
@@ -2373,7 +2374,7 @@ class GPXSimulatorApi:
         Start playback of a GPX route.  Creates a playback session and starts the Celery task to simulate device movement along the route.  Args:     route_id: ID of the route to play     data: Playback configuration (speed, loop)  Returns:     201: Created playback session     400: Invalid request or playback already active     404: Route not found
 
         :param route_id: (required)
-        :type route_id: str
+        :type route_id: UUID
         :param start_playback_request: (required)
         :type start_playback_request: StartPlaybackRequest
         :param _request_timeout: timeout setting for this request. If one

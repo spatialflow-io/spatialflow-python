@@ -18,6 +18,7 @@ from typing_extensions import Annotated
 
 from pydantic import StrictBool, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional
+from uuid import UUID
 from ..models.action_response import ActionResponse
 from ..models.config_field_definition_request import ConfigFieldDefinitionRequest
 from ..models.config_field_definition_response import ConfigFieldDefinitionResponse
@@ -56,7 +57,7 @@ class IntegrationsApi:
     async def apps_integrations_api_bulk_export_integrations(
         self,
         include_secrets: Optional[StrictBool] = None,
-        request_body: Optional[List[Optional[StrictStr]]] = None,
+        request_body: Optional[List[Optional[UUID]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -77,7 +78,7 @@ class IntegrationsApi:
         :param include_secrets:
         :type include_secrets: bool
         :param request_body:
-        :type request_body: List[Optional[str]]
+        :type request_body: List[Optional[UUID]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -127,7 +128,7 @@ class IntegrationsApi:
     async def apps_integrations_api_bulk_export_integrations_with_http_info(
         self,
         include_secrets: Optional[StrictBool] = None,
-        request_body: Optional[List[Optional[StrictStr]]] = None,
+        request_body: Optional[List[Optional[UUID]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -148,7 +149,7 @@ class IntegrationsApi:
         :param include_secrets:
         :type include_secrets: bool
         :param request_body:
-        :type request_body: List[Optional[str]]
+        :type request_body: List[Optional[UUID]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -198,7 +199,7 @@ class IntegrationsApi:
     async def apps_integrations_api_bulk_export_integrations_without_preload_content(
         self,
         include_secrets: Optional[StrictBool] = None,
-        request_body: Optional[List[Optional[StrictStr]]] = None,
+        request_body: Optional[List[Optional[UUID]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -219,7 +220,7 @@ class IntegrationsApi:
         :param include_secrets:
         :type include_secrets: bool
         :param request_body:
-        :type request_body: List[Optional[str]]
+        :type request_body: List[Optional[UUID]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -323,6 +324,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -632,6 +634,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -656,7 +659,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_create_config_field(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         config_field_definition_request: ConfigFieldDefinitionRequest,
         _request_timeout: Union[
             None,
@@ -676,7 +679,7 @@ class IntegrationsApi:
         Create config field for integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param config_field_definition_request: (required)
         :type config_field_definition_request: ConfigFieldDefinitionRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -727,7 +730,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_create_config_field_with_http_info(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         config_field_definition_request: ConfigFieldDefinitionRequest,
         _request_timeout: Union[
             None,
@@ -747,7 +750,7 @@ class IntegrationsApi:
         Create config field for integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param config_field_definition_request: (required)
         :type config_field_definition_request: ConfigFieldDefinitionRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -798,7 +801,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_create_config_field_without_preload_content(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         config_field_definition_request: ConfigFieldDefinitionRequest,
         _request_timeout: Union[
             None,
@@ -818,7 +821,7 @@ class IntegrationsApi:
         Create config field for integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param config_field_definition_request: (required)
         :type config_field_definition_request: ConfigFieldDefinitionRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -921,6 +924,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -1195,6 +1199,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -1469,6 +1474,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -1493,8 +1499,8 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_config_field(
         self,
-        integration_type_id: StrictStr,
-        field_id: StrictStr,
+        integration_type_id: UUID,
+        field_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1513,9 +1519,9 @@ class IntegrationsApi:
         Delete config field (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param field_id: (required)
-        :type field_id: str
+        :type field_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1564,8 +1570,8 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_config_field_with_http_info(
         self,
-        integration_type_id: StrictStr,
-        field_id: StrictStr,
+        integration_type_id: UUID,
+        field_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1584,9 +1590,9 @@ class IntegrationsApi:
         Delete config field (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param field_id: (required)
-        :type field_id: str
+        :type field_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1635,8 +1641,8 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_config_field_without_preload_content(
         self,
-        integration_type_id: StrictStr,
-        field_id: StrictStr,
+        integration_type_id: UUID,
+        field_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1655,9 +1661,9 @@ class IntegrationsApi:
         Delete config field (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param field_id: (required)
-        :type field_id: str
+        :type field_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1745,6 +1751,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -1769,7 +1776,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_integration(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1788,7 +1795,7 @@ class IntegrationsApi:
         Delete an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1836,7 +1843,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_integration_with_http_info(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1855,7 +1862,7 @@ class IntegrationsApi:
         Delete an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1903,7 +1910,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_integration_without_preload_content(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1922,7 +1929,7 @@ class IntegrationsApi:
         Delete an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2006,6 +2013,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -2030,7 +2038,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_integration_type(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2049,7 +2057,7 @@ class IntegrationsApi:
         Delete integration type (admin only, non-builtin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2097,7 +2105,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_integration_type_with_http_info(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2116,7 +2124,7 @@ class IntegrationsApi:
         Delete integration type (admin only, non-builtin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2164,7 +2172,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_delete_integration_type_without_preload_content(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2183,7 +2191,7 @@ class IntegrationsApi:
         Delete integration type (admin only, non-builtin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2267,6 +2275,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -2291,7 +2300,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_export_integration(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         include_secrets: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
@@ -2311,7 +2320,7 @@ class IntegrationsApi:
         Export integration configuration.  By default, sensitive data is encrypted. Set include_secrets=true to include decrypted sensitive data (use with caution).
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param include_secrets:
         :type include_secrets: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2362,7 +2371,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_export_integration_with_http_info(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         include_secrets: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
@@ -2382,7 +2391,7 @@ class IntegrationsApi:
         Export integration configuration.  By default, sensitive data is encrypted. Set include_secrets=true to include decrypted sensitive data (use with caution).
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param include_secrets:
         :type include_secrets: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2433,7 +2442,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_export_integration_without_preload_content(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         include_secrets: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
@@ -2453,7 +2462,7 @@ class IntegrationsApi:
         Export integration configuration.  By default, sensitive data is encrypted. Set include_secrets=true to include decrypted sensitive data (use with caution).
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param include_secrets:
         :type include_secrets: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2545,6 +2554,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -2791,6 +2801,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -2815,7 +2826,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2834,7 +2845,7 @@ class IntegrationsApi:
         Get integration details
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2882,7 +2893,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_with_http_info(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2901,7 +2912,7 @@ class IntegrationsApi:
         Get integration details
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2949,7 +2960,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_without_preload_content(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2968,7 +2979,7 @@ class IntegrationsApi:
         Get integration details
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3052,6 +3063,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -3298,6 +3310,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -3322,7 +3335,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_stats(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3341,7 +3354,7 @@ class IntegrationsApi:
         Get usage statistics for an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3389,7 +3402,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_stats_with_http_info(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3408,7 +3421,7 @@ class IntegrationsApi:
         Get usage statistics for an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3456,7 +3469,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_stats_without_preload_content(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3475,7 +3488,7 @@ class IntegrationsApi:
         Get usage statistics for an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3559,6 +3572,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -3583,7 +3597,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_type(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3602,7 +3616,7 @@ class IntegrationsApi:
         Get specific integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3650,7 +3664,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_type_with_http_info(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3669,7 +3683,7 @@ class IntegrationsApi:
         Get specific integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3717,7 +3731,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_get_integration_type_without_preload_content(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3736,7 +3750,7 @@ class IntegrationsApi:
         Get specific integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3820,6 +3834,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -4094,6 +4109,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -4118,7 +4134,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_list_config_fields(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4137,7 +4153,7 @@ class IntegrationsApi:
         List config fields for an integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4185,7 +4201,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_list_config_fields_with_http_info(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4204,7 +4220,7 @@ class IntegrationsApi:
         List config fields for an integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4252,7 +4268,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_list_config_fields_without_preload_content(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4271,7 +4287,7 @@ class IntegrationsApi:
         List config fields for an integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4355,6 +4371,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -4686,6 +4703,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -5000,6 +5018,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -5254,6 +5273,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -5542,6 +5562,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -5788,6 +5809,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -5812,7 +5834,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_test_integration(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5831,7 +5853,7 @@ class IntegrationsApi:
         Test an integration to verify it works
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5879,7 +5901,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_test_integration_with_http_info(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5898,7 +5920,7 @@ class IntegrationsApi:
         Test an integration to verify it works
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5946,7 +5968,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_test_integration_without_preload_content(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5965,7 +5987,7 @@ class IntegrationsApi:
         Test an integration to verify it works
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6049,6 +6071,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -6073,8 +6096,8 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_config_field(
         self,
-        integration_type_id: StrictStr,
-        field_id: StrictStr,
+        integration_type_id: UUID,
+        field_id: UUID,
         config_field_definition_request: ConfigFieldDefinitionRequest,
         _request_timeout: Union[
             None,
@@ -6094,9 +6117,9 @@ class IntegrationsApi:
         Update config field (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param field_id: (required)
-        :type field_id: str
+        :type field_id: UUID
         :param config_field_definition_request: (required)
         :type config_field_definition_request: ConfigFieldDefinitionRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -6148,8 +6171,8 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_config_field_with_http_info(
         self,
-        integration_type_id: StrictStr,
-        field_id: StrictStr,
+        integration_type_id: UUID,
+        field_id: UUID,
         config_field_definition_request: ConfigFieldDefinitionRequest,
         _request_timeout: Union[
             None,
@@ -6169,9 +6192,9 @@ class IntegrationsApi:
         Update config field (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param field_id: (required)
-        :type field_id: str
+        :type field_id: UUID
         :param config_field_definition_request: (required)
         :type config_field_definition_request: ConfigFieldDefinitionRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -6223,8 +6246,8 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_config_field_without_preload_content(
         self,
-        integration_type_id: StrictStr,
-        field_id: StrictStr,
+        integration_type_id: UUID,
+        field_id: UUID,
         config_field_definition_request: ConfigFieldDefinitionRequest,
         _request_timeout: Union[
             None,
@@ -6244,9 +6267,9 @@ class IntegrationsApi:
         Update config field (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param field_id: (required)
-        :type field_id: str
+        :type field_id: UUID
         :param config_field_definition_request: (required)
         :type config_field_definition_request: ConfigFieldDefinitionRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -6353,6 +6376,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -6377,7 +6401,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_integration(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         update_integration_schema: UpdateIntegrationSchema,
         _request_timeout: Union[
             None,
@@ -6397,7 +6421,7 @@ class IntegrationsApi:
         Update an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param update_integration_schema: (required)
         :type update_integration_schema: UpdateIntegrationSchema
         :param _request_timeout: timeout setting for this request. If one
@@ -6448,7 +6472,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_integration_with_http_info(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         update_integration_schema: UpdateIntegrationSchema,
         _request_timeout: Union[
             None,
@@ -6468,7 +6492,7 @@ class IntegrationsApi:
         Update an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param update_integration_schema: (required)
         :type update_integration_schema: UpdateIntegrationSchema
         :param _request_timeout: timeout setting for this request. If one
@@ -6519,7 +6543,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_integration_without_preload_content(
         self,
-        integration_id: StrictStr,
+        integration_id: UUID,
         update_integration_schema: UpdateIntegrationSchema,
         _request_timeout: Union[
             None,
@@ -6539,7 +6563,7 @@ class IntegrationsApi:
         Update an integration
 
         :param integration_id: (required)
-        :type integration_id: str
+        :type integration_id: UUID
         :param update_integration_schema: (required)
         :type update_integration_schema: UpdateIntegrationSchema
         :param _request_timeout: timeout setting for this request. If one
@@ -6642,6 +6666,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 
@@ -6666,7 +6691,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_integration_type(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         integration_type_request: IntegrationTypeRequest,
         _request_timeout: Union[
             None,
@@ -6686,7 +6711,7 @@ class IntegrationsApi:
         Update integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param integration_type_request: (required)
         :type integration_type_request: IntegrationTypeRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -6737,7 +6762,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_integration_type_with_http_info(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         integration_type_request: IntegrationTypeRequest,
         _request_timeout: Union[
             None,
@@ -6757,7 +6782,7 @@ class IntegrationsApi:
         Update integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param integration_type_request: (required)
         :type integration_type_request: IntegrationTypeRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -6808,7 +6833,7 @@ class IntegrationsApi:
     @validate_call
     async def apps_integrations_api_update_integration_type_without_preload_content(
         self,
-        integration_type_id: StrictStr,
+        integration_type_id: UUID,
         integration_type_request: IntegrationTypeRequest,
         _request_timeout: Union[
             None,
@@ -6828,7 +6853,7 @@ class IntegrationsApi:
         Update integration type (admin only)
 
         :param integration_type_id: (required)
-        :type integration_type_id: str
+        :type integration_type_id: UUID
         :param integration_type_request: (required)
         :type integration_type_request: IntegrationTypeRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -6931,6 +6956,7 @@ class IntegrationsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyBearer', 
             'JWTBearer'
         ]
 

@@ -1,6 +1,6 @@
 # TestPointResponse
 
-Schema for test point response
+Schema for test point response.  Provides both the legacy `results` array (unchanged for backward compatibility) and the new `matched_geofences` array with enhanced group information.
 
 ## Properties
 
@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **inside_geofences** | **int** |  | 
 **total_geofences** | **int** |  | 
 **results** | [**List[GeofenceTestResult]**](GeofenceTestResult.md) |  | 
+**matched_geofences** | [**List[MatchedGeofenceItem]**](MatchedGeofenceItem.md) | Geofences containing the test point, with group info. Ordered by distance_meters ASC, then geofence_id ASC. | [optional] 
+**request_metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example
 

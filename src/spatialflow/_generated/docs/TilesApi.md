@@ -1,6 +1,6 @@
 # spatialflow_generated.TilesApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -17,7 +17,8 @@ Method | HTTP request | Description
 
 Get Raster Tile
 
-Placeholder for raster tile support. Currently returns 404 as we only support vector tiles.
+Placeholder for raster tile support.
+Currently returns 404 as we only support vector tiles.
 
 ### Example
 
@@ -28,10 +29,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -96,7 +97,15 @@ void (empty response body)
 
 Get Tile
 
-Generate MVT tile for geofences.  Args:     z: Zoom level (0-16)     x: Tile X coordinate     y: Tile Y coordinate  Returns:     MVT tile binary data or 204 No Content for empty tiles
+Generate MVT tile for geofences.
+
+Args:
+    z: Zoom level (0-16)
+    x: Tile X coordinate
+    y: Tile Y coordinate
+
+Returns:
+    MVT tile binary data or 204 No Content for empty tiles
 
 ### Example
 
@@ -107,10 +116,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -180,7 +189,9 @@ Name | Type | Description  | Notes
 
 Get Tile Metadata
 
-Get metadata about available tiles.  Returns information about zoom levels, bounds, and layer details.
+Get metadata about available tiles.
+
+Returns information about zoom levels, bounds, and layer details.
 
 ### Example
 
@@ -192,10 +203,10 @@ from spatialflow_generated.models.tile_metadata import TileMetadata
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -255,7 +266,9 @@ This endpoint does not need any parameter.
 
 Get Tile Style
 
-Get a custom tile style configuration.  Future endpoint for custom map styles.
+Get a custom tile style configuration.
+
+Future endpoint for custom map styles.
 
 ### Example
 
@@ -266,10 +279,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -340,10 +353,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -391,7 +404,9 @@ No authorization required
 
 Invalidate Tiles
 
-Invalidate all cached tiles for the current workspace.  This should be called when geofences are modified.
+Invalidate all cached tiles for the current workspace.
+
+This should be called when geofences are modified.
 
 ### Example
 
@@ -402,10 +417,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters

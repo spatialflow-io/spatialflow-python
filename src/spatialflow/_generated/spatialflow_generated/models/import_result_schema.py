@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class ImportResultSchema(BaseModel):
     Result of import operation
     """ # noqa: E501
     success: StrictBool
-    integration_id: Optional[StrictStr] = None
+    integration_id: Optional[UUID] = None
     message: StrictStr
     conflicts: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = ["success", "integration_id", "message", "conflicts"]

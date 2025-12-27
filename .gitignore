@@ -1,0 +1,29 @@
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OpenAPI generator scratch (if regenerating)
+.openapi-generator/FILES

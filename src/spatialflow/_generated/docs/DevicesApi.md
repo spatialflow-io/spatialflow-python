@@ -1,6 +1,6 @@
 # spatialflow_generated.DevicesApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -38,10 +38,10 @@ from spatialflow_generated.models.device_out import DeviceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -124,10 +124,10 @@ from spatialflow_generated.models.location_update_out import LocationUpdateOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -210,10 +210,10 @@ from spatialflow_generated.models.device_out import DeviceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -296,10 +296,10 @@ from spatialflow_generated.models.device_out import DeviceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -380,10 +380,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -461,10 +461,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -551,10 +551,10 @@ from spatialflow_generated.models.device_out import DeviceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -635,10 +635,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -711,7 +711,24 @@ Name | Type | Description  | Notes
 
 Get Import Job
 
-Get status of a location import job.  Returns the current status, progress, and error details of an import job. Poll this endpoint to track job execution.  **Authentication:** JWT token required **Authorization:** Must be in the same organization as the job  **Job Statuses:** - `pending`: Job queued, not yet started - `processing`: Job is parsing CSV and queueing locations - `completed`: Job finished successfully (locations queued for processing) - `failed`: Job encountered an error (see error_message)  **Error Handling:** If error_rate > 1%, the job will fail with first 100 errors listed.  **PRD Reference:** §3.1.2 CSV Import Schema
+Get status of a location import job.
+
+Returns the current status, progress, and error details of an import job.
+Poll this endpoint to track job execution.
+
+**Authentication:** JWT token required
+**Authorization:** Must be in the same organization as the job
+
+**Job Statuses:**
+- `pending`: Job queued, not yet started
+- `processing`: Job is parsing CSV and queueing locations
+- `completed`: Job finished successfully (locations queued for processing)
+- `failed`: Job encountered an error (see error_message)
+
+**Error Handling:**
+If error_rate > 1%, the job will fail with first 100 errors listed.
+
+**PRD Reference:** §3.1.2 CSV Import Schema
 
 ### Example
 
@@ -723,10 +740,10 @@ from spatialflow_generated.models.location_import_response import LocationImport
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -802,10 +819,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -882,10 +899,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -911,7 +928,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     limit = 50 # int |  (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
     device_id = 'device_id_example' # str |  (optional)
-    geofence_id = 'geofence_id_example' # str |  (optional)
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID |  (optional)
     event_type = 'event_type_example' # str |  (optional)
 
     try:
@@ -933,7 +950,7 @@ Name | Type | Description  | Notes
  **limit** | **int**|  | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
  **device_id** | **str**|  | [optional] 
- **geofence_id** | **str**|  | [optional] 
+ **geofence_id** | **UUID**|  | [optional] 
  **event_type** | **str**|  | [optional] 
 
 ### Return type
@@ -975,10 +992,10 @@ from spatialflow_generated.models.device_out import DeviceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1061,10 +1078,10 @@ from spatialflow_generated.models.location_update_out import LocationUpdateOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1137,7 +1154,41 @@ Name | Type | Description  | Notes
 
 Upload Csv Import
 
-Upload CSV file for bulk location import.  This endpoint accepts a CSV file with location data and queues it for async processing. Useful for customer migrations or bulk historical data imports.  **Authentication:** JWT token required **Max File Size:** 50 MB **Max Rows:** 500,000  **CSV Format:** ```csv device_id,ts,lat,lon,accuracy_m,speed_mps,heading_deg,meta_driver truck-005,2025-10-01T14:12:03Z,42.651,-73.756,9.2,12.4,180,alice truck-006,2025-10-01T14:13:00Z,42.652,-73.757,8.5,15.0,175,bob ```  **Required Columns:** - `device_id`: Unique device identifier - `ts`: ISO-8601 timestamp - `lat`: Latitude (-90 to 90) - `lon`: Longitude (-180 to 180)  **Optional Columns:** - `accuracy_m`: GPS accuracy in meters - `speed_mps`: Speed in meters per second - `heading_deg`: Heading in degrees (0-359) - `meta_*`: Metadata columns (e.g., meta_driver, meta_cargo)  **Validation Rules:** - Rejects entire import if >1% rows are invalid - Rejects timestamps > 5 minutes in the future - Warns for timestamps > 30 days old  **PRD Reference:** §3.1.2 CSV Import Schema **Roadmap:** Phase 2, Task 2.2
+Upload CSV file for bulk location import.
+
+This endpoint accepts a CSV file with location data and queues it for
+async processing. Useful for customer migrations or bulk historical data imports.
+
+**Authentication:** JWT token required
+**Max File Size:** 50 MB
+**Max Rows:** 500,000
+
+**CSV Format:**
+```csv
+device_id,ts,lat,lon,accuracy_m,speed_mps,heading_deg,meta_driver
+truck-005,2025-10-01T14:12:03Z,42.651,-73.756,9.2,12.4,180,alice
+truck-006,2025-10-01T14:13:00Z,42.652,-73.757,8.5,15.0,175,bob
+```
+
+**Required Columns:**
+- `device_id`: Unique device identifier
+- `ts`: ISO-8601 timestamp
+- `lat`: Latitude (-90 to 90)
+- `lon`: Longitude (-180 to 180)
+
+**Optional Columns:**
+- `accuracy_m`: GPS accuracy in meters
+- `speed_mps`: Speed in meters per second
+- `heading_deg`: Heading in degrees (0-359)
+- `meta_*`: Metadata columns (e.g., meta_driver, meta_cargo)
+
+**Validation Rules:**
+- Rejects entire import if >1% rows are invalid
+- Rejects timestamps > 5 minutes in the future
+- Warns for timestamps > 30 days old
+
+**PRD Reference:** §3.1.2 CSV Import Schema
+**Roadmap:** Phase 2, Task 2.2
 
 ### Example
 
@@ -1149,10 +1200,10 @@ from spatialflow_generated.models.location_import_response import LocationImport
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters

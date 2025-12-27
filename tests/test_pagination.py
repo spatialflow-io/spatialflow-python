@@ -45,7 +45,7 @@ class TestPaginate:
             return response
 
         items = []
-        async for item in paginate(fetch_page, limit=2):
+        async for item in paginate(fetch_page, limit=2, items_field="results"):
             items.append(item)
 
         assert len(items) == 5
@@ -59,7 +59,7 @@ class TestPaginate:
             return MockResponse(results=[], count=0, next=None)
 
         items = []
-        async for item in paginate(fetch_page):
+        async for item in paginate(fetch_page, items_field="results"):
             items.append(item)
 
         assert len(items) == 0
@@ -75,7 +75,7 @@ class TestPaginate:
             )
 
         items = []
-        async for item in paginate(fetch_page):
+        async for item in paginate(fetch_page, items_field="results"):
             items.append(item)
 
         assert len(items) == 2
@@ -88,7 +88,7 @@ class TestPaginate:
             captured_limits.append(limit)
             return MockResponse(results=[], count=0, next=None)
 
-        async for _ in paginate(fetch_page, limit=50):
+        async for _ in paginate(fetch_page, limit=50, items_field="results"):
             pass
 
         assert captured_limits == [50]
@@ -101,7 +101,7 @@ class TestPaginate:
             captured_limits.append(limit)
             return MockResponse(results=[], count=0, next=None)
 
-        async for _ in paginate(fetch_page):
+        async for _ in paginate(fetch_page, items_field="results"):
             pass
 
         assert captured_limits == [100]

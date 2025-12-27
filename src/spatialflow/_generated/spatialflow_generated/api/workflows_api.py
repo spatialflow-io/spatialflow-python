@@ -20,6 +20,7 @@ from datetime import datetime
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
+from uuid import UUID
 from ..models.create_from_template_in import CreateFromTemplateIn
 from ..models.execution_out import ExecutionOut
 from ..models.retry_policy_response_schema import RetryPolicyResponseSchema
@@ -48,6 +49,271 @@ class WorkflowsApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    async def apps_workflows_api_activate_workflow(
+        self,
+        workflow_id: UUID,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> WorkflowOut:
+        """Activate Workflow
+
+        Activate a draft workflow for production use.  Transitions a workflow from draft status to active status. Idempotent: Returns 200 if workflow is already active.
+
+        :param workflow_id: (required)
+        :type workflow_id: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workflows_api_activate_workflow_serialize(
+            workflow_id=workflow_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkflowOut",
+            '400': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_workflows_api_activate_workflow_with_http_info(
+        self,
+        workflow_id: UUID,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[WorkflowOut]:
+        """Activate Workflow
+
+        Activate a draft workflow for production use.  Transitions a workflow from draft status to active status. Idempotent: Returns 200 if workflow is already active.
+
+        :param workflow_id: (required)
+        :type workflow_id: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workflows_api_activate_workflow_serialize(
+            workflow_id=workflow_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkflowOut",
+            '400': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_workflows_api_activate_workflow_without_preload_content(
+        self,
+        workflow_id: UUID,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Activate Workflow
+
+        Activate a draft workflow for production use.  Transitions a workflow from draft status to active status. Idempotent: Returns 200 if workflow is already active.
+
+        :param workflow_id: (required)
+        :type workflow_id: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workflows_api_activate_workflow_serialize(
+            workflow_id=workflow_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkflowOut",
+            '400': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_workflows_api_activate_workflow_serialize(
+        self,
+        workflow_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if workflow_id is not None:
+            _path_params['workflow_id'] = workflow_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/workflows/{workflow_id}/activate',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
@@ -334,7 +600,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_create_workflow_from_template(
         self,
-        template_id: StrictStr,
+        template_id: UUID,
         create_from_template_in: CreateFromTemplateIn,
         _request_timeout: Union[
             None,
@@ -354,7 +620,7 @@ class WorkflowsApi:
         Create a workflow from a template.
 
         :param template_id: (required)
-        :type template_id: str
+        :type template_id: UUID
         :param create_from_template_in: (required)
         :type create_from_template_in: CreateFromTemplateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -406,7 +672,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_create_workflow_from_template_with_http_info(
         self,
-        template_id: StrictStr,
+        template_id: UUID,
         create_from_template_in: CreateFromTemplateIn,
         _request_timeout: Union[
             None,
@@ -426,7 +692,7 @@ class WorkflowsApi:
         Create a workflow from a template.
 
         :param template_id: (required)
-        :type template_id: str
+        :type template_id: UUID
         :param create_from_template_in: (required)
         :type create_from_template_in: CreateFromTemplateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -478,7 +744,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_create_workflow_from_template_without_preload_content(
         self,
-        template_id: StrictStr,
+        template_id: UUID,
         create_from_template_in: CreateFromTemplateIn,
         _request_timeout: Union[
             None,
@@ -498,7 +764,7 @@ class WorkflowsApi:
         Create a workflow from a template.
 
         :param template_id: (required)
-        :type template_id: str
+        :type template_id: UUID
         :param create_from_template_in: (required)
         :type create_from_template_in: CreateFromTemplateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -627,7 +893,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_delete_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -646,7 +912,7 @@ class WorkflowsApi:
         Delete a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -695,7 +961,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_delete_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -714,7 +980,7 @@ class WorkflowsApi:
         Delete a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -763,7 +1029,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_delete_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -782,7 +1048,7 @@ class WorkflowsApi:
         Delete a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -892,7 +1158,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_duplicate_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         name: StrictStr,
         _request_timeout: Union[
             None,
@@ -912,7 +1178,7 @@ class WorkflowsApi:
         Duplicate an existing workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param name: (required)
         :type name: str
         :param _request_timeout: timeout setting for this request. If one
@@ -964,7 +1230,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_duplicate_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         name: StrictStr,
         _request_timeout: Union[
             None,
@@ -984,7 +1250,7 @@ class WorkflowsApi:
         Duplicate an existing workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param name: (required)
         :type name: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1036,7 +1302,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_duplicate_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         name: StrictStr,
         _request_timeout: Union[
             None,
@@ -1056,7 +1322,7 @@ class WorkflowsApi:
         Duplicate an existing workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param name: (required)
         :type name: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1174,7 +1440,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_execute_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         test_data: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
@@ -1194,7 +1460,7 @@ class WorkflowsApi:
         Manually execute a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param test_data:
         :type test_data: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
@@ -1247,7 +1513,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_execute_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         test_data: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
@@ -1267,7 +1533,7 @@ class WorkflowsApi:
         Manually execute a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param test_data:
         :type test_data: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
@@ -1320,7 +1586,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_execute_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         test_data: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
@@ -1340,7 +1606,7 @@ class WorkflowsApi:
         Manually execute a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param test_data:
         :type test_data: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
@@ -1459,7 +1725,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_export_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1478,7 +1744,7 @@ class WorkflowsApi:
         Export workflow as JSON.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1526,7 +1792,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_export_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1545,7 +1811,7 @@ class WorkflowsApi:
         Export workflow as JSON.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1593,7 +1859,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_export_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1612,7 +1878,7 @@ class WorkflowsApi:
         Export workflow as JSON.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1968,7 +2234,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_execution_details(
         self,
-        execution_id: StrictStr,
+        execution_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1987,7 +2253,7 @@ class WorkflowsApi:
         Get detailed execution information including steps.
 
         :param execution_id: (required)
-        :type execution_id: str
+        :type execution_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2035,7 +2301,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_execution_details_with_http_info(
         self,
-        execution_id: StrictStr,
+        execution_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2054,7 +2320,7 @@ class WorkflowsApi:
         Get detailed execution information including steps.
 
         :param execution_id: (required)
-        :type execution_id: str
+        :type execution_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2102,7 +2368,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_execution_details_without_preload_content(
         self,
-        execution_id: StrictStr,
+        execution_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2121,7 +2387,7 @@ class WorkflowsApi:
         Get detailed execution information including steps.
 
         :param execution_id: (required)
-        :type execution_id: str
+        :type execution_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2477,7 +2743,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_version_diff(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         version_number: StrictInt,
         _request_timeout: Union[
             None,
@@ -2497,7 +2763,7 @@ class WorkflowsApi:
         Compare a specific version with the current workflow state.  Returns a diff showing what changed between the version and current state.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param version_number: (required)
         :type version_number: int
         :param _request_timeout: timeout setting for this request. If one
@@ -2548,7 +2814,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_version_diff_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         version_number: StrictInt,
         _request_timeout: Union[
             None,
@@ -2568,7 +2834,7 @@ class WorkflowsApi:
         Compare a specific version with the current workflow state.  Returns a diff showing what changed between the version and current state.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param version_number: (required)
         :type version_number: int
         :param _request_timeout: timeout setting for this request. If one
@@ -2619,7 +2885,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_version_diff_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         version_number: StrictInt,
         _request_timeout: Union[
             None,
@@ -2639,7 +2905,7 @@ class WorkflowsApi:
         Compare a specific version with the current workflow state.  Returns a diff showing what changed between the version and current state.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param version_number: (required)
         :type version_number: int
         :param _request_timeout: timeout setting for this request. If one
@@ -2754,7 +3020,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2773,7 +3039,7 @@ class WorkflowsApi:
         Get workflow details.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2821,7 +3087,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2840,7 +3106,7 @@ class WorkflowsApi:
         Get workflow details.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2888,7 +3154,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2907,7 +3173,7 @@ class WorkflowsApi:
         Get workflow details.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3016,7 +3282,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_bottlenecks(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3029,13 +3295,13 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """Get Workflow Bottlenecks
 
         Identify performance bottlenecks in a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3067,7 +3333,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -3083,7 +3349,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_bottlenecks_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3096,13 +3362,13 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """Get Workflow Bottlenecks
 
         Identify performance bottlenecks in a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3134,7 +3400,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -3150,7 +3416,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_bottlenecks_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3169,7 +3435,7 @@ class WorkflowsApi:
         Identify performance bottlenecks in a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3201,7 +3467,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -3278,8 +3544,8 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_execution_detail(
         self,
-        workflow_id: StrictStr,
-        execution_id: StrictStr,
+        workflow_id: UUID,
+        execution_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3298,9 +3564,9 @@ class WorkflowsApi:
         Get detailed execution information for a specific workflow execution.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param execution_id: (required)
-        :type execution_id: str
+        :type execution_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3349,8 +3615,8 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_execution_detail_with_http_info(
         self,
-        workflow_id: StrictStr,
-        execution_id: StrictStr,
+        workflow_id: UUID,
+        execution_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3369,9 +3635,9 @@ class WorkflowsApi:
         Get detailed execution information for a specific workflow execution.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param execution_id: (required)
-        :type execution_id: str
+        :type execution_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3420,8 +3686,8 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_execution_detail_without_preload_content(
         self,
-        workflow_id: StrictStr,
-        execution_id: StrictStr,
+        workflow_id: UUID,
+        execution_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3440,9 +3706,9 @@ class WorkflowsApi:
         Get detailed execution information for a specific workflow execution.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param execution_id: (required)
-        :type execution_id: str
+        :type execution_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3555,7 +3821,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_executions(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         status: Optional[StrictStr] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -3577,7 +3843,7 @@ class WorkflowsApi:
         Get execution history for a specific workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param status:
         :type status: str
         :param limit:
@@ -3634,7 +3900,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_executions_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         status: Optional[StrictStr] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -3656,7 +3922,7 @@ class WorkflowsApi:
         Get execution history for a specific workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param status:
         :type status: str
         :param limit:
@@ -3713,7 +3979,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_executions_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         status: Optional[StrictStr] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -3735,7 +4001,7 @@ class WorkflowsApi:
         Get execution history for a specific workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param status:
         :type status: str
         :param limit:
@@ -3868,7 +4134,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_performance(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None,
         _request_timeout: Union[
@@ -3889,7 +4155,7 @@ class WorkflowsApi:
         Get performance metrics for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param start_date:
         :type start_date: datetime
         :param end_date:
@@ -3943,7 +4209,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_performance_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None,
         _request_timeout: Union[
@@ -3964,7 +4230,7 @@ class WorkflowsApi:
         Get performance metrics for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param start_date:
         :type start_date: datetime
         :param end_date:
@@ -4018,7 +4284,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_performance_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None,
         _request_timeout: Union[
@@ -4039,7 +4305,7 @@ class WorkflowsApi:
         Get performance metrics for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param start_date:
         :type start_date: datetime
         :param end_date:
@@ -4182,7 +4448,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_retry_policy(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4201,7 +4467,7 @@ class WorkflowsApi:
         Get retry policy configuration for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4249,7 +4515,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_retry_policy_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4268,7 +4534,7 @@ class WorkflowsApi:
         Get retry policy configuration for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4316,7 +4582,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_retry_policy_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4335,7 +4601,7 @@ class WorkflowsApi:
         Get retry policy configuration for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4444,7 +4710,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_statistics(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4463,7 +4729,7 @@ class WorkflowsApi:
         Get detailed statistics for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4511,7 +4777,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_statistics_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4530,7 +4796,7 @@ class WorkflowsApi:
         Get detailed statistics for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4578,7 +4844,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_statistics_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4597,7 +4863,7 @@ class WorkflowsApi:
         Get detailed statistics for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4706,7 +4972,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_step_performance(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4719,13 +4985,13 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """Get Workflow Step Performance
 
         Get performance breakdown by workflow step.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4757,7 +5023,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -4773,7 +5039,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_step_performance_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4786,13 +5052,13 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """Get Workflow Step Performance
 
         Get performance breakdown by workflow step.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4824,7 +5090,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -4840,7 +5106,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_step_performance_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4859,7 +5125,7 @@ class WorkflowsApi:
         Get performance breakdown by workflow step.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4891,7 +5157,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -4968,7 +5234,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_template(
         self,
-        template_id: StrictStr,
+        template_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4987,7 +5253,7 @@ class WorkflowsApi:
         Get workflow template details.
 
         :param template_id: (required)
-        :type template_id: str
+        :type template_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5035,7 +5301,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_template_with_http_info(
         self,
-        template_id: StrictStr,
+        template_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5054,7 +5320,7 @@ class WorkflowsApi:
         Get workflow template details.
 
         :param template_id: (required)
-        :type template_id: str
+        :type template_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5102,7 +5368,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_get_workflow_template_without_preload_content(
         self,
-        template_id: StrictStr,
+        template_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5121,7 +5387,7 @@ class WorkflowsApi:
         Get workflow template details.
 
         :param template_id: (required)
-        :type template_id: str
+        :type template_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5743,7 +6009,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_list_workflow_executions(
         self,
-        workflow_id: Optional[StrictStr] = None,
+        workflow_id: Optional[UUID] = None,
         status: Optional[StrictStr] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -5765,7 +6031,7 @@ class WorkflowsApi:
         List workflow executions with filtering.
 
         :param workflow_id:
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param status:
         :type status: str
         :param limit:
@@ -5822,7 +6088,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_list_workflow_executions_with_http_info(
         self,
-        workflow_id: Optional[StrictStr] = None,
+        workflow_id: Optional[UUID] = None,
         status: Optional[StrictStr] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -5844,7 +6110,7 @@ class WorkflowsApi:
         List workflow executions with filtering.
 
         :param workflow_id:
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param status:
         :type status: str
         :param limit:
@@ -5901,7 +6167,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_list_workflow_executions_without_preload_content(
         self,
-        workflow_id: Optional[StrictStr] = None,
+        workflow_id: Optional[UUID] = None,
         status: Optional[StrictStr] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -5923,7 +6189,7 @@ class WorkflowsApi:
         List workflow executions with filtering.
 
         :param workflow_id:
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param status:
         :type status: str
         :param limit:
@@ -6322,7 +6588,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_list_workflow_versions(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6341,7 +6607,7 @@ class WorkflowsApi:
         List all versions of a workflow.  Returns versions in descending order (newest first).
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6389,7 +6655,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_list_workflow_versions_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6408,7 +6674,7 @@ class WorkflowsApi:
         List all versions of a workflow.  Returns versions in descending order (newest first).
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6456,7 +6722,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_list_workflow_versions_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6475,7 +6741,7 @@ class WorkflowsApi:
         List all versions of a workflow.  Returns versions in descending order (newest first).
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6916,7 +7182,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_restore_workflow_version(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         version_number: StrictInt,
         _request_timeout: Union[
             None,
@@ -6936,7 +7202,7 @@ class WorkflowsApi:
         Restore a workflow to a previous version.  This creates a new version with the snapshot data from the specified version.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param version_number: (required)
         :type version_number: int
         :param _request_timeout: timeout setting for this request. If one
@@ -6987,7 +7253,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_restore_workflow_version_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         version_number: StrictInt,
         _request_timeout: Union[
             None,
@@ -7007,7 +7273,7 @@ class WorkflowsApi:
         Restore a workflow to a previous version.  This creates a new version with the snapshot data from the specified version.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param version_number: (required)
         :type version_number: int
         :param _request_timeout: timeout setting for this request. If one
@@ -7058,7 +7324,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_restore_workflow_version_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         version_number: StrictInt,
         _request_timeout: Union[
             None,
@@ -7078,7 +7344,7 @@ class WorkflowsApi:
         Restore a workflow to a previous version.  This creates a new version with the snapshot data from the specified version.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param version_number: (required)
         :type version_number: int
         :param _request_timeout: timeout setting for this request. If one
@@ -7193,7 +7459,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_test_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         test_workflow_in: TestWorkflowIn,
         _request_timeout: Union[
             None,
@@ -7213,7 +7479,7 @@ class WorkflowsApi:
         Test workflow configuration with sample data.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param test_workflow_in: (required)
         :type test_workflow_in: TestWorkflowIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7265,7 +7531,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_test_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         test_workflow_in: TestWorkflowIn,
         _request_timeout: Union[
             None,
@@ -7285,7 +7551,7 @@ class WorkflowsApi:
         Test workflow configuration with sample data.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param test_workflow_in: (required)
         :type test_workflow_in: TestWorkflowIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7337,7 +7603,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_test_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         test_workflow_in: TestWorkflowIn,
         _request_timeout: Union[
             None,
@@ -7357,7 +7623,7 @@ class WorkflowsApi:
         Test workflow configuration with sample data.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param test_workflow_in: (required)
         :type test_workflow_in: TestWorkflowIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7486,7 +7752,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_toggle_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7505,7 +7771,7 @@ class WorkflowsApi:
         Toggle workflow between active and paused states.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7554,7 +7820,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_toggle_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7573,7 +7839,7 @@ class WorkflowsApi:
         Toggle workflow between active and paused states.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7622,7 +7888,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_toggle_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7641,7 +7907,7 @@ class WorkflowsApi:
         Toggle workflow between active and paused states.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7751,7 +8017,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_update_workflow(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         workflow_update: WorkflowUpdate,
         _request_timeout: Union[
             None,
@@ -7771,7 +8037,7 @@ class WorkflowsApi:
         Update workflow configuration.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param workflow_update: (required)
         :type workflow_update: WorkflowUpdate
         :param _request_timeout: timeout setting for this request. If one
@@ -7824,7 +8090,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_update_workflow_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         workflow_update: WorkflowUpdate,
         _request_timeout: Union[
             None,
@@ -7844,7 +8110,7 @@ class WorkflowsApi:
         Update workflow configuration.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param workflow_update: (required)
         :type workflow_update: WorkflowUpdate
         :param _request_timeout: timeout setting for this request. If one
@@ -7897,7 +8163,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_update_workflow_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         workflow_update: WorkflowUpdate,
         _request_timeout: Union[
             None,
@@ -7917,7 +8183,7 @@ class WorkflowsApi:
         Update workflow configuration.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param workflow_update: (required)
         :type workflow_update: WorkflowUpdate
         :param _request_timeout: timeout setting for this request. If one
@@ -8047,7 +8313,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_update_workflow_retry_policy(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         workflow_retry_policy_update_schema: WorkflowRetryPolicyUpdateSchema,
         _request_timeout: Union[
             None,
@@ -8067,7 +8333,7 @@ class WorkflowsApi:
         Update retry policy configuration for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param workflow_retry_policy_update_schema: (required)
         :type workflow_retry_policy_update_schema: WorkflowRetryPolicyUpdateSchema
         :param _request_timeout: timeout setting for this request. If one
@@ -8118,7 +8384,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_update_workflow_retry_policy_with_http_info(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         workflow_retry_policy_update_schema: WorkflowRetryPolicyUpdateSchema,
         _request_timeout: Union[
             None,
@@ -8138,7 +8404,7 @@ class WorkflowsApi:
         Update retry policy configuration for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param workflow_retry_policy_update_schema: (required)
         :type workflow_retry_policy_update_schema: WorkflowRetryPolicyUpdateSchema
         :param _request_timeout: timeout setting for this request. If one
@@ -8189,7 +8455,7 @@ class WorkflowsApi:
     @validate_call
     async def apps_workflows_api_update_workflow_retry_policy_without_preload_content(
         self,
-        workflow_id: StrictStr,
+        workflow_id: UUID,
         workflow_retry_policy_update_schema: WorkflowRetryPolicyUpdateSchema,
         _request_timeout: Union[
             None,
@@ -8209,7 +8475,7 @@ class WorkflowsApi:
         Update retry policy configuration for a workflow.
 
         :param workflow_id: (required)
-        :type workflow_id: str
+        :type workflow_id: UUID
         :param workflow_retry_policy_update_schema: (required)
         :type workflow_retry_policy_update_schema: WorkflowRetryPolicyUpdateSchema
         :param _request_timeout: timeout setting for this request. If one

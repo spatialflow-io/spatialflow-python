@@ -1,21 +1,21 @@
 # spatialflow_generated.E2ETestApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apps_test_api_cleanup_test_data**](E2ETestApi.md#apps_test_api_cleanup_test_data) | **POST** /api/v1/test/cleanup-e2e-data | Cleanup Test Data
-[**apps_test_api_cleanup_test_data_0**](E2ETestApi.md#apps_test_api_cleanup_test_data_0) | **DELETE** /api/v1/test/cleanup | Cleanup Test Data
+[**apps_test_api_cleanup_e2e_data**](E2ETestApi.md#apps_test_api_cleanup_e2e_data) | **POST** /api/v1/test/cleanup-e2e-data | Cleanup E2E Data
+[**apps_test_api_cleanup_test_data**](E2ETestApi.md#apps_test_api_cleanup_test_data) | **DELETE** /api/v1/test/cleanup | Cleanup Test Data
 [**apps_test_api_create_test_user**](E2ETestApi.md#apps_test_api_create_test_user) | **POST** /api/v1/test/create-user | Create Test User
 [**apps_test_api_seed_e2e_data**](E2ETestApi.md#apps_test_api_seed_e2e_data) | **POST** /api/v1/test/seed-e2e-data | Seed E2E Data
 
 
-# **apps_test_api_cleanup_test_data**
-> Dict[str, object] apps_test_api_cleanup_test_data()
+# **apps_test_api_cleanup_e2e_data**
+> Dict[str, object] apps_test_api_cleanup_e2e_data()
 
-Cleanup Test Data
+Cleanup E2E Data
 
-Clean up E2E test data created during test runs.
+Clean up E2E test data created during test runs (POST method).
 
 ### Example
 
@@ -25,10 +25,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -38,12 +38,12 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     api_instance = spatialflow_generated.E2ETestApi(api_client)
 
     try:
-        # Cleanup Test Data
-        api_response = await api_instance.apps_test_api_cleanup_test_data()
-        print("The response of E2ETestApi->apps_test_api_cleanup_test_data:\n")
+        # Cleanup E2E Data
+        api_response = await api_instance.apps_test_api_cleanup_e2e_data()
+        print("The response of E2ETestApi->apps_test_api_cleanup_e2e_data:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling E2ETestApi->apps_test_api_cleanup_test_data: %s\n" % e)
+        print("Exception when calling E2ETestApi->apps_test_api_cleanup_e2e_data: %s\n" % e)
 ```
 
 
@@ -73,12 +73,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **apps_test_api_cleanup_test_data_0**
-> Dict[str, object] apps_test_api_cleanup_test_data_0()
+# **apps_test_api_cleanup_test_data**
+> Dict[str, object] apps_test_api_cleanup_test_data()
 
 Cleanup Test Data
 
-Clean up E2E test data created during test runs.
+Clean up E2E test data created during test runs (DELETE method).
 
 ### Example
 
@@ -88,10 +88,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -102,11 +102,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Cleanup Test Data
-        api_response = await api_instance.apps_test_api_cleanup_test_data_0()
-        print("The response of E2ETestApi->apps_test_api_cleanup_test_data_0:\n")
+        api_response = await api_instance.apps_test_api_cleanup_test_data()
+        print("The response of E2ETestApi->apps_test_api_cleanup_test_data:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling E2ETestApi->apps_test_api_cleanup_test_data_0: %s\n" % e)
+        print("Exception when calling E2ETestApi->apps_test_api_cleanup_test_data: %s\n" % e)
 ```
 
 
@@ -152,10 +152,10 @@ from spatialflow_generated.models.create_user_schema import CreateUserSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -221,10 +221,10 @@ from spatialflow_generated.models.seed_data_response_schema import SeedDataRespo
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 

@@ -13,6 +13,7 @@ from .geofences_api import GeofencesApi
 from .integrations_api import IntegrationsApi
 from .public_api import PublicApi
 from .public_location_ingest_api import PublicLocationIngestApi
+from .simulation_center_api import SimulationCenterApi
 from .storage_api import StorageApi
 from .subscriptions_api import SubscriptionsApi
 from .system_api import SystemApi

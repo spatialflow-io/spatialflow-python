@@ -1,6 +1,6 @@
 # spatialflow_generated.GeofencesApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -28,7 +28,10 @@ Method | HTTP request | Description
 
 Bulk Create Geofences
 
-Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple  geofences in a single request. Maximum 100 geofences per request.
+Bulk create multiple geofences.
+
+This endpoint allows users with the BATCH_OPERATIONS feature to create multiple
+geofences in a single request. Maximum 100 geofences per request.
 
 ### Example
 
@@ -41,10 +44,10 @@ from spatialflow_generated.models.bulk_geofence_request import BulkGeofenceReque
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -129,10 +132,10 @@ from spatialflow_generated.models.geofence_response import GeofenceResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -221,10 +224,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -247,7 +250,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    geofence_id = 'geofence_id_example' # str | 
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Delete Geofence
@@ -265,7 +268,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **geofence_id** | **str**|  | 
+ **geofence_id** | **UUID**|  | 
 
 ### Return type
 
@@ -310,10 +313,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -375,10 +378,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -456,10 +459,10 @@ from spatialflow_generated.models.geofence_response import GeofenceResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -482,7 +485,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    geofence_id = 'geofence_id_example' # str | 
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Geofence
@@ -500,7 +503,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **geofence_id** | **str**|  | 
+ **geofence_id** | **UUID**|  | 
 
 ### Return type
 
@@ -535,7 +538,15 @@ Name | Type | Description  | Notes
 
 Get Test Event History
 
-Get test event history for a geofence.  Args:     geofence_id: ID of the geofence     limit: Maximum number of events to return (default 50, max 100)     offset: Number of events to skip (for pagination)  Returns:     List of test events with execution details
+Get test event history for a geofence.
+
+Args:
+    geofence_id: ID of the geofence
+    limit: Maximum number of events to return (default 50, max 100)
+    offset: Number of events to skip (for pagination)
+
+Returns:
+    List of test events with execution details
 
 ### Example
 
@@ -547,10 +558,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -573,7 +584,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    geofence_id = 'geofence_id_example' # str | 
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     limit = 50 # int |  (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
 
@@ -591,7 +602,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **geofence_id** | **str**|  | 
+ **geofence_id** | **UUID**|  | 
  **limit** | **int**|  | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
 
@@ -621,7 +632,9 @@ void (empty response body)
 
 Get Upload Job Status
 
-Get the status of a geofence upload job.  Returns current status, progress, and results (when completed) of the upload job.
+Get the status of a geofence upload job.
+
+Returns current status, progress, and results (when completed) of the upload job.
 
 ### Example
 
@@ -634,10 +647,10 @@ from spatialflow_generated.models.upload_job_status import UploadJobStatus
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -660,7 +673,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    job_id = 'job_id_example' # str | 
+    job_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Upload Job Status
@@ -678,7 +691,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **job_id** | **str**|  | 
+ **job_id** | **UUID**|  | 
 
 ### Return type
 
@@ -725,10 +738,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -806,10 +819,10 @@ from spatialflow_generated.models.geofence_list_response import GeofenceListResp
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -901,10 +914,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -927,7 +940,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    group_id = 'group_id_example' # str | 
+    group_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # List Group Geofences
@@ -945,7 +958,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **group_id** | **str**|  | 
+ **group_id** | **UUID**|  | 
 
 ### Return type
 
@@ -986,10 +999,10 @@ from spatialflow_generated.models.test_point_request import TestPointRequest
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1012,7 +1025,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    group_id = 'group_id_example' # str | 
+    group_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     test_point_request = spatialflow_generated.TestPointRequest() # TestPointRequest | 
 
     try:
@@ -1031,7 +1044,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **group_id** | **str**|  | 
+ **group_id** | **UUID**|  | 
  **test_point_request** | [**TestPointRequest**](TestPointRequest.md)|  | 
 
 ### Return type
@@ -1074,10 +1087,10 @@ from spatialflow_generated.models.test_point_response import TestPointResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1154,7 +1167,18 @@ Name | Type | Description  | Notes
 
 Trigger Test Event
 
-Trigger a simulated test event for a geofence.  This allows users to test their webhooks and workflows without physically entering or exiting the geofence.  Args:     geofence_id: ID of the geofence     event_type: Type of event to simulate ('enter' or 'exit')     test_metadata: Optional metadata to include in the test event  Returns:     Test event details including triggered webhooks and workflows
+Trigger a simulated test event for a geofence.
+
+This allows users to test their webhooks and workflows without physically
+entering or exiting the geofence.
+
+Args:
+    geofence_id: ID of the geofence
+    event_type: Type of event to simulate ('enter' or 'exit')
+    test_metadata: Optional metadata to include in the test event
+
+Returns:
+    Test event details including triggered webhooks and workflows
 
 ### Example
 
@@ -1167,10 +1191,10 @@ from spatialflow_generated.models.test_event_request import TestEventRequest
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1193,7 +1217,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    geofence_id = 'geofence_id_example' # str | 
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     event_type = 'event_type_example' # str | 
     test_event_request = spatialflow_generated.TestEventRequest() # TestEventRequest |  (optional)
 
@@ -1213,7 +1237,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **geofence_id** | **str**|  | 
+ **geofence_id** | **UUID**|  | 
  **event_type** | **str**|  | 
  **test_event_request** | [**TestEventRequest**](TestEventRequest.md)|  | [optional] 
 
@@ -1265,10 +1289,10 @@ from spatialflow_generated.models.update_geofence_request import UpdateGeofenceR
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1291,7 +1315,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    geofence_id = 'geofence_id_example' # str | 
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     update_geofence_request = spatialflow_generated.UpdateGeofenceRequest() # UpdateGeofenceRequest | 
 
     try:
@@ -1310,7 +1334,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **geofence_id** | **str**|  | 
+ **geofence_id** | **UUID**|  | 
  **update_geofence_request** | [**UpdateGeofenceRequest**](UpdateGeofenceRequest.md)|  | 
 
 ### Return type
@@ -1359,10 +1383,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1385,7 +1409,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    geofence_id = 'geofence_id_example' # str | 
+    geofence_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     group_name = 'group_name_example' # str |  (optional)
 
     try:
@@ -1404,7 +1428,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **geofence_id** | **str**|  | 
+ **geofence_id** | **UUID**|  | 
  **group_name** | **str**|  | [optional] 
 
 ### Return type
@@ -1433,7 +1457,17 @@ Name | Type | Description  | Notes
 
 Upload Geofences Async
 
-Upload geofences from a file (asynchronous).  This endpoint queues a background job to process geofence imports from various file formats: - GeoJSON (.geojson, .json) - Standard geospatial format - KML (.kml) - Google Earth format - GPX (.gpx) - GPS track format (converted to polygon buffers)  The file must first be uploaded using the storage API to get a file_id. All imported geofences can optionally be assigned to a group.  Returns a job ID to track the import progress.
+Upload geofences from a file (asynchronous).
+
+This endpoint queues a background job to process geofence imports from various file formats:
+- GeoJSON (.geojson, .json) - Standard geospatial format
+- KML (.kml) - Google Earth format
+- GPX (.gpx) - GPS track format (converted to polygon buffers)
+
+The file must first be uploaded using the storage API to get a file_id.
+All imported geofences can optionally be assigned to a group.
+
+Returns a job ID to track the import progress.
 
 ### Example
 
@@ -1447,10 +1481,10 @@ from spatialflow_generated.models.upload_geofences_request import UploadGeofence
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters

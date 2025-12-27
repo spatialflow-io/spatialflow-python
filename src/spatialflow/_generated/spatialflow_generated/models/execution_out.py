@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,8 +28,8 @@ class ExecutionOut(BaseModel):
     """
     ExecutionOut
     """ # noqa: E501
-    id: StrictStr
-    workflow_id: StrictStr
+    id: UUID
+    workflow_id: UUID
     workflow_name: StrictStr
     execution_id: StrictStr
     trigger_source: StrictStr

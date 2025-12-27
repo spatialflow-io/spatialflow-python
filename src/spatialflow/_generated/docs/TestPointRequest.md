@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **lng** | **float** |  | [optional] 
 **geofence_ids** | **List[str]** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
+**request_metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example
 

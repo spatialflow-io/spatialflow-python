@@ -1,6 +1,6 @@
 # spatialflow_generated.IntegrationsApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -36,10 +36,13 @@ Method | HTTP request | Description
 
 Bulk Export Integrations
 
-Export multiple integrations at once.  If integration_ids is not provided, exports all user's integrations.
+Export multiple integrations at once.
+
+If integration_ids is not provided, exports all user's integrations.
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -48,16 +51,22 @@ from spatialflow_generated.models.export_integration_schema import ExportIntegra
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -69,7 +78,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
     include_secrets = False # bool |  (optional) (default to False)
-    request_body = ['request_body_example'] # List[Optional[str]] |  (optional)
+    request_body = None # List[Optional[UUID]] |  (optional)
 
     try:
         # Bulk Export Integrations
@@ -88,7 +97,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_secrets** | **bool**|  | [optional] [default to False]
- **request_body** | [**List[Optional[str]]**](str.md)|  | [optional] 
+ **request_body** | [**List[Optional[UUID]]**](UUID.md)|  | [optional] 
 
 ### Return type
 
@@ -96,7 +105,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -120,6 +129,7 @@ Import multiple integrations at once.
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -129,16 +139,22 @@ from spatialflow_generated.models.import_result_schema import ImportResultSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -179,7 +195,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -203,6 +219,7 @@ Create config field for integration type (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -212,16 +229,22 @@ from spatialflow_generated.models.config_field_definition_response import Config
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -232,7 +255,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     config_field_definition_request = spatialflow_generated.ConfigFieldDefinitionRequest() # ConfigFieldDefinitionRequest | 
 
     try:
@@ -251,7 +274,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
  **config_field_definition_request** | [**ConfigFieldDefinitionRequest**](ConfigFieldDefinitionRequest.md)|  | 
 
 ### Return type
@@ -260,7 +283,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -284,6 +307,7 @@ Create a new integration
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -293,16 +317,22 @@ from spatialflow_generated.models.integration_detail_schema import IntegrationDe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -339,7 +369,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -363,6 +393,7 @@ Create new integration type (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -372,16 +403,22 @@ from spatialflow_generated.models.integration_type_response import IntegrationTy
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -418,7 +455,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -442,6 +479,7 @@ Delete config field (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -450,16 +488,22 @@ from spatialflow_generated.models.action_response import ActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -470,8 +514,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
-    field_id = 'field_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    field_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Delete Config Field
@@ -489,8 +533,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
- **field_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
+ **field_id** | **UUID**|  | 
 
 ### Return type
 
@@ -498,7 +542,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -522,6 +566,7 @@ Delete an integration
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -529,16 +574,22 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -549,7 +600,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = 'integration_id_example' # str | 
+    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Delete Integration
@@ -567,7 +618,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
+ **integration_id** | **UUID**|  | 
 
 ### Return type
 
@@ -575,7 +626,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -599,6 +650,7 @@ Delete integration type (admin only, non-builtin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -607,16 +659,22 @@ from spatialflow_generated.models.action_response import ActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -627,7 +685,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Delete Integration Type
@@ -645,7 +703,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
 
 ### Return type
 
@@ -653,7 +711,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -673,10 +731,14 @@ Name | Type | Description  | Notes
 
 Export Integration
 
-Export integration configuration.  By default, sensitive data is encrypted. Set include_secrets=true to include decrypted sensitive data (use with caution).
+Export integration configuration.
+
+By default, sensitive data is encrypted. Set include_secrets=true to include
+decrypted sensitive data (use with caution).
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -685,16 +747,22 @@ from spatialflow_generated.models.export_integration_schema import ExportIntegra
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -705,7 +773,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = 'integration_id_example' # str | 
+    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     include_secrets = False # bool |  (optional) (default to False)
 
     try:
@@ -724,7 +792,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
+ **integration_id** | **UUID**|  | 
  **include_secrets** | **bool**|  | [optional] [default to False]
 
 ### Return type
@@ -733,7 +801,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -757,6 +825,7 @@ Get list of available integration types
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -764,16 +833,22 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -806,7 +881,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -830,6 +905,7 @@ Get integration details
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -838,16 +914,22 @@ from spatialflow_generated.models.integration_detail_schema import IntegrationDe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -858,7 +940,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = 'integration_id_example' # str | 
+    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Integration
@@ -876,7 +958,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
+ **integration_id** | **UUID**|  | 
 
 ### Return type
 
@@ -884,7 +966,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -904,10 +986,22 @@ Name | Type | Description  | Notes
 
 Get Integration Error Stats
 
-Get integration error statistics for the dashboard health strip.  Returns count of failed integration usage logs in the last 24 hours and timestamp of the most recent error.  Returns:     200: Error statistics     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/integrations/error-stats     Response: { \"error_count_24h\": 5, \"last_error_at\": \"2025-10-05T12:34:56Z\" }
+Get integration error statistics for the dashboard health strip.
+
+Returns count of failed integration usage logs in the last 24 hours
+and timestamp of the most recent error.
+
+Returns:
+    200: Error statistics
+    401: Unauthorized - invalid or missing authentication
+
+Example:
+    GET /api/v1/integrations/error-stats
+    Response: { "error_count_24h": 5, "last_error_at": "2025-10-05T12:34:56Z" }
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -915,16 +1009,22 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -957,7 +1057,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -981,6 +1081,7 @@ Get usage statistics for an integration
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -989,16 +1090,22 @@ from spatialflow_generated.models.integration_stats_schema import IntegrationSta
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1009,7 +1116,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = 'integration_id_example' # str | 
+    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Integration Stats
@@ -1027,7 +1134,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
+ **integration_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1035,7 +1142,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1059,6 +1166,7 @@ Get specific integration type (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1067,16 +1175,22 @@ from spatialflow_generated.models.integration_type_response import IntegrationTy
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1087,7 +1201,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get Integration Type
@@ -1105,7 +1219,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1113,7 +1227,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1133,10 +1247,15 @@ Name | Type | Description  | Notes
 
 Import Integration
 
-Import integration from exported data.  If an integration with the same name exists: - Set overwrite=true to replace it - Set overwrite=false to create with a new name (default)
+Import integration from exported data.
+
+If an integration with the same name exists:
+- Set overwrite=true to replace it
+- Set overwrite=false to create with a new name (default)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1146,16 +1265,22 @@ from spatialflow_generated.models.import_result_schema import ImportResultSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1192,7 +1317,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1216,6 +1341,7 @@ List config fields for an integration type (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1224,16 +1350,22 @@ from spatialflow_generated.models.config_field_definition_response import Config
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1244,7 +1376,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # List Config Fields
@@ -1262,7 +1394,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1270,7 +1402,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1294,6 +1426,7 @@ List all integration types (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1302,16 +1435,22 @@ from spatialflow_generated.models.integration_type_list_response import Integrat
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1356,7 +1495,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1380,6 +1519,7 @@ List user's integrations with optional filtering
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1388,16 +1528,22 @@ from spatialflow_generated.models.integration_response_schema import Integration
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1440,7 +1586,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1464,6 +1610,7 @@ Initiate OAuth flow for an integration
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1471,16 +1618,22 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1515,7 +1668,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1539,6 +1692,7 @@ Handle OAuth callback
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1546,16 +1700,22 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1594,7 +1754,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1618,6 +1778,7 @@ Test all active integrations for the user
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1626,16 +1787,22 @@ from spatialflow_generated.models.test_integration_response_schema import TestIn
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1668,7 +1835,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1692,6 +1859,7 @@ Test an integration to verify it works
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1700,16 +1868,22 @@ from spatialflow_generated.models.test_integration_response_schema import TestIn
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1720,7 +1894,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = 'integration_id_example' # str | 
+    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Test Integration
@@ -1738,7 +1912,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
+ **integration_id** | **UUID**|  | 
 
 ### Return type
 
@@ -1746,7 +1920,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1770,6 +1944,7 @@ Update config field (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1779,16 +1954,22 @@ from spatialflow_generated.models.config_field_definition_response import Config
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1799,8 +1980,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
-    field_id = 'field_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    field_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     config_field_definition_request = spatialflow_generated.ConfigFieldDefinitionRequest() # ConfigFieldDefinitionRequest | 
 
     try:
@@ -1819,8 +2000,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
- **field_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
+ **field_id** | **UUID**|  | 
  **config_field_definition_request** | [**ConfigFieldDefinitionRequest**](ConfigFieldDefinitionRequest.md)|  | 
 
 ### Return type
@@ -1829,7 +2010,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1853,6 +2034,7 @@ Update an integration
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1862,16 +2044,22 @@ from spatialflow_generated.models.update_integration_schema import UpdateIntegra
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1882,7 +2070,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = 'integration_id_example' # str | 
+    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     update_integration_schema = spatialflow_generated.UpdateIntegrationSchema() # UpdateIntegrationSchema | 
 
     try:
@@ -1901,7 +2089,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **str**|  | 
+ **integration_id** | **UUID**|  | 
  **update_integration_schema** | [**UpdateIntegrationSchema**](UpdateIntegrationSchema.md)|  | 
 
 ### Return type
@@ -1910,7 +2098,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1934,6 +2122,7 @@ Update integration type (admin only)
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1943,16 +2132,22 @@ from spatialflow_generated.models.integration_type_response import IntegrationTy
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1963,7 +2158,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = 'integration_type_id_example' # str | 
+    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     integration_type_request = spatialflow_generated.IntegrationTypeRequest() # IntegrationTypeRequest | 
 
     try:
@@ -1982,7 +2177,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **str**|  | 
+ **integration_type_id** | **UUID**|  | 
  **integration_type_request** | [**IntegrationTypeRequest**](IntegrationTypeRequest.md)|  | 
 
 ### Return type
@@ -1991,7 +2186,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 

@@ -1,6 +1,6 @@
 # spatialflow_generated.PublicLocationIngestApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,21 +14,36 @@ Method | HTTP request | Description
 
 Get Ingest Stats
 
-Get location ingestion statistics for the authenticated organization.  Authentication: API Key (Bearer token)  Returns:     - total_ingested_today: Total locations ingested today     - total_ingested_week: Total locations ingested this week     - devices_active: Number of active devices     - last_ingest: Timestamp of last location ingestion  Example:     ```bash     curl -X GET https://api.spatialflow.io/api/v1/locations/stats \\       -H \"Authorization: Bearer sf_live_abc123...\"     ```
+Get location ingestion statistics for the authenticated organization.
+
+Authentication: API Key (Bearer token)
+
+Returns:
+    - total_ingested_today: Total locations ingested today
+    - total_ingested_week: Total locations ingested this week
+    - devices_active: Number of active devices
+    - last_ingest: Timestamp of last location ingestion
+
+Example:
+    ```bash
+    curl -X GET https://api.spatialflow.io/api/v1/locations/stats \
+      -H "Authorization: Bearer sf_live_abc123..."
+    ```
 
 ### Example
 
 * Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
 
 ```python
 import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -41,6 +56,11 @@ configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with spatialflow_generated.ApiClient(configuration) as api_client:
@@ -68,7 +88,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -88,11 +108,40 @@ This endpoint does not need any parameter.
 
 Ingest Location
 
-Ingest a single location point.  This endpoint accepts location updates from external systems and queues them for asynchronous processing with GPS jitter reduction filters.  Authentication: API Key (Bearer token) Rate Limit: 1000 requests/minute per API key  PRD Reference: §3.4 Public Ingest API  Returns:     202 Accepted: Location queued for processing     400 Bad Request: Invalid location data     401 Unauthorized: Missing or invalid API key     429 Too Many Requests: Rate limit exceeded  Example:     ```bash     curl -X POST https://api.spatialflow.io/api/v1/locations \\       -H \"Authorization: Bearer sf_live_abc123...\" \\       -H \"Content-Type: application/json\" \\       -d '{         \"device_id\": \"truck-005\",         \"lat\": 40.7589,         \"lon\": -73.9851,         \"ts\": \"2025-10-01T14:30:00Z\",         \"accuracy\": 8.5       }'     ```
+Ingest a single location point.
+
+This endpoint accepts location updates from external systems and queues them
+for asynchronous processing with GPS jitter reduction filters.
+
+Authentication: API Key (Bearer token)
+Rate Limit: 1000 requests/minute per API key
+
+PRD Reference: §3.4 Public Ingest API
+
+Returns:
+    202 Accepted: Location queued for processing
+    400 Bad Request: Invalid location data
+    401 Unauthorized: Missing or invalid API key
+    429 Too Many Requests: Rate limit exceeded
+
+Example:
+    ```bash
+    curl -X POST https://api.spatialflow.io/api/v1/locations \
+      -H "Authorization: Bearer sf_live_abc123..." \
+      -H "Content-Type: application/json" \
+      -d '{
+        "device_id": "truck-005",
+        "lat": 40.7589,
+        "lon": -73.9851,
+        "ts": "2025-10-01T14:30:00Z",
+        "accuracy": 8.5
+      }'
+    ```
 
 ### Example
 
 * Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
 
 ```python
 import spatialflow_generated
@@ -101,10 +150,10 @@ from spatialflow_generated.models.location_point_in import LocationPointIn
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -117,6 +166,11 @@ configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with spatialflow_generated.ApiClient(configuration) as api_client:
@@ -148,7 +202,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -170,11 +224,43 @@ Name | Type | Description  | Notes
 
 Ingest Location Batch
 
-Ingest a batch of location points.  Accepts up to 5000 locations per batch (PRD §3.4). Each location is validated and processed asynchronously as a single batch task.  **Idempotency:** If `idempotency_key` is provided, duplicate requests with the same key within 24 hours will return the original response without reprocessing.  Authentication: API Key (Bearer token) Rate Limit: 100 batches/minute per API key  PRD Reference: §3.4 Public Ingest API  Returns:     202 Accepted: Locations queued (includes counts of accepted/rejected)     400 Bad Request: Invalid batch data     401 Unauthorized: Missing or invalid API key     429 Too Many Requests: Rate limit exceeded  Example:     ```bash     curl -X POST https://api.spatialflow.io/api/v1/locations/batch \\       -H \"Authorization: Bearer sf_live_abc123...\" \\       -H \"Content-Type: application/json\" \\       -d '{         \"locations\": [           {\"device_id\": \"truck-005\", \"lat\": 40.7589, \"lon\": -73.9851, \"ts\": \"2025-10-01T14:30:00Z\"},           {\"device_id\": \"truck-005\", \"lat\": 40.7590, \"lon\": -73.9850, \"ts\": \"2025-10-01T14:31:00Z\"}         ],         \"idempotency_key\": \"batch-20251001-001\"       }'     ```
+Ingest a batch of location points.
+
+Accepts up to 5000 locations per batch (PRD §3.4). Each location is validated
+and processed asynchronously as a single batch task.
+
+**Idempotency:** If `idempotency_key` is provided, duplicate requests with the
+same key within 24 hours will return the original response without reprocessing.
+
+Authentication: API Key (Bearer token)
+Rate Limit: 100 batches/minute per API key
+
+PRD Reference: §3.4 Public Ingest API
+
+Returns:
+    202 Accepted: Locations queued (includes counts of accepted/rejected)
+    400 Bad Request: Invalid batch data
+    401 Unauthorized: Missing or invalid API key
+    429 Too Many Requests: Rate limit exceeded
+
+Example:
+    ```bash
+    curl -X POST https://api.spatialflow.io/api/v1/locations/batch \
+      -H "Authorization: Bearer sf_live_abc123..." \
+      -H "Content-Type: application/json" \
+      -d '{
+        "locations": [
+          {"device_id": "truck-005", "lat": 40.7589, "lon": -73.9851, "ts": "2025-10-01T14:30:00Z"},
+          {"device_id": "truck-005", "lat": 40.7590, "lon": -73.9850, "ts": "2025-10-01T14:31:00Z"}
+        ],
+        "idempotency_key": "batch-20251001-001"
+      }'
+    ```
 
 ### Example
 
 * Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
 
 ```python
 import spatialflow_generated
@@ -183,10 +269,10 @@ from spatialflow_generated.models.location_ingest_response import LocationIngest
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -199,6 +285,11 @@ configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with spatialflow_generated.ApiClient(configuration) as api_client:
@@ -230,7 +321,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 

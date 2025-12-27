@@ -16,9 +16,10 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
-from typing import Optional
+from pydantic import Field, StrictBool, StrictStr
+from typing import Any, Dict, Optional
 from typing_extensions import Annotated
+from ..models.admin_user_stats_response import AdminUserStatsResponse
 from ..models.health_check_response import HealthCheckResponse
 from ..models.member_action_response import MemberActionResponse
 from ..models.ping_response import PingResponse
@@ -1651,6 +1652,293 @@ class AdminApi:
 
 
     @validate_call
+    async def apps_admin_portal_api_delete_user(
+        self,
+        user_id: StrictStr,
+        confirm_workspace_deletion: Optional[StrictBool] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, object]:
+        """Delete User
+
+        Delete a user with proper cascade cleanup (Issue #67).  Workspace Deletion Policy: - Delete workspace when member count reaches ZERO (any role) - Shared workspaces with other members: remove membership only - This prevents orphaned workspaces regardless of user's role  Args:     user_id: UUID of user to delete     confirm_workspace_deletion: Query param - must be True to delete last-member workspaces  Returns:     200: Summary of deleted data     400: User is last member without confirmation, self-deletion, etc.     404: User not found     500: Server error
+
+        :param user_id: (required)
+        :type user_id: str
+        :param confirm_workspace_deletion:
+        :type confirm_workspace_deletion: bool
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_delete_user_serialize(
+            user_id=user_id,
+            confirm_workspace_deletion=confirm_workspace_deletion,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+            '500': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_delete_user_with_http_info(
+        self,
+        user_id: StrictStr,
+        confirm_workspace_deletion: Optional[StrictBool] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, object]]:
+        """Delete User
+
+        Delete a user with proper cascade cleanup (Issue #67).  Workspace Deletion Policy: - Delete workspace when member count reaches ZERO (any role) - Shared workspaces with other members: remove membership only - This prevents orphaned workspaces regardless of user's role  Args:     user_id: UUID of user to delete     confirm_workspace_deletion: Query param - must be True to delete last-member workspaces  Returns:     200: Summary of deleted data     400: User is last member without confirmation, self-deletion, etc.     404: User not found     500: Server error
+
+        :param user_id: (required)
+        :type user_id: str
+        :param confirm_workspace_deletion:
+        :type confirm_workspace_deletion: bool
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_delete_user_serialize(
+            user_id=user_id,
+            confirm_workspace_deletion=confirm_workspace_deletion,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+            '500': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_delete_user_without_preload_content(
+        self,
+        user_id: StrictStr,
+        confirm_workspace_deletion: Optional[StrictBool] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete User
+
+        Delete a user with proper cascade cleanup (Issue #67).  Workspace Deletion Policy: - Delete workspace when member count reaches ZERO (any role) - Shared workspaces with other members: remove membership only - This prevents orphaned workspaces regardless of user's role  Args:     user_id: UUID of user to delete     confirm_workspace_deletion: Query param - must be True to delete last-member workspaces  Returns:     200: Summary of deleted data     400: User is last member without confirmation, self-deletion, etc.     404: User not found     500: Server error
+
+        :param user_id: (required)
+        :type user_id: str
+        :param confirm_workspace_deletion:
+        :type confirm_workspace_deletion: bool
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_delete_user_serialize(
+            user_id=user_id,
+            confirm_workspace_deletion=confirm_workspace_deletion,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+            '500': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_delete_user_serialize(
+        self,
+        user_id,
+        confirm_workspace_deletion,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if user_id is not None:
+            _path_params['user_id'] = user_id
+        # process the query parameters
+        if confirm_workspace_deletion is not None:
+            
+            _query_params.append(('confirm_workspace_deletion', confirm_workspace_deletion))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/api/v1/admin/users/{user_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_admin_portal_api_delete_workspace(
         self,
         workspace_id: StrictStr,
@@ -2163,6 +2451,343 @@ class AdminApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/admin/users/{user_id}/usage',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_users_with_stats(
+        self,
+        days: Optional[Annotated[int, Field(le=90, strict=True, ge=1)]] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        sort: Optional[StrictStr] = None,
+        user_ids: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminUserStatsResponse:
+        """Get Users With Stats
+
+        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+
+        :param days:
+        :type days: int
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param sort:
+        :type sort: str
+        :param user_ids:
+        :type user_ids: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_users_with_stats_serialize(
+            days=days,
+            limit=limit,
+            offset=offset,
+            sort=sort,
+            user_ids=user_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserStatsResponse",
+            '403': "Dict[str, object]",
+            '500': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_users_with_stats_with_http_info(
+        self,
+        days: Optional[Annotated[int, Field(le=90, strict=True, ge=1)]] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        sort: Optional[StrictStr] = None,
+        user_ids: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminUserStatsResponse]:
+        """Get Users With Stats
+
+        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+
+        :param days:
+        :type days: int
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param sort:
+        :type sort: str
+        :param user_ids:
+        :type user_ids: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_users_with_stats_serialize(
+            days=days,
+            limit=limit,
+            offset=offset,
+            sort=sort,
+            user_ids=user_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserStatsResponse",
+            '403': "Dict[str, object]",
+            '500': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_users_with_stats_without_preload_content(
+        self,
+        days: Optional[Annotated[int, Field(le=90, strict=True, ge=1)]] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        sort: Optional[StrictStr] = None,
+        user_ids: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Users With Stats
+
+        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+
+        :param days:
+        :type days: int
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param sort:
+        :type sort: str
+        :param user_ids:
+        :type user_ids: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_users_with_stats_serialize(
+            days=days,
+            limit=limit,
+            offset=offset,
+            sort=sort,
+            user_ids=user_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserStatsResponse",
+            '403': "Dict[str, object]",
+            '500': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_get_users_with_stats_serialize(
+        self,
+        days,
+        limit,
+        offset,
+        sort,
+        user_ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if days is not None:
+            
+            _query_params.append(('days', days))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
+            
+        if user_ids is not None:
+            
+            _query_params.append(('user_ids', user_ids))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/users/stats',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5276,6 +5901,273 @@ class AdminApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/api/v1/admin/users/{user_id}/resend-verification',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_revoke_invitation(
+        self,
+        invite_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, object]:
+        """Revoke Invitation
+
+        Revoke a pending invitation (admin action).  Use case: Stolen/compromised invite link needs to be killed.  Authorization: Global admins (is_superuser or role='admin') can revoke any invitation. This is by design - admins have full system authority for security incidents.  Args:     invite_id: UUID of the invitation to revoke  Returns:     200: Success message     400: Invitation already used or revoked     404: Invitation not found
+
+        :param invite_id: (required)
+        :type invite_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_revoke_invitation_serialize(
+            invite_id=invite_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_revoke_invitation_with_http_info(
+        self,
+        invite_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, object]]:
+        """Revoke Invitation
+
+        Revoke a pending invitation (admin action).  Use case: Stolen/compromised invite link needs to be killed.  Authorization: Global admins (is_superuser or role='admin') can revoke any invitation. This is by design - admins have full system authority for security incidents.  Args:     invite_id: UUID of the invitation to revoke  Returns:     200: Success message     400: Invitation already used or revoked     404: Invitation not found
+
+        :param invite_id: (required)
+        :type invite_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_revoke_invitation_serialize(
+            invite_id=invite_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_revoke_invitation_without_preload_content(
+        self,
+        invite_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke Invitation
+
+        Revoke a pending invitation (admin action).  Use case: Stolen/compromised invite link needs to be killed.  Authorization: Global admins (is_superuser or role='admin') can revoke any invitation. This is by design - admins have full system authority for security incidents.  Args:     invite_id: UUID of the invitation to revoke  Returns:     200: Success message     400: Invitation already used or revoked     404: Invitation not found
+
+        :param invite_id: (required)
+        :type invite_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_revoke_invitation_serialize(
+            invite_id=invite_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, object]",
+            '400': "Dict[str, object]",
+            '404': "Dict[str, object]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_revoke_invitation_serialize(
+        self,
+        invite_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invite_id is not None:
+            _path_params['invite_id'] = invite_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/api/v1/admin/invitations/{invite_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

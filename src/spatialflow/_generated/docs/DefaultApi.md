@@ -1,6 +1,6 @@
 # spatialflow_generated.DefaultApi
 
-All URIs are relative to *https://api.spatialflow.io*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -30,10 +30,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -108,10 +108,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -179,10 +179,10 @@ from spatialflow_generated.models.o_auth_providers_response import OAuthProvider
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -244,10 +244,10 @@ from spatialflow_generated.models.o_auth_link_response import OAuthLinkResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -311,7 +311,8 @@ Name | Type | Description  | Notes
 
 Oauth Authorize
 
-Initialize OAuth flow for a provider. Returns authorization URL to redirect user to.
+Initialize OAuth flow for a provider.
+Returns authorization URL to redirect user to.
 
 ### Example
 
@@ -322,10 +323,10 @@ from spatialflow_generated.models.o_auth_authorize_response import OAuthAuthoriz
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -382,7 +383,8 @@ No authorization required
 
 Oauth Callback
 
-Handle OAuth callback from provider. Exchanges code for tokens and creates/links user account.
+Handle OAuth callback from provider.
+Exchanges code for tokens and creates/links user account.
 
 ### Example
 
@@ -393,10 +395,10 @@ from spatialflow_generated.models.o_auth_callback_query import OAuthCallbackQuer
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -450,7 +452,13 @@ No authorization required
 
 Unsubscribe
 
-Handle email unsubscribe requests.  Verifies the signed timestamped token (max 90 days old) and adds the email to the blacklist. This endpoint is public (no authentication required) to allow one-click unsubscribe from emails.  Rate limited to 10 requests per minute per IP to prevent abuse.
+Handle email unsubscribe requests.
+
+Verifies the signed timestamped token (max 90 days old) and adds the email to the blacklist.
+This endpoint is public (no authentication required) to allow
+one-click unsubscribe from emails.
+
+Rate limited to 10 requests per minute per IP to prevent abuse.
 
 ### Example
 
@@ -462,10 +470,10 @@ from spatialflow_generated.models.unsubscribe_response import UnsubscribeRespons
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 
@@ -520,7 +528,10 @@ No authorization required
 
 Verify Unsubscribe Token
 
-Verify an unsubscribe token without actually unsubscribing.  This can be used by the frontend to show a confirmation page before the user confirms they want to unsubscribe.
+Verify an unsubscribe token without actually unsubscribing.
+
+This can be used by the frontend to show a confirmation page
+before the user confirms they want to unsubscribe.
 
 ### Example
 
@@ -530,10 +541,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.spatialflow.io
+# Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
+    host = "http://localhost"
 )
 
 

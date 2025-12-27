@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
+**id** | **UUID** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
 **status** | **str** |  | 
@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **user_id** | **str** |  | 
 **workspace_id** | **str** |  | [optional] 
 **version** | **int** |  | 
+**template_warnings** | [**TemplateWarnings**](TemplateWarnings.md) |  | [optional] 
 
 ## Example
 

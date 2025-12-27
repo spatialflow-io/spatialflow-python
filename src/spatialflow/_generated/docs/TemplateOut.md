@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
+**id** | **UUID** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
 **category** | **str** |  | 

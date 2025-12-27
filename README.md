@@ -8,197 +8,91 @@ The official Python SDK for [SpatialFlow](https://spatialflow.io) - a real-time 
 pip install spatialflow
 ```
 
+### Development Installation
+
+```bash
+cd sdks/python
+pip install -e ".[dev]"
+```
+
 ## Quick Start
 
 ```python
 import asyncio
-from spatialflow import SpatialFlow, models
+from spatialflow import SpatialFlow
 
 async def main():
-    # Initialize with API key
     async with SpatialFlow(api_key="sf_xxx") as client:
         # List geofences
-        response = await client.geofences.apps_geofences_api_list_geofences()
-        for geofence in response.results:
+        response = await client.geofences.list()
+        for geofence in response.geofences:
             print(f"{geofence.name}: {geofence.id}")
 
-        # Create a geofence
-        geofence = await client.geofences.apps_geofences_api_create_geofence(
-            models.CreateGeofenceRequest(
-                name="My Region",
-                geometry={
-                    "type": "Polygon",
-                    "coordinates": [[[-122.4, 37.8], [-122.4, 37.7], [-122.3, 37.7], [-122.3, 37.8], [-122.4, 37.8]]]
-                }
-            )
-        )
+        # Get workspace usage
+        usage = await client.workspaces.get_usage()
+        print(f"Event units: {usage.event_units}")
 
 asyncio.run(main())
 ```
 
-## Authentication
+## Supported Resources
 
-### API Key (Recommended for server-side)
+| Resource | Methods | Description |
+|----------|---------|-------------|
+| **Geofences** | CRUD, upload, bulk | Manage geofence boundaries |
+| **Workflows** | CRUD, execute, monitor, versioning | Automation workflows |
+| **Webhooks** | CRUD, deliveries, DLQ, metrics | Webhook endpoints and delivery tracking |
+| **Devices** | CRUD, location updates | Device management |
+| **Account** | profile, API keys, metrics, onboarding | User account management |
+| **Workspaces** | get, update, usage | Workspace settings and usage metrics |
+| **Locations** | ingest, batch, stats | Public location ingestion API |
+| **Integrations** | CRUD, test | Third-party service connections |
+| **Storage** | presigned URLs, files | File upload and management |
 
-```python
-client = SpatialFlow(api_key="sf_xxx")
-```
+## Features
 
-### JWT Token (For client-side apps)
+- Fully async with `aiohttp`
+- Automatic retry with exponential backoff
+- Pagination helpers
+- Webhook signature verification
+- Workflow builders for common patterns
+- File upload with streaming (memory efficient)
 
-```python
-client = SpatialFlow(access_token="eyJ...")
-```
-
-## Resources
-
-- **Geofences** - Create and manage geofences
-- **Workflows** - Automate location-based actions
-- **Webhooks** - Receive real-time event notifications
-- **Devices** - Track device locations
-
-## Method Naming
-
-API methods are auto-generated from the OpenAPI spec and follow the pattern:
-`apps_{resource}_api_{operation}`. For example:
-
-```python
-# Geofences
-client.geofences.apps_geofences_api_list_geofences()
-client.geofences.apps_geofences_api_create_geofence(...)
-client.geofences.apps_geofences_api_get_geofence(id=...)
-client.geofences.apps_geofences_api_update_geofence(id=..., ...)
-client.geofences.apps_geofences_api_delete_geofence(id=...)
-
-# Workflows
-client.workflows.apps_workflows_api_list_workflows()
-client.workflows.apps_workflows_api_create_workflow(...)
-
-# Webhooks
-client.webhooks.apps_webhooks_api_list_webhooks()
-client.webhooks.apps_webhooks_api_create_webhook(...)
-```
-
-Use your IDE's autocomplete to discover available methods, or see the
-[API Reference](https://docs.spatialflow.io/sdk/python) for the full list.
-
-## Webhook Verification
-
-Verify incoming webhook signatures to ensure they're from SpatialFlow:
+## Error Handling
 
 ```python
-from spatialflow import verify_webhook_signature, WebhookSignatureError
+from spatialflow import SpatialFlow, NotFoundError, ValidationError
 
-# In your webhook handler (e.g., FastAPI/Flask)
-@app.post("/webhook")
-async def handle_webhook(request):
-    payload = await request.body()
-    signature = request.headers.get("X-SF-Signature")
-
+async with SpatialFlow(api_key="sf_xxx") as client:
     try:
-        event = verify_webhook_signature(
-            payload=payload,
-            signature=signature,
-            secret=WEBHOOK_SECRET,
-        )
-        print(f"Event type: {event['type']}")
-        return {"status": "ok"}
-    except WebhookSignatureError as e:
-        return {"error": str(e)}, 400
+        geofence = await client.geofences.get("invalid-id")
+    except NotFoundError as e:
+        print(f"Geofence not found: {e}")
+    except ValidationError as e:
+        print(f"Invalid request: {e.errors}")
 ```
 
-## Pagination
+## Raw API Access
 
-Use the async paginator to iterate through all results:
+For advanced use cases, access the generated API clients directly:
 
 ```python
-from spatialflow import paginate
-
-async def fetch_page(offset, limit):
-    return await client.geofences.apps_geofences_api_list_geofences(
-        offset=offset, limit=limit
-    )
-
-async for geofence in paginate(fetch_page):
-    print(geofence.name)
+async with SpatialFlow(api_key="sf_xxx") as client:
+    # Use raw generated API
+    response = await client.raw.geofences.apps_geofences_api_list_geofences()
 ```
 
-## File Uploads
+Available via `client.raw`:
+- `geofences`, `workflows`, `webhooks`, `devices`, `storage`, `locations`, `integrations`, `workspaces`, `account` (also wrapped)
+- `authentication`, `admin`, `billing`, `subscriptions`, `tiles` (raw only)
 
-Upload geofence files (GeoJSON, KML, GPX) with automatic job polling:
-
-```python
-from spatialflow import upload_geofences
-
-result = await upload_geofences(
-    client,
-    "boundaries.geojson",
-    group_name="my-region",
-    timeout=120,
-    on_status=lambda status, _: print(f"Status: {status}"),
-)
-
-print(f"Created {result.created_count} geofences")
-for geofence in result.created_geofences:
-    print(f"  - {geofence['name']} ({geofence['id']})")
-```
-
-## Async Job Polling
-
-For lower-level control over job polling:
-
-```python
-from spatialflow import poll_job, JobTimeoutError, JobFailedError
-
-async def get_status():
-    return await client.geofences.apps_geofences_api_get_upload_job_status(
-        job_id=job_id
-    )
-
-try:
-    result = await poll_job(
-        get_status,
-        timeout=120,
-        poll_interval=2.0,
-        on_status=lambda status, _: print(f"Status: {status}"),
-    )
-    print(f"Job completed: {result.created_count} created")
-except JobTimeoutError as e:
-    print(f"Job timed out after {e.timeout}s (last status: {e.last_status})")
-except JobFailedError as e:
-    print(f"Job failed: {e.error_message}")
-```
-
-## Models
-
-Request/response models are available via the `models` namespace:
-
-```python
-from spatialflow import models
-
-# Common models
-models.CreateGeofenceRequest
-models.GeofenceResponse
-models.CreateWebhookRequest
-models.WebhookResponse
-models.WorkflowIn
-models.WorkflowOut
-
-# Explore all available models
-print([m for m in dir(models) if not m.startswith('_')])
-```
+> **Alpha Notice:** This SDK is in alpha (v0.1.0). Some generated APIs (email, system, gpx_simulator,
+> public, default, e2e_test) are not yet exposed. Use the generated client directly for those.
 
 ## Documentation
 
-- [API Reference](https://docs.spatialflow.io/sdk/python)
-- [Examples](./examples/)
-- [Changelog](./CHANGELOG.md)
-
-## Support
-
-- GitHub Issues: https://github.com/spatialflow-io/spatialflow-python/issues
-- Email: support@spatialflow.io
+Full documentation: [docs.spatialflow.io/sdks/python](https://docs.spatialflow.io/sdks/python)
 
 ## License
 
-MIT License - see [LICENSE](./LICENSE) for details.
+MIT

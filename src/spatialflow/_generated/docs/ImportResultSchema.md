@@ -7,7 +7,7 @@ Result of import operation
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **success** | **bool** |  | 
-**integration_id** | **str** |  | [optional] 
+**integration_id** | **UUID** |  | [optional] 
 **message** | **str** |  | 
 **conflicts** | **List[str]** |  | [optional] 
 

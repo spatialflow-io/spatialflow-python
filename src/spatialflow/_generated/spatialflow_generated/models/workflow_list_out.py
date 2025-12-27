@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class WorkflowListOut(BaseModel):
     """
     WorkflowListOut
     """ # noqa: E501
-    id: StrictStr
+    id: UUID
     name: StrictStr
     description: Optional[StrictStr]
     status: StrictStr

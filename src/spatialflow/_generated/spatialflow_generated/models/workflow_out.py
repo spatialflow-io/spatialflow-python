@@ -20,6 +20,8 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from uuid import UUID
+from .template_warnings import TemplateWarnings
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +29,7 @@ class WorkflowOut(BaseModel):
     """
     WorkflowOut
     """ # noqa: E501
-    id: StrictStr
+    id: UUID
     name: StrictStr
     description: Optional[StrictStr]
     status: StrictStr
@@ -41,7 +43,8 @@ class WorkflowOut(BaseModel):
     user_id: StrictStr
     workspace_id: Optional[StrictStr] = None
     version: StrictInt
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "status", "nodes", "edges", "created_at", "updated_at", "last_run", "run_count", "success_rate", "user_id", "workspace_id", "version"]
+    template_warnings: Optional[TemplateWarnings] = None
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "status", "nodes", "edges", "created_at", "updated_at", "last_run", "run_count", "success_rate", "user_id", "workspace_id", "version", "template_warnings"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,6 +85,9 @@ class WorkflowOut(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of template_warnings
+        if self.template_warnings:
+            _dict['template_warnings'] = self.template_warnings.to_dict()
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
@@ -96,6 +102,11 @@ class WorkflowOut(BaseModel):
         # and model_fields_set contains the field
         if self.workspace_id is None and "workspace_id" in self.model_fields_set:
             _dict['workspace_id'] = None
+
+        # set to None if template_warnings (nullable) is None
+        # and model_fields_set contains the field
+        if self.template_warnings is None and "template_warnings" in self.model_fields_set:
+            _dict['template_warnings'] = None
 
         return _dict
 
@@ -122,7 +133,8 @@ class WorkflowOut(BaseModel):
             "success_rate": obj.get("success_rate"),
             "user_id": obj.get("user_id"),
             "workspace_id": obj.get("workspace_id"),
-            "version": obj.get("version")
+            "version": obj.get("version"),
+            "template_warnings": TemplateWarnings.from_dict(obj["template_warnings"]) if obj.get("template_warnings") is not None else None
         })
         return _obj
 

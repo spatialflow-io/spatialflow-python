@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class DeviceOut(BaseModel):
     """
     DeviceOut
     """ # noqa: E501
-    id: StrictStr
+    id: UUID
     device_id: StrictStr
     name: StrictStr
     device_type: StrictStr

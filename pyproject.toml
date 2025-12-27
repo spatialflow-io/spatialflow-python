@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spatialflow"
-version = "0.1.0"
+version = "0.2.0"
 description = "Python SDK for SpatialFlow - Real-time geospatial automation platform"
 readme = "README.md"
 license = "MIT"
@@ -61,6 +61,30 @@ Changelog = "https://github.com/spatialflow-io/spatialflow-python/blob/main/CHAN
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/spatialflow"]
+# Exclude generated scaffolding from wheel (keep only Python code)
+exclude = [
+    # OpenAPI generator scaffolding
+    "**/.openapi-generator*",
+    "**/git_push.sh",
+    # Generated docs (not needed at runtime)
+    "**/docs/**",
+    # CI/CD configs
+    "**/.github/**",
+    "**/.gitlab-ci.yml",
+    "**/.travis.yml",
+    "**/tox.ini",
+    # Build configs (use root pyproject.toml instead)
+    "src/spatialflow/_generated/pyproject.toml",
+    "src/spatialflow/_generated/setup.py",
+    "src/spatialflow/_generated/setup.cfg",
+    "src/spatialflow/_generated/requirements.txt",
+    "src/spatialflow/_generated/test-requirements.txt",
+    # Generated README (we have our own)
+    "src/spatialflow/_generated/README.md",
+    # Git ignores
+    "**/.gitignore",
+    "**/.spec-hash",
+]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -68,6 +92,25 @@ include = [
     "/tests",
     "/README.md",
     "/CHANGELOG.md",
+    "/LICENSE",
+]
+exclude = [
+    # Same exclusions for sdist
+    "**/.openapi-generator*",
+    "**/git_push.sh",
+    "**/docs/**",
+    "**/.github/**",
+    "**/.gitlab-ci.yml",
+    "**/.travis.yml",
+    "**/tox.ini",
+    "src/spatialflow/_generated/pyproject.toml",
+    "src/spatialflow/_generated/setup.py",
+    "src/spatialflow/_generated/setup.cfg",
+    "src/spatialflow/_generated/requirements.txt",
+    "src/spatialflow/_generated/test-requirements.txt",
+    "src/spatialflow/_generated/README.md",
+    "**/.gitignore",
+    "**/.spec-hash",
 ]
 
 [tool.ruff]

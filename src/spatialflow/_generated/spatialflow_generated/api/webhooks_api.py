@@ -18,6 +18,7 @@ from typing_extensions import Annotated
 
 from pydantic import StrictBool, StrictInt, StrictStr
 from typing import Any, Dict, Optional
+from uuid import UUID
 from ..models.create_webhook_request import CreateWebhookRequest
 from ..models.success_response import SuccessResponse
 from ..models.test_webhook_request import TestWebhookRequest
@@ -337,7 +338,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_delete_webhook(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -356,7 +357,7 @@ class WebhooksApi:
         Delete a webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -407,7 +408,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_delete_webhook_with_http_info(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -426,7 +427,7 @@ class WebhooksApi:
         Delete a webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -477,7 +478,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_delete_webhook_without_preload_content(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -496,7 +497,7 @@ class WebhooksApi:
         Delete a webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -857,7 +858,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -876,7 +877,7 @@ class WebhooksApi:
         Get a specific webhook by ID.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -926,7 +927,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_with_http_info(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -945,7 +946,7 @@ class WebhooksApi:
         Get a specific webhook by ID.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -995,7 +996,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_without_preload_content(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1014,7 +1015,7 @@ class WebhooksApi:
         Get a specific webhook by ID.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1125,7 +1126,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_deliveries(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         status: Optional[StrictStr] = None,
@@ -1148,7 +1149,7 @@ class WebhooksApi:
         Get delivery history for a webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param limit:
         :type limit: int
         :param offset:
@@ -1210,7 +1211,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_deliveries_with_http_info(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         status: Optional[StrictStr] = None,
@@ -1233,7 +1234,7 @@ class WebhooksApi:
         Get delivery history for a webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param limit:
         :type limit: int
         :param offset:
@@ -1295,7 +1296,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_deliveries_without_preload_content(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         status: Optional[StrictStr] = None,
@@ -1318,7 +1319,7 @@ class WebhooksApi:
         Get delivery history for a webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param limit:
         :type limit: int
         :param offset:
@@ -1461,8 +1462,8 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_delivery_detail(
         self,
-        webhook_id: StrictStr,
-        delivery_id: StrictStr,
+        webhook_id: UUID,
+        delivery_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1481,9 +1482,9 @@ class WebhooksApi:
         Get detailed delivery information.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param delivery_id: (required)
-        :type delivery_id: str
+        :type delivery_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1535,8 +1536,8 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_delivery_detail_with_http_info(
         self,
-        webhook_id: StrictStr,
-        delivery_id: StrictStr,
+        webhook_id: UUID,
+        delivery_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1555,9 +1556,9 @@ class WebhooksApi:
         Get detailed delivery information.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param delivery_id: (required)
-        :type delivery_id: str
+        :type delivery_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1609,8 +1610,8 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_get_webhook_delivery_detail_without_preload_content(
         self,
-        webhook_id: StrictStr,
-        delivery_id: StrictStr,
+        webhook_id: UUID,
+        delivery_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1629,9 +1630,9 @@ class WebhooksApi:
         Get detailed delivery information.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param delivery_id: (required)
-        :type delivery_id: str
+        :type delivery_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2907,7 +2908,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_receive_webhook(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2926,7 +2927,7 @@ class WebhooksApi:
         Receive incoming webhook from external service with signature verification.  This endpoint is PUBLIC and used when SpatialFlow receives webhooks from external services (e.g., payment providers, third-party integrations). The signature is verified using the configured secret for the webhook.  Security: This endpoint does not require authentication since external services cannot authenticate with our org context. Security is provided by signature validation.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2976,7 +2977,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_receive_webhook_with_http_info(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2995,7 +2996,7 @@ class WebhooksApi:
         Receive incoming webhook from external service with signature verification.  This endpoint is PUBLIC and used when SpatialFlow receives webhooks from external services (e.g., payment providers, third-party integrations). The signature is verified using the configured secret for the webhook.  Security: This endpoint does not require authentication since external services cannot authenticate with our org context. Security is provided by signature validation.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3045,7 +3046,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_receive_webhook_without_preload_content(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3064,7 +3065,7 @@ class WebhooksApi:
         Receive incoming webhook from external service with signature verification.  This endpoint is PUBLIC and used when SpatialFlow receives webhooks from external services (e.g., payment providers, third-party integrations). The signature is verified using the configured secret for the webhook.  Security: This endpoint does not require authentication since external services cannot authenticate with our org context. Security is provided by signature validation.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3174,7 +3175,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_retry_from_dlq(
         self,
-        dlq_id: StrictStr,
+        dlq_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3193,7 +3194,7 @@ class WebhooksApi:
         Manually retry a failed webhook delivery from Dead Letter Queue.  Marks the DLQ entry as requeued and creates a new delivery attempt. The webhook will go through the full retry logic again (7 attempts).  Args:     dlq_id: UUID of the DLQ entry to retry  Returns:     200: Successfully queued for retry with new task ID     400: Entry already requeued     401: Unauthorized - invalid or missing authentication     404: DLQ entry not found or doesn't belong to workspace  Example:     POST /api/v1/webhooks/dlq/550e8400-e29b-41d4-a716-446655440000/retry
 
         :param dlq_id: (required)
-        :type dlq_id: str
+        :type dlq_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3244,7 +3245,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_retry_from_dlq_with_http_info(
         self,
-        dlq_id: StrictStr,
+        dlq_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3263,7 +3264,7 @@ class WebhooksApi:
         Manually retry a failed webhook delivery from Dead Letter Queue.  Marks the DLQ entry as requeued and creates a new delivery attempt. The webhook will go through the full retry logic again (7 attempts).  Args:     dlq_id: UUID of the DLQ entry to retry  Returns:     200: Successfully queued for retry with new task ID     400: Entry already requeued     401: Unauthorized - invalid or missing authentication     404: DLQ entry not found or doesn't belong to workspace  Example:     POST /api/v1/webhooks/dlq/550e8400-e29b-41d4-a716-446655440000/retry
 
         :param dlq_id: (required)
-        :type dlq_id: str
+        :type dlq_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3314,7 +3315,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_retry_from_dlq_without_preload_content(
         self,
-        dlq_id: StrictStr,
+        dlq_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3333,7 +3334,7 @@ class WebhooksApi:
         Manually retry a failed webhook delivery from Dead Letter Queue.  Marks the DLQ entry as requeued and creates a new delivery attempt. The webhook will go through the full retry logic again (7 attempts).  Args:     dlq_id: UUID of the DLQ entry to retry  Returns:     200: Successfully queued for retry with new task ID     400: Entry already requeued     401: Unauthorized - invalid or missing authentication     404: DLQ entry not found or doesn't belong to workspace  Example:     POST /api/v1/webhooks/dlq/550e8400-e29b-41d4-a716-446655440000/retry
 
         :param dlq_id: (required)
-        :type dlq_id: str
+        :type dlq_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3444,8 +3445,8 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_retry_webhook_delivery(
         self,
-        webhook_id: StrictStr,
-        delivery_id: StrictStr,
+        webhook_id: UUID,
+        delivery_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3464,9 +3465,9 @@ class WebhooksApi:
         Retry a failed webhook delivery.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param delivery_id: (required)
-        :type delivery_id: str
+        :type delivery_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3519,8 +3520,8 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_retry_webhook_delivery_with_http_info(
         self,
-        webhook_id: StrictStr,
-        delivery_id: StrictStr,
+        webhook_id: UUID,
+        delivery_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3539,9 +3540,9 @@ class WebhooksApi:
         Retry a failed webhook delivery.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param delivery_id: (required)
-        :type delivery_id: str
+        :type delivery_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3594,8 +3595,8 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_retry_webhook_delivery_without_preload_content(
         self,
-        webhook_id: StrictStr,
-        delivery_id: StrictStr,
+        webhook_id: UUID,
+        delivery_id: UUID,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3614,9 +3615,9 @@ class WebhooksApi:
         Retry a failed webhook delivery.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param delivery_id: (required)
-        :type delivery_id: str
+        :type delivery_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3733,7 +3734,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_test_webhook(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         test_webhook_request: TestWebhookRequest,
         _request_timeout: Union[
             None,
@@ -3753,7 +3754,7 @@ class WebhooksApi:
         Test a webhook with a sample payload.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param test_webhook_request: (required)
         :type test_webhook_request: TestWebhookRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -3808,7 +3809,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_test_webhook_with_http_info(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         test_webhook_request: TestWebhookRequest,
         _request_timeout: Union[
             None,
@@ -3828,7 +3829,7 @@ class WebhooksApi:
         Test a webhook with a sample payload.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param test_webhook_request: (required)
         :type test_webhook_request: TestWebhookRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -3883,7 +3884,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_test_webhook_without_preload_content(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         test_webhook_request: TestWebhookRequest,
         _request_timeout: Union[
             None,
@@ -3903,7 +3904,7 @@ class WebhooksApi:
         Test a webhook with a sample payload.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param test_webhook_request: (required)
         :type test_webhook_request: TestWebhookRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4035,7 +4036,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_update_webhook(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         update_webhook_request: UpdateWebhookRequest,
         _request_timeout: Union[
             None,
@@ -4055,7 +4056,7 @@ class WebhooksApi:
         Update an existing webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param update_webhook_request: (required)
         :type update_webhook_request: UpdateWebhookRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4109,7 +4110,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_update_webhook_with_http_info(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         update_webhook_request: UpdateWebhookRequest,
         _request_timeout: Union[
             None,
@@ -4129,7 +4130,7 @@ class WebhooksApi:
         Update an existing webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param update_webhook_request: (required)
         :type update_webhook_request: UpdateWebhookRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4183,7 +4184,7 @@ class WebhooksApi:
     @validate_call
     async def apps_webhooks_api_update_webhook_without_preload_content(
         self,
-        webhook_id: StrictStr,
+        webhook_id: UUID,
         update_webhook_request: UpdateWebhookRequest,
         _request_timeout: Union[
             None,
@@ -4203,7 +4204,7 @@ class WebhooksApi:
         Update an existing webhook.
 
         :param webhook_id: (required)
-        :type webhook_id: str
+        :type webhook_id: UUID
         :param update_webhook_request: (required)
         :type update_webhook_request: UpdateWebhookRequest
         :param _request_timeout: timeout setting for this request. If one
