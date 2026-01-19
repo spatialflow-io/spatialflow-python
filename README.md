@@ -86,7 +86,7 @@ Available via `client.raw`:
 - `geofences`, `workflows`, `webhooks`, `devices`, `storage`, `locations`, `integrations`, `workspaces`, `account` (also wrapped)
 - `authentication`, `admin`, `billing`, `subscriptions`, `tiles` (raw only)
 
-> **Alpha Notice:** This SDK is in alpha (v0.1.0). Some generated APIs (email, system, gpx_simulator,
+> **Alpha Notice:** This SDK is in alpha (v0.2.0). Some generated APIs (email, system, gpx_simulator,
 > public, default, e2e_test) are not yet exposed. Use the generated client directly for those.
 
 ## Documentation
