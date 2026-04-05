@@ -1,6 +1,6 @@
 # spatialflow_generated.WebhooksApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -41,10 +41,10 @@ from spatialflow_generated.models.webhook_response import WebhookResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -109,6 +109,9 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -130,10 +133,10 @@ from spatialflow_generated.models.success_response import SuccessResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -156,7 +159,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
 
     try:
         # Delete Webhook
@@ -174,7 +177,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
 
 ### Return type
 
@@ -197,6 +200,8 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -205,17 +210,7 @@ Name | Type | Description  | Notes
 
 Get Dlq Stats
 
-Get Dead Letter Queue statistics for the workspace.
-
-Returns aggregated metrics about failed webhook deliveries including
-total entries, requeued count, and breakdown by webhook.
-
-Returns:
-    200: DLQ statistics
-    401: Unauthorized - invalid or missing authentication
-
-Example:
-    GET /api/v1/webhooks/dlq/stats
+Get Dead Letter Queue statistics for the workspace.  Returns aggregated metrics about failed webhook deliveries including total entries, requeued count, and breakdown by webhook.  Returns:     200: DLQ statistics     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/webhooks/dlq/stats
 
 ### Example
 
@@ -226,10 +221,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -281,6 +276,9 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -302,10 +300,10 @@ from spatialflow_generated.models.webhook_response import WebhookResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -328,7 +326,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
 
     try:
         # Get Webhook
@@ -346,7 +344,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
 
 ### Return type
 
@@ -368,6 +366,8 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -389,10 +389,10 @@ from spatialflow_generated.models.webhook_delivery_list_response import WebhookD
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -415,7 +415,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
     limit = 50 # int |  (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
     status = 'status_example' # str |  (optional)
@@ -437,7 +437,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
  **limit** | **int**|  | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
  **status** | **str**|  | [optional] 
@@ -463,6 +463,8 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -484,10 +486,10 @@ from spatialflow_generated.models.webhook_delivery_detail_response import Webhoo
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -510,8 +512,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
-    delivery_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
+    delivery_id = 'delivery_id_example' # str | 
 
     try:
         # Get Webhook Delivery Detail
@@ -529,8 +531,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
- **delivery_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
+ **delivery_id** | **str**|  | 
 
 ### Return type
 
@@ -553,6 +555,8 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -574,10 +578,10 @@ from spatialflow_generated.models.webhook_metrics_response import WebhookMetrics
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -637,6 +641,8 @@ This endpoint does not need any parameter.
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -645,31 +651,7 @@ This endpoint does not need any parameter.
 
 Get Webhook Success Timeline
 
-Get webhook delivery success rate timeline for sparkline visualization.
-
-Aggregates webhook delivery success rates over the specified time range,
-returning hourly or daily buckets depending on the range duration.
-
-Args:
-    time_range: One of 'today', 'week', 'month', 'custom' (default: 'today')
-    start_date: ISO date string for custom range start (YYYY-MM-DD)
-    end_date: ISO date string for custom range end (YYYY-MM-DD)
-
-Returns:
-    200: Success rate timeline with current overall rate
-    401: Unauthorized - invalid or missing authentication
-
-Example:
-    GET /api/v1/webhooks/success-timeline?time_range=week
-    Response: {
-        "timeline": [
-            {"timestamp": "2025-10-01T00:00:00Z", "success_rate": 95.2, "total": 100, "successful": 95},
-            ...
-        ],
-        "current_rate": 96.5,
-        "total_deliveries": 1000,
-        "successful_deliveries": 965
-    }
+Get webhook delivery success rate timeline for sparkline visualization.  Aggregates webhook delivery success rates over the specified time range, returning hourly or daily buckets depending on the range duration.  Args:     time_range: One of 'today', 'week', 'month', 'custom' (default: 'today')     start_date: ISO date string for custom range start (YYYY-MM-DD)     end_date: ISO date string for custom range end (YYYY-MM-DD)  Returns:     200: Success rate timeline with current overall rate     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/webhooks/success-timeline?time_range=week     Response: {         \"timeline\": [             {\"timestamp\": \"2025-10-01T00:00:00Z\", \"success_rate\": 95.2, \"total\": 100, \"successful\": 95},             ...         ],         \"current_rate\": 96.5,         \"total_deliveries\": 1000,         \"successful_deliveries\": 965     }
 
 ### Example
 
@@ -680,10 +662,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -742,7 +724,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -751,22 +737,7 @@ Name | Type | Description  | Notes
 
 List Dlq Entries
 
-List webhook deliveries in Dead Letter Queue.
-
-Returns failed webhook deliveries that have exhausted all retry attempts.
-Entries can be filtered by requeue status and are paginated for performance.
-
-Args:
-    limit: Maximum number of entries to return (default: 50, max: 100)
-    offset: Number of entries to skip for pagination (default: 0)
-    requeued: Filter by requeue status (None = all, True = requeued only, False = not requeued)
-
-Returns:
-    200: List of DLQ entries with pagination metadata
-    401: Unauthorized - invalid or missing authentication
-
-Example:
-    GET /api/v1/webhooks/dlq?limit=20&requeued=false
+List webhook deliveries in Dead Letter Queue.  Returns failed webhook deliveries that have exhausted all retry attempts. Entries can be filtered by requeue status and are paginated for performance.  Args:     limit: Maximum number of entries to return (default: 50, max: 100)     offset: Number of entries to skip for pagination (default: 0)     requeued: Filter by requeue status (None = all, True = requeued only, False = not requeued)  Returns:     200: List of DLQ entries with pagination metadata     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/webhooks/dlq?limit=20&requeued=false
 
 ### Example
 
@@ -777,10 +748,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -840,6 +811,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -861,10 +835,10 @@ from spatialflow_generated.models.webhook_list_response import WebhookListRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -931,6 +905,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **429** | Too Many Requests |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -939,14 +916,7 @@ Name | Type | Description  | Notes
 
 Receive Webhook
 
-Receive incoming webhook from external service with signature verification.
-
-This endpoint is PUBLIC and used when SpatialFlow receives webhooks from external services
-(e.g., payment providers, third-party integrations). The signature is verified
-using the configured secret for the webhook.
-
-Security: This endpoint does not require authentication since external services
-cannot authenticate with our org context. Security is provided by signature validation.
+Receive incoming webhook from external service with signature verification.  This endpoint is PUBLIC and used when SpatialFlow receives webhooks from external services (e.g., payment providers, third-party integrations). The signature is verified using the configured secret for the webhook.  Security: This endpoint does not require authentication since external services cannot authenticate with our org context. Security is provided by signature validation.
 
 ### Example
 
@@ -958,10 +928,10 @@ from spatialflow_generated.models.success_response import SuccessResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -978,7 +948,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
 
     try:
         # Receive Webhook
@@ -996,7 +966,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
 
 ### Return type
 
@@ -1018,6 +988,8 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1026,22 +998,7 @@ Name | Type | Description  | Notes
 
 Retry From Dlq
 
-Manually retry a failed webhook delivery from Dead Letter Queue.
-
-Marks the DLQ entry as requeued and creates a new delivery attempt.
-The webhook will go through the full retry logic again (7 attempts).
-
-Args:
-    dlq_id: UUID of the DLQ entry to retry
-
-Returns:
-    200: Successfully queued for retry with new task ID
-    400: Entry already requeued
-    401: Unauthorized - invalid or missing authentication
-    404: DLQ entry not found or doesn't belong to workspace
-
-Example:
-    POST /api/v1/webhooks/dlq/550e8400-e29b-41d4-a716-446655440000/retry
+Manually retry a failed webhook delivery from Dead Letter Queue.  Marks the DLQ entry as requeued and creates a new delivery attempt. The webhook will go through the full retry logic again (7 attempts).  Args:     dlq_id: UUID of the DLQ entry to retry  Returns:     200: Successfully queued for retry with new task ID     400: Entry already requeued     401: Unauthorized - invalid or missing authentication     404: DLQ entry not found or doesn't belong to workspace  Example:     POST /api/v1/webhooks/dlq/550e8400-e29b-41d4-a716-446655440000/retry
 
 ### Example
 
@@ -1052,10 +1009,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1072,7 +1029,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    dlq_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    dlq_id = 'dlq_id_example' # str | 
 
     try:
         # Retry From Dlq
@@ -1090,7 +1047,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **dlq_id** | **UUID**|  | 
+ **dlq_id** | **str**|  | 
 
 ### Return type
 
@@ -1113,6 +1070,8 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1133,10 +1092,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1159,8 +1118,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
-    delivery_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
+    delivery_id = 'delivery_id_example' # str | 
 
     try:
         # Retry Webhook Delivery
@@ -1178,8 +1137,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
- **delivery_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
+ **delivery_id** | **str**|  | 
 
 ### Return type
 
@@ -1203,6 +1162,8 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1225,10 +1186,10 @@ from spatialflow_generated.models.webhook_test_response import WebhookTestRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1251,7 +1212,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
     test_webhook_request = spatialflow_generated.TestWebhookRequest() # TestWebhookRequest | 
 
     try:
@@ -1270,7 +1231,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
  **test_webhook_request** | [**TestWebhookRequest**](TestWebhookRequest.md)|  | 
 
 ### Return type
@@ -1295,6 +1256,8 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1317,10 +1280,10 @@ from spatialflow_generated.models.webhook_response import WebhookResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1343,7 +1306,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WebhooksApi(api_client)
-    webhook_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    webhook_id = 'webhook_id_example' # str | 
     update_webhook_request = spatialflow_generated.UpdateWebhookRequest() # UpdateWebhookRequest | 
 
     try:
@@ -1362,7 +1325,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webhook_id** | **UUID**|  | 
+ **webhook_id** | **str**|  | 
  **update_webhook_request** | [**UpdateWebhookRequest**](UpdateWebhookRequest.md)|  | 
 
 ### Return type
@@ -1386,6 +1349,8 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1404,10 +1369,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 
@@ -1450,6 +1415,10 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **503** | Service Unavailable |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

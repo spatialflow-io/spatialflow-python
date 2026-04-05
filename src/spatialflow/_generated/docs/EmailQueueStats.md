@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **pending** | **int** |  | 
 **queued** | **int** |  | 
 **delivered** | **int** |  | 
+**skipped** | **int** |  | 
 **failed** | **int** |  | 
 **total_today** | **int** |  | 
 **total_this_hour** | **int** |  | 

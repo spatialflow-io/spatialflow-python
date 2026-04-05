@@ -7,7 +7,7 @@ API key creation response schema.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **str** |  | 
-**api_key** | **Dict[str, object]** |  | 
+**api_key** | [**ApiKeyDetailSchema**](ApiKeyDetailSchema.md) |  | 
 
 ## Example
 

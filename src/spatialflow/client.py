@@ -45,7 +45,7 @@ __all__ = ["SpatialFlow"]
 DEFAULT_BASE_URL = "https://api.spatialflow.io"
 DEFAULT_TIMEOUT = 30  # seconds
 DEFAULT_MAX_RETRIES = 3
-VERSION = "0.2.0"
+VERSION = "1.1.0"
 
 
 class SpatialFlow:

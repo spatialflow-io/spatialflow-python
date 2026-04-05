@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**refresh_token** | **str** |  | 
+**refresh_token** | **str** |  | [optional] 
 
 ## Example
 

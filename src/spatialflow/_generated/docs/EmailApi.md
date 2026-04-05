@@ -1,6 +1,6 @@
 # spatialflow_generated.EmailApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 
 # **apps_email_api_get_email_history**
-> apps_email_api_get_email_history(limit=limit, offset=offset)
+> Dict[str, object] apps_email_api_get_email_history(limit=limit, offset=offset)
 
 Get Email History
 
@@ -29,10 +29,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -54,7 +54,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Get Email History
-        await api_instance.apps_email_api_get_email_history(limit=limit, offset=offset)
+        api_response = await api_instance.apps_email_api_get_email_history(limit=limit, offset=offset)
+        print("The response of EmailApi->apps_email_api_get_email_history:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling EmailApi->apps_email_api_get_email_history: %s\n" % e)
 ```
@@ -71,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -80,13 +82,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -107,10 +113,10 @@ from spatialflow_generated.models.email_status_response import EmailStatusRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -165,7 +171,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -186,10 +195,10 @@ from spatialflow_generated.models.email_queue_stats import EmailQueueStats
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -240,6 +249,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -259,10 +272,10 @@ from spatialflow_generated.models.email_health_response import EmailHealthRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 
@@ -304,6 +317,10 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -312,11 +329,7 @@ No authorization required
 
 Preview Email Template
 
-Preview an email template with sample data (admin only)
-
-Args:
-    template_name: Name of the template to preview
-    format: Output format - 'html' or 'txt' (default: 'html')
+Preview an email template with sample data (admin only)  Args:     template_name: Name of the template to preview     format: Output format - 'html' or 'txt' (default: 'html')
 
 ### Example
 
@@ -327,10 +340,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -387,6 +400,9 @@ void (empty response body)
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -407,10 +423,10 @@ from spatialflow_generated.models.send_email_request import SendEmailRequest
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -466,6 +482,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -485,10 +505,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -539,7 +559,11 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -5,10 +5,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **UUID** |  | 
+**id** | **str** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
 **category** | **str** |  | 
+**lane** | **str** |  | 
 **tags** | **List[str]** |  | 
 **is_featured** | **bool** |  | 
 **usage_count** | **int** |  | 

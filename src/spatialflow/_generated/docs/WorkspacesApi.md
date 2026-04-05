@@ -1,11 +1,13 @@
 # spatialflow_generated.WorkspacesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**apps_workspaces_api_cancel_invitation**](WorkspacesApi.md#apps_workspaces_api_cancel_invitation) | **DELETE** /api/v1/workspaces/invitations/{invite_id} | Cancel Invitation
 [**apps_workspaces_api_create_invitation**](WorkspacesApi.md#apps_workspaces_api_create_invitation) | **POST** /api/v1/workspaces/invitations | Create Invitation
+[**apps_workspaces_api_delete_saml_config**](WorkspacesApi.md#apps_workspaces_api_delete_saml_config) | **DELETE** /api/v1/workspaces/saml-config | Delete Saml Config
+[**apps_workspaces_api_get_saml_config**](WorkspacesApi.md#apps_workspaces_api_get_saml_config) | **GET** /api/v1/workspaces/saml-config | Get Saml Config
 [**apps_workspaces_api_get_workspace**](WorkspacesApi.md#apps_workspaces_api_get_workspace) | **GET** /api/v1/workspaces/ | Get Workspace
 [**apps_workspaces_api_get_workspace_usage**](WorkspacesApi.md#apps_workspaces_api_get_workspace_usage) | **GET** /api/v1/workspaces/usage | Get Workspace Usage
 [**apps_workspaces_api_list_invitations**](WorkspacesApi.md#apps_workspaces_api_list_invitations) | **GET** /api/v1/workspaces/invitations | List Invitations
@@ -15,6 +17,7 @@ Method | HTTP request | Description
 [**apps_workspaces_api_revoke_all_workspace_sessions**](WorkspacesApi.md#apps_workspaces_api_revoke_all_workspace_sessions) | **POST** /api/v1/workspaces/revoke-all-sessions | Revoke All Workspace Sessions
 [**apps_workspaces_api_update_member_role**](WorkspacesApi.md#apps_workspaces_api_update_member_role) | **PATCH** /api/v1/workspaces/members/{user_id} | Update Member Role
 [**apps_workspaces_api_update_workspace**](WorkspacesApi.md#apps_workspaces_api_update_workspace) | **PUT** /api/v1/workspaces/ | Update Workspace
+[**apps_workspaces_api_upsert_saml_config**](WorkspacesApi.md#apps_workspaces_api_upsert_saml_config) | **PUT** /api/v1/workspaces/saml-config | Upsert Saml Config
 
 
 # **apps_workspaces_api_cancel_invitation**
@@ -22,10 +25,7 @@ Method | HTTP request | Description
 
 Cancel Invitation
 
-Cancel (revoke) a pending invitation (owner-only).
-
-Returns 404 for invitations in other workspaces (tenant isolation).
-Returns 400 if already used or already cancelled.
+Cancel (revoke) a pending invitation (PRD §4).  Available to owners and managers. Returns 404 for invitations in other workspaces (tenant isolation). Returns 400 if already used or already cancelled.
 
 ### Example
 
@@ -36,10 +36,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -97,6 +97,8 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -105,17 +107,7 @@ Name | Type | Description  | Notes
 
 Create Invitation
 
-Send an invitation to join the workspace (owner-only).
-
-Creates a new invitation and sends an email to the invitee.
-Auto-revokes previous pending invitations for the same email/workspace.
-
-Blocks:
-- Self-invites
-- Inviting existing workspace members
-- Inviting users already in another workspace (stricter than admin flow)
-
-Rate limited to 10 invitations per hour per user (only counted after owner check passes).
+Send an invitation to join the workspace (PRD §4).  Role-based invitation rules: - Owners: Can invite to any role - Managers: Can invite to manager, field_worker, or member (NOT owner) - Field workers/members: Cannot invite  Creates a new invitation and sends an email to the invitee. Auto-revokes previous pending invitations for the same email/workspace.  Blocks: - Self-invites - Inviting existing workspace members - Inviting users already in another workspace (stricter than admin flow)  Rate limited to 10 invitations per hour per user (only counted after permission check passes).
 
 ### Example
 
@@ -128,10 +120,10 @@ from spatialflow_generated.models.invitation_out import InvitationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -190,6 +182,163 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workspaces_api_delete_saml_config**
+> Dict[str, object] apps_workspaces_api_delete_saml_config()
+
+Delete Saml Config
+
+Delete the SAML SSO configuration for the workspace.  Only workspace owners can manage SSO configuration. Returns 404 if no configuration exists.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkspacesApi(api_client)
+
+    try:
+        # Delete Saml Config
+        api_response = await api_instance.apps_workspaces_api_delete_saml_config()
+        print("The response of WorkspacesApi->apps_workspaces_api_delete_saml_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkspacesApi->apps_workspaces_api_delete_saml_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workspaces_api_get_saml_config**
+> SAMLConfigOut apps_workspaces_api_get_saml_config()
+
+Get Saml Config
+
+Get the SAML SSO configuration for the workspace.  Only workspace owners can view SSO configuration. Returns 404 if no configuration exists.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.saml_config_out import SAMLConfigOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkspacesApi(api_client)
+
+    try:
+        # Get Saml Config
+        api_response = await api_instance.apps_workspaces_api_get_saml_config()
+        print("The response of WorkspacesApi->apps_workspaces_api_get_saml_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkspacesApi->apps_workspaces_api_get_saml_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SAMLConfigOut**](SAMLConfigOut.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -210,10 +359,10 @@ from spatialflow_generated.models.workspace_out import WorkspaceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -265,6 +414,9 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -273,38 +425,7 @@ This endpoint does not need any parameter.
 
 Get Workspace Usage
 
-Get current period usage metrics for billing.
-
-Returns aggregated usage for the current day (midnight to now).
-Usage is calculated hourly and includes:
-- Location events (DeviceLocation records)
-- Action deliveries (successful webhook deliveries)
-- Event units (locations + 0.5 * actions)
-
-**Event Units Calculation (PRD §7):**
-- 1 location event = 1 event unit
-- 1 action delivery = 0.5 event units
-
-**Tier Limits (PRD §7):**
-- Developer: 500,000 event units/month
-- Pro: 5,000,000 event units/month
-- Enterprise: Unlimited
-
-**Example Response:**
-```json
-{
-    "location_events": 10000,
-    "action_deliveries": 5000,
-    "event_units": 12500,
-    "tier": "developer",
-    "tier_limit": 500000,
-    "period_start": "2025-10-01T00:00:00Z",
-    "period_end": "2025-10-01T23:59:59Z"
-}
-```
-
-PRD Reference: §7 Pricing & Packaging
-Roadmap: Phase 2, Task 2.3
+Get current period usage metrics for billing.  Returns aggregated usage for the current day (midnight to now). Usage is calculated hourly and includes: - Location events (DeviceLocation records) - Action deliveries (successful webhook deliveries) - Event units (locations + 0.5 * actions)  **Event Units Calculation (PRD §7):** - 1 location event = 1 event unit - 1 action delivery = 0.5 event units  **Tier Limits (PRD §7):** - Developer: 500,000 event units/month - Pro: 5,000,000 event units/month - Enterprise: Unlimited  **Example Response:** ```json {     \"location_events\": 10000,     \"action_deliveries\": 5000,     \"event_units\": 12500,     \"tier\": \"developer\",     \"tier_limit\": 500000,     \"period_start\": \"2025-10-01T00:00:00Z\",     \"period_end\": \"2025-10-01T23:59:59Z\" } ```  PRD Reference: §7 Pricing & Packaging Roadmap: Phase 2, Task 2.3
 
 ### Example
 
@@ -316,10 +437,10 @@ from spatialflow_generated.models.usage_response import UsageResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -371,6 +492,9 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -379,10 +503,7 @@ This endpoint does not need any parameter.
 
 List Invitations
 
-List pending invitations for the workspace (owner-only).
-
-Returns only pending (not used, not revoked, not expired) invitations.
-Capped at 100 results for performance; total reflects actual pending count.
+List pending invitations for the workspace (PRD §4).  Available to owners and managers. Returns only pending (not used, not revoked, not expired) invitations. Capped at 100 results for performance; total reflects actual pending count.
 
 ### Example
 
@@ -394,10 +515,10 @@ from spatialflow_generated.models.invitation_list_response import InvitationList
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -450,6 +571,8 @@ This endpoint does not need any parameter.
 **200** | OK |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -458,12 +581,7 @@ This endpoint does not need any parameter.
 
 List Workspace Members
 
-Get members of the user's workspace.
-
-Returns all members with their roles. Available to all workspace members.
-Scoped to requester's workspace only (no cross-workspace access).
-
-Hard cap at 500 members. TODO (#67): Add pagination (page/limit params) for larger lists.
+Get members of the user's workspace.  Returns all members with their roles. Available to all workspace members. Scoped to requester's workspace only (no cross-workspace access).  Hard cap at 500 members. TODO (#67): Add pagination (page/limit params) for larger lists.
 
 ### Example
 
@@ -475,10 +593,10 @@ from spatialflow_generated.models.member_list_response import MemberListResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -530,6 +648,9 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -538,17 +659,7 @@ This endpoint does not need any parameter.
 
 Remove Member
 
-Remove a member from the workspace.
-
-Only workspace owners can remove members. Owners cannot remove themselves
-if they are the last owner.
-
-Immediately invalidates all tokens for the removed user (Issue #67).
-The user will receive 401 on subsequent requests and must re-authenticate.
-
-Note: This assumes single-workspace-per-user model. On removal, user.workspace
-is cleared. If multi-workspace membership is added later, this logic and the
-last-owner checks will need to be updated.
+Remove a member from the workspace (PRD §4).  Role-based removal rules: - Owners: Can remove any member (including other owners, except last) - Managers: Can remove field_workers and members (NOT owners or managers) - Field workers/members: Cannot remove anyone  Immediately invalidates all tokens for the removed user. The user will receive 401 on subsequent requests and must re-authenticate.  Note: This assumes single-workspace-per-user model. On removal, user.workspace is cleared. If multi-workspace membership is added later, this logic and the last-owner checks will need to be updated.
 
 ### Example
 
@@ -560,10 +671,10 @@ from spatialflow_generated.models.member_action_out import MemberActionOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -620,6 +731,8 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -628,13 +741,7 @@ Name | Type | Description  | Notes
 
 Resend Invitation
 
-Resend invitation email (owner-only).
-
-Creates a new invitation (new token, new expiry) and revokes the old one.
-Only works for pending (non-expired, non-used, non-revoked) invitations.
-
-For expired invitations, create a new invitation instead.
-Rate limited to 10 resends per hour per user (only counted after owner check passes).
+Resend invitation email (PRD §4).  Available to owners and managers. Creates a new invitation (new token, new expiry) and revokes the old one. Only works for pending (non-expired, non-used, non-revoked) invitations.  For expired invitations, create a new invitation instead. Rate limited to 10 resends per hour per user (only counted after permission check passes).
 
 ### Example
 
@@ -646,10 +753,10 @@ from spatialflow_generated.models.invitation_out import InvitationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -708,6 +815,8 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -716,16 +825,7 @@ Name | Type | Description  | Notes
 
 Revoke All Workspace Sessions
 
-Revoke all sessions for all members of the workspace.
-
-Only workspace owners can perform this action.
-All members (including the caller) will need to re-authenticate.
-Rate limited to 1 request per minute per workspace.
-
-Use cases:
-- Security incident response
-- Compliance requirements
-- Credential rotation after potential breach
+Revoke all sessions for all members of the workspace.  Only workspace owners can perform this action. All members (including the caller) will need to re-authenticate. Rate limited to 1 request per minute per workspace.  Use cases: - Security incident response - Compliance requirements - Credential rotation after potential breach
 
 ### Example
 
@@ -737,10 +837,10 @@ from spatialflow_generated.models.revoke_all_sessions_out import RevokeAllSessio
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -794,6 +894,8 @@ This endpoint does not need any parameter.
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -802,13 +904,7 @@ This endpoint does not need any parameter.
 
 Update Member Role
 
-Update a member's role.
-
-Only workspace owners can change roles. Cannot demote the last owner.
-
-On role downgrade (owner -> member), immediately invalidates all tokens
-for the affected user (Issue #67). They must re-authenticate to get new
-tokens with the updated role.
+Update a member's role (PRD §4).  Role management rules: - Owners: Can change any role (including promoting to owner) - Managers: Can change to manager, field_worker, or member (NOT owner) - Field workers/members: Cannot change roles  Cannot demote the last owner.  On any permission downgrade, immediately invalidates all tokens for the affected user. They must re-authenticate to get new tokens with the updated role.
 
 ### Example
 
@@ -821,10 +917,10 @@ from spatialflow_generated.models.update_member_role_in import UpdateMemberRoleI
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -884,6 +980,8 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -892,7 +990,7 @@ Name | Type | Description  | Notes
 
 Update Workspace
 
-Update the user's workspace.
+Update the user's workspace. Only owners and managers can update.
 
 ### Example
 
@@ -905,10 +1003,10 @@ from spatialflow_generated.models.workspace_out import WorkspaceOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -964,6 +1062,93 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workspaces_api_upsert_saml_config**
+> SAMLConfigOut apps_workspaces_api_upsert_saml_config(saml_config_in)
+
+Upsert Saml Config
+
+Create or update the SAML SSO configuration for the workspace.  Only workspace owners can manage SSO configuration. Validates PEM certificate format and domain uniqueness.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.saml_config_in import SAMLConfigIn
+from spatialflow_generated.models.saml_config_out import SAMLConfigOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkspacesApi(api_client)
+    saml_config_in = spatialflow_generated.SAMLConfigIn() # SAMLConfigIn | 
+
+    try:
+        # Upsert Saml Config
+        api_response = await api_instance.apps_workspaces_api_upsert_saml_config(saml_config_in)
+        print("The response of WorkspacesApi->apps_workspaces_api_upsert_saml_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkspacesApi->apps_workspaces_api_upsert_saml_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **saml_config_in** | [**SAMLConfigIn**](SAMLConfigIn.md)|  | 
+
+### Return type
+
+[**SAMLConfigOut**](SAMLConfigOut.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

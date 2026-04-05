@@ -1,6 +1,6 @@
 # spatialflow_generated.AccountApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,13 +8,12 @@ Method | HTTP request | Description
 [**apps_accounts_api_create_api_key**](AccountApi.md#apps_accounts_api_create_api_key) | **POST** /api/v1/account/api-keys | Create Api Key
 [**apps_accounts_api_create_erasure_job**](AccountApi.md#apps_accounts_api_create_erasure_job) | **POST** /api/v1/account/privacy/erasure | Create Erasure Job
 [**apps_accounts_api_delete_api_key**](AccountApi.md#apps_accounts_api_delete_api_key) | **DELETE** /api/v1/account/api-keys/{api_key_id} | Delete Api Key
-[**apps_accounts_api_dismiss_onboarding**](AccountApi.md#apps_accounts_api_dismiss_onboarding) | **POST** /api/v1/account/onboarding/dismiss | Dismiss Onboarding
+[**apps_accounts_api_delete_own_account**](AccountApi.md#apps_accounts_api_delete_own_account) | **DELETE** /api/v1/account/me | Delete Own Account
 [**apps_accounts_api_get_api_key**](AccountApi.md#apps_accounts_api_get_api_key) | **GET** /api/v1/account/api-keys/{api_key_id} | Get Api Key
 [**apps_accounts_api_get_api_keys**](AccountApi.md#apps_accounts_api_get_api_keys) | **GET** /api/v1/account/api-keys | Get Api Keys
 [**apps_accounts_api_get_dashboard_metrics**](AccountApi.md#apps_accounts_api_get_dashboard_metrics) | **GET** /api/v1/account/dashboard/metrics | Get Dashboard Metrics
 [**apps_accounts_api_get_erasure_job**](AccountApi.md#apps_accounts_api_get_erasure_job) | **GET** /api/v1/account/privacy/erasure/{job_id} | Get Erasure Job
 [**apps_accounts_api_get_notifications**](AccountApi.md#apps_accounts_api_get_notifications) | **GET** /api/v1/account/notifications | Get Notifications
-[**apps_accounts_api_get_onboarding_progress**](AccountApi.md#apps_accounts_api_get_onboarding_progress) | **GET** /api/v1/account/onboarding/progress | Get Onboarding Progress
 [**apps_accounts_api_get_user_profile**](AccountApi.md#apps_accounts_api_get_user_profile) | **GET** /api/v1/account/me | Get User Profile
 [**apps_accounts_api_list_expiring_api_keys**](AccountApi.md#apps_accounts_api_list_expiring_api_keys) | **GET** /api/v1/account/api-keys/expiring | List Expiring Api Keys
 [**apps_accounts_api_mark_all_notifications_read**](AccountApi.md#apps_accounts_api_mark_all_notifications_read) | **POST** /api/v1/account/notifications/read-all | Mark All Notifications Read
@@ -23,12 +22,11 @@ Method | HTTP request | Description
 [**apps_accounts_api_rotate_api_key**](AccountApi.md#apps_accounts_api_rotate_api_key) | **POST** /api/v1/account/api-keys/{api_key_id}/rotate | Rotate Api Key
 [**apps_accounts_api_set_api_key_expiration**](AccountApi.md#apps_accounts_api_set_api_key_expiration) | **PATCH** /api/v1/account/api-keys/{api_key_id}/expiration | Set Api Key Expiration
 [**apps_accounts_api_update_api_key**](AccountApi.md#apps_accounts_api_update_api_key) | **PUT** /api/v1/account/api-keys/{api_key_id} | Update Api Key
-[**apps_accounts_api_update_onboarding_progress**](AccountApi.md#apps_accounts_api_update_onboarding_progress) | **POST** /api/v1/account/onboarding/progress | Update Onboarding Progress
 [**apps_accounts_api_update_user_profile**](AccountApi.md#apps_accounts_api_update_user_profile) | **PUT** /api/v1/account/me | Update User Profile
 
 
 # **apps_accounts_api_account_health_check**
-> apps_accounts_api_account_health_check()
+> Dict[str, object] apps_accounts_api_account_health_check()
 
 Account Health Check
 
@@ -42,10 +40,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 
@@ -56,7 +54,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Account Health Check
-        await api_instance.apps_accounts_api_account_health_check()
+        api_response = await api_instance.apps_accounts_api_account_health_check()
+        print("The response of AccountApi->apps_accounts_api_account_health_check:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AccountApi->apps_accounts_api_account_health_check: %s\n" % e)
 ```
@@ -69,7 +69,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -78,13 +78,17 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -107,10 +111,10 @@ from spatialflow_generated.models.api_key_create_response import ApiKeyCreateRes
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -173,6 +177,10 @@ Name | Type | Description  | Notes
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -181,37 +189,7 @@ Name | Type | Description  | Notes
 
 Create Erasure Job
 
-Create a privacy data erasure job (GDPR compliance).
-
-This endpoint allows workspace owners and admins to delete location
-and event data for GDPR Article 17 (Right to be Forgotten) compliance.
-
-**Authentication:** JWT token required
-**Authorization:** Owner or Admin role only
-
-**Scope Options:**
-- `workspace`: Delete all data for the workspace
-- `device`: Delete data for specific devices (requires device_ids)
-- `date_range`: Delete data within a time range (requires from_date and to_date)
-- `tag`: Delete data with specific tags (requires tags)
-
-**Dry Run Mode:**
-Set `dry_run: true` to estimate deletions without actually deleting data.
-Always run dry-run first to verify the scope.
-
-**Example:**
-```json
-{
-    "scope": "device",
-    "device_ids": ["truck-005", "truck-009"],
-    "from_date": "2024-01-01T00:00:00Z",
-    "to_date": "2024-12-31T23:59:59Z",
-    "dry_run": true
-}
-```
-
-**PRD Reference:** §4.5 Privacy Erasure API
-**Roadmap:** Phase 2, Task 2.1
+Create a privacy data erasure job (GDPR compliance).  This endpoint allows workspace owners and admins to delete location and event data for GDPR Article 17 (Right to be Forgotten) compliance.  **Authentication:** JWT token required **Authorization:** Owner or Admin role only  **Scope Options:** - `workspace`: Delete all data for the workspace - `device`: Delete data for specific devices (requires device_ids) - `date_range`: Delete data within a time range (requires from_date and to_date) - `tag`: Delete data with specific tags (requires tags)  **Dry Run Mode:** Set `dry_run: true` to estimate deletions without actually deleting data. Always run dry-run first to verify the scope.  **Example:** ```json {     \"scope\": \"device\",     \"device_ids\": [\"truck-005\", \"truck-009\"],     \"from_date\": \"2024-01-01T00:00:00Z\",     \"to_date\": \"2024-12-31T23:59:59Z\",     \"dry_run\": true } ```  **PRD Reference:** §4.5 Privacy Erasure API **Roadmap:** Phase 2, Task 2.1
 
 ### Example
 
@@ -224,10 +202,10 @@ from spatialflow_generated.models.privacy_erasure_response import PrivacyErasure
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -281,9 +259,12 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -304,10 +285,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -368,42 +349,46 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **apps_accounts_api_dismiss_onboarding**
-> OnboardingProgressResponse apps_accounts_api_dismiss_onboarding()
+# **apps_accounts_api_delete_own_account**
+> Dict[str, object] apps_accounts_api_delete_own_account()
 
-Dismiss Onboarding
+Delete Own Account
 
-Dismiss the onboarding checklist.
-
-Permanently hides the onboarding checklist card for the user.
-This action cannot be undone via API.
-
-**Authentication:** JWT token required
+Delete the authenticated user's own account. Required for App Store/Play Store compliance.
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.onboarding_progress_response import OnboardingProgressResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -416,12 +401,12 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     api_instance = spatialflow_generated.AccountApi(api_client)
 
     try:
-        # Dismiss Onboarding
-        api_response = await api_instance.apps_accounts_api_dismiss_onboarding()
-        print("The response of AccountApi->apps_accounts_api_dismiss_onboarding:\n")
+        # Delete Own Account
+        api_response = await api_instance.apps_accounts_api_delete_own_account()
+        print("The response of AccountApi->apps_accounts_api_delete_own_account:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling AccountApi->apps_accounts_api_dismiss_onboarding: %s\n" % e)
+        print("Exception when calling AccountApi->apps_accounts_api_delete_own_account: %s\n" % e)
 ```
 
 
@@ -432,11 +417,11 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**OnboardingProgressResponse**](OnboardingProgressResponse.md)
+**Dict[str, object]**
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -448,6 +433,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -469,10 +460,10 @@ from spatialflow_generated.models.api_key_response import ApiKeyResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -534,6 +525,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -555,10 +549,10 @@ from spatialflow_generated.models.api_key_response import ApiKeyResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -615,6 +609,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -623,32 +621,7 @@ This endpoint does not need any parameter.
 
 Get Dashboard Metrics
 
-Get dashboard KPI metrics for the authenticated user.
-
-Returns key performance indicators for the dashboard:
-- **Active Workflows**: Workflows that are active and were created or executed in the period
-- **Events Total**: Total geofence entry/exit events triggered in the period
-- **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)
-
-**Time Ranges:**
-- `today`: From midnight to now
-- `7d`: Last 7 days
-- `30d`: Last 30 days
-- `custom`: Custom date range (requires start_date and end_date)
-
-**Formulas:**
-- Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100
-- Returns `null` when total_attempts = 0 (UI should show "—")
-
-**Authentication:** JWT token required
-
-**Example:**
-```
-GET /api/v1/accounts/dashboard/metrics?time_range=7d
-GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z
-```
-
-**Dashboard UX:** Ticket #2 - Global Time-Range Control + KPI Formulas
+Get dashboard KPI metrics for the authenticated user.  Returns key performance indicators for the dashboard: - **Active Workflows**: Workflows that are active and were created or executed in the period - **Events Total**: Total geofence entry/exit events triggered in the period - **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)  **Time Ranges:** - `today`: From midnight to now - `7d`: Last 7 days - `30d`: Last 30 days - `custom`: Custom date range (requires start_date and end_date)  **Formulas:** - Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100 - Returns `null` when total_attempts = 0 (UI should show \"—\")  **Authentication:** JWT token required  **Example:** ``` GET /api/v1/accounts/dashboard/metrics?time_range=7d GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z ```  **Dashboard UX:** Ticket #2 - Global Time-Range Control + KPI Formulas
 
 ### Example
 
@@ -660,10 +633,10 @@ from spatialflow_generated.models.dashboard_metrics_response import DashboardMet
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -725,6 +698,9 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -733,21 +709,7 @@ Name | Type | Description  | Notes
 
 Get Erasure Job
 
-Get status of a privacy erasure job.
-
-Returns the current status, progress, and results of an erasure job.
-Poll this endpoint to track job execution.
-
-**Authentication:** JWT token required
-**Authorization:** Must be in the same workspace as the job
-
-**Job Statuses:**
-- `pending`: Job queued, not yet started
-- `running`: Job is executing
-- `completed`: Job finished successfully
-- `failed`: Job encountered an error
-
-**PRD Reference:** §4.5 Privacy Erasure API
+Get status of a privacy erasure job.  Returns the current status, progress, and results of an erasure job. Poll this endpoint to track job execution.  **Authentication:** JWT token required **Authorization:** Must be in the same workspace as the job  **Job Statuses:** - `pending`: Job queued, not yet started - `running`: Job is executing - `completed`: Job finished successfully - `failed`: Job encountered an error  **PRD Reference:** §4.5 Privacy Erasure API
 
 ### Example
 
@@ -759,10 +721,10 @@ from spatialflow_generated.models.privacy_erasure_response import PrivacyErasure
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -818,11 +780,14 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_get_notifications**
-> apps_accounts_api_get_notifications(unread_only=unread_only)
+> Dict[str, object] apps_accounts_api_get_notifications(unread_only=unread_only)
 
 Get Notifications
 
@@ -838,10 +803,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -868,7 +833,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Get Notifications
-        await api_instance.apps_accounts_api_get_notifications(unread_only=unread_only)
+        api_response = await api_instance.apps_accounts_api_get_notifications(unread_only=unread_only)
+        print("The response of AccountApi->apps_accounts_api_get_notifications:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AccountApi->apps_accounts_api_get_notifications: %s\n" % e)
 ```
@@ -884,90 +851,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**Dict[str, object]**
 
 ### Authorization
 
 [APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **apps_accounts_api_get_onboarding_progress**
-> OnboardingProgressResponse apps_accounts_api_get_onboarding_progress()
-
-Get Onboarding Progress
-
-Get current user's onboarding checklist progress.
-
-Returns the user's progress through the onboarding checklist steps,
-including which steps are complete and overall completion percentage.
-
-**Authentication:** JWT token required
-
-### Example
-
-* Bearer Authentication (JWTBearer):
-
-```python
-import spatialflow_generated
-from spatialflow_generated.models.onboarding_progress_response import OnboardingProgressResponse
-from spatialflow_generated.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization: JWTBearer
-configuration = spatialflow_generated.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with spatialflow_generated.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = spatialflow_generated.AccountApi(api_client)
-
-    try:
-        # Get Onboarding Progress
-        api_response = await api_instance.apps_accounts_api_get_onboarding_progress()
-        print("The response of AccountApi->apps_accounts_api_get_onboarding_progress:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AccountApi->apps_accounts_api_get_onboarding_progress: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-[**OnboardingProgressResponse**](OnboardingProgressResponse.md)
-
-### Authorization
-
-[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -979,6 +867,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1000,10 +892,10 @@ from spatialflow_generated.models.user_profile_response import UserProfileRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1060,6 +952,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1068,9 +964,7 @@ This endpoint does not need any parameter.
 
 List Expiring Api Keys
 
-List API keys expiring within the specified number of days.
-
-Default: 30 days
+List API keys expiring within the specified number of days.  Default: 30 days
 
 ### Example
 
@@ -1082,10 +976,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1146,6 +1040,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1166,10 +1064,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1226,6 +1124,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1246,10 +1148,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1310,7 +1212,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1332,10 +1237,10 @@ from spatialflow_generated.models.api_key_create_response import ApiKeyCreateRes
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1397,6 +1302,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1405,10 +1313,7 @@ Name | Type | Description  | Notes
 
 Rotate Api Key
 
-Rotate an API key.
-
-Creates a new API key with the same permissions and marks the old one for expiration.
-The old key remains active for the grace period (default 7 days).
+Rotate an API key.  Creates a new API key with the same permissions and marks the old one for expiration. The old key remains active for the grace period (default 7 days).
 
 ### Example
 
@@ -1421,10 +1326,10 @@ from spatialflow_generated.models.api_key_create_response import ApiKeyCreateRes
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1488,6 +1393,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1496,9 +1404,7 @@ Name | Type | Description  | Notes
 
 Set Api Key Expiration
 
-Set or update expiration date for an API key.
-
-Pass expires_at as ISO 8601 datetime string or null to remove expiration.
+Set or update expiration date for an API key.  Pass expires_at as ISO 8601 datetime string or null to remove expiration.
 
 ### Example
 
@@ -1510,10 +1416,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1577,6 +1483,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1598,10 +1507,10 @@ from spatialflow_generated.models.api_key_update_request import ApiKeyUpdateRequ
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1666,97 +1575,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **apps_accounts_api_update_onboarding_progress**
-> OnboardingProgressResponse apps_accounts_api_update_onboarding_progress(update_onboarding_progress_request)
-
-Update Onboarding Progress
-
-Update onboarding progress by marking a step as complete.
-
-Marks the specified onboarding step as complete. If all steps are complete,
-automatically sets the completed_at timestamp.
-
-**Authentication:** JWT token required
-
-**Example:**
-```json
-{
-    "step": "created_workflow"
-}
-```
-
-### Example
-
-* Bearer Authentication (JWTBearer):
-
-```python
-import spatialflow_generated
-from spatialflow_generated.models.onboarding_progress_response import OnboardingProgressResponse
-from spatialflow_generated.models.update_onboarding_progress_request import UpdateOnboardingProgressRequest
-from spatialflow_generated.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization: JWTBearer
-configuration = spatialflow_generated.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with spatialflow_generated.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = spatialflow_generated.AccountApi(api_client)
-    update_onboarding_progress_request = spatialflow_generated.UpdateOnboardingProgressRequest() # UpdateOnboardingProgressRequest | 
-
-    try:
-        # Update Onboarding Progress
-        api_response = await api_instance.apps_accounts_api_update_onboarding_progress(update_onboarding_progress_request)
-        print("The response of AccountApi->apps_accounts_api_update_onboarding_progress:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AccountApi->apps_accounts_api_update_onboarding_progress: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **update_onboarding_progress_request** | [**UpdateOnboardingProgressRequest**](UpdateOnboardingProgressRequest.md)|  | 
-
-### Return type
-
-[**OnboardingProgressResponse**](OnboardingProgressResponse.md)
-
-### Authorization
-
-[JWTBearer](../README.md#JWTBearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1778,10 +1599,10 @@ from spatialflow_generated.models.update_profile_request import UpdateProfileReq
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1844,6 +1665,10 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

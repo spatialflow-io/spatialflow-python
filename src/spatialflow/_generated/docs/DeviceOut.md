@@ -5,13 +5,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **UUID** |  | 
+**id** | **str** |  | 
 **device_id** | **str** |  | 
 **name** | **str** |  | 
 **device_type** | **str** |  | 
 **is_active** | **bool** |  | 
+**shift_status** | **str** |  | 
+**shift_started_at** | **datetime** |  | [optional] 
+**shift_paused_at** | **datetime** |  | [optional] 
+**shift_ended_at** | **datetime** |  | [optional] 
+**shift_resumed_at** | **datetime** |  | [optional] 
 **last_location** | **Dict[str, object]** |  | [optional] 
 **last_location_time** | **datetime** |  | [optional] 
+**last_heading** | **float** |  | [optional] 
+**current_session_notes** | **str** |  | [optional] [default to '']
+**in_geofence_ids** | **List[Optional[str]]** |  | [optional] [default to []]
+**in_geofence_entries** | **Dict[str, Optional[str]]** |  | [optional] 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 
 

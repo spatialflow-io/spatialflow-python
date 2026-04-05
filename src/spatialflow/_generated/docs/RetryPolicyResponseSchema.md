@@ -6,7 +6,7 @@ Response schema for retry policy information.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**available_policies** | **Dict[str, Optional[Dict[str, object]]]** |  | 
+**available_policies** | [**Dict[str, RetryPolicySchema]**](RetryPolicySchema.md) |  | 
 **retry_strategies** | **List[str]** |  | 
 **circuit_breaker_defaults** | [**CircuitBreakerSchema**](CircuitBreakerSchema.md) |  | 
 

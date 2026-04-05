@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **UUID** |  | [optional] 
+**id** | **str** |  | [optional] 
 **name** | **str** |  | 
 **slug** | **str** |  | 
 **logo_url** | **str** |  | [optional] 
@@ -13,6 +13,9 @@ Name | Type | Description | Notes
 **billing_email** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **timezone** | **str** | Workspace default timezone | [optional] [default to 'UTC']
+**support_email** | **str** |  | [optional] 
+**slack_connect_url** | **str** |  | [optional] 
+**unit_system** | **str** | Unit system for display (imperial: mi/mph/ft, metric: km/kph/m) | [optional] [default to 'imperial']
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 
 

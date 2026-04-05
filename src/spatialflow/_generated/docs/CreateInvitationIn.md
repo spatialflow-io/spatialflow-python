@@ -7,7 +7,7 @@ Request to create a workspace invitation.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **email** | **str** |  | 
-**role** | **str** |  | [optional] [default to 'member']
+**role** | **str** |  | [optional] [default to 'field_worker']
 
 ## Example
 

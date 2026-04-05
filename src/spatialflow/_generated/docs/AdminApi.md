@@ -1,6 +1,6 @@
 # spatialflow_generated.AdminApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,11 +12,17 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_deactivate_user**](AdminApi.md#apps_admin_portal_api_deactivate_user) | **PUT** /api/v1/admin/users/{user_id}/deactivate | Deactivate User
 [**apps_admin_portal_api_delete_user**](AdminApi.md#apps_admin_portal_api_delete_user) | **DELETE** /api/v1/admin/users/{user_id} | Delete User
 [**apps_admin_portal_api_delete_workspace**](AdminApi.md#apps_admin_portal_api_delete_workspace) | **DELETE** /api/v1/admin/workspaces/{workspace_id} | Delete Workspace
+[**apps_admin_portal_api_export_marketing_subscribers**](AdminApi.md#apps_admin_portal_api_export_marketing_subscribers) | **GET** /api/v1/admin/users/marketing-subscribers | Export Marketing Subscribers
+[**apps_admin_portal_api_get_configuration**](AdminApi.md#apps_admin_portal_api_get_configuration) | **GET** /api/v1/admin/configurations/{key} | Get Configuration
+[**apps_admin_portal_api_get_dashboard_stats**](AdminApi.md#apps_admin_portal_api_get_dashboard_stats) | **GET** /api/v1/admin/dashboard-stats | Get Dashboard Stats
+[**apps_admin_portal_api_get_notification_config**](AdminApi.md#apps_admin_portal_api_get_notification_config) | **GET** /api/v1/admin/slack-config | Get Notification Config
+[**apps_admin_portal_api_get_user_detail**](AdminApi.md#apps_admin_portal_api_get_user_detail) | **GET** /api/v1/admin/users/{user_id} | Get User Detail
 [**apps_admin_portal_api_get_user_usage**](AdminApi.md#apps_admin_portal_api_get_user_usage) | **GET** /api/v1/admin/users/{user_id}/usage | Get User Usage
 [**apps_admin_portal_api_get_users_with_stats**](AdminApi.md#apps_admin_portal_api_get_users_with_stats) | **GET** /api/v1/admin/users/stats | Get Users With Stats
 [**apps_admin_portal_api_get_workspace**](AdminApi.md#apps_admin_portal_api_get_workspace) | **GET** /api/v1/admin/workspaces/{workspace_id} | Get Workspace
 [**apps_admin_portal_api_get_workspace_members**](AdminApi.md#apps_admin_portal_api_get_workspace_members) | **GET** /api/v1/admin/workspaces/{workspace_id}/members | Get Workspace Members
 [**apps_admin_portal_api_invite_user**](AdminApi.md#apps_admin_portal_api_invite_user) | **POST** /api/v1/admin/users/invite | Invite User
+[**apps_admin_portal_api_list_configurations**](AdminApi.md#apps_admin_portal_api_list_configurations) | **GET** /api/v1/admin/configurations | List Configurations
 [**apps_admin_portal_api_list_pending_users**](AdminApi.md#apps_admin_portal_api_list_pending_users) | **GET** /api/v1/admin/users/pending | List Pending Users
 [**apps_admin_portal_api_list_users**](AdminApi.md#apps_admin_portal_api_list_users) | **GET** /api/v1/admin/users | List Users
 [**apps_admin_portal_api_list_workspaces**](AdminApi.md#apps_admin_portal_api_list_workspaces) | **GET** /api/v1/admin/workspaces | List Workspaces
@@ -25,8 +31,13 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_remove_user_workspace**](AdminApi.md#apps_admin_portal_api_remove_user_workspace) | **DELETE** /api/v1/admin/users/{user_id}/workspace | Remove User Workspace
 [**apps_admin_portal_api_resend_password_reset**](AdminApi.md#apps_admin_portal_api_resend_password_reset) | **POST** /api/v1/admin/users/{user_id}/resend-reset | Resend Password Reset
 [**apps_admin_portal_api_resend_verification_email**](AdminApi.md#apps_admin_portal_api_resend_verification_email) | **POST** /api/v1/admin/users/{user_id}/resend-verification | Resend Verification Email
+[**apps_admin_portal_api_reset_configuration**](AdminApi.md#apps_admin_portal_api_reset_configuration) | **DELETE** /api/v1/admin/configurations/{key} | Reset Configuration
 [**apps_admin_portal_api_revoke_invitation**](AdminApi.md#apps_admin_portal_api_revoke_invitation) | **DELETE** /api/v1/admin/invitations/{invite_id} | Revoke Invitation
+[**apps_admin_portal_api_send_test_email**](AdminApi.md#apps_admin_portal_api_send_test_email) | **POST** /api/v1/admin/email/test | Send Test Email
+[**apps_admin_portal_api_test_notification**](AdminApi.md#apps_admin_portal_api_test_notification) | **POST** /api/v1/admin/slack-config/test | Test Notification
+[**apps_admin_portal_api_update_configuration**](AdminApi.md#apps_admin_portal_api_update_configuration) | **PUT** /api/v1/admin/configurations/{key} | Update Configuration
 [**apps_admin_portal_api_update_member_role**](AdminApi.md#apps_admin_portal_api_update_member_role) | **PATCH** /api/v1/admin/workspaces/{workspace_id}/members/{user_id} | Update Member Role
+[**apps_admin_portal_api_update_notification_config**](AdminApi.md#apps_admin_portal_api_update_notification_config) | **PUT** /api/v1/admin/slack-config | Update Notification Config
 [**apps_admin_portal_api_update_user_workspace**](AdminApi.md#apps_admin_portal_api_update_user_workspace) | **PATCH** /api/v1/admin/users/{user_id}/workspace | Update User Workspace
 [**apps_admin_portal_api_update_workspace**](AdminApi.md#apps_admin_portal_api_update_workspace) | **PUT** /api/v1/admin/workspaces/{workspace_id} | Update Workspace
 
@@ -48,10 +59,10 @@ from spatialflow_generated.models.user_action_response import UserActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -108,6 +119,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -127,10 +141,10 @@ from spatialflow_generated.models.health_check_response import HealthCheckRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 
@@ -172,6 +186,10 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -192,10 +210,10 @@ from spatialflow_generated.models.ping_response import PingResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -246,6 +264,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -266,10 +288,10 @@ from spatialflow_generated.models.user_action_response import UserActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -326,6 +348,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -347,10 +372,10 @@ from spatialflow_generated.models.user_approval_request import UserApprovalReque
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -410,6 +435,9 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -430,10 +458,10 @@ from spatialflow_generated.models.user_action_response import UserActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -491,6 +519,9 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -499,22 +530,7 @@ Name | Type | Description  | Notes
 
 Delete User
 
-Delete a user with proper cascade cleanup (Issue #67).
-
-Workspace Deletion Policy:
-- Delete workspace when member count reaches ZERO (any role)
-- Shared workspaces with other members: remove membership only
-- This prevents orphaned workspaces regardless of user's role
-
-Args:
-    user_id: UUID of user to delete
-    confirm_workspace_deletion: Query param - must be True to delete last-member workspaces
-
-Returns:
-    200: Summary of deleted data
-    400: User is last member without confirmation, self-deletion, etc.
-    404: User not found
-    500: Server error
+Delete a user with proper cascade cleanup (Issue #67).  Workspace Deletion Policy: - Delete workspace when member count reaches ZERO (any role) - Shared workspaces with other members: remove membership only - This prevents orphaned workspaces regardless of user's role  Args:     user_id: UUID of user to delete     confirm_workspace_deletion: Query param - must be True to delete last-member workspaces  Returns:     200: Summary of deleted data     400: User is last member without confirmation, self-deletion, etc.     404: User not found     500: Server error
 
 ### Example
 
@@ -525,10 +541,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -588,6 +604,9 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -596,9 +615,7 @@ Name | Type | Description  | Notes
 
 Delete Workspace
 
-Delete workspace (hard delete with safety checks).
-Workspace must have 0 members before deletion.
-Cancels Stripe subscription and deletes all related data via CASCADE.
+Delete workspace (hard delete with safety checks). Workspace must have 0 members before deletion. Cancels Stripe subscription and deletes all related data via CASCADE.
 
 ### Example
 
@@ -610,10 +627,10 @@ from spatialflow_generated.models.workspace_delete_response import WorkspaceDele
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -668,6 +685,421 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_export_marketing_subscribers**
+> MarketingSubscriberExportResponse apps_admin_portal_api_export_marketing_subscribers(format=format)
+
+Export Marketing Subscribers
+
+Export users who opted in to marketing emails.  Returns users who: - Have marketing_emails=True - Are active (is_active=True) - Have verified email (email_verified=True)  Args:     format: Export format - 'json' (default) or 'csv'  Returns:     200: List of subscribers with email, first_name, last_name, subscribed_at     400: Invalid format parameter     403: Not admin     500: Server error
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.marketing_subscriber_export_response import MarketingSubscriberExportResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    format = 'json' # str |  (optional) (default to 'json')
+
+    try:
+        # Export Marketing Subscribers
+        api_response = await api_instance.apps_admin_portal_api_export_marketing_subscribers(format=format)
+        print("The response of AdminApi->apps_admin_portal_api_export_marketing_subscribers:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_export_marketing_subscribers: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **format** | **str**|  | [optional] [default to &#39;json&#39;]
+
+### Return type
+
+[**MarketingSubscriberExportResponse**](MarketingSubscriberExportResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_configuration**
+> ConfigurationItem apps_admin_portal_api_get_configuration(key)
+
+Get Configuration
+
+Get single configuration with resolved value and metadata.  Write-only secrets return null value. Shows source (default/env/database).
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.configuration_item import ConfigurationItem
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    key = 'key_example' # str | 
+
+    try:
+        # Get Configuration
+        api_response = await api_instance.apps_admin_portal_api_get_configuration(key)
+        print("The response of AdminApi->apps_admin_portal_api_get_configuration:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_configuration: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **key** | **str**|  | 
+
+### Return type
+
+[**ConfigurationItem**](ConfigurationItem.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_dashboard_stats**
+> DashboardStatsResponse apps_admin_portal_api_get_dashboard_stats()
+
+Get Dashboard Stats
+
+Get aggregated dashboard statistics.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.dashboard_stats_response import DashboardStatsResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # Get Dashboard Stats
+        api_response = await api_instance.apps_admin_portal_api_get_dashboard_stats()
+        print("The response of AdminApi->apps_admin_portal_api_get_dashboard_stats:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_dashboard_stats: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**DashboardStatsResponse**](DashboardStatsResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_notification_config**
+> NotificationConfigResponse apps_admin_portal_api_get_notification_config()
+
+Get Notification Config
+
+Get notification configuration.  Returns current settings for provider selection, all notification toggles and thresholds. Never exposes the actual webhook URL (only indicates if it's configured). Supports multiple providers: Slack, MS Teams, Generic Webhook.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_config_response import NotificationConfigResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # Get Notification Config
+        api_response = await api_instance.apps_admin_portal_api_get_notification_config()
+        print("The response of AdminApi->apps_admin_portal_api_get_notification_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_notification_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**NotificationConfigResponse**](NotificationConfigResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_user_detail**
+> UserSummary apps_admin_portal_api_get_user_detail(user_id)
+
+Get User Detail
+
+Get a single user's details by ID.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.user_summary import UserSummary
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    user_id = 'user_id_example' # str | 
+
+    try:
+        # Get User Detail
+        api_response = await api_instance.apps_admin_portal_api_get_user_detail(user_id)
+        print("The response of AdminApi->apps_admin_portal_api_get_user_detail:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_user_detail: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user_id** | **str**|  | 
+
+### Return type
+
+[**UserSummary**](UserSummary.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -688,10 +1120,10 @@ from spatialflow_generated.models.user_usage_response import UserUsageResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -748,6 +1180,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -756,22 +1191,7 @@ Name | Type | Description  | Notes
 
 Get Users With Stats
 
-Get users with API call counts for admin dashboard.
-
-Returns aggregated API call counts per user within the specified date range.
-Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.
-
-Args:
-    days: Number of days to look back (default 30, max 90)
-    limit: Maximum results per page (default 50, max 100)
-    offset: Number of results to skip for pagination
-    sort: Sort by "api_calls" (descending) or "email" (ascending)
-    user_ids: Optional comma-separated UUIDs to scope to specific users
-
-Returns:
-    200: List of users with their API call counts
-    403: User is not an admin
-    500: Internal server error
+Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
 
 ### Example
 
@@ -783,10 +1203,10 @@ from spatialflow_generated.models.admin_user_stats_response import AdminUserStat
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -851,6 +1271,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -871,10 +1294,10 @@ from spatialflow_generated.models.workspace_detail_response import WorkspaceDeta
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -929,6 +1352,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -949,10 +1377,10 @@ from spatialflow_generated.models.workspace_members_response import WorkspaceMem
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1011,6 +1439,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1019,10 +1452,7 @@ Name | Type | Description  | Notes
 
 Invite User
 
-Invite new user to a workspace via email.
-
-If workspace_id is None or empty, creates a new workspace for the user.
-The user becomes owner of new workspaces, or gets the requested role for existing ones.
+Invite new user to a workspace via email.  If workspace_id is None or empty, creates a new workspace for the user. The user becomes owner of new workspaces, or gets the requested role for existing ones.
 
 ### Example
 
@@ -1035,10 +1465,10 @@ from spatialflow_generated.models.user_invite_response import UserInviteResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1093,6 +1523,91 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_list_configurations**
+> ConfigurationListResponse apps_admin_portal_api_list_configurations()
+
+List Configurations
+
+List all system configurations grouped by category.  Returns all configurations with resolved values and metadata. Write-only secrets have null values. Readonly fields show source.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.configuration_list_response import ConfigurationListResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # List Configurations
+        api_response = await api_instance.apps_admin_portal_api_list_configurations()
+        print("The response of AdminApi->apps_admin_portal_api_list_configurations:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_list_configurations: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ConfigurationListResponse**](ConfigurationListResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1113,10 +1628,10 @@ from spatialflow_generated.models.user_list_response import UserListResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1173,6 +1688,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1193,10 +1713,10 @@ from spatialflow_generated.models.user_list_response import UserListResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1260,6 +1780,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1280,10 +1804,10 @@ from spatialflow_generated.models.workspace_list_response import WorkspaceListRe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1342,6 +1866,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1363,10 +1892,10 @@ from spatialflow_generated.models.user_rejection_request import UserRejectionReq
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1426,6 +1955,9 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1446,10 +1978,10 @@ from spatialflow_generated.models.member_action_response import MemberActionResp
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1506,6 +2038,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1526,10 +2064,10 @@ from spatialflow_generated.models.user_workspace_response import UserWorkspaceRe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1584,6 +2122,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1604,10 +2148,10 @@ from spatialflow_generated.models.user_action_response import UserActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1664,6 +2208,9 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1684,10 +2231,10 @@ from spatialflow_generated.models.user_action_response import UserActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1745,6 +2292,93 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_reset_configuration**
+> ConfigurationResetResponse apps_admin_portal_api_reset_configuration(key)
+
+Reset Configuration
+
+Reset configuration to env/default by clearing database value.  Readonly configs cannot be reset. Invalidates cache and logs audit trail. Returns new source (env or default) and effective value.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.configuration_reset_response import ConfigurationResetResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    key = 'key_example' # str | 
+
+    try:
+        # Reset Configuration
+        api_response = await api_instance.apps_admin_portal_api_reset_configuration(key)
+        print("The response of AdminApi->apps_admin_portal_api_reset_configuration:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_reset_configuration: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **key** | **str**|  | 
+
+### Return type
+
+[**ConfigurationResetResponse**](ConfigurationResetResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1753,20 +2387,7 @@ Name | Type | Description  | Notes
 
 Revoke Invitation
 
-Revoke a pending invitation (admin action).
-
-Use case: Stolen/compromised invite link needs to be killed.
-
-Authorization: Global admins (is_superuser or role='admin') can revoke any invitation.
-This is by design - admins have full system authority for security incidents.
-
-Args:
-    invite_id: UUID of the invitation to revoke
-
-Returns:
-    200: Success message
-    400: Invitation already used or revoked
-    404: Invitation not found
+Revoke a pending invitation (admin action).  Use case: Stolen/compromised invite link needs to be killed.  Authorization: Global admins (is_superuser or role='admin') can revoke any invitation. This is by design - admins have full system authority for security incidents.  Args:     invite_id: UUID of the invitation to revoke  Returns:     200: Success message     400: Invitation already used or revoked     404: Invitation not found
 
 ### Example
 
@@ -1777,10 +2398,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1837,6 +2458,259 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_send_test_email**
+> EmailTestResponse apps_admin_portal_api_send_test_email()
+
+Send Test Email
+
+Send a test email to verify email configuration (admin only).  Rate limited to 5 requests per hour to prevent abuse. Sends test email to the admin's own email address. Returns config info for debugging purposes.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.email_test_response import EmailTestResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # Send Test Email
+        api_response = await api_instance.apps_admin_portal_api_send_test_email()
+        print("The response of AdminApi->apps_admin_portal_api_send_test_email:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_send_test_email: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**EmailTestResponse**](EmailTestResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_test_notification**
+> NotificationTestResponse apps_admin_portal_api_test_notification()
+
+Test Notification
+
+Send a test notification to verify webhook configuration.  Sends a test message synchronously and returns the result. Use this to verify the webhook URL is correct and working. Works with all providers: Slack, MS Teams, Generic Webhook.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_test_response import NotificationTestResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # Test Notification
+        api_response = await api_instance.apps_admin_portal_api_test_notification()
+        print("The response of AdminApi->apps_admin_portal_api_test_notification:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_test_notification: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**NotificationTestResponse**](NotificationTestResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
+**502** | Bad Gateway |  -  |
+**504** | Gateway Timeout |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_update_configuration**
+> ConfigurationUpdateResponse apps_admin_portal_api_update_configuration(key, configuration_update_request)
+
+Update Configuration
+
+Update configuration value.  Validates against ConfigSpec rules. Readonly configs cannot be updated. Invalidates cache and logs audit trail.  Returns:     200: Success with requires_restart flag     400: Validation error or readonly field     404: Configuration not found     500: Server error
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.configuration_update_request import ConfigurationUpdateRequest
+from spatialflow_generated.models.configuration_update_response import ConfigurationUpdateResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    key = 'key_example' # str | 
+    configuration_update_request = spatialflow_generated.ConfigurationUpdateRequest() # ConfigurationUpdateRequest | 
+
+    try:
+        # Update Configuration
+        api_response = await api_instance.apps_admin_portal_api_update_configuration(key, configuration_update_request)
+        print("The response of AdminApi->apps_admin_portal_api_update_configuration:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_update_configuration: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **key** | **str**|  | 
+ **configuration_update_request** | [**ConfigurationUpdateRequest**](ConfigurationUpdateRequest.md)|  | 
+
+### Return type
+
+[**ConfigurationUpdateResponse**](ConfigurationUpdateResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1858,10 +2732,10 @@ from spatialflow_generated.models.update_member_role_request import UpdateMember
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1920,6 +2794,97 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_update_notification_config**
+> NotificationConfigResponse apps_admin_portal_api_update_notification_config(notification_config_update_request)
+
+Update Notification Config
+
+Update notification configuration.  Validates webhook URL format against the target provider's pattern. Pass null/omit fields to keep current values, or empty string to clear webhook URL.  Provider switching rules: - If provider changes and webhook_url is not provided, the existing webhook_url is cleared - webhook_url must match the pattern for the target provider
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_config_response import NotificationConfigResponse
+from spatialflow_generated.models.notification_config_update_request import NotificationConfigUpdateRequest
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    notification_config_update_request = spatialflow_generated.NotificationConfigUpdateRequest() # NotificationConfigUpdateRequest | 
+
+    try:
+        # Update Notification Config
+        api_response = await api_instance.apps_admin_portal_api_update_notification_config(notification_config_update_request)
+        print("The response of AdminApi->apps_admin_portal_api_update_notification_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_update_notification_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **notification_config_update_request** | [**NotificationConfigUpdateRequest**](NotificationConfigUpdateRequest.md)|  | 
+
+### Return type
+
+[**NotificationConfigResponse**](NotificationConfigResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1941,10 +2906,10 @@ from spatialflow_generated.models.user_workspace_response import UserWorkspaceRe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2001,6 +2966,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2022,10 +2993,10 @@ from spatialflow_generated.models.workspace_update_response import WorkspaceUpda
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2082,6 +3053,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

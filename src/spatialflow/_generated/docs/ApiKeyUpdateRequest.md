@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **permissions** | **List[str]** |  | [optional] 
 **is_active** | **bool** |  | [optional] 
 **rate_limit_per_hour** | **int** |  | [optional] 
+**read_only** | **bool** |  | [optional] 
+**description** | **str** |  | [optional] 
 
 ## Example
 

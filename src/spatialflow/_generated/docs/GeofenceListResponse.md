@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **geofences** | [**List[GeofenceResponse]**](GeofenceResponse.md) |  | 
 **count** | **int** |  | 
+**total_count** | **int** |  | 
 
 ## Example
 

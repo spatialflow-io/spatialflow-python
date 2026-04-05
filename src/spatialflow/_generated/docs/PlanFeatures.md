@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **support** | **str** |  | 
 **custom_domains** | **str** |  | [optional] 
 **sla** | **str** |  | [optional] 
+**feature_list** | **List[str]** | Feature list from model | [optional] 
 
 ## Example
 

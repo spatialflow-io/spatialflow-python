@@ -30,6 +30,8 @@ Name | Type | Description | Notes
 **default_geofence_color** | **str** |  | [optional] [default to '#3B82F6']
 **show_tutorial_tooltips** | **bool** |  | [optional] [default to True]
 **default_api_version** | **str** |  | [optional] [default to 'v1']
+**workspace_role** | **str** |  | [optional] 
+**workspace_id** | **str** |  | [optional] 
 **selected_plan** | **str** |  | [optional] [default to 'free']
 **company** | **str** |  | [optional] 
 

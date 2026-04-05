@@ -6,7 +6,7 @@ Detailed integration response with masked config
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **UUID** |  | 
+**id** | **str** |  | 
 **name** | **str** |  | 
 **type** | **str** |  | 
 **description** | **str** |  | 

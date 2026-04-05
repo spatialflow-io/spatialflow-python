@@ -1,6 +1,6 @@
 # spatialflow_generated.IntegrationsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -24,7 +24,7 @@ Method | HTTP request | Description
 [**apps_integrations_api_list_integrations**](IntegrationsApi.md#apps_integrations_api_list_integrations) | **GET** /api/v1/integrations/ | List Integrations
 [**apps_integrations_api_oauth_authorize**](IntegrationsApi.md#apps_integrations_api_oauth_authorize) | **GET** /api/v1/integrations/{integration_type}/oauth/authorize | Oauth Authorize
 [**apps_integrations_api_oauth_callback**](IntegrationsApi.md#apps_integrations_api_oauth_callback) | **POST** /api/v1/integrations/{integration_type}/oauth/callback | Oauth Callback
-[**apps_integrations_api_test_bulk_integrations**](IntegrationsApi.md#apps_integrations_api_test_bulk_integrations) | **POST** /api/v1/integrations/test-bulk | Test Bulk Integrations
+[**apps_integrations_api_test_all_integrations**](IntegrationsApi.md#apps_integrations_api_test_all_integrations) | **POST** /api/v1/integrations/test-bulk | Test All Integrations
 [**apps_integrations_api_test_integration**](IntegrationsApi.md#apps_integrations_api_test_integration) | **POST** /api/v1/integrations/{integration_id}/test | Test Integration
 [**apps_integrations_api_update_config_field**](IntegrationsApi.md#apps_integrations_api_update_config_field) | **PUT** /api/v1/integrations/admin/integration-types/{integration_type_id}/fields/{field_id} | Update Config Field
 [**apps_integrations_api_update_integration**](IntegrationsApi.md#apps_integrations_api_update_integration) | **PUT** /api/v1/integrations/{integration_id} | Update Integration
@@ -36,9 +36,7 @@ Method | HTTP request | Description
 
 Bulk Export Integrations
 
-Export multiple integrations at once.
-
-If integration_ids is not provided, exports all user's integrations.
+Export multiple integrations at once.  If integration_ids is not provided, exports all user's integrations.
 
 ### Example
 
@@ -51,10 +49,10 @@ from spatialflow_generated.models.export_integration_schema import ExportIntegra
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -78,7 +76,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
     include_secrets = False # bool |  (optional) (default to False)
-    request_body = None # List[Optional[UUID]] |  (optional)
+    request_body = ['request_body_example'] # List[Optional[str]] |  (optional)
 
     try:
         # Bulk Export Integrations
@@ -97,7 +95,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_secrets** | **bool**|  | [optional] [default to False]
- **request_body** | [**List[Optional[UUID]]**](UUID.md)|  | [optional] 
+ **request_body** | [**List[Optional[str]]**](str.md)|  | [optional] 
 
 ### Return type
 
@@ -117,6 +115,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -139,10 +141,10 @@ from spatialflow_generated.models.import_result_schema import ImportResultSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -207,6 +209,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -229,10 +235,10 @@ from spatialflow_generated.models.config_field_definition_response import Config
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -255,7 +261,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
     config_field_definition_request = spatialflow_generated.ConfigFieldDefinitionRequest() # ConfigFieldDefinitionRequest | 
 
     try:
@@ -274,7 +280,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
  **config_field_definition_request** | [**ConfigFieldDefinitionRequest**](ConfigFieldDefinitionRequest.md)|  | 
 
 ### Return type
@@ -295,6 +301,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -317,10 +329,10 @@ from spatialflow_generated.models.integration_detail_schema import IntegrationDe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -380,7 +392,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -403,10 +421,10 @@ from spatialflow_generated.models.integration_type_response import IntegrationTy
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -467,6 +485,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -488,10 +512,10 @@ from spatialflow_generated.models.action_response import ActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -514,8 +538,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
-    field_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
+    field_id = 'field_id_example' # str | 
 
     try:
         # Delete Config Field
@@ -533,8 +557,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
- **field_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
+ **field_id** | **str**|  | 
 
 ### Return type
 
@@ -554,6 +578,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -574,10 +604,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -600,7 +630,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_id = 'integration_id_example' # str | 
 
     try:
         # Delete Integration
@@ -618,7 +648,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **UUID**|  | 
+ **integration_id** | **str**|  | 
 
 ### Return type
 
@@ -638,6 +668,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -659,10 +694,10 @@ from spatialflow_generated.models.action_response import ActionResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -685,7 +720,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
 
     try:
         # Delete Integration Type
@@ -703,7 +738,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
 
 ### Return type
 
@@ -723,6 +758,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -731,10 +772,7 @@ Name | Type | Description  | Notes
 
 Export Integration
 
-Export integration configuration.
-
-By default, sensitive data is encrypted. Set include_secrets=true to include
-decrypted sensitive data (use with caution).
+Export integration configuration.  By default, sensitive data is encrypted. Set include_secrets=true to include decrypted sensitive data (use with caution).
 
 ### Example
 
@@ -747,10 +785,10 @@ from spatialflow_generated.models.export_integration_schema import ExportIntegra
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -773,7 +811,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_id = 'integration_id_example' # str | 
     include_secrets = False # bool |  (optional) (default to False)
 
     try:
@@ -792,7 +830,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **UUID**|  | 
+ **integration_id** | **str**|  | 
  **include_secrets** | **bool**|  | [optional] [default to False]
 
 ### Return type
@@ -813,6 +851,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -833,10 +876,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -893,6 +936,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -914,10 +961,10 @@ from spatialflow_generated.models.integration_detail_schema import IntegrationDe
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -940,7 +987,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_id = 'integration_id_example' # str | 
 
     try:
         # Get Integration
@@ -958,7 +1005,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **UUID**|  | 
+ **integration_id** | **str**|  | 
 
 ### Return type
 
@@ -978,6 +1025,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -986,18 +1037,7 @@ Name | Type | Description  | Notes
 
 Get Integration Error Stats
 
-Get integration error statistics for the dashboard health strip.
-
-Returns count of failed integration usage logs in the last 24 hours
-and timestamp of the most recent error.
-
-Returns:
-    200: Error statistics
-    401: Unauthorized - invalid or missing authentication
-
-Example:
-    GET /api/v1/integrations/error-stats
-    Response: { "error_count_24h": 5, "last_error_at": "2025-10-05T12:34:56Z" }
+Get integration error statistics for the dashboard health strip.  Returns count of failed integration usage logs in the last 24 hours and timestamp of the most recent error.  Returns:     200: Error statistics     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/integrations/error-stats     Response: { \"error_count_24h\": 5, \"last_error_at\": \"2025-10-05T12:34:56Z\" }
 
 ### Example
 
@@ -1009,10 +1049,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1069,6 +1109,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1090,10 +1134,10 @@ from spatialflow_generated.models.integration_stats_schema import IntegrationSta
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1116,7 +1160,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_id = 'integration_id_example' # str | 
 
     try:
         # Get Integration Stats
@@ -1134,7 +1178,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **UUID**|  | 
+ **integration_id** | **str**|  | 
 
 ### Return type
 
@@ -1154,6 +1198,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1175,10 +1223,10 @@ from spatialflow_generated.models.integration_type_response import IntegrationTy
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1201,7 +1249,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
 
     try:
         # Get Integration Type
@@ -1219,7 +1267,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
 
 ### Return type
 
@@ -1239,6 +1287,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1247,11 +1300,7 @@ Name | Type | Description  | Notes
 
 Import Integration
 
-Import integration from exported data.
-
-If an integration with the same name exists:
-- Set overwrite=true to replace it
-- Set overwrite=false to create with a new name (default)
+Import integration from exported data.  If an integration with the same name exists: - Set overwrite=true to replace it - Set overwrite=false to create with a new name (default)
 
 ### Example
 
@@ -1265,10 +1314,10 @@ from spatialflow_generated.models.import_result_schema import ImportResultSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1329,6 +1378,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1350,10 +1405,10 @@ from spatialflow_generated.models.config_field_definition_response import Config
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1376,7 +1431,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
 
     try:
         # List Config Fields
@@ -1394,7 +1449,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
 
 ### Return type
 
@@ -1414,6 +1469,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1435,10 +1495,10 @@ from spatialflow_generated.models.integration_type_list_response import Integrat
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1507,6 +1567,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1528,10 +1593,10 @@ from spatialflow_generated.models.integration_response_schema import Integration
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1598,11 +1663,15 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_oauth_authorize**
-> apps_integrations_api_oauth_authorize(integration_type)
+> Dict[str, object] apps_integrations_api_oauth_authorize(integration_type)
 
 Oauth Authorize
 
@@ -1618,10 +1687,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1648,7 +1717,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Oauth Authorize
-        await api_instance.apps_integrations_api_oauth_authorize(integration_type)
+        api_response = await api_instance.apps_integrations_api_oauth_authorize(integration_type)
+        print("The response of IntegrationsApi->apps_integrations_api_oauth_authorize:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling IntegrationsApi->apps_integrations_api_oauth_authorize: %s\n" % e)
 ```
@@ -1664,7 +1735,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -1673,18 +1744,24 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_oauth_callback**
-> apps_integrations_api_oauth_callback(integration_type, code, state)
+> IntegrationDetailSchema apps_integrations_api_oauth_callback(integration_type, code, state)
 
 Oauth Callback
 
@@ -1697,13 +1774,14 @@ Handle OAuth callback
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.integration_detail_schema import IntegrationDetailSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1732,7 +1810,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Oauth Callback
-        await api_instance.apps_integrations_api_oauth_callback(integration_type, code, state)
+        api_response = await api_instance.apps_integrations_api_oauth_callback(integration_type, code, state)
+        print("The response of IntegrationsApi->apps_integrations_api_oauth_callback:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling IntegrationsApi->apps_integrations_api_oauth_callback: %s\n" % e)
 ```
@@ -1750,7 +1830,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**IntegrationDetailSchema**](IntegrationDetailSchema.md)
 
 ### Authorization
 
@@ -1759,22 +1839,28 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **apps_integrations_api_test_bulk_integrations**
-> List[TestIntegrationResponseSchema] apps_integrations_api_test_bulk_integrations()
+# **apps_integrations_api_test_all_integrations**
+> List[Dict[str, object]] apps_integrations_api_test_all_integrations()
 
-Test Bulk Integrations
+Test All Integrations
 
-Test all active integrations for the user
+Test all user's integrations in parallel.  Returns a detailed report for each integration including: - Success/failure status - Response time - Error messages if any - Last verification time
 
 ### Example
 
@@ -1783,14 +1869,13 @@ Test all active integrations for the user
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.test_integration_response_schema import TestIntegrationResponseSchema
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1815,12 +1900,12 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
 
     try:
-        # Test Bulk Integrations
-        api_response = await api_instance.apps_integrations_api_test_bulk_integrations()
-        print("The response of IntegrationsApi->apps_integrations_api_test_bulk_integrations:\n")
+        # Test All Integrations
+        api_response = await api_instance.apps_integrations_api_test_all_integrations()
+        print("The response of IntegrationsApi->apps_integrations_api_test_all_integrations:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling IntegrationsApi->apps_integrations_api_test_bulk_integrations: %s\n" % e)
+        print("Exception when calling IntegrationsApi->apps_integrations_api_test_all_integrations: %s\n" % e)
 ```
 
 
@@ -1831,7 +1916,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[TestIntegrationResponseSchema]**](TestIntegrationResponseSchema.md)
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -1847,6 +1932,10 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1868,10 +1957,10 @@ from spatialflow_generated.models.test_integration_response_schema import TestIn
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1894,7 +1983,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_id = 'integration_id_example' # str | 
 
     try:
         # Test Integration
@@ -1912,7 +2001,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **UUID**|  | 
+ **integration_id** | **str**|  | 
 
 ### Return type
 
@@ -1932,6 +2021,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1954,10 +2047,10 @@ from spatialflow_generated.models.config_field_definition_response import Config
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1980,8 +2073,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
-    field_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
+    field_id = 'field_id_example' # str | 
     config_field_definition_request = spatialflow_generated.ConfigFieldDefinitionRequest() # ConfigFieldDefinitionRequest | 
 
     try:
@@ -2000,8 +2093,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
- **field_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
+ **field_id** | **str**|  | 
  **config_field_definition_request** | [**ConfigFieldDefinitionRequest**](ConfigFieldDefinitionRequest.md)|  | 
 
 ### Return type
@@ -2022,6 +2115,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2044,10 +2143,10 @@ from spatialflow_generated.models.update_integration_schema import UpdateIntegra
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2070,7 +2169,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_id = 'integration_id_example' # str | 
     update_integration_schema = spatialflow_generated.UpdateIntegrationSchema() # UpdateIntegrationSchema | 
 
     try:
@@ -2089,7 +2188,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_id** | **UUID**|  | 
+ **integration_id** | **str**|  | 
  **update_integration_schema** | [**UpdateIntegrationSchema**](UpdateIntegrationSchema.md)|  | 
 
 ### Return type
@@ -2110,6 +2209,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+**403** | Forbidden |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2132,10 +2237,10 @@ from spatialflow_generated.models.integration_type_response import IntegrationTy
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -2158,7 +2263,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
-    integration_type_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    integration_type_id = 'integration_type_id_example' # str | 
     integration_type_request = spatialflow_generated.IntegrationTypeRequest() # IntegrationTypeRequest | 
 
     try:
@@ -2177,7 +2282,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type_id** | **UUID**|  | 
+ **integration_type_id** | **str**|  | 
  **integration_type_request** | [**IntegrationTypeRequest**](IntegrationTypeRequest.md)|  | 
 
 ### Return type
@@ -2198,6 +2303,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

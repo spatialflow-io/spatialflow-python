@@ -1,6 +1,6 @@
 # spatialflow_generated.TilesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -17,22 +17,21 @@ Method | HTTP request | Description
 
 Get Raster Tile
 
-Placeholder for raster tile support.
-Currently returns 404 as we only support vector tiles.
+Placeholder for raster tile support. Currently returns 404 as we only support vector tiles.
 
 ### Example
 
-* Bearer Authentication (JWTBearer):
+* Bearer Authentication (TileJWTAuth):
 
 ```python
 import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -40,7 +39,7 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: JWTBearer
+# Configure Bearer authorization: TileJWTAuth
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -77,7 +76,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[TileJWTAuth](../README.md#TileJWTAuth)
 
 ### HTTP request headers
 
@@ -88,7 +87,10 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -97,29 +99,21 @@ void (empty response body)
 
 Get Tile
 
-Generate MVT tile for geofences.
-
-Args:
-    z: Zoom level (0-16)
-    x: Tile X coordinate
-    y: Tile Y coordinate
-
-Returns:
-    MVT tile binary data or 204 No Content for empty tiles
+Generate MVT tile for geofences.  Args:     z: Zoom level (0-16)     x: Tile X coordinate     y: Tile Y coordinate  Returns:     MVT tile binary data or 204 No Content for empty tiles
 
 ### Example
 
-* Bearer Authentication (JWTBearer):
+* Bearer Authentication (TileJWTAuth):
 
 ```python
 import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -127,7 +121,7 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: JWTBearer
+# Configure Bearer authorization: TileJWTAuth
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -166,7 +160,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[TileJWTAuth](../README.md#TileJWTAuth)
 
 ### HTTP request headers
 
@@ -181,6 +175,10 @@ Name | Type | Description  | Notes
 **204** | No Content |  -  |
 **400** | Bad Request |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -189,13 +187,11 @@ Name | Type | Description  | Notes
 
 Get Tile Metadata
 
-Get metadata about available tiles.
-
-Returns information about zoom levels, bounds, and layer details.
+Get metadata about available tiles.  Returns information about zoom levels, bounds, and layer details.
 
 ### Example
 
-* Bearer Authentication (JWTBearer):
+* Bearer Authentication (TileJWTAuth):
 
 ```python
 import spatialflow_generated
@@ -203,10 +199,10 @@ from spatialflow_generated.models.tile_metadata import TileMetadata
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -214,7 +210,7 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: JWTBearer
+# Configure Bearer authorization: TileJWTAuth
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -245,7 +241,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[TileJWTAuth](../README.md#TileJWTAuth)
 
 ### HTTP request headers
 
@@ -258,6 +254,10 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -266,23 +266,21 @@ This endpoint does not need any parameter.
 
 Get Tile Style
 
-Get a custom tile style configuration.
-
-Future endpoint for custom map styles.
+Get a custom tile style configuration.  Future endpoint for custom map styles.
 
 ### Example
 
-* Bearer Authentication (JWTBearer):
+* Bearer Authentication (TileJWTAuth):
 
 ```python
 import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -290,7 +288,7 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: JWTBearer
+# Configure Bearer authorization: TileJWTAuth
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -323,7 +321,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[TileJWTAuth](../README.md#TileJWTAuth)
 
 ### HTTP request headers
 
@@ -334,12 +332,16 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**401** | Unauthorized |  -  |
 **501** | Not Implemented |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_tiles_api_health_check**
-> apps_tiles_api_health_check()
+> Dict[str, object] apps_tiles_api_health_check()
 
 Health Check
 
@@ -353,10 +355,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 
@@ -367,7 +369,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Health Check
-        await api_instance.apps_tiles_api_health_check()
+        api_response = await api_instance.apps_tiles_api_health_check()
+        print("The response of TilesApi->apps_tiles_api_health_check:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling TilesApi->apps_tiles_api_health_check: %s\n" % e)
 ```
@@ -380,7 +384,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -389,13 +393,17 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -404,23 +412,21 @@ No authorization required
 
 Invalidate Tiles
 
-Invalidate all cached tiles for the current workspace.
-
-This should be called when geofences are modified.
+Invalidate all cached tiles for the current workspace.  This should be called when geofences are modified.
 
 ### Example
 
-* Bearer Authentication (JWTBearer):
+* Bearer Authentication (TileJWTAuth):
 
 ```python
 import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -428,7 +434,7 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: JWTBearer
+# Configure Bearer authorization: TileJWTAuth
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -459,7 +465,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[TileJWTAuth](../README.md#TileJWTAuth)
 
 ### HTTP request headers
 
@@ -472,6 +478,10 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

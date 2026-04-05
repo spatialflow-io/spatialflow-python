@@ -1,6 +1,6 @@
 # spatialflow_generated.GPXSimulatorApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -21,9 +21,7 @@ Method | HTTP request | Description
 
 Cancel Gpx Playback
 
-Cancel an active or paused playback.
-
-The playback cannot be resumed after cancellation.
+Cancel an active or paused playback.  The playback cannot be resumed after cancellation.
 
 ### Example
 
@@ -35,10 +33,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -61,7 +59,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    playback_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    playback_id = 'playback_id_example' # str | 
 
     try:
         # Cancel Gpx Playback
@@ -79,7 +77,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **playback_id** | **UUID**|  | 
+ **playback_id** | **str**|  | 
 
 ### Return type
 
@@ -99,6 +97,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -119,10 +121,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -145,7 +147,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    route_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    route_id = 'route_id_example' # str | 
 
     try:
         # Delete Gpx Route
@@ -163,7 +165,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **route_id** | **UUID**|  | 
+ **route_id** | **str**|  | 
 
 ### Return type
 
@@ -183,6 +185,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -204,10 +210,10 @@ from spatialflow_generated.models.gpx_playback_out import GPXPlaybackOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -230,7 +236,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    playback_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    playback_id = 'playback_id_example' # str | 
 
     try:
         # Get Gpx Playback
@@ -248,7 +254,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **playback_id** | **UUID**|  | 
+ **playback_id** | **str**|  | 
 
 ### Return type
 
@@ -268,6 +274,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -289,10 +299,10 @@ from spatialflow_generated.models.gpx_route_out import GPXRouteOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -315,7 +325,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    route_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    route_id = 'route_id_example' # str | 
 
     try:
         # Get Gpx Route
@@ -333,7 +343,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **route_id** | **UUID**|  | 
+ **route_id** | **str**|  | 
 
 ### Return type
 
@@ -353,6 +363,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -361,15 +375,7 @@ Name | Type | Description  | Notes
 
 List Gpx Playbacks
 
-List GPX playback sessions.
-
-Args:
-    status: Optional filter by status (running, paused, completed, cancelled, failed)
-    limit: Maximum number of results
-    offset: Pagination offset
-
-Returns:
-    List of playback sessions
+List GPX playback sessions.  Args:     status: Optional filter by status (running, paused, completed, cancelled, failed)     limit: Maximum number of results     offset: Pagination offset  Returns:     List of playback sessions
 
 ### Example
 
@@ -382,10 +388,10 @@ from spatialflow_generated.models.gpx_playback_out import GPXPlaybackOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -450,6 +456,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -458,15 +468,7 @@ Name | Type | Description  | Notes
 
 List Gpx Routes
 
-List GPX routes for the authenticated user.
-
-Args:
-    device_id: Optional filter by device
-    limit: Maximum number of results
-    offset: Pagination offset
-
-Returns:
-    List of GPX routes
+List GPX routes for the authenticated user.  Args:     device_id: Optional filter by device     limit: Maximum number of results     offset: Pagination offset  Returns:     List of GPX routes
 
 ### Example
 
@@ -479,10 +481,10 @@ from spatialflow_generated.models.gpx_route_out import GPXRouteOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -547,6 +549,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -555,9 +561,7 @@ Name | Type | Description  | Notes
 
 Pause Gpx Playback
 
-Pause an active playback.
-
-The playback will stop at the current point and can be resumed later.
+Pause an active playback.  The playback will stop at the current point and can be resumed later.
 
 ### Example
 
@@ -570,10 +574,10 @@ from spatialflow_generated.models.gpx_playback_out import GPXPlaybackOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -596,7 +600,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    playback_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    playback_id = 'playback_id_example' # str | 
 
     try:
         # Pause Gpx Playback
@@ -614,7 +618,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **playback_id** | **UUID**|  | 
+ **playback_id** | **str**|  | 
 
 ### Return type
 
@@ -634,6 +638,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -642,9 +651,7 @@ Name | Type | Description  | Notes
 
 Resume Gpx Playback
 
-Resume a paused playback.
-
-Continues from the point where it was paused.
+Resume a paused playback.  Continues from the point where it was paused.
 
 ### Example
 
@@ -657,10 +664,10 @@ from spatialflow_generated.models.gpx_playback_out import GPXPlaybackOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -683,7 +690,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    playback_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    playback_id = 'playback_id_example' # str | 
 
     try:
         # Resume Gpx Playback
@@ -701,7 +708,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **playback_id** | **UUID**|  | 
+ **playback_id** | **str**|  | 
 
 ### Return type
 
@@ -721,6 +728,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -729,19 +741,7 @@ Name | Type | Description  | Notes
 
 Start Gpx Playback
 
-Start playback of a GPX route.
-
-Creates a playback session and starts the Celery task to simulate
-device movement along the route.
-
-Args:
-    route_id: ID of the route to play
-    data: Playback configuration (speed, loop)
-
-Returns:
-    201: Created playback session
-    400: Invalid request or playback already active
-    404: Route not found
+Start playback of a GPX route.  Creates a playback session and starts the Celery task to simulate device movement along the route.  Args:     route_id: ID of the route to play     data: Playback configuration (speed, loop)  Returns:     201: Created playback session     400: Invalid request or playback already active     404: Route not found
 
 ### Example
 
@@ -755,10 +755,10 @@ from spatialflow_generated.models.start_playback_request import StartPlaybackReq
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -781,7 +781,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GPXSimulatorApi(api_client)
-    route_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    route_id = 'route_id_example' # str | 
     start_playback_request = spatialflow_generated.StartPlaybackRequest() # StartPlaybackRequest | 
 
     try:
@@ -800,7 +800,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **route_id** | **UUID**|  | 
+ **route_id** | **str**|  | 
  **start_playback_request** | [**StartPlaybackRequest**](StartPlaybackRequest.md)|  | 
 
 ### Return type
@@ -821,6 +821,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -829,21 +834,7 @@ Name | Type | Description  | Notes
 
 Upload Gpx Route
 
-Upload and parse a GPX file to create a new route.
-
-The GPX file is parsed, validated, and stored in S3. Track points are
-extracted and saved for efficient playback.
-
-Args:
-    device_id: Device to associate with this route
-    name: Name for the route
-    file: GPX file upload
-    description: Optional route description
-
-Returns:
-    201: Created route details
-    400: Invalid GPX file or device
-    401: Unauthorized
+Upload and parse a GPX file to create a new route.  The GPX file is parsed, validated, and stored in S3. Track points are extracted and saved for efficient playback.  Args:     device_id: Device to associate with this route     name: Name for the route     file: GPX file upload     description: Optional route description  Returns:     201: Created route details     400: Invalid GPX file or device     401: Unauthorized
 
 ### Example
 
@@ -856,10 +847,10 @@ from spatialflow_generated.models.gpx_route_out import GPXRouteOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -926,6 +917,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

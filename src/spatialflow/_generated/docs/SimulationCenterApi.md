@@ -1,6 +1,6 @@
 # spatialflow_generated.SimulationCenterApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -26,14 +26,7 @@ Method | HTTP request | Description
 
 Create Simulation
 
-Create a new simulation session.
-
-Simulations start in 'draft' status. Add routes, then start the simulation.
-
-Returns:
-    201: Created simulation
-    400: Invalid request
-    401: Unauthorized
+Create a new simulation session.  Simulations start in 'draft' status. Add routes, then start the simulation.  Returns:     201: Created simulation     400: Invalid request     401: Unauthorized
 
 ### Example
 
@@ -47,10 +40,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -111,6 +104,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -119,9 +117,7 @@ Name | Type | Description  | Notes
 
 Delete Simulation
 
-Delete a simulation and all associated data.
-
-Running simulations will be cancelled first.
+Delete a simulation and all associated data.  Running simulations will be cancelled first.
 
 ### Example
 
@@ -133,10 +129,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -159,7 +155,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Delete Simulation
@@ -177,7 +173,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -197,6 +193,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -205,9 +205,7 @@ Name | Type | Description  | Notes
 
 Get Route Track Points
 
-Get track points for a simulation route.
-
-Returns the full list of coordinates for drawing the route on a map.
+Get track points for a simulation route.  Returns the full list of coordinates for drawing the route on a map.
 
 ### Example
 
@@ -220,10 +218,10 @@ from spatialflow_generated.models.route_track_points_out import RouteTrackPoints
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -246,8 +244,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
-    route_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
+    route_id = 'route_id_example' # str | 
 
     try:
         # Get Route Track Points
@@ -265,8 +263,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
- **route_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
+ **route_id** | **str**|  | 
 
 ### Return type
 
@@ -286,7 +284,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -308,10 +309,10 @@ from spatialflow_generated.models.simulation_detail_out import SimulationDetailO
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -334,7 +335,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Get Simulation
@@ -352,7 +353,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -372,6 +373,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -380,12 +385,7 @@ Name | Type | Description  | Notes
 
 List Simulation Events
 
-List events from a simulation.
-
-Args:
-    event_type: Optional filter by event type
-    limit: Maximum number of results
-    offset: Pagination offset
+List events from a simulation.  Args:     event_type: Optional filter by event type     limit: Maximum number of results     offset: Pagination offset
 
 ### Example
 
@@ -398,10 +398,10 @@ from spatialflow_generated.models.simulation_event_out import SimulationEventOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -424,7 +424,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
     event_type = 'event_type_example' # str |  (optional)
     limit = 100 # int |  (optional) (default to 100)
     offset = 0 # int |  (optional) (default to 0)
@@ -445,7 +445,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
  **event_type** | **str**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 100]
  **offset** | **int**|  | [optional] [default to 0]
@@ -468,6 +468,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -476,15 +480,7 @@ Name | Type | Description  | Notes
 
 List Simulations
 
-List simulations for the authenticated user.
-
-Args:
-    status: Optional filter by status
-    limit: Maximum number of results
-    offset: Pagination offset
-
-Returns:
-    List of simulations
+List simulations for the authenticated user.  Args:     status: Optional filter by status     limit: Maximum number of results     offset: Pagination offset  Returns:     List of simulations
 
 ### Example
 
@@ -497,10 +493,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -565,6 +561,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -573,9 +573,7 @@ Name | Type | Description  | Notes
 
 Pause Simulation
 
-Pause simulation playback.
-
-All routes will stop at their current point and can be resumed.
+Pause simulation playback.  All routes will stop at their current point and can be resumed.
 
 ### Example
 
@@ -588,10 +586,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -614,7 +612,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Pause Simulation
@@ -632,7 +630,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -652,7 +650,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **409** | Conflict |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -661,9 +663,7 @@ Name | Type | Description  | Notes
 
 Remove Route
 
-Remove a route from the simulation.
-
-Can only remove routes when simulation is in 'draft' or 'ready' state.
+Remove a route from the simulation.  Can only remove routes when simulation is in 'draft' or 'ready' state.
 
 ### Example
 
@@ -675,10 +675,10 @@ import spatialflow_generated
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -701,8 +701,8 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
-    route_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
+    route_id = 'route_id_example' # str | 
 
     try:
         # Remove Route
@@ -720,8 +720,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
- **route_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
+ **route_id** | **str**|  | 
 
 ### Return type
 
@@ -742,6 +742,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -750,9 +754,7 @@ Name | Type | Description  | Notes
 
 Reset Simulation
 
-Reset a completed/cancelled/failed simulation to 'ready' state.
-
-Clears all events and resets route progress.
+Reset a completed/cancelled/failed simulation to 'ready' state.  Clears all events and resets route progress.
 
 ### Example
 
@@ -765,10 +767,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -791,7 +793,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Reset Simulation
@@ -809,7 +811,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -830,6 +832,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -838,9 +844,7 @@ Name | Type | Description  | Notes
 
 Resume Simulation
 
-Resume a paused simulation.
-
-Routes continue from their checkpointed positions.
+Resume a paused simulation.  Routes continue from their checkpointed positions.
 
 ### Example
 
@@ -853,10 +857,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -879,7 +883,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Resume Simulation
@@ -897,7 +901,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -917,7 +921,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **409** | Conflict |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -926,9 +934,7 @@ Name | Type | Description  | Notes
 
 Start Simulation
 
-Start simulation playback.
-
-Creates transient devices and queues Celery tasks for each route.
+Start simulation playback.  Creates transient devices and queues Celery tasks for each route.
 
 ### Example
 
@@ -941,10 +947,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -967,7 +973,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Start Simulation
@@ -985,7 +991,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -1006,7 +1012,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **409** | Conflict |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1015,9 +1025,7 @@ Name | Type | Description  | Notes
 
 Stop Simulation
 
-Stop simulation and reset all routes.
-
-Running tasks will be cancelled. Routes are reset to start positions.
+Stop simulation and reset all routes.  Running tasks will be cancelled. Routes are reset to start positions.
 
 ### Example
 
@@ -1030,10 +1038,10 @@ from spatialflow_generated.models.simulation_out import SimulationOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1056,7 +1064,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
 
     try:
         # Stop Simulation
@@ -1074,7 +1082,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
 
 ### Return type
 
@@ -1094,7 +1102,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **409** | Conflict |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1103,10 +1115,7 @@ Name | Type | Description  | Notes
 
 Update Simulation
 
-Update simulation settings.
-
-Can only update simulations in 'draft' or 'ready' state.
-Speed multiplier can be updated during 'running' state.
+Update simulation settings.  Can only update simulations in 'draft' or 'ready' state. Speed multiplier can be updated during 'running' state.
 
 ### Example
 
@@ -1120,10 +1129,10 @@ from spatialflow_generated.models.update_simulation_request import UpdateSimulat
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1146,7 +1155,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
     update_simulation_request = spatialflow_generated.UpdateSimulationRequest() # UpdateSimulationRequest | 
 
     try:
@@ -1165,7 +1174,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
  **update_simulation_request** | [**UpdateSimulationRequest**](UpdateSimulationRequest.md)|  | 
 
 ### Return type
@@ -1187,6 +1196,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1195,10 +1208,7 @@ Name | Type | Description  | Notes
 
 Upload Csv Route
 
-Upload a CSV time-series file and add it as a route to the simulation.
-
-CSV must have columns: latitude, longitude, timestamp
-Optional columns: elevation, speed, heading
+Upload a CSV time-series file and add it as a route to the simulation.  CSV must have columns: latitude, longitude, timestamp Optional columns: elevation, speed, heading
 
 ### Example
 
@@ -1211,10 +1221,10 @@ from spatialflow_generated.models.route_upload_response import RouteUploadRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1237,7 +1247,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
     file = None # bytearray | 
     simulated_device_name = '' # str |  (optional) (default to '')
     simulated_device_type = 'simulation' # str |  (optional) (default to 'simulation')
@@ -1258,7 +1268,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
  **file** | **bytearray**|  | 
  **simulated_device_name** | **str**|  | [optional] [default to &#39;&#39;]
  **simulated_device_type** | **str**|  | [optional] [default to &#39;simulation&#39;]
@@ -1282,6 +1292,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1303,10 +1317,10 @@ from spatialflow_generated.models.route_upload_response import RouteUploadRespon
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://api.spatialflow.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = spatialflow_generated.Configuration(
-    host = "http://localhost"
+    host = "https://api.spatialflow.io"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1329,7 +1343,7 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.SimulationCenterApi(api_client)
-    simulation_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    simulation_id = 'simulation_id_example' # str | 
     file = None # bytearray | 
     simulated_device_name = '' # str |  (optional) (default to '')
     simulated_device_type = 'simulation' # str |  (optional) (default to 'simulation')
@@ -1350,7 +1364,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **simulation_id** | **UUID**|  | 
+ **simulation_id** | **str**|  | 
  **file** | **bytearray**|  | 
  **simulated_device_name** | **str**|  | [optional] [default to &#39;&#39;]
  **simulated_device_type** | **str**|  | [optional] [default to &#39;simulation&#39;]
@@ -1374,6 +1388,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

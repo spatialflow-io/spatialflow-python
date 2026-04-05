@@ -14,6 +14,15 @@ Name | Type | Description | Notes
 **features** | [**PlanFeatures**](PlanFeatures.md) |  | 
 **limits** | [**PlanLimits**](PlanLimits.md) |  | 
 **stripe_price_id** | **str** |  | [optional] 
+**tier** | **str** | Lowercase plan name (e.g., &#39;free&#39;, &#39;pro&#39;) | [optional] [default to '']
+**display_name** | **str** | Human-readable plan name | [optional] [default to '']
+**price_monthly** | **float** | Monthly price in dollars | [optional] [default to 0]
+**price_yearly** | **float** | Yearly price in dollars | [optional] [default to 0]
+**stripe_price_monthly_id** | **str** |  | [optional] 
+**stripe_price_yearly_id** | **str** |  | [optional] 
+**event_overage_rate** | **float** | Price per extra 100k events | [optional] [default to 0]
+**geofence_overage_rate** | **float** | Price per extra 100 geofences | [optional] [default to 0]
+**is_featured** | **bool** | Whether this plan is featured/recommended | [optional] [default to False]
 
 ## Example
 

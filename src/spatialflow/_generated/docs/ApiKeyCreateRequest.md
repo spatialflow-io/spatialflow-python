@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] [default to 'Default']
 **permissions** | **List[str]** |  | [optional] 
+**read_only** | **bool** |  | [optional] [default to False]
+**description** | **str** |  | [optional] 
 
 ## Example
 

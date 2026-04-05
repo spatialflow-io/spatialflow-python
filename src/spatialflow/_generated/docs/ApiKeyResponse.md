@@ -15,6 +15,10 @@ Name | Type | Description | Notes
 **rate_limit_per_hour** | **int** |  | 
 **last_used_at** | **datetime** |  | [optional] 
 **created_at** | **datetime** |  | 
+**read_only** | **bool** |  | [optional] [default to False]
+**description** | **str** |  | [optional] 
+**workspace_id** | **str** |  | [optional] 
+**expires_at** | **datetime** |  | [optional] 
 
 ## Example
 

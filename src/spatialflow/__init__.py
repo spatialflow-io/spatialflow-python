@@ -19,7 +19,7 @@ Example:
 
 """
 
-__version__ = "0.2.0"
+__version__ = "1.1.0"
 
 # Main client (imported early to get DEFAULT_BASE_URL)
 from .client import SpatialFlow, DEFAULT_BASE_URL

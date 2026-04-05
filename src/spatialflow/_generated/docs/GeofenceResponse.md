@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **id** | **str** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
-**geometry** | **Dict[str, object]** | GeoJSON geometry (Polygon, MultiPolygon, or Circle) | 
+**geometry** | [**Geometry**](Geometry.md) |  | 
 **geometry_type** | **str** | Logical geometry type: Polygon, MultiPolygon, or Circle | 
 **radius_meters** | **float** |  | [optional] 
 **webhook_url** | **str** |  | 

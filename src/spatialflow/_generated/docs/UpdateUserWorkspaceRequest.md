@@ -7,7 +7,7 @@ Request to update user's workspace.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **workspace_id** | **str** |  | 
-**role** | **str** |  | [optional] [default to 'member']
+**role** | **str** |  | [optional] [default to 'field_worker']
 
 ## Example
 

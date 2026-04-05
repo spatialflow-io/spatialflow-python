@@ -17,10 +17,13 @@ Name | Type | Description | Notes
 **updated_at** | **str** |  | 
 **is_superuser** | **bool** |  | 
 **is_staff** | **bool** |  | 
-**roles** | **List[str]** |  | 
+**roles** | **List[str]** |  | [optional] 
 **is_beta_user** | **bool** |  | [optional] 
 **admin_approved** | **bool** |  | [optional] 
 **admin_approved_at** | **str** |  | [optional] 
+**workspace_id** | **str** |  | [optional] 
+**workspace_slug** | **str** |  | [optional] 
+**workspace_role** | **str** |  | [optional] 
 
 ## Example
 

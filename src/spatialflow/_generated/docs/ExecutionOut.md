@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **UUID** |  | 
-**workflow_id** | **UUID** |  | 
+**id** | **str** |  | 
+**workflow_id** | **str** |  | 
 **workflow_name** | **str** |  | 
 **execution_id** | **str** |  | 
 **trigger_source** | **str** |  | 

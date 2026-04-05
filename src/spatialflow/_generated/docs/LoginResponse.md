@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **refresh_token** | **str** |  | 
 **token_type** | **str** |  | 
 **expires_in** | **int** |  | 
-**user** | **Dict[str, object]** |  | 
+**user** | [**UserResponse**](UserResponse.md) |  | 
 
 ## Example
 

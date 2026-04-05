@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **version** | **str** |  | 
-**workflow** | **Dict[str, object]** |  | 
+**workflow** | [**WorkflowImportDataSchema**](WorkflowImportDataSchema.md) |  | 
 
 ## Example
 

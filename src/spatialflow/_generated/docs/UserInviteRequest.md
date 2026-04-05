@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **workspace_id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **company** | **str** |  | [optional] 
-**role** | **str** |  | [optional] [default to 'member']
+**role** | **str** |  | [optional] [default to 'field_worker']
 
 ## Example
 

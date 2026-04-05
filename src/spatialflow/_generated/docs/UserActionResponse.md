@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **email_verified** | **bool** |  | [optional] 
 **admin_approved** | **bool** |  | [optional] 
 **admin_approved_at** | **str** |  | [optional] 
-**temporary_password** | **str** |  | [optional] 
+**password_set** | **bool** |  | [optional] [default to False]
 
 ## Example
 
