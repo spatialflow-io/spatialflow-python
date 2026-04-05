@@ -4,7 +4,7 @@ Pagination helpers for SpatialFlow SDK.
 Provides async iterators for paginated API responses.
 """
 
-from typing import TypeVar, Generic, AsyncIterator, Callable, Awaitable, Any, List
+from typing import TypeVar, Generic, AsyncIterator, Callable, Awaitable, Any, List, Optional
 
 T = TypeVar("T")
 
@@ -24,8 +24,8 @@ class PaginatedResponse(Generic[T]):
         self,
         items: List[T],
         count: int,
-        next_url: str | None = None,
-        previous_url: str | None = None,
+        next_url: Optional[str] = None,
+        previous_url: Optional[str] = None,
     ):
         self.items = items
         self.count = count
@@ -62,7 +62,7 @@ class AsyncPaginator(Generic[T]):
         fetch_page: Callable[[int, int], Awaitable[Any]],
         extract_items: Callable[[Any], List[T]],
         extract_count: Callable[[Any], int],
-        extract_next: Callable[[Any], str | None],
+        extract_next: Callable[[Any], Optional[str]],
         limit: int = 100,
     ):
         """
@@ -82,8 +82,8 @@ class AsyncPaginator(Generic[T]):
         self._limit = limit
         self._offset = 0
         self._exhausted = False
-        self._total_count: int | None = None
-        self._uses_cursor: bool | None = None  # Track if using cursor-based pagination
+        self._total_count: Optional[int] = None
+        self._uses_cursor: Optional[bool] = None  # Track if using cursor-based pagination
 
     async def __aiter__(self) -> AsyncIterator[T]:
         """Async iterate over all items across all pages."""
@@ -115,7 +115,7 @@ class AsyncPaginator(Generic[T]):
                 self._offset += self._limit
 
     @property
-    def total_count(self) -> int | None:
+    def total_count(self) -> Optional[int]:
         """
         Total count of items (available after first page is fetched).
         """
