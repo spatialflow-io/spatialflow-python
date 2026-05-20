@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **webhooks_delivered** | **int** | Monthly webhook delivery limit (-1 for unlimited) | 
 **test_points** | **int** | Monthly test point limit (-1 for unlimited) | 
 **rate_limit_per_hour** | **int** | Hourly rate limit | 
+**devices** | **int** | Maximum devices per workspace (-1 for unlimited) | [optional] [default to 5]
 **log_retention_days** | **int** | Log retention in days (-1 for unlimited) | [optional] [default to 7]
 **location_retention_days** | **int** | Location data retention in days | [optional] [default to 90]
 

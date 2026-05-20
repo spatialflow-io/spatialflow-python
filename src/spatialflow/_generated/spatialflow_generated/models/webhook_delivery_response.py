@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from .delivery_status_enum import DeliveryStatusEnum
 from typing import Optional, Set
@@ -41,7 +41,7 @@ class WebhookDeliveryResponse(BaseModel):
     response_time_ms: Optional[Union[StrictFloat, StrictInt]]
     error_message: Optional[StrictStr]
     attempt_count: StrictInt
-    retry_count: Optional[StrictInt] = 0
+    retry_count: Optional[StrictInt] = Field(default=0, description="Deprecated — use attempt_count")
     created_at: datetime
     delivered_at: Optional[datetime]
     next_retry_at: Optional[datetime]

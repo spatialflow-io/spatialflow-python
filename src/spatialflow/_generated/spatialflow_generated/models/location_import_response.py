@@ -35,7 +35,7 @@ class LocationImportResponse(BaseModel):
     invalid_rows: Optional[StrictInt] = 0
     processed_rows: Optional[StrictInt] = 0
     error_rate: Optional[Union[StrictFloat, StrictInt]] = 0.0
-    errors: Optional[List[Optional[Dict[str, Any]]]] = None
+    errors: Optional[List[Dict[str, Any]]] = None
     created_at: datetime
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None

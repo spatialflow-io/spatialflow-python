@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **recent_activities** | [**List[RecentActivity]**](RecentActivity.md) |  | 
 **account_created** | **str** |  | 
 **last_login** | **str** |  | 
+**last_seen_at** | **str** |  | [optional] 
 
 ## Example
 

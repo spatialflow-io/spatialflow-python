@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **maxzoom** | **int** |  | 
 **bounds** | **List[float]** |  | 
 **center** | **List[float]** |  | 
-**layers** | **List[Optional[Dict[str, object]]]** |  | 
+**layers** | **List[Dict[str, object]]** |  | 
 
 ## Example
 

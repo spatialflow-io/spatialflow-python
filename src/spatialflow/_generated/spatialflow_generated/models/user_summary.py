@@ -37,11 +37,12 @@ class UserSummary(BaseModel):
     admin_approved_at: Optional[StrictStr] = None
     created_at: Optional[StrictStr]
     last_login: Optional[StrictStr]
+    last_seen_at: Optional[StrictStr] = None
     updated_at: Optional[StrictStr] = None
     subscription_tier: Optional[StrictStr] = 'free'
     api_keys_count: StrictInt
     workspace: Optional[WorkspaceSummary] = None
-    __properties: ClassVar[List[str]] = ["id", "email", "name", "role", "email_verified", "is_beta_user", "admin_approved", "admin_approved_at", "created_at", "last_login", "updated_at", "subscription_tier", "api_keys_count", "workspace"]
+    __properties: ClassVar[List[str]] = ["id", "email", "name", "role", "email_verified", "is_beta_user", "admin_approved", "admin_approved_at", "created_at", "last_login", "last_seen_at", "updated_at", "subscription_tier", "api_keys_count", "workspace"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,6 +106,11 @@ class UserSummary(BaseModel):
         if self.last_login is None and "last_login" in self.model_fields_set:
             _dict['last_login'] = None
 
+        # set to None if last_seen_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_seen_at is None and "last_seen_at" in self.model_fields_set:
+            _dict['last_seen_at'] = None
+
         # set to None if updated_at (nullable) is None
         # and model_fields_set contains the field
         if self.updated_at is None and "updated_at" in self.model_fields_set:
@@ -137,6 +143,7 @@ class UserSummary(BaseModel):
             "admin_approved_at": obj.get("admin_approved_at"),
             "created_at": obj.get("created_at"),
             "last_login": obj.get("last_login"),
+            "last_seen_at": obj.get("last_seen_at"),
             "updated_at": obj.get("updated_at"),
             "subscription_tier": obj.get("subscription_tier") if obj.get("subscription_tier") is not None else 'free',
             "api_keys_count": obj.get("api_keys_count"),

@@ -26,6 +26,7 @@ from ..models.export_integration_schema import ExportIntegrationSchema
 from ..models.import_integration_schema import ImportIntegrationSchema
 from ..models.import_result_schema import ImportResultSchema
 from ..models.integration_detail_schema import IntegrationDetailSchema
+from ..models.integration_error_stats_out import IntegrationErrorStatsOut
 from ..models.integration_response_schema import IntegrationResponseSchema
 from ..models.integration_stats_schema import IntegrationStatsSchema
 from ..models.integration_type_list_response import IntegrationTypeListResponse
@@ -56,7 +57,7 @@ class IntegrationsApi:
     async def apps_integrations_api_bulk_export_integrations(
         self,
         include_secrets: Optional[StrictBool] = None,
-        request_body: Optional[List[Optional[StrictStr]]] = None,
+        request_body: Optional[List[StrictStr]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -77,7 +78,7 @@ class IntegrationsApi:
         :param include_secrets:
         :type include_secrets: bool
         :param request_body:
-        :type request_body: List[Optional[str]]
+        :type request_body: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -131,7 +132,7 @@ class IntegrationsApi:
     async def apps_integrations_api_bulk_export_integrations_with_http_info(
         self,
         include_secrets: Optional[StrictBool] = None,
-        request_body: Optional[List[Optional[StrictStr]]] = None,
+        request_body: Optional[List[StrictStr]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -152,7 +153,7 @@ class IntegrationsApi:
         :param include_secrets:
         :type include_secrets: bool
         :param request_body:
-        :type request_body: List[Optional[str]]
+        :type request_body: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -206,7 +207,7 @@ class IntegrationsApi:
     async def apps_integrations_api_bulk_export_integrations_without_preload_content(
         self,
         include_secrets: Optional[StrictBool] = None,
-        request_body: Optional[List[Optional[StrictStr]]] = None,
+        request_body: Optional[List[StrictStr]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -227,7 +228,7 @@ class IntegrationsApi:
         :param include_secrets:
         :type include_secrets: bool
         :param request_body:
-        :type request_body: List[Optional[str]]
+        :type request_body: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -421,9 +422,9 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ImportResultSchema]",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -500,9 +501,9 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ImportResultSchema]",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -579,9 +580,9 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ImportResultSchema]",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -738,10 +739,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConfigFieldDefinitionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -815,10 +814,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConfigFieldDefinitionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -892,10 +889,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConfigFieldDefinitionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1042,12 +1037,12 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "IntegrationDetailSchema",
-            '400': "ErrorResponse",
+            '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1115,12 +1110,12 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "IntegrationDetailSchema",
-            '400': "ErrorResponse",
+            '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1188,12 +1183,12 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "IntegrationDetailSchema",
-            '400': "ErrorResponse",
+            '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1335,10 +1330,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationTypeResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1408,10 +1401,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationTypeResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1481,10 +1472,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationTypeResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1632,10 +1621,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ActionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1709,10 +1696,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ActionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1786,10 +1771,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ActionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1884,7 +1867,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Delete Integration
 
         Delete an integration
@@ -1922,11 +1905,11 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "ErrorResponse",
+            '204': None,
+            '400': "Dict[str, object]",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1956,7 +1939,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Delete Integration
 
         Delete an integration
@@ -1994,11 +1977,11 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "ErrorResponse",
+            '204': None,
+            '400': "Dict[str, object]",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2066,11 +2049,11 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "ErrorResponse",
+            '204': None,
+            '400': "Dict[str, object]",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2200,10 +2183,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ActionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2273,10 +2254,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ActionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2346,10 +2325,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ActionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2485,9 +2462,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ExportIntegrationSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2561,9 +2537,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ExportIntegrationSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2637,9 +2612,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ExportIntegrationSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2734,7 +2708,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """Get Available Integration Types
 
         Get list of available integration types
@@ -2769,7 +2743,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2801,7 +2775,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """Get Available Integration Types
 
         Get list of available integration types
@@ -2836,7 +2810,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2903,7 +2877,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3034,8 +3008,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationDetailSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3105,8 +3079,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationDetailSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3176,8 +3150,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationDetailSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3267,7 +3241,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> IntegrationErrorStatsOut:
         """Get Integration Error Stats
 
         Get integration error statistics for the dashboard health strip.  Returns count of failed integration usage logs in the last 24 hours and timestamp of the most recent error.  Returns:     200: Error statistics     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/integrations/error-stats     Response: { \"error_count_24h\": 5, \"last_error_at\": \"2025-10-05T12:34:56Z\" }
@@ -3302,7 +3276,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "IntegrationErrorStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3334,7 +3308,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[IntegrationErrorStatsOut]:
         """Get Integration Error Stats
 
         Get integration error statistics for the dashboard health strip.  Returns count of failed integration usage logs in the last 24 hours and timestamp of the most recent error.  Returns:     200: Error statistics     401: Unauthorized - invalid or missing authentication  Example:     GET /api/v1/integrations/error-stats     Response: { \"error_count_24h\": 5, \"last_error_at\": \"2025-10-05T12:34:56Z\" }
@@ -3369,7 +3343,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "IntegrationErrorStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3436,7 +3410,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "IntegrationErrorStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3843,7 +3817,6 @@ class IntegrationsApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3915,7 +3888,6 @@ class IntegrationsApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3987,7 +3959,6 @@ class IntegrationsApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4117,12 +4088,10 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResultSchema",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -4190,12 +4159,10 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResultSchema",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -4263,12 +4230,10 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResultSchema",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
-            '422': "ErrorResponse",
-            '500': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -4413,7 +4378,6 @@ class IntegrationsApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4485,7 +4449,6 @@ class IntegrationsApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4557,7 +4520,6 @@ class IntegrationsApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4705,7 +4667,6 @@ class IntegrationsApi:
             '200': "IntegrationTypeListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -4793,7 +4754,6 @@ class IntegrationsApi:
             '200': "IntegrationTypeListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -4881,7 +4841,6 @@ class IntegrationsApi:
             '200': "IntegrationTypeListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -5915,7 +5874,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """Test All Integrations
 
         Test all user's integrations in parallel.  Returns a detailed report for each integration including: - Success/failure status - Response time - Error messages if any - Last verification time
@@ -5950,7 +5909,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5982,7 +5941,7 @@ class IntegrationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """Test All Integrations
 
         Test all user's integrations in parallel.  Returns a detailed report for each integration including: - Success/failure status - Response time - Error messages if any - Last verification time
@@ -6017,7 +5976,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -6084,7 +6043,7 @@ class IntegrationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -6215,8 +6174,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TestIntegrationResponseSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6286,8 +6245,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TestIntegrationResponseSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6357,8 +6316,8 @@ class IntegrationsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TestIntegrationResponseSchema",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6496,10 +6455,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConfigFieldDefinitionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6577,10 +6534,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConfigFieldDefinitionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6658,10 +6613,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConfigFieldDefinitionResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6815,12 +6768,12 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationDetailSchema",
-            '400': "ErrorResponse",
+            '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
-            '500': "ErrorResponse",
-            '403': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -6892,12 +6845,12 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationDetailSchema",
-            '400': "ErrorResponse",
+            '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
-            '500': "ErrorResponse",
-            '403': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -6969,12 +6922,12 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationDetailSchema",
-            '400': "ErrorResponse",
+            '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
-            '500': "ErrorResponse",
-            '403': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -7123,10 +7076,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationTypeResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -7200,10 +7151,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationTypeResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -7277,10 +7226,8 @@ class IntegrationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IntegrationTypeResponse",
-            '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }

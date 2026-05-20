@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | 
 **description** | **str** |  | [optional] 
-**geometry** | **Dict[str, object]** | GeoJSON geometry (Polygon, MultiPolygon, or Circle) | 
+**geometry** | [**Geometry**](Geometry.md) |  | 
 **webhook_url** | **str** |  | [optional] 
 **webhook_events** | **List[str]** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 

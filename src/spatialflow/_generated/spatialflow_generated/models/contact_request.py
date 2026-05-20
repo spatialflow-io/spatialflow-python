@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,11 +27,11 @@ class ContactRequest(BaseModel):
     """
     ContactRequest
     """ # noqa: E501
-    name: StrictStr
+    name: Annotated[str, Field(min_length=2, strict=True, max_length=100)]
     email: StrictStr
     company: Optional[StrictStr] = None
     use_case: StrictStr
-    message: StrictStr
+    message: Annotated[str, Field(min_length=10, strict=True, max_length=2000)]
     website: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["name", "email", "company", "use_case", "message", "website"]
 

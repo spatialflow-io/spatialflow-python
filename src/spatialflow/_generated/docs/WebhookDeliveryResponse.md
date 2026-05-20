@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **response_time_ms** | **float** |  | 
 **error_message** | **str** |  | 
 **attempt_count** | **int** |  | 
-**retry_count** | **int** |  | [optional] [default to 0]
+**retry_count** | **int** | Deprecated — use attempt_count | [optional] [default to 0]
 **created_at** | **datetime** |  | 
 **delivered_at** | **datetime** |  | 
 **next_retry_at** | **datetime** |  | 

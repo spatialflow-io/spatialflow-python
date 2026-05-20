@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from typing import Any, Dict
+from ..models.ingest_stats_out import IngestStatsOut
 from ..models.location_batch_in import LocationBatchIn
 from ..models.location_ingest_response import LocationIngestResponse
 from ..models.location_point_in import LocationPointIn
@@ -54,7 +54,7 @@ class PublicLocationIngestApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> IngestStatsOut:
         """Get Ingest Stats
 
         Get location ingestion statistics for the authenticated organization.  Authentication: API Key (Bearer token)  Returns:     - total_ingested_today: Total locations ingested today     - total_ingested_week: Total locations ingested this week     - devices_active: Number of active devices     - last_ingest: Timestamp of last location ingestion  Example:     ```bash     curl -X GET https://api.spatialflow.io/api/v1/locations/stats \\       -H \"Authorization: Bearer sf_live_abc123...\"     ```
@@ -89,7 +89,7 @@ class PublicLocationIngestApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "IngestStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -121,7 +121,7 @@ class PublicLocationIngestApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[IngestStatsOut]:
         """Get Ingest Stats
 
         Get location ingestion statistics for the authenticated organization.  Authentication: API Key (Bearer token)  Returns:     - total_ingested_today: Total locations ingested today     - total_ingested_week: Total locations ingested this week     - devices_active: Number of active devices     - last_ingest: Timestamp of last location ingestion  Example:     ```bash     curl -X GET https://api.spatialflow.io/api/v1/locations/stats \\       -H \"Authorization: Bearer sf_live_abc123...\"     ```
@@ -156,7 +156,7 @@ class PublicLocationIngestApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "IngestStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -223,7 +223,7 @@ class PublicLocationIngestApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "IngestStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",

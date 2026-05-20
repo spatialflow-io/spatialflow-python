@@ -50,12 +50,14 @@ class UserProfileResponse(BaseModel):
     default_map_style: Optional[StrictStr] = 'streets'
     default_geofence_color: Optional[StrictStr] = '#3B82F6'
     show_tutorial_tooltips: Optional[StrictBool] = True
+    has_completed_tour: Optional[StrictBool] = False
+    has_completed_workflow_tour: Optional[StrictBool] = False
     default_api_version: Optional[StrictStr] = 'v1'
     workspace_role: Optional[StrictStr] = None
     workspace_id: Optional[StrictStr] = None
     selected_plan: Optional[StrictStr] = 'free'
     company: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "email", "name", "role", "is_staff", "is_superuser", "email_verified", "created_at", "updated_at", "bio", "avatar_url", "phone_number", "timezone", "date_format", "time_format", "email_notifications", "webhook_failure_notifications", "workflow_failure_notifications", "usage_alert_notifications", "marketing_emails", "default_map_style", "default_geofence_color", "show_tutorial_tooltips", "default_api_version", "workspace_role", "workspace_id", "selected_plan", "company"]
+    __properties: ClassVar[List[str]] = ["id", "email", "name", "role", "is_staff", "is_superuser", "email_verified", "created_at", "updated_at", "bio", "avatar_url", "phone_number", "timezone", "date_format", "time_format", "email_notifications", "webhook_failure_notifications", "workflow_failure_notifications", "usage_alert_notifications", "marketing_emails", "default_map_style", "default_geofence_color", "show_tutorial_tooltips", "has_completed_tour", "has_completed_workflow_tour", "default_api_version", "workspace_role", "workspace_id", "selected_plan", "company"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -161,6 +163,8 @@ class UserProfileResponse(BaseModel):
             "default_map_style": obj.get("default_map_style") if obj.get("default_map_style") is not None else 'streets',
             "default_geofence_color": obj.get("default_geofence_color") if obj.get("default_geofence_color") is not None else '#3B82F6',
             "show_tutorial_tooltips": obj.get("show_tutorial_tooltips") if obj.get("show_tutorial_tooltips") is not None else True,
+            "has_completed_tour": obj.get("has_completed_tour") if obj.get("has_completed_tour") is not None else False,
+            "has_completed_workflow_tour": obj.get("has_completed_workflow_tour") if obj.get("has_completed_workflow_tour") is not None else False,
             "default_api_version": obj.get("default_api_version") if obj.get("default_api_version") is not None else 'v1',
             "workspace_role": obj.get("workspace_role"),
             "workspace_id": obj.get("workspace_id"),

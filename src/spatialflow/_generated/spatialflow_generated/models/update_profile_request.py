@@ -42,8 +42,10 @@ class UpdateProfileRequest(BaseModel):
     default_map_style: Optional[Annotated[str, Field(strict=True, max_length=50)]] = None
     default_geofence_color: Optional[Annotated[str, Field(strict=True)]] = None
     show_tutorial_tooltips: Optional[StrictBool] = None
+    has_completed_tour: Optional[StrictBool] = None
+    has_completed_workflow_tour: Optional[StrictBool] = None
     default_api_version: Optional[Annotated[str, Field(strict=True, max_length=10)]] = None
-    __properties: ClassVar[List[str]] = ["name", "bio", "avatar_url", "phone_number", "timezone", "date_format", "time_format", "email_notifications", "webhook_failure_notifications", "workflow_failure_notifications", "usage_alert_notifications", "marketing_emails", "default_map_style", "default_geofence_color", "show_tutorial_tooltips", "default_api_version"]
+    __properties: ClassVar[List[str]] = ["name", "bio", "avatar_url", "phone_number", "timezone", "date_format", "time_format", "email_notifications", "webhook_failure_notifications", "workflow_failure_notifications", "usage_alert_notifications", "marketing_emails", "default_map_style", "default_geofence_color", "show_tutorial_tooltips", "has_completed_tour", "has_completed_workflow_tour", "default_api_version"]
 
     @field_validator('phone_number')
     def phone_number_validate_regular_expression(cls, value):
@@ -179,6 +181,16 @@ class UpdateProfileRequest(BaseModel):
         if self.show_tutorial_tooltips is None and "show_tutorial_tooltips" in self.model_fields_set:
             _dict['show_tutorial_tooltips'] = None
 
+        # set to None if has_completed_tour (nullable) is None
+        # and model_fields_set contains the field
+        if self.has_completed_tour is None and "has_completed_tour" in self.model_fields_set:
+            _dict['has_completed_tour'] = None
+
+        # set to None if has_completed_workflow_tour (nullable) is None
+        # and model_fields_set contains the field
+        if self.has_completed_workflow_tour is None and "has_completed_workflow_tour" in self.model_fields_set:
+            _dict['has_completed_workflow_tour'] = None
+
         # set to None if default_api_version (nullable) is None
         # and model_fields_set contains the field
         if self.default_api_version is None and "default_api_version" in self.model_fields_set:
@@ -211,6 +223,8 @@ class UpdateProfileRequest(BaseModel):
             "default_map_style": obj.get("default_map_style"),
             "default_geofence_color": obj.get("default_geofence_color"),
             "show_tutorial_tooltips": obj.get("show_tutorial_tooltips"),
+            "has_completed_tour": obj.get("has_completed_tour"),
+            "has_completed_workflow_tour": obj.get("has_completed_workflow_tour"),
             "default_api_version": obj.get("default_api_version")
         })
         return _obj

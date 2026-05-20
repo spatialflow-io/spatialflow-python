@@ -116,7 +116,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_webhooks_api_delete_webhook**
-> SuccessResponse apps_webhooks_api_delete_webhook(webhook_id)
+> apps_webhooks_api_delete_webhook(webhook_id)
 
 Delete Webhook
 
@@ -129,7 +129,6 @@ Delete a webhook.
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.success_response import SuccessResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -163,9 +162,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete Webhook
-        api_response = await api_instance.apps_webhooks_api_delete_webhook(webhook_id)
-        print("The response of WebhooksApi->apps_webhooks_api_delete_webhook:\n")
-        pprint(api_response)
+        await api_instance.apps_webhooks_api_delete_webhook(webhook_id)
     except Exception as e:
         print("Exception when calling WebhooksApi->apps_webhooks_api_delete_webhook: %s\n" % e)
 ```
@@ -181,7 +178,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SuccessResponse**](SuccessResponse.md)
+void (empty response body)
 
 ### Authorization
 
@@ -196,7 +193,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |

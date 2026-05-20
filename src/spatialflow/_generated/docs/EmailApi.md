@@ -11,10 +11,12 @@ Method | HTTP request | Description
 [**apps_email_api_preview_email_template**](EmailApi.md#apps_email_api_preview_email_template) | **GET** /api/v1/email/preview/{template_name} | Preview Email Template
 [**apps_email_api_send_email**](EmailApi.md#apps_email_api_send_email) | **POST** /api/v1/email/send | Send Email
 [**apps_email_api_send_test_email**](EmailApi.md#apps_email_api_send_test_email) | **POST** /api/v1/email/test | Send Test Email
+[**apps_email_unsubscribe_unsubscribe**](EmailApi.md#apps_email_unsubscribe_unsubscribe) | **POST** /api/v1/email/unsubscribe | Unsubscribe
+[**apps_email_unsubscribe_verify_unsubscribe_token**](EmailApi.md#apps_email_unsubscribe_verify_unsubscribe_token) | **GET** /api/v1/email/unsubscribe/verify | Verify Unsubscribe Token
 
 
 # **apps_email_api_get_email_history**
-> Dict[str, object] apps_email_api_get_email_history(limit=limit, offset=offset)
+> EmailHistoryOut apps_email_api_get_email_history(limit=limit, offset=offset)
 
 Get Email History
 
@@ -26,6 +28,7 @@ Get email history for the current user
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.email_history_out import EmailHistoryOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -73,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**EmailHistoryOut**](EmailHistoryOut.md)
 
 ### Authorization
 
@@ -171,8 +174,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -480,7 +483,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**202** | Accepted |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -559,9 +562,155 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_email_unsubscribe_unsubscribe**
+> UnsubscribeResponse apps_email_unsubscribe_unsubscribe(unsubscribe_request)
+
+Unsubscribe
+
+Handle email unsubscribe requests.  Verifies the signed timestamped token (max 90 days old) and adds the email to the blacklist. This endpoint is public (no authentication required) to allow one-click unsubscribe from emails.  Rate limited to 10 requests per minute per IP to prevent abuse.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.unsubscribe_request import UnsubscribeRequest
+from spatialflow_generated.models.unsubscribe_response import UnsubscribeResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.EmailApi(api_client)
+    unsubscribe_request = spatialflow_generated.UnsubscribeRequest() # UnsubscribeRequest | 
+
+    try:
+        # Unsubscribe
+        api_response = await api_instance.apps_email_unsubscribe_unsubscribe(unsubscribe_request)
+        print("The response of EmailApi->apps_email_unsubscribe_unsubscribe:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling EmailApi->apps_email_unsubscribe_unsubscribe: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **unsubscribe_request** | [**UnsubscribeRequest**](UnsubscribeRequest.md)|  | 
+
+### Return type
+
+[**UnsubscribeResponse**](UnsubscribeResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_email_unsubscribe_verify_unsubscribe_token**
+> Dict[str, object] apps_email_unsubscribe_verify_unsubscribe_token(token)
+
+Verify Unsubscribe Token
+
+Verify an unsubscribe token without actually unsubscribing.  This can be used by the frontend to show a confirmation page before the user confirms they want to unsubscribe.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.EmailApi(api_client)
+    token = 'token_example' # str | 
+
+    try:
+        # Verify Unsubscribe Token
+        api_response = await api_instance.apps_email_unsubscribe_verify_unsubscribe_token(token)
+        print("The response of EmailApi->apps_email_unsubscribe_verify_unsubscribe_token:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling EmailApi->apps_email_unsubscribe_verify_unsubscribe_token: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **token** | **str**|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 

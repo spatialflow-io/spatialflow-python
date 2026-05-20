@@ -269,7 +269,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_delete_api_key**
-> Dict[str, object] apps_accounts_api_delete_api_key(api_key_id)
+> apps_accounts_api_delete_api_key(api_key_id)
 
 Delete Api Key
 
@@ -315,9 +315,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete Api Key
-        api_response = await api_instance.apps_accounts_api_delete_api_key(api_key_id)
-        print("The response of AccountApi->apps_accounts_api_delete_api_key:\n")
-        pprint(api_response)
+        await api_instance.apps_accounts_api_delete_api_key(api_key_id)
     except Exception as e:
         print("Exception when calling AccountApi->apps_accounts_api_delete_api_key: %s\n" % e)
 ```
@@ -333,7 +331,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -348,16 +346,16 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
+**404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_delete_own_account**
-> Dict[str, object] apps_accounts_api_delete_own_account()
+> apps_accounts_api_delete_own_account()
 
 Delete Own Account
 
@@ -402,9 +400,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete Own Account
-        api_response = await api_instance.apps_accounts_api_delete_own_account()
-        print("The response of AccountApi->apps_accounts_api_delete_own_account:\n")
-        pprint(api_response)
+        await api_instance.apps_accounts_api_delete_own_account()
     except Exception as e:
         print("Exception when calling AccountApi->apps_accounts_api_delete_own_account: %s\n" % e)
 ```
@@ -417,7 +413,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -432,7 +428,7 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
 **400** | Bad Request |  -  |
 **500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
@@ -787,7 +783,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_get_notifications**
-> Dict[str, object] apps_accounts_api_get_notifications(unread_only=unread_only)
+> apps_accounts_api_get_notifications(unread_only=unread_only)
 
 Get Notifications
 
@@ -833,9 +829,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Get Notifications
-        api_response = await api_instance.apps_accounts_api_get_notifications(unread_only=unread_only)
-        print("The response of AccountApi->apps_accounts_api_get_notifications:\n")
-        pprint(api_response)
+        await api_instance.apps_accounts_api_get_notifications(unread_only=unread_only)
     except Exception as e:
         print("Exception when calling AccountApi->apps_accounts_api_get_notifications: %s\n" % e)
 ```
@@ -851,7 +845,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -960,7 +954,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_list_expiring_api_keys**
-> List[Dict[str, object]] apps_accounts_api_list_expiring_api_keys(days=days)
+> List[Optional[Dict[str, object]]] apps_accounts_api_list_expiring_api_keys(days=days)
 
 List Expiring Api Keys
 
@@ -1024,7 +1018,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -1212,9 +1206,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

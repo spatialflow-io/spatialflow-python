@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -257,7 +257,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -496,7 +496,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_subscriptions_api_handle_stripe_webhook**
-> Dict[str, object] apps_subscriptions_api_handle_stripe_webhook()
+> apps_subscriptions_api_handle_stripe_webhook()
 
 Handle Stripe Webhook
 
@@ -524,9 +524,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Handle Stripe Webhook
-        api_response = await api_instance.apps_subscriptions_api_handle_stripe_webhook()
-        print("The response of SubscriptionsApi->apps_subscriptions_api_handle_stripe_webhook:\n")
-        pprint(api_response)
+        await api_instance.apps_subscriptions_api_handle_stripe_webhook()
     except Exception as e:
         print("Exception when calling SubscriptionsApi->apps_subscriptions_api_handle_stripe_webhook: %s\n" % e)
 ```
@@ -539,7 +537,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 

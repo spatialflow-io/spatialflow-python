@@ -19,11 +19,17 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Any, Dict, Optional
 from typing_extensions import Annotated
+from ..models.active_geofence_summary_out import ActiveGeofenceSummaryOut
 from ..models.async_upload_geofences_response import AsyncUploadGeofencesResponse
 from ..models.bulk_geofence_request import BulkGeofenceRequest
 from ..models.create_geofence_request import CreateGeofenceRequest
+from ..models.geofence_group_update_out import GeofenceGroupUpdateOut
+from ..models.geofence_groups_out import GeofenceGroupsOut
 from ..models.geofence_list_response import GeofenceListResponse
 from ..models.geofence_response import GeofenceResponse
+from ..models.group_geofences_out import GroupGeofencesOut
+from ..models.group_test_point_out import GroupTestPointOut
+from ..models.test_event_history_out import TestEventHistoryOut
 from ..models.test_event_request import TestEventRequest
 from ..models.test_point_request import TestPointRequest
 from ..models.test_point_response import TestPointResponse
@@ -663,7 +669,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Delete Geofence
 
         Delete (deactivate) geofence.
@@ -701,7 +707,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '401': "ErrorResponse",
             '404': "ErrorResponse",
             '500': "ErrorResponse",
@@ -739,7 +745,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Delete Geofence
 
         Delete (deactivate) geofence.
@@ -777,7 +783,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '401': "ErrorResponse",
             '404': "ErrorResponse",
             '500': "ErrorResponse",
@@ -853,7 +859,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '401': "ErrorResponse",
             '404': "ErrorResponse",
             '500': "ErrorResponse",
@@ -1208,7 +1214,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> ActiveGeofenceSummaryOut:
         """Get Active Geofences Summary
 
         Get summary of active geofences with event counts for dashboard map widget.
@@ -1243,7 +1249,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "ActiveGeofenceSummaryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1275,7 +1281,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[ActiveGeofenceSummaryOut]:
         """Get Active Geofences Summary
 
         Get summary of active geofences with event counts for dashboard map widget.
@@ -1310,7 +1316,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "ActiveGeofenceSummaryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1377,7 +1383,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "ActiveGeofenceSummaryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1759,7 +1765,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> TestEventHistoryOut:
         """Get Test Event History
 
         Get test event history for a geofence.  Args:     geofence_id: ID of the geofence     limit: Maximum number of events to return (default 50, max 100)     offset: Number of events to skip (for pagination)  Returns:     List of test events with execution details
@@ -1803,7 +1809,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "TestEventHistoryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1838,7 +1844,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[TestEventHistoryOut]:
         """Get Test Event History
 
         Get test event history for a geofence.  Args:     geofence_id: ID of the geofence     limit: Maximum number of events to return (default 50, max 100)     offset: Number of events to skip (for pagination)  Returns:     List of test events with execution details
@@ -1882,7 +1888,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "TestEventHistoryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1961,7 +1967,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "TestEventHistoryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2353,7 +2359,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> GeofenceGroupsOut:
         """List Geofence Groups
 
         List all unique groups for the current user.
@@ -2388,7 +2394,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GeofenceGroupsOut",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -2421,7 +2427,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[GeofenceGroupsOut]:
         """List Geofence Groups
 
         List all unique groups for the current user.
@@ -2456,7 +2462,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GeofenceGroupsOut",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -2524,7 +2530,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GeofenceGroupsOut",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -2944,7 +2950,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> GroupGeofencesOut:
         """List Group Geofences
 
         List all geofences in a specific group.
@@ -2982,7 +2988,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GroupGeofencesOut",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -3016,7 +3022,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[GroupGeofencesOut]:
         """List Group Geofences
 
         List all geofences in a specific group.
@@ -3054,7 +3060,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GroupGeofencesOut",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -3126,7 +3132,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GroupGeofencesOut",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -3222,7 +3228,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> GroupTestPointOut:
         """Test Group Point
 
         Test a point against all geofences in a group.
@@ -3263,7 +3269,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GroupTestPointOut",
             '400': "Dict[str, object]",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
@@ -3299,7 +3305,7 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[GroupTestPointOut]:
         """Test Group Point
 
         Test a point against all geofences in a group.
@@ -3340,7 +3346,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GroupTestPointOut",
             '400': "Dict[str, object]",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
@@ -3417,7 +3423,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GroupTestPointOut",
             '400': "Dict[str, object]",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
@@ -3825,8 +3831,7 @@ class GeofencesApi:
     async def apps_geofences_api_trigger_test_event(
         self,
         geofence_id: StrictStr,
-        event_type: StrictStr,
-        test_event_request: Optional[TestEventRequest] = None,
+        test_event_request: TestEventRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3846,9 +3851,7 @@ class GeofencesApi:
 
         :param geofence_id: (required)
         :type geofence_id: str
-        :param event_type: (required)
-        :type event_type: str
-        :param test_event_request:
+        :param test_event_request: (required)
         :type test_event_request: TestEventRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3874,7 +3877,6 @@ class GeofencesApi:
 
         _param = self._apps_geofences_api_trigger_test_event_serialize(
             geofence_id=geofence_id,
-            event_type=event_type,
             test_event_request=test_event_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3910,8 +3912,7 @@ class GeofencesApi:
     async def apps_geofences_api_trigger_test_event_with_http_info(
         self,
         geofence_id: StrictStr,
-        event_type: StrictStr,
-        test_event_request: Optional[TestEventRequest] = None,
+        test_event_request: TestEventRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3931,9 +3932,7 @@ class GeofencesApi:
 
         :param geofence_id: (required)
         :type geofence_id: str
-        :param event_type: (required)
-        :type event_type: str
-        :param test_event_request:
+        :param test_event_request: (required)
         :type test_event_request: TestEventRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3959,7 +3958,6 @@ class GeofencesApi:
 
         _param = self._apps_geofences_api_trigger_test_event_serialize(
             geofence_id=geofence_id,
-            event_type=event_type,
             test_event_request=test_event_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3995,8 +3993,7 @@ class GeofencesApi:
     async def apps_geofences_api_trigger_test_event_without_preload_content(
         self,
         geofence_id: StrictStr,
-        event_type: StrictStr,
-        test_event_request: Optional[TestEventRequest] = None,
+        test_event_request: TestEventRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4016,9 +4013,7 @@ class GeofencesApi:
 
         :param geofence_id: (required)
         :type geofence_id: str
-        :param event_type: (required)
-        :type event_type: str
-        :param test_event_request:
+        :param test_event_request: (required)
         :type test_event_request: TestEventRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4044,7 +4039,6 @@ class GeofencesApi:
 
         _param = self._apps_geofences_api_trigger_test_event_serialize(
             geofence_id=geofence_id,
-            event_type=event_type,
             test_event_request=test_event_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4075,7 +4069,6 @@ class GeofencesApi:
     def _apps_geofences_api_trigger_test_event_serialize(
         self,
         geofence_id,
-        event_type,
         test_event_request,
         _request_auth,
         _content_type,
@@ -4101,10 +4094,6 @@ class GeofencesApi:
         if geofence_id is not None:
             _path_params['geofence_id'] = geofence_id
         # process the query parameters
-        if event_type is not None:
-            
-            _query_params.append(('event_type', event_type))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4482,7 +4471,7 @@ class GeofencesApi:
     async def apps_geofences_api_update_geofence_group(
         self,
         geofence_id: StrictStr,
-        group_name: Optional[StrictStr] = None,
+        body: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4495,15 +4484,15 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> GeofenceGroupUpdateOut:
         """Update Geofence Group
 
         Assign or update a geofence's group.
 
         :param geofence_id: (required)
         :type geofence_id: str
-        :param group_name:
-        :type group_name: str
+        :param body:
+        :type body: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4528,7 +4517,7 @@ class GeofencesApi:
 
         _param = self._apps_geofences_api_update_geofence_group_serialize(
             geofence_id=geofence_id,
-            group_name=group_name,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4536,7 +4525,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GeofenceGroupUpdateOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4557,7 +4546,7 @@ class GeofencesApi:
     async def apps_geofences_api_update_geofence_group_with_http_info(
         self,
         geofence_id: StrictStr,
-        group_name: Optional[StrictStr] = None,
+        body: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4570,15 +4559,15 @@ class GeofencesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[GeofenceGroupUpdateOut]:
         """Update Geofence Group
 
         Assign or update a geofence's group.
 
         :param geofence_id: (required)
         :type geofence_id: str
-        :param group_name:
-        :type group_name: str
+        :param body:
+        :type body: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4603,7 +4592,7 @@ class GeofencesApi:
 
         _param = self._apps_geofences_api_update_geofence_group_serialize(
             geofence_id=geofence_id,
-            group_name=group_name,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4611,7 +4600,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GeofenceGroupUpdateOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4632,7 +4621,7 @@ class GeofencesApi:
     async def apps_geofences_api_update_geofence_group_without_preload_content(
         self,
         geofence_id: StrictStr,
-        group_name: Optional[StrictStr] = None,
+        body: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4652,8 +4641,8 @@ class GeofencesApi:
 
         :param geofence_id: (required)
         :type geofence_id: str
-        :param group_name:
-        :type group_name: str
+        :param body:
+        :type body: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4678,7 +4667,7 @@ class GeofencesApi:
 
         _param = self._apps_geofences_api_update_geofence_group_serialize(
             geofence_id=geofence_id,
-            group_name=group_name,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4686,7 +4675,7 @@ class GeofencesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "GeofenceGroupUpdateOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4702,7 +4691,7 @@ class GeofencesApi:
     def _apps_geofences_api_update_geofence_group_serialize(
         self,
         geofence_id,
-        group_name,
+        body,
         _request_auth,
         _content_type,
         _headers,
@@ -4727,13 +4716,11 @@ class GeofencesApi:
         if geofence_id is not None:
             _path_params['geofence_id'] = geofence_id
         # process the query parameters
-        if group_name is not None:
-            
-            _query_params.append(('group_name', group_name))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if body is not None:
+            _body_params = body
 
 
         # set the HTTP header `Accept`
@@ -4744,6 +4731,19 @@ class GeofencesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

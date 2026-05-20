@@ -1,6 +1,6 @@
 # DeviceSessionOut
 
-Response schema for a completed tracking session.
+Response schema for a tracking session (active or completed).
 
 ## Properties
 
@@ -8,11 +8,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
 **started_at** | **datetime** |  | 
-**ended_at** | **datetime** |  | 
-**duration_seconds** | **int** |  | 
+**ended_at** | **datetime** |  | [optional] 
+**duration_seconds** | **int** |  | [optional] 
 **location_count** | **int** |  | 
 **distance_meters** | **float** |  | [optional] 
-**notes** | **str** |  | 
 **has_track_geometry** | **bool** |  | [optional] [default to False]
 
 ## Example

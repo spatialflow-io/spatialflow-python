@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **invalid_rows** | **int** |  | [optional] [default to 0]
 **processed_rows** | **int** |  | [optional] [default to 0]
 **error_rate** | **float** |  | [optional] [default to 0.0]
-**errors** | **List[Optional[Dict[str, object]]]** |  | [optional] [default to []]
+**errors** | **List[Dict[str, object]]** |  | [optional] [default to []]
 **created_at** | **datetime** |  | 
 **started_at** | **datetime** |  | [optional] 
 **completed_at** | **datetime** |  | [optional] 

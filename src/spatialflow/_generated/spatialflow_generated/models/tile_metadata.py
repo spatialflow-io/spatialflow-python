@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,7 +32,7 @@ class TileMetadata(BaseModel):
     maxzoom: StrictInt
     bounds: List[Union[StrictFloat, StrictInt]]
     center: List[Union[StrictFloat, StrictInt]]
-    layers: List[Optional[Dict[str, Any]]]
+    layers: List[Dict[str, Any]]
     __properties: ClassVar[List[str]] = ["name", "format", "minzoom", "maxzoom", "bounds", "center", "layers"]
 
     model_config = ConfigDict(

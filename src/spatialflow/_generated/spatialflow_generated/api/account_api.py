@@ -903,7 +903,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Delete Api Key
 
         Delete a specific API key.
@@ -941,10 +941,10 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -974,7 +974,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Delete Api Key
 
         Delete a specific API key.
@@ -1012,10 +1012,10 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1083,10 +1083,10 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1176,7 +1176,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Delete Own Account
 
         Delete the authenticated user's own account. Required for App Store/Play Store compliance.
@@ -1211,7 +1211,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '400': "ErrorResponse",
             '500': "ErrorResponse",
             '401': "ErrorResponse",
@@ -1245,7 +1245,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Delete Own Account
 
         Delete the authenticated user's own account. Required for App Store/Play Store compliance.
@@ -1280,7 +1280,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '400': "ErrorResponse",
             '500': "ErrorResponse",
             '401': "ErrorResponse",
@@ -1349,7 +1349,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '400': "ErrorResponse",
             '500': "ErrorResponse",
             '401': "ErrorResponse",
@@ -2581,7 +2581,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Get Notifications
 
         Get user notifications.
@@ -2619,7 +2619,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2652,7 +2652,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Get Notifications
 
         Get user notifications.
@@ -2690,7 +2690,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2761,7 +2761,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3116,7 +3116,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """List Expiring Api Keys
 
         List API keys expiring within the specified number of days.  Default: 30 days
@@ -3154,7 +3154,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3187,7 +3187,7 @@ class AccountApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """List Expiring Api Keys
 
         List API keys expiring within the specified number of days.  Default: 30 days
@@ -3225,7 +3225,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3296,7 +3296,7 @@ class AccountApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3690,9 +3690,9 @@ class AccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3761,9 +3761,9 @@ class AccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3832,9 +3832,9 @@ class AccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(

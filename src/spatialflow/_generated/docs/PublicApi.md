@@ -89,7 +89,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_public_api_get_api_docs**
-> Dict[str, object] apps_public_api_get_api_docs()
+> ApiDocsOut apps_public_api_get_api_docs()
 
 Get Api Docs
 
@@ -100,6 +100,7 @@ Returns the complete OpenAPI 3.0 specification
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.api_docs_out import ApiDocsOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -132,7 +133,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**ApiDocsOut**](ApiDocsOut.md)
 
 ### Authorization
 
@@ -156,7 +157,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_public_api_get_websocket_routes**
-> Dict[str, object] apps_public_api_get_websocket_routes()
+> WebSocketRoutesOut apps_public_api_get_websocket_routes()
 
 Get Websocket Routes
 
@@ -167,6 +168,7 @@ Returns documentation for all available WebSocket endpoints.  This endpoint help
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.web_socket_routes_out import WebSocketRoutesOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -199,7 +201,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**WebSocketRoutesOut**](WebSocketRoutesOut.md)
 
 ### Authorization
 
@@ -223,7 +225,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_public_api_health_check**
-> Dict[str, object] apps_public_api_health_check()
+> HealthOut apps_public_api_health_check()
 
 Health Check
 
@@ -234,6 +236,7 @@ Health check endpoint for public service
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.health_out import HealthOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -266,7 +269,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**HealthOut**](HealthOut.md)
 
 ### Authorization
 
@@ -290,7 +293,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_public_api_runtime_config**
-> Dict[str, object] apps_public_api_runtime_config()
+> RuntimeConfigOut apps_public_api_runtime_config()
 
 Runtime Config
 
@@ -301,6 +304,7 @@ Get runtime configuration for frontend applications.  This endpoint provides dyn
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.runtime_config_out import RuntimeConfigOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -333,7 +337,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**RuntimeConfigOut**](RuntimeConfigOut.md)
 
 ### Authorization
 
@@ -349,7 +353,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**429** | Too Many Requests |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -421,7 +424,7 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**201** | Created |  -  |
 **400** | Bad Request |  -  |
 **429** | Too Many Requests |  -  |
 **401** | Unauthorized |  -  |
@@ -432,7 +435,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_public_api_status**
-> Dict[str, object] apps_public_api_status()
+> StatusOut apps_public_api_status()
 
 Status
 
@@ -443,6 +446,7 @@ Public status endpoint with admin approval information.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.status_out import StatusOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -475,7 +479,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**StatusOut**](StatusOut.md)
 
 ### Authorization
 
@@ -499,7 +503,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_public_api_swagger_ui**
-> Dict[str, object] apps_public_api_swagger_ui()
+> DocsUiOut apps_public_api_swagger_ui()
 
 Swagger Ui
 
@@ -510,6 +514,7 @@ Interactive Swagger UI for exploring and testing the API  Note: In production, t
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.docs_ui_out import DocsUiOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -542,7 +547,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**DocsUiOut**](DocsUiOut.md)
 
 ### Authorization
 

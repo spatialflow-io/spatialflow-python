@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **apps_public_locations_api_get_ingest_stats**
-> Dict[str, object] apps_public_locations_api_get_ingest_stats()
+> IngestStatsOut apps_public_locations_api_get_ingest_stats()
 
 Get Ingest Stats
 
@@ -23,6 +23,7 @@ Get location ingestion statistics for the authenticated organization.  Authentic
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.ingest_stats_out import IngestStatsOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -70,7 +71,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**IngestStatsOut**](IngestStatsOut.md)
 
 ### Authorization
 

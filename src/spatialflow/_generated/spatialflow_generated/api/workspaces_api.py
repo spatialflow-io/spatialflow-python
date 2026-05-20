@@ -19,10 +19,14 @@ from typing_extensions import Annotated
 from pydantic import StrictStr
 from typing import Any, Dict
 from ..models.create_invitation_in import CreateInvitationIn
+from ..models.extend_invitation_in import ExtendInvitationIn
 from ..models.invitation_list_response import InvitationListResponse
 from ..models.invitation_out import InvitationOut
 from ..models.member_action_out import MemberActionOut
 from ..models.member_list_response import MemberListResponse
+from ..models.mobile_workspace_bootstrap_out import MobileWorkspaceBootstrapOut
+from ..models.mobile_workspace_select_in import MobileWorkspaceSelectIn
+from ..models.mobile_workspace_selection_out import MobileWorkspaceSelectionOut
 from ..models.revoke_all_sessions_out import RevokeAllSessionsOut
 from ..models.saml_config_in import SAMLConfigIn
 from ..models.saml_config_out import SAMLConfigOut
@@ -668,9 +672,9 @@ class WorkspacesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -735,9 +739,9 @@ class WorkspacesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -802,9 +806,9 @@ class WorkspacesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -860,6 +864,310 @@ class WorkspacesApi:
         return self.api_client.param_serialize(
             method='DELETE',
             resource_path='/api/v1/workspaces/saml-config',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_workspaces_api_extend_invitation(
+        self,
+        invite_id: StrictStr,
+        extend_invitation_in: ExtendInvitationIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> InvitationOut:
+        """Extend Invitation
+
+        Extend the expiry of a pending invitation (PRD §4 — Phase 78).  Available to owners and managers. Permits extending an already-expired invitation (recovery path) but blocks extending a used or revoked one. The original invitation token is preserved — no new email is sent; the recipient's existing email link will continue to work until the new expires_at. Validates expires_at strictly in the future and at most 90 days from now. Atomic with select_for_update to prevent race conditions with concurrent revoke.
+
+        :param invite_id: (required)
+        :type invite_id: str
+        :param extend_invitation_in: (required)
+        :type extend_invitation_in: ExtendInvitationIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_extend_invitation_serialize(
+            invite_id=invite_id,
+            extend_invitation_in=extend_invitation_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "InvitationOut",
+            '400': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_workspaces_api_extend_invitation_with_http_info(
+        self,
+        invite_id: StrictStr,
+        extend_invitation_in: ExtendInvitationIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[InvitationOut]:
+        """Extend Invitation
+
+        Extend the expiry of a pending invitation (PRD §4 — Phase 78).  Available to owners and managers. Permits extending an already-expired invitation (recovery path) but blocks extending a used or revoked one. The original invitation token is preserved — no new email is sent; the recipient's existing email link will continue to work until the new expires_at. Validates expires_at strictly in the future and at most 90 days from now. Atomic with select_for_update to prevent race conditions with concurrent revoke.
+
+        :param invite_id: (required)
+        :type invite_id: str
+        :param extend_invitation_in: (required)
+        :type extend_invitation_in: ExtendInvitationIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_extend_invitation_serialize(
+            invite_id=invite_id,
+            extend_invitation_in=extend_invitation_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "InvitationOut",
+            '400': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_workspaces_api_extend_invitation_without_preload_content(
+        self,
+        invite_id: StrictStr,
+        extend_invitation_in: ExtendInvitationIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Extend Invitation
+
+        Extend the expiry of a pending invitation (PRD §4 — Phase 78).  Available to owners and managers. Permits extending an already-expired invitation (recovery path) but blocks extending a used or revoked one. The original invitation token is preserved — no new email is sent; the recipient's existing email link will continue to work until the new expires_at. Validates expires_at strictly in the future and at most 90 days from now. Atomic with select_for_update to prevent race conditions with concurrent revoke.
+
+        :param invite_id: (required)
+        :type invite_id: str
+        :param extend_invitation_in: (required)
+        :type extend_invitation_in: ExtendInvitationIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_extend_invitation_serialize(
+            invite_id=invite_id,
+            extend_invitation_in=extend_invitation_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "InvitationOut",
+            '400': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_workspaces_api_extend_invitation_serialize(
+        self,
+        invite_id,
+        extend_invitation_in,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invite_id is not None:
+            _path_params['invite_id'] = invite_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if extend_invitation_in is not None:
+            _body_params = extend_invitation_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PATCH',
+            resource_path='/api/v1/workspaces/invitations/{invite_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2166,6 +2474,264 @@ class WorkspacesApi:
 
 
     @validate_call
+    async def apps_workspaces_api_mobile_workspace_bootstrap(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> MobileWorkspaceBootstrapOut:
+        """Mobile Workspace Bootstrap
+
+        Return mobile workspace-picker state for signed-in mobile tracking users.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_mobile_workspace_bootstrap_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MobileWorkspaceBootstrapOut",
+            '403': "ErrorResponse",
+            '401': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_workspaces_api_mobile_workspace_bootstrap_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[MobileWorkspaceBootstrapOut]:
+        """Mobile Workspace Bootstrap
+
+        Return mobile workspace-picker state for signed-in mobile tracking users.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_mobile_workspace_bootstrap_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MobileWorkspaceBootstrapOut",
+            '403': "ErrorResponse",
+            '401': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_workspaces_api_mobile_workspace_bootstrap_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Mobile Workspace Bootstrap
+
+        Return mobile workspace-picker state for signed-in mobile tracking users.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_mobile_workspace_bootstrap_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MobileWorkspaceBootstrapOut",
+            '403': "ErrorResponse",
+            '401': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_workspaces_api_mobile_workspace_bootstrap_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/workspaces/mobile/bootstrap',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_workspaces_api_remove_member(
         self,
         user_id: StrictStr,
@@ -2181,7 +2747,7 @@ class WorkspacesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> MemberActionOut:
+    ) -> None:
         """Remove Member
 
         Remove a member from the workspace (PRD §4).  Role-based removal rules: - Owners: Can remove any member (including other owners, except last) - Managers: Can remove field_workers and members (NOT owners or managers) - Field workers/members: Cannot remove anyone  Immediately invalidates all tokens for the removed user. The user will receive 401 on subsequent requests and must re-authenticate.  Note: This assumes single-workspace-per-user model. On removal, user.workspace is cleared. If multi-workspace membership is added later, this logic and the last-owner checks will need to be updated.
@@ -2219,10 +2785,10 @@ class WorkspacesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MemberActionOut",
-            '403': "ErrorResponse",
+            '204': None,
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2252,7 +2818,7 @@ class WorkspacesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[MemberActionOut]:
+    ) -> ApiResponse[None]:
         """Remove Member
 
         Remove a member from the workspace (PRD §4).  Role-based removal rules: - Owners: Can remove any member (including other owners, except last) - Managers: Can remove field_workers and members (NOT owners or managers) - Field workers/members: Cannot remove anyone  Immediately invalidates all tokens for the removed user. The user will receive 401 on subsequent requests and must re-authenticate.  Note: This assumes single-workspace-per-user model. On removal, user.workspace is cleared. If multi-workspace membership is added later, this logic and the last-owner checks will need to be updated.
@@ -2290,10 +2856,10 @@ class WorkspacesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MemberActionOut",
-            '403': "ErrorResponse",
+            '204': None,
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2361,10 +2927,10 @@ class WorkspacesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MemberActionOut",
-            '403': "ErrorResponse",
+            '204': None,
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2963,6 +3529,292 @@ class WorkspacesApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/api/v1/workspaces/revoke-all-sessions',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_workspaces_api_select_mobile_workspace(
+        self,
+        mobile_workspace_select_in: MobileWorkspaceSelectIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> MobileWorkspaceSelectionOut:
+        """Select Mobile Workspace
+
+        Set or confirm the selected mobile workspace and return fresh tokens.
+
+        :param mobile_workspace_select_in: (required)
+        :type mobile_workspace_select_in: MobileWorkspaceSelectIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_select_mobile_workspace_serialize(
+            mobile_workspace_select_in=mobile_workspace_select_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MobileWorkspaceSelectionOut",
+            '403': "ErrorResponse",
+            '401': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_workspaces_api_select_mobile_workspace_with_http_info(
+        self,
+        mobile_workspace_select_in: MobileWorkspaceSelectIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[MobileWorkspaceSelectionOut]:
+        """Select Mobile Workspace
+
+        Set or confirm the selected mobile workspace and return fresh tokens.
+
+        :param mobile_workspace_select_in: (required)
+        :type mobile_workspace_select_in: MobileWorkspaceSelectIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_select_mobile_workspace_serialize(
+            mobile_workspace_select_in=mobile_workspace_select_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MobileWorkspaceSelectionOut",
+            '403': "ErrorResponse",
+            '401': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_workspaces_api_select_mobile_workspace_without_preload_content(
+        self,
+        mobile_workspace_select_in: MobileWorkspaceSelectIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Select Mobile Workspace
+
+        Set or confirm the selected mobile workspace and return fresh tokens.
+
+        :param mobile_workspace_select_in: (required)
+        :type mobile_workspace_select_in: MobileWorkspaceSelectIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_workspaces_api_select_mobile_workspace_serialize(
+            mobile_workspace_select_in=mobile_workspace_select_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MobileWorkspaceSelectionOut",
+            '403': "ErrorResponse",
+            '401': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_workspaces_api_select_mobile_workspace_serialize(
+        self,
+        mobile_workspace_select_in,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if mobile_workspace_select_in is not None:
+            _body_params = mobile_workspace_select_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/workspaces/mobile/select',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

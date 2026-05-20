@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**providers** | **List[Optional[Dict[str, object]]]** |  | 
+**providers** | **List[Dict[str, object]]** |  | 
 
 ## Example
 

@@ -33,7 +33,7 @@ class IntegrationStatsSchema(BaseModel):
     health_status: StrictStr
     last_used_at: Optional[StrictStr]
     last_health_check_at: Optional[StrictStr]
-    recent_errors: List[Optional[Dict[str, Any]]]
+    recent_errors: List[Dict[str, Any]]
     __properties: ClassVar[List[str]] = ["total_uses", "successful_uses", "success_rate", "average_duration_ms", "health_status", "last_used_at", "last_health_check_at", "recent_errors"]
 
     model_config = ConfigDict(

@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,12 +30,12 @@ class UserResponse(BaseModel):
     email: StrictStr
     name: StrictStr
     role: StrictStr
-    email_verified: StrictBool = Field(alias="emailVerified")
+    email_verified: StrictBool
     selected_plan: StrictStr
     company: Optional[StrictStr]
-    language_preference: StrictStr = Field(alias="languagePreference")
-    created_at: StrictStr = Field(alias="createdAt")
-    updated_at: StrictStr = Field(alias="updatedAt")
+    language_preference: StrictStr
+    created_at: StrictStr
+    updated_at: StrictStr
     is_superuser: StrictBool
     is_staff: StrictBool
     roles: Optional[List[StrictStr]] = None
@@ -45,7 +45,7 @@ class UserResponse(BaseModel):
     workspace_id: Optional[StrictStr] = None
     workspace_slug: Optional[StrictStr] = None
     workspace_role: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "email", "name", "role", "emailVerified", "selected_plan", "company", "languagePreference", "createdAt", "updatedAt", "is_superuser", "is_staff", "roles", "is_beta_user", "admin_approved", "admin_approved_at", "workspace_id", "workspace_slug", "workspace_role"]
+    __properties: ClassVar[List[str]] = ["id", "email", "name", "role", "email_verified", "selected_plan", "company", "language_preference", "created_at", "updated_at", "is_superuser", "is_staff", "roles", "is_beta_user", "admin_approved", "admin_approved_at", "workspace_id", "workspace_slug", "workspace_role"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -142,12 +142,12 @@ class UserResponse(BaseModel):
             "email": obj.get("email"),
             "name": obj.get("name"),
             "role": obj.get("role"),
-            "emailVerified": obj.get("emailVerified"),
+            "email_verified": obj.get("email_verified"),
             "selected_plan": obj.get("selected_plan"),
             "company": obj.get("company"),
-            "languagePreference": obj.get("languagePreference"),
-            "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt"),
+            "language_preference": obj.get("language_preference"),
+            "created_at": obj.get("created_at"),
+            "updated_at": obj.get("updated_at"),
             "is_superuser": obj.get("is_superuser"),
             "is_staff": obj.get("is_staff"),
             "roles": obj.get("roles"),

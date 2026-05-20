@@ -32,7 +32,7 @@ class AuditLogOut(BaseModel):
     resource_type: StrictStr
     resource_id: Optional[StrictStr] = None
     description: StrictStr
-    changes: Dict[str, Any]
+    changes: Optional[Any]
     ip_address: Optional[StrictStr] = None
     user_agent: Optional[StrictStr] = None
     http_method: StrictStr
@@ -84,6 +84,11 @@ class AuditLogOut(BaseModel):
         # and model_fields_set contains the field
         if self.resource_id is None and "resource_id" in self.model_fields_set:
             _dict['resource_id'] = None
+
+        # set to None if changes (nullable) is None
+        # and model_fields_set contains the field
+        if self.changes is None and "changes" in self.model_fields_set:
+            _dict['changes'] = None
 
         # set to None if ip_address (nullable) is None
         # and model_fields_set contains the field

@@ -7,14 +7,17 @@ Method | HTTP request | Description
 [**apps_workspaces_api_cancel_invitation**](WorkspacesApi.md#apps_workspaces_api_cancel_invitation) | **DELETE** /api/v1/workspaces/invitations/{invite_id} | Cancel Invitation
 [**apps_workspaces_api_create_invitation**](WorkspacesApi.md#apps_workspaces_api_create_invitation) | **POST** /api/v1/workspaces/invitations | Create Invitation
 [**apps_workspaces_api_delete_saml_config**](WorkspacesApi.md#apps_workspaces_api_delete_saml_config) | **DELETE** /api/v1/workspaces/saml-config | Delete Saml Config
+[**apps_workspaces_api_extend_invitation**](WorkspacesApi.md#apps_workspaces_api_extend_invitation) | **PATCH** /api/v1/workspaces/invitations/{invite_id} | Extend Invitation
 [**apps_workspaces_api_get_saml_config**](WorkspacesApi.md#apps_workspaces_api_get_saml_config) | **GET** /api/v1/workspaces/saml-config | Get Saml Config
 [**apps_workspaces_api_get_workspace**](WorkspacesApi.md#apps_workspaces_api_get_workspace) | **GET** /api/v1/workspaces/ | Get Workspace
 [**apps_workspaces_api_get_workspace_usage**](WorkspacesApi.md#apps_workspaces_api_get_workspace_usage) | **GET** /api/v1/workspaces/usage | Get Workspace Usage
 [**apps_workspaces_api_list_invitations**](WorkspacesApi.md#apps_workspaces_api_list_invitations) | **GET** /api/v1/workspaces/invitations | List Invitations
 [**apps_workspaces_api_list_workspace_members**](WorkspacesApi.md#apps_workspaces_api_list_workspace_members) | **GET** /api/v1/workspaces/members | List Workspace Members
+[**apps_workspaces_api_mobile_workspace_bootstrap**](WorkspacesApi.md#apps_workspaces_api_mobile_workspace_bootstrap) | **GET** /api/v1/workspaces/mobile/bootstrap | Mobile Workspace Bootstrap
 [**apps_workspaces_api_remove_member**](WorkspacesApi.md#apps_workspaces_api_remove_member) | **DELETE** /api/v1/workspaces/members/{user_id} | Remove Member
 [**apps_workspaces_api_resend_invitation**](WorkspacesApi.md#apps_workspaces_api_resend_invitation) | **POST** /api/v1/workspaces/invitations/{invite_id}/resend | Resend Invitation
 [**apps_workspaces_api_revoke_all_workspace_sessions**](WorkspacesApi.md#apps_workspaces_api_revoke_all_workspace_sessions) | **POST** /api/v1/workspaces/revoke-all-sessions | Revoke All Workspace Sessions
+[**apps_workspaces_api_select_mobile_workspace**](WorkspacesApi.md#apps_workspaces_api_select_mobile_workspace) | **POST** /api/v1/workspaces/mobile/select | Select Mobile Workspace
 [**apps_workspaces_api_update_member_role**](WorkspacesApi.md#apps_workspaces_api_update_member_role) | **PATCH** /api/v1/workspaces/members/{user_id} | Update Member Role
 [**apps_workspaces_api_update_workspace**](WorkspacesApi.md#apps_workspaces_api_update_workspace) | **PUT** /api/v1/workspaces/ | Update Workspace
 [**apps_workspaces_api_upsert_saml_config**](WorkspacesApi.md#apps_workspaces_api_upsert_saml_config) | **PUT** /api/v1/workspaces/saml-config | Upsert Saml Config
@@ -257,9 +260,95 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workspaces_api_extend_invitation**
+> InvitationOut apps_workspaces_api_extend_invitation(invite_id, extend_invitation_in)
+
+Extend Invitation
+
+Extend the expiry of a pending invitation (PRD §4 — Phase 78).  Available to owners and managers. Permits extending an already-expired invitation (recovery path) but blocks extending a used or revoked one. The original invitation token is preserved — no new email is sent; the recipient's existing email link will continue to work until the new expires_at. Validates expires_at strictly in the future and at most 90 days from now. Atomic with select_for_update to prevent race conditions with concurrent revoke.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.extend_invitation_in import ExtendInvitationIn
+from spatialflow_generated.models.invitation_out import InvitationOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkspacesApi(api_client)
+    invite_id = 'invite_id_example' # str | 
+    extend_invitation_in = spatialflow_generated.ExtendInvitationIn() # ExtendInvitationIn | 
+
+    try:
+        # Extend Invitation
+        api_response = await api_instance.apps_workspaces_api_extend_invitation(invite_id, extend_invitation_in)
+        print("The response of WorkspacesApi->apps_workspaces_api_extend_invitation:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkspacesApi->apps_workspaces_api_extend_invitation: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **invite_id** | **str**|  | 
+ **extend_invitation_in** | [**ExtendInvitationIn**](ExtendInvitationIn.md)|  | 
+
+### Return type
+
+[**InvitationOut**](InvitationOut.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -654,8 +743,86 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_workspaces_api_mobile_workspace_bootstrap**
+> MobileWorkspaceBootstrapOut apps_workspaces_api_mobile_workspace_bootstrap()
+
+Mobile Workspace Bootstrap
+
+Return mobile workspace-picker state for signed-in mobile tracking users.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.mobile_workspace_bootstrap_out import MobileWorkspaceBootstrapOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkspacesApi(api_client)
+
+    try:
+        # Mobile Workspace Bootstrap
+        api_response = await api_instance.apps_workspaces_api_mobile_workspace_bootstrap()
+        print("The response of WorkspacesApi->apps_workspaces_api_mobile_workspace_bootstrap:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkspacesApi->apps_workspaces_api_mobile_workspace_bootstrap: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**MobileWorkspaceBootstrapOut**](MobileWorkspaceBootstrapOut.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_workspaces_api_remove_member**
-> MemberActionOut apps_workspaces_api_remove_member(user_id)
+> apps_workspaces_api_remove_member(user_id)
 
 Remove Member
 
@@ -667,7 +834,6 @@ Remove a member from the workspace (PRD §4).  Role-based removal rules: - Owner
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.member_action_out import MemberActionOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -695,9 +861,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Remove Member
-        api_response = await api_instance.apps_workspaces_api_remove_member(user_id)
-        print("The response of WorkspacesApi->apps_workspaces_api_remove_member:\n")
-        pprint(api_response)
+        await api_instance.apps_workspaces_api_remove_member(user_id)
     except Exception as e:
         print("Exception when calling WorkspacesApi->apps_workspaces_api_remove_member: %s\n" % e)
 ```
@@ -713,7 +877,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MemberActionOut**](MemberActionOut.md)
+void (empty response body)
 
 ### Authorization
 
@@ -728,10 +892,10 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
-**403** | Forbidden |  -  |
+**204** | No Content |  -  |
 **404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -895,6 +1059,89 @@ This endpoint does not need any parameter.
 **404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workspaces_api_select_mobile_workspace**
+> MobileWorkspaceSelectionOut apps_workspaces_api_select_mobile_workspace(mobile_workspace_select_in)
+
+Select Mobile Workspace
+
+Set or confirm the selected mobile workspace and return fresh tokens.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.mobile_workspace_select_in import MobileWorkspaceSelectIn
+from spatialflow_generated.models.mobile_workspace_selection_out import MobileWorkspaceSelectionOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkspacesApi(api_client)
+    mobile_workspace_select_in = spatialflow_generated.MobileWorkspaceSelectIn() # MobileWorkspaceSelectIn | 
+
+    try:
+        # Select Mobile Workspace
+        api_response = await api_instance.apps_workspaces_api_select_mobile_workspace(mobile_workspace_select_in)
+        print("The response of WorkspacesApi->apps_workspaces_api_select_mobile_workspace:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkspacesApi->apps_workspaces_api_select_mobile_workspace: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **mobile_workspace_select_in** | [**MobileWorkspaceSelectIn**](MobileWorkspaceSelectIn.md)|  | 
+
+### Return type
+
+[**MobileWorkspaceSelectionOut**](MobileWorkspaceSelectionOut.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

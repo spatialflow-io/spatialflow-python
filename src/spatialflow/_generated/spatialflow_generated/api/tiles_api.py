@@ -100,8 +100,8 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -178,8 +178,8 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -256,8 +256,8 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -965,8 +965,8 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '401': "ErrorResponse",
             '501': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
@@ -1036,8 +1036,8 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '401': "ErrorResponse",
             '501': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
@@ -1107,8 +1107,8 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '401': "ErrorResponse",
             '501': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
@@ -1199,7 +1199,7 @@ class TilesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Health Check
 
         Health check endpoint for tiles service.
@@ -1234,7 +1234,7 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1266,7 +1266,7 @@ class TilesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Health Check
 
         Health check endpoint for tiles service.
@@ -1301,7 +1301,7 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1368,7 +1368,7 @@ class TilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",

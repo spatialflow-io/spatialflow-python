@@ -330,7 +330,7 @@ class GPXSimulatorApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Delete Gpx Route
 
         Delete (deactivate) a GPX route.
@@ -368,10 +368,10 @@ class GPXSimulatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -401,7 +401,7 @@ class GPXSimulatorApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Delete Gpx Route
 
         Delete (deactivate) a GPX route.
@@ -439,10 +439,10 @@ class GPXSimulatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -510,10 +510,10 @@ class GPXSimulatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -643,8 +643,8 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXPlaybackOut",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -714,8 +714,8 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXPlaybackOut",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -785,8 +785,8 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXPlaybackOut",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -918,8 +918,8 @@ class GPXSimulatorApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXRouteOut",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -989,8 +989,8 @@ class GPXSimulatorApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXRouteOut",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1060,8 +1060,8 @@ class GPXSimulatorApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXRouteOut",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1811,9 +1811,8 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1883,9 +1882,8 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -1955,9 +1953,8 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2087,10 +2084,9 @@ class GPXSimulatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '201': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
+            '200': "GPXPlaybackOut",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2159,10 +2155,9 @@ class GPXSimulatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '201': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
+            '200': "GPXPlaybackOut",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2231,10 +2226,9 @@ class GPXSimulatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '201': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
+            '200': "GPXPlaybackOut",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2369,10 +2363,9 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2445,10 +2438,9 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2521,10 +2513,9 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "GPXPlaybackOut",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
-            '404': "ErrorResponse",
             '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2682,7 +2673,6 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "GPXRouteOut",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2766,7 +2756,6 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "GPXRouteOut",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2850,7 +2839,6 @@ class GPXSimulatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "GPXRouteOut",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",

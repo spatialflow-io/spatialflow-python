@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **geofences** | **int** |  | [optional] [default to 0]
 **webhooks_delivered** | **int** |  | [optional] [default to 0]
 **test_points** | **int** |  | [optional] [default to 0]
+**devices** | **int** |  | [optional] [default to 0]
 
 ## Example
 

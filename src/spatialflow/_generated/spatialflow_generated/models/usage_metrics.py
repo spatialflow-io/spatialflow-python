@@ -30,7 +30,8 @@ class UsageMetrics(BaseModel):
     geofences: Optional[StrictInt] = 0
     webhooks_delivered: Optional[StrictInt] = 0
     test_points: Optional[StrictInt] = 0
-    __properties: ClassVar[List[str]] = ["api_calls", "geofences", "webhooks_delivered", "test_points"]
+    devices: Optional[StrictInt] = 0
+    __properties: ClassVar[List[str]] = ["api_calls", "geofences", "webhooks_delivered", "test_points", "devices"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,7 +87,8 @@ class UsageMetrics(BaseModel):
             "api_calls": obj.get("api_calls") if obj.get("api_calls") is not None else 0,
             "geofences": obj.get("geofences") if obj.get("geofences") is not None else 0,
             "webhooks_delivered": obj.get("webhooks_delivered") if obj.get("webhooks_delivered") is not None else 0,
-            "test_points": obj.get("test_points") if obj.get("test_points") is not None else 0
+            "test_points": obj.get("test_points") if obj.get("test_points") is not None else 0,
+            "devices": obj.get("devices") if obj.get("devices") is not None else 0
         })
         return _obj
 

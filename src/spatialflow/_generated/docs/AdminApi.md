@@ -9,17 +9,26 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_admin_ping**](AdminApi.md#apps_admin_portal_api_admin_ping) | **GET** /api/v1/admin/ping | Admin Ping
 [**apps_admin_portal_api_admin_reset_password**](AdminApi.md#apps_admin_portal_api_admin_reset_password) | **POST** /api/v1/admin/users/{user_id}/reset-password | Admin Reset Password
 [**apps_admin_portal_api_approve_user**](AdminApi.md#apps_admin_portal_api_approve_user) | **POST** /api/v1/admin/users/{user_id}/approve | Approve User
+[**apps_admin_portal_api_bulk_approve_users**](AdminApi.md#apps_admin_portal_api_bulk_approve_users) | **POST** /api/v1/admin/users/bulk-approve | Bulk Approve Users
+[**apps_admin_portal_api_bulk_deactivate_users**](AdminApi.md#apps_admin_portal_api_bulk_deactivate_users) | **POST** /api/v1/admin/users/bulk-deactivate | Bulk Deactivate Users
+[**apps_admin_portal_api_bulk_invite_users**](AdminApi.md#apps_admin_portal_api_bulk_invite_users) | **POST** /api/v1/admin/users/bulk-invite | Bulk Invite Users
 [**apps_admin_portal_api_deactivate_user**](AdminApi.md#apps_admin_portal_api_deactivate_user) | **PUT** /api/v1/admin/users/{user_id}/deactivate | Deactivate User
 [**apps_admin_portal_api_delete_user**](AdminApi.md#apps_admin_portal_api_delete_user) | **DELETE** /api/v1/admin/users/{user_id} | Delete User
 [**apps_admin_portal_api_delete_workspace**](AdminApi.md#apps_admin_portal_api_delete_workspace) | **DELETE** /api/v1/admin/workspaces/{workspace_id} | Delete Workspace
 [**apps_admin_portal_api_export_marketing_subscribers**](AdminApi.md#apps_admin_portal_api_export_marketing_subscribers) | **GET** /api/v1/admin/users/marketing-subscribers | Export Marketing Subscribers
+[**apps_admin_portal_api_export_users**](AdminApi.md#apps_admin_portal_api_export_users) | **GET** /api/v1/admin/users/export | Export Users
+[**apps_admin_portal_api_get_admin_system_health**](AdminApi.md#apps_admin_portal_api_get_admin_system_health) | **GET** /api/v1/admin/system-health | Get Admin System Health
 [**apps_admin_portal_api_get_configuration**](AdminApi.md#apps_admin_portal_api_get_configuration) | **GET** /api/v1/admin/configurations/{key} | Get Configuration
 [**apps_admin_portal_api_get_dashboard_stats**](AdminApi.md#apps_admin_portal_api_get_dashboard_stats) | **GET** /api/v1/admin/dashboard-stats | Get Dashboard Stats
+[**apps_admin_portal_api_get_dashboard_trends**](AdminApi.md#apps_admin_portal_api_get_dashboard_trends) | **GET** /api/v1/admin/dashboard-stats/trends | Get Dashboard Trends
+[**apps_admin_portal_api_get_dormant_workspaces**](AdminApi.md#apps_admin_portal_api_get_dormant_workspaces) | **GET** /api/v1/admin/workspaces/dormant | Get Dormant Workspaces
 [**apps_admin_portal_api_get_notification_config**](AdminApi.md#apps_admin_portal_api_get_notification_config) | **GET** /api/v1/admin/slack-config | Get Notification Config
+[**apps_admin_portal_api_get_user_activity**](AdminApi.md#apps_admin_portal_api_get_user_activity) | **GET** /api/v1/admin/users/{user_id}/activity | Get User Activity
 [**apps_admin_portal_api_get_user_detail**](AdminApi.md#apps_admin_portal_api_get_user_detail) | **GET** /api/v1/admin/users/{user_id} | Get User Detail
 [**apps_admin_portal_api_get_user_usage**](AdminApi.md#apps_admin_portal_api_get_user_usage) | **GET** /api/v1/admin/users/{user_id}/usage | Get User Usage
 [**apps_admin_portal_api_get_users_with_stats**](AdminApi.md#apps_admin_portal_api_get_users_with_stats) | **GET** /api/v1/admin/users/stats | Get Users With Stats
 [**apps_admin_portal_api_get_workspace**](AdminApi.md#apps_admin_portal_api_get_workspace) | **GET** /api/v1/admin/workspaces/{workspace_id} | Get Workspace
+[**apps_admin_portal_api_get_workspace_analytics**](AdminApi.md#apps_admin_portal_api_get_workspace_analytics) | **GET** /api/v1/admin/workspaces/analytics | Get Workspace Analytics
 [**apps_admin_portal_api_get_workspace_members**](AdminApi.md#apps_admin_portal_api_get_workspace_members) | **GET** /api/v1/admin/workspaces/{workspace_id}/members | Get Workspace Members
 [**apps_admin_portal_api_invite_user**](AdminApi.md#apps_admin_portal_api_invite_user) | **POST** /api/v1/admin/users/invite | Invite User
 [**apps_admin_portal_api_list_configurations**](AdminApi.md#apps_admin_portal_api_list_configurations) | **GET** /api/v1/admin/configurations | List Configurations
@@ -35,6 +44,7 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_revoke_invitation**](AdminApi.md#apps_admin_portal_api_revoke_invitation) | **DELETE** /api/v1/admin/invitations/{invite_id} | Revoke Invitation
 [**apps_admin_portal_api_send_test_email**](AdminApi.md#apps_admin_portal_api_send_test_email) | **POST** /api/v1/admin/email/test | Send Test Email
 [**apps_admin_portal_api_test_notification**](AdminApi.md#apps_admin_portal_api_test_notification) | **POST** /api/v1/admin/slack-config/test | Test Notification
+[**apps_admin_portal_api_transfer_workspace_ownership**](AdminApi.md#apps_admin_portal_api_transfer_workspace_ownership) | **POST** /api/v1/admin/workspaces/{workspace_id}/transfer-ownership | Transfer Workspace Ownership
 [**apps_admin_portal_api_update_configuration**](AdminApi.md#apps_admin_portal_api_update_configuration) | **PUT** /api/v1/admin/configurations/{key} | Update Configuration
 [**apps_admin_portal_api_update_member_role**](AdminApi.md#apps_admin_portal_api_update_member_role) | **PATCH** /api/v1/admin/workspaces/{workspace_id}/members/{user_id} | Update Member Role
 [**apps_admin_portal_api_update_notification_config**](AdminApi.md#apps_admin_portal_api_update_notification_config) | **PUT** /api/v1/admin/slack-config | Update Notification Config
@@ -441,6 +451,258 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_admin_portal_api_bulk_approve_users**
+> BulkOperationResponse apps_admin_portal_api_bulk_approve_users(bulk_approve_request)
+
+Bulk Approve Users
+
+Bulk approve multiple pending users.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.bulk_approve_request import BulkApproveRequest
+from spatialflow_generated.models.bulk_operation_response import BulkOperationResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    bulk_approve_request = spatialflow_generated.BulkApproveRequest() # BulkApproveRequest | 
+
+    try:
+        # Bulk Approve Users
+        api_response = await api_instance.apps_admin_portal_api_bulk_approve_users(bulk_approve_request)
+        print("The response of AdminApi->apps_admin_portal_api_bulk_approve_users:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_bulk_approve_users: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bulk_approve_request** | [**BulkApproveRequest**](BulkApproveRequest.md)|  | 
+
+### Return type
+
+[**BulkOperationResponse**](BulkOperationResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_bulk_deactivate_users**
+> BulkOperationResponse apps_admin_portal_api_bulk_deactivate_users(bulk_deactivate_request)
+
+Bulk Deactivate Users
+
+Bulk deactivate multiple users.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.bulk_deactivate_request import BulkDeactivateRequest
+from spatialflow_generated.models.bulk_operation_response import BulkOperationResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    bulk_deactivate_request = spatialflow_generated.BulkDeactivateRequest() # BulkDeactivateRequest | 
+
+    try:
+        # Bulk Deactivate Users
+        api_response = await api_instance.apps_admin_portal_api_bulk_deactivate_users(bulk_deactivate_request)
+        print("The response of AdminApi->apps_admin_portal_api_bulk_deactivate_users:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_bulk_deactivate_users: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bulk_deactivate_request** | [**BulkDeactivateRequest**](BulkDeactivateRequest.md)|  | 
+
+### Return type
+
+[**BulkOperationResponse**](BulkOperationResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_bulk_invite_users**
+> BulkOperationResponse apps_admin_portal_api_bulk_invite_users(bulk_invite_request)
+
+Bulk Invite Users
+
+Bulk invite multiple users.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.bulk_invite_request import BulkInviteRequest
+from spatialflow_generated.models.bulk_operation_response import BulkOperationResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    bulk_invite_request = spatialflow_generated.BulkInviteRequest() # BulkInviteRequest | 
+
+    try:
+        # Bulk Invite Users
+        api_response = await api_instance.apps_admin_portal_api_bulk_invite_users(bulk_invite_request)
+        print("The response of AdminApi->apps_admin_portal_api_bulk_invite_users:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_bulk_invite_users: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bulk_invite_request** | [**BulkInviteRequest**](BulkInviteRequest.md)|  | 
+
+### Return type
+
+[**BulkOperationResponse**](BulkOperationResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_admin_portal_api_deactivate_user**
 > UserActionResponse apps_admin_portal_api_deactivate_user(user_id)
 
@@ -685,10 +947,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -778,6 +1038,167 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_admin_portal_api_export_users**
+> List[object] apps_admin_portal_api_export_users(format=format)
+
+Export Users
+
+Export full user list.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    format = 'json' # str |  (optional) (default to 'json')
+
+    try:
+        # Export Users
+        api_response = await api_instance.apps_admin_portal_api_export_users(format=format)
+        print("The response of AdminApi->apps_admin_portal_api_export_users:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_export_users: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **format** | **str**|  | [optional] [default to &#39;json&#39;]
+
+### Return type
+
+**List[object]**
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_admin_system_health**
+> SystemHealthResponse apps_admin_portal_api_get_admin_system_health()
+
+Get Admin System Health
+
+Read-only system health snapshot for the admin portal.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.system_health_response import SystemHealthResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # Get Admin System Health
+        api_response = await api_instance.apps_admin_portal_api_get_admin_system_health()
+        print("The response of AdminApi->apps_admin_portal_api_get_admin_system_health:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_admin_system_health: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SystemHealthResponse**](SystemHealthResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_admin_portal_api_get_configuration**
 > ConfigurationItem apps_admin_portal_api_get_configuration(key)
 
@@ -862,7 +1283,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_admin_portal_api_get_dashboard_stats**
-> DashboardStatsResponse apps_admin_portal_api_get_dashboard_stats()
+> EnhancedDashboardStatsResponse apps_admin_portal_api_get_dashboard_stats()
 
 Get Dashboard Stats
 
@@ -874,7 +1295,7 @@ Get aggregated dashboard statistics.
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.dashboard_stats_response import DashboardStatsResponse
+from spatialflow_generated.models.enhanced_dashboard_stats_response import EnhancedDashboardStatsResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -916,7 +1337,173 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**DashboardStatsResponse**](DashboardStatsResponse.md)
+[**EnhancedDashboardStatsResponse**](EnhancedDashboardStatsResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_dashboard_trends**
+> DashboardTrendsResponse apps_admin_portal_api_get_dashboard_trends(days=days)
+
+Get Dashboard Trends
+
+Get time-series trend data for dashboard charts.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.dashboard_trends_response import DashboardTrendsResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    days = 30 # int |  (optional) (default to 30)
+
+    try:
+        # Get Dashboard Trends
+        api_response = await api_instance.apps_admin_portal_api_get_dashboard_trends(days=days)
+        print("The response of AdminApi->apps_admin_portal_api_get_dashboard_trends:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_dashboard_trends: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **days** | **int**|  | [optional] [default to 30]
+
+### Return type
+
+[**DashboardTrendsResponse**](DashboardTrendsResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_dormant_workspaces**
+> DormantWorkspaceResponse apps_admin_portal_api_get_dormant_workspaces(inactive_days=inactive_days)
+
+Get Dormant Workspaces
+
+Find workspaces with no recent activity.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.dormant_workspace_response import DormantWorkspaceResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    inactive_days = 30 # int |  (optional) (default to 30)
+
+    try:
+        # Get Dormant Workspaces
+        api_response = await api_instance.apps_admin_portal_api_get_dormant_workspaces(inactive_days=inactive_days)
+        print("The response of AdminApi->apps_admin_portal_api_get_dormant_workspaces:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_dormant_workspaces: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inactive_days** | **int**|  | [optional] [default to 30]
+
+### Return type
+
+[**DormantWorkspaceResponse**](DormantWorkspaceResponse.md)
 
 ### Authorization
 
@@ -1015,6 +1602,93 @@ This endpoint does not need any parameter.
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_user_activity**
+> UserActivityResponse apps_admin_portal_api_get_user_activity(user_id, limit=limit, offset=offset)
+
+Get User Activity
+
+Get activity timeline for a specific user.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.user_activity_response import UserActivityResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    user_id = 'user_id_example' # str | 
+    limit = 50 # int |  (optional) (default to 50)
+    offset = 0 # int |  (optional) (default to 0)
+
+    try:
+        # Get User Activity
+        api_response = await api_instance.apps_admin_portal_api_get_user_activity(user_id, limit=limit, offset=offset)
+        print("The response of AdminApi->apps_admin_portal_api_get_user_activity:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_user_activity: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user_id** | **str**|  | 
+ **limit** | **int**|  | [optional] [default to 50]
+ **offset** | **int**|  | [optional] [default to 0]
+
+### Return type
+
+[**UserActivityResponse**](UserActivityResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1191,7 +1865,7 @@ Name | Type | Description  | Notes
 
 Get Users With Stats
 
-Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
 
 ### Example
 
@@ -1278,7 +1952,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_admin_portal_api_get_workspace**
-> WorkspaceDetailResponse apps_admin_portal_api_get_workspace(workspace_id)
+> EnhancedWorkspaceDetailResponse apps_admin_portal_api_get_workspace(workspace_id)
 
 Get Workspace
 
@@ -1290,7 +1964,7 @@ Get detailed information about a specific workspace.
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.workspace_detail_response import WorkspaceDetailResponse
+from spatialflow_generated.models.enhanced_workspace_detail_response import EnhancedWorkspaceDetailResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1336,7 +2010,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**WorkspaceDetailResponse**](WorkspaceDetailResponse.md)
+[**EnhancedWorkspaceDetailResponse**](EnhancedWorkspaceDetailResponse.md)
 
 ### Authorization
 
@@ -1355,7 +2029,93 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_get_workspace_analytics**
+> WorkspaceAnalyticsResponse apps_admin_portal_api_get_workspace_analytics(sort=sort, limit=limit, offset=offset)
+
+Get Workspace Analytics
+
+Get workspace analytics with usage rankings.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.workspace_analytics_response import WorkspaceAnalyticsResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    sort = 'event_units' # str |  (optional) (default to 'event_units')
+    limit = 20 # int |  (optional) (default to 20)
+    offset = 0 # int |  (optional) (default to 0)
+
+    try:
+        # Get Workspace Analytics
+        api_response = await api_instance.apps_admin_portal_api_get_workspace_analytics(sort=sort, limit=limit, offset=offset)
+        print("The response of AdminApi->apps_admin_portal_api_get_workspace_analytics:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_get_workspace_analytics: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sort** | **str**|  | [optional] [default to &#39;event_units&#39;]
+ **limit** | **int**|  | [optional] [default to 20]
+ **offset** | **int**|  | [optional] [default to 0]
+
+### Return type
+
+[**WorkspaceAnalyticsResponse**](WorkspaceAnalyticsResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1442,7 +2202,6 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1523,10 +2282,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -1690,14 +2447,13 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_admin_portal_api_list_users**
-> UserListResponse apps_admin_portal_api_list_users(page=page, limit=limit, search=search, role=role, status=status)
+> UserListResponse apps_admin_portal_api_list_users(page=page, limit=limit, search=search, role=role, status=status, workspace_id=workspace_id, sort_by=sort_by, sort_order=sort_order)
 
 List Users
 
@@ -1738,10 +2494,13 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     search = 'search_example' # str |  (optional)
     role = 'role_example' # str |  (optional)
     status = 'status_example' # str |  (optional)
+    workspace_id = 'workspace_id_example' # str |  (optional)
+    sort_by = 'date_joined' # str |  (optional) (default to 'date_joined')
+    sort_order = 'desc' # str |  (optional) (default to 'desc')
 
     try:
         # List Users
-        api_response = await api_instance.apps_admin_portal_api_list_users(page=page, limit=limit, search=search, role=role, status=status)
+        api_response = await api_instance.apps_admin_portal_api_list_users(page=page, limit=limit, search=search, role=role, status=status, workspace_id=workspace_id, sort_by=sort_by, sort_order=sort_order)
         print("The response of AdminApi->apps_admin_portal_api_list_users:\n")
         pprint(api_response)
     except Exception as e:
@@ -1760,6 +2519,9 @@ Name | Type | Description  | Notes
  **search** | **str**|  | [optional] 
  **role** | **str**|  | [optional] 
  **status** | **str**|  | [optional] 
+ **workspace_id** | **str**|  | [optional] 
+ **sort_by** | **str**|  | [optional] [default to &#39;date_joined&#39;]
+ **sort_order** | **str**|  | [optional] [default to &#39;desc&#39;]
 
 ### Return type
 
@@ -1788,7 +2550,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_admin_portal_api_list_workspaces**
-> WorkspaceListResponse apps_admin_portal_api_list_workspaces(page=page, limit=limit, search=search)
+> EnhancedWorkspaceListResponse apps_admin_portal_api_list_workspaces(page=page, limit=limit, search=search, sort_by=sort_by, sort_order=sort_order)
 
 List Workspaces
 
@@ -1800,7 +2562,7 @@ Get paginated list of workspaces with filtering options.
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.workspace_list_response import WorkspaceListResponse
+from spatialflow_generated.models.enhanced_workspace_list_response import EnhancedWorkspaceListResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1827,10 +2589,12 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     page = 1 # int |  (optional) (default to 1)
     limit = 20 # int |  (optional) (default to 20)
     search = 'search_example' # str |  (optional)
+    sort_by = 'created_at' # str |  (optional) (default to 'created_at')
+    sort_order = 'desc' # str |  (optional) (default to 'desc')
 
     try:
         # List Workspaces
-        api_response = await api_instance.apps_admin_portal_api_list_workspaces(page=page, limit=limit, search=search)
+        api_response = await api_instance.apps_admin_portal_api_list_workspaces(page=page, limit=limit, search=search, sort_by=sort_by, sort_order=sort_order)
         print("The response of AdminApi->apps_admin_portal_api_list_workspaces:\n")
         pprint(api_response)
     except Exception as e:
@@ -1847,10 +2611,12 @@ Name | Type | Description  | Notes
  **page** | **int**|  | [optional] [default to 1]
  **limit** | **int**|  | [optional] [default to 20]
  **search** | **str**|  | [optional] 
+ **sort_by** | **str**|  | [optional] [default to &#39;created_at&#39;]
+ **sort_order** | **str**|  | [optional] [default to &#39;desc&#39;]
 
 ### Return type
 
-[**WorkspaceListResponse**](WorkspaceListResponse.md)
+[**EnhancedWorkspaceListResponse**](EnhancedWorkspaceListResponse.md)
 
 ### Authorization
 
@@ -1868,7 +2634,6 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -2039,9 +2804,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -2123,9 +2888,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -2627,6 +3392,93 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_admin_portal_api_transfer_workspace_ownership**
+> OwnershipTransferResponse apps_admin_portal_api_transfer_workspace_ownership(workspace_id, ownership_transfer_request)
+
+Transfer Workspace Ownership
+
+Transfer workspace ownership to a different member.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.ownership_transfer_request import OwnershipTransferRequest
+from spatialflow_generated.models.ownership_transfer_response import OwnershipTransferResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    workspace_id = 'workspace_id_example' # str | 
+    ownership_transfer_request = spatialflow_generated.OwnershipTransferRequest() # OwnershipTransferRequest | 
+
+    try:
+        # Transfer Workspace Ownership
+        api_response = await api_instance.apps_admin_portal_api_transfer_workspace_ownership(workspace_id, ownership_transfer_request)
+        print("The response of AdminApi->apps_admin_portal_api_transfer_workspace_ownership:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_transfer_workspace_ownership: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workspace_id** | **str**|  | 
+ **ownership_transfer_request** | [**OwnershipTransferRequest**](OwnershipTransferRequest.md)|  | 
+
+### Return type
+
+[**OwnershipTransferResponse**](OwnershipTransferResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_admin_portal_api_update_configuration**
 > ConfigurationUpdateResponse apps_admin_portal_api_update_configuration(key, configuration_update_request)
 
@@ -2795,9 +3647,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -2967,9 +3819,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -3056,7 +3908,6 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

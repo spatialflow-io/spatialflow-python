@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**event_type** | **str** |  | 
 **test_metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example

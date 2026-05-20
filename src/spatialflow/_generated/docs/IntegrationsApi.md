@@ -76,7 +76,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.IntegrationsApi(api_client)
     include_secrets = False # bool |  (optional) (default to False)
-    request_body = ['request_body_example'] # List[Optional[str]] |  (optional)
+    request_body = ['request_body_example'] # List[str] |  (optional)
 
     try:
         # Bulk Export Integrations
@@ -95,7 +95,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_secrets** | **bool**|  | [optional] [default to False]
- **request_body** | [**List[Optional[str]]**](str.md)|  | [optional] 
+ **request_body** | [**List[str]**](str.md)|  | [optional] 
 
 ### Return type
 
@@ -210,9 +210,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
-**422** | Validation Error |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -301,10 +301,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -394,11 +392,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
-**422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -485,10 +483,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -578,17 +574,15 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_delete_integration**
-> Dict[str, object] apps_integrations_api_delete_integration(integration_id)
+> apps_integrations_api_delete_integration(integration_id)
 
 Delete Integration
 
@@ -634,9 +628,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete Integration
-        api_response = await api_instance.apps_integrations_api_delete_integration(integration_id)
-        print("The response of IntegrationsApi->apps_integrations_api_delete_integration:\n")
-        pprint(api_response)
+        await api_instance.apps_integrations_api_delete_integration(integration_id)
     except Exception as e:
         print("Exception when calling IntegrationsApi->apps_integrations_api_delete_integration: %s\n" % e)
 ```
@@ -652,7 +644,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -667,11 +659,11 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
-**404** | Not Found |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -758,10 +750,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -852,15 +842,14 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
-**404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_get_available_integration_types**
-> List[Dict[str, object]] apps_integrations_api_get_available_integration_types()
+> List[Optional[Dict[str, object]]] apps_integrations_api_get_available_integration_types()
 
 Get Available Integration Types
 
@@ -920,7 +909,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -1026,14 +1015,14 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
-**404** | Not Found |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_get_integration_error_stats**
-> Dict[str, object] apps_integrations_api_get_integration_error_stats()
+> IntegrationErrorStatsOut apps_integrations_api_get_integration_error_stats()
 
 Get Integration Error Stats
 
@@ -1046,6 +1035,7 @@ Get integration error statistics for the dashboard health strip.  Returns count 
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.integration_error_stats_out import IntegrationErrorStatsOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1093,7 +1083,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**IntegrationErrorStatsOut**](IntegrationErrorStatsOut.md)
 
 ### Authorization
 
@@ -1290,7 +1280,6 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1378,12 +1367,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
-**422** | Validation Error |  -  |
-**500** | Internal Server Error |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1472,7 +1459,6 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1569,7 +1555,6 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -1856,7 +1841,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_test_all_integrations**
-> List[Dict[str, object]] apps_integrations_api_test_all_integrations()
+> List[Optional[Dict[str, object]]] apps_integrations_api_test_all_integrations()
 
 Test All Integrations
 
@@ -1916,7 +1901,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -2022,8 +2007,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
-**404** | Not Found |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -2115,10 +2100,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -2210,11 +2193,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
-**500** | Internal Server Error |  -  |
-**403** | Forbidden |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2303,10 +2286,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 

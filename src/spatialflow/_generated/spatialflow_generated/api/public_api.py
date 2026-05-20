@@ -17,8 +17,14 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from typing import Any, Dict
+from ..models.api_docs_out import ApiDocsOut
 from ..models.contact_request import ContactRequest
+from ..models.docs_ui_out import DocsUiOut
+from ..models.health_out import HealthOut
+from ..models.runtime_config_out import RuntimeConfigOut
 from ..models.signup_request import SignupRequest
+from ..models.status_out import StatusOut
+from ..models.web_socket_routes_out import WebSocketRoutesOut
 
 from ..api_client import ApiClient, RequestSerialized
 from ..api_response import ApiResponse
@@ -344,7 +350,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> ApiDocsOut:
         """Get Api Docs
 
         Returns the complete OpenAPI 3.0 specification
@@ -379,7 +385,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "ApiDocsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -411,7 +417,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[ApiDocsOut]:
         """Get Api Docs
 
         Returns the complete OpenAPI 3.0 specification
@@ -446,7 +452,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "ApiDocsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -513,7 +519,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "ApiDocsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -601,7 +607,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> WebSocketRoutesOut:
         """Get Websocket Routes
 
         Returns documentation for all available WebSocket endpoints.  This endpoint helps developers discover and understand the WebSocket routes available in the SpatialFlow API.
@@ -636,7 +642,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WebSocketRoutesOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -668,7 +674,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[WebSocketRoutesOut]:
         """Get Websocket Routes
 
         Returns documentation for all available WebSocket endpoints.  This endpoint helps developers discover and understand the WebSocket routes available in the SpatialFlow API.
@@ -703,7 +709,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WebSocketRoutesOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -770,7 +776,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WebSocketRoutesOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -858,7 +864,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> HealthOut:
         """Health Check
 
         Health check endpoint for public service
@@ -893,7 +899,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "HealthOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -925,7 +931,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[HealthOut]:
         """Health Check
 
         Health check endpoint for public service
@@ -960,7 +966,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "HealthOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1027,7 +1033,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "HealthOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1115,7 +1121,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> RuntimeConfigOut:
         """Runtime Config
 
         Get runtime configuration for frontend applications.  This endpoint provides dynamic configuration that was previously only available as build-time environment variables. Allows Admin UI to control feature toggles without requiring frontend rebuilds (Issue #119).  Response includes only safe-to-expose public configuration: - Feature toggles (Route Tester, admin approval) - Analytics configuration (enabled flag, host URL - NOT API keys)  Note: API keys and sensitive values are NEVER returned from this endpoint.  Rate limited: 120/minute per IP to prevent abuse while allowing frequent frontend polling (e.g., SPA init, tab reopens).  Caching: Response is cached for 30 seconds to reduce database lookups. ConfigurationService also has its own 5-minute cache layer.
@@ -1150,8 +1156,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '429': "Dict[str, object]",
+            '200': "RuntimeConfigOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1183,7 +1188,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[RuntimeConfigOut]:
         """Runtime Config
 
         Get runtime configuration for frontend applications.  This endpoint provides dynamic configuration that was previously only available as build-time environment variables. Allows Admin UI to control feature toggles without requiring frontend rebuilds (Issue #119).  Response includes only safe-to-expose public configuration: - Feature toggles (Route Tester, admin approval) - Analytics configuration (enabled flag, host URL - NOT API keys)  Note: API keys and sensitive values are NEVER returned from this endpoint.  Rate limited: 120/minute per IP to prevent abuse while allowing frequent frontend polling (e.g., SPA init, tab reopens).  Caching: Response is cached for 30 seconds to reduce database lookups. ConfigurationService also has its own 5-minute cache layer.
@@ -1218,8 +1223,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '429': "Dict[str, object]",
+            '200': "RuntimeConfigOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1286,8 +1290,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '429': "Dict[str, object]",
+            '200': "RuntimeConfigOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1414,7 +1417,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '201': "Dict[str, object]",
             '400': "Dict[str, object]",
             '429': "Dict[str, object]",
             '401': "ErrorResponse",
@@ -1487,7 +1490,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '201': "Dict[str, object]",
             '400': "Dict[str, object]",
             '429': "Dict[str, object]",
             '401': "ErrorResponse",
@@ -1560,7 +1563,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '201': "Dict[str, object]",
             '400': "Dict[str, object]",
             '429': "Dict[str, object]",
             '401': "ErrorResponse",
@@ -1666,7 +1669,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> StatusOut:
         """Status
 
         Public status endpoint with admin approval information.
@@ -1701,7 +1704,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "StatusOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1733,7 +1736,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[StatusOut]:
         """Status
 
         Public status endpoint with admin approval information.
@@ -1768,7 +1771,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "StatusOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1835,7 +1838,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "StatusOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1923,7 +1926,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> DocsUiOut:
         """Swagger Ui
 
         Interactive Swagger UI for exploring and testing the API  Note: In production, this would serve an HTML page with Swagger UI. For now, returning a redirect to the docs endpoint.
@@ -1958,7 +1961,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DocsUiOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1990,7 +1993,7 @@ class PublicApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[DocsUiOut]:
         """Swagger Ui
 
         Interactive Swagger UI for exploring and testing the API  Note: In production, this would serve an HTML page with Swagger UI. For now, returning a redirect to the docs endpoint.
@@ -2025,7 +2028,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DocsUiOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2092,7 +2095,7 @@ class PublicApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DocsUiOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",

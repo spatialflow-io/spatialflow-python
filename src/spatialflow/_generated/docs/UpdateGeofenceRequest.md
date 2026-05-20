@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**geometry** | **Dict[str, object]** |  | [optional] 
+**geometry** | [**Geometry1**](Geometry1.md) |  | [optional] 
 **webhook_url** | **str** |  | [optional] 
 **webhook_events** | **List[str]** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 

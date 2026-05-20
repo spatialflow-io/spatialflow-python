@@ -87,8 +87,8 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
@@ -332,8 +332,8 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**401** | Unauthorized |  -  |
 **501** | Not Implemented |  -  |
+**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -341,7 +341,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_tiles_api_health_check**
-> Dict[str, object] apps_tiles_api_health_check()
+> apps_tiles_api_health_check()
 
 Health Check
 
@@ -369,9 +369,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Health Check
-        api_response = await api_instance.apps_tiles_api_health_check()
-        print("The response of TilesApi->apps_tiles_api_health_check:\n")
-        pprint(api_response)
+        await api_instance.apps_tiles_api_health_check()
     except Exception as e:
         print("Exception when calling TilesApi->apps_tiles_api_health_check: %s\n" % e)
 ```
@@ -384,7 +382,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 

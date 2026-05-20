@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **resource_type** | **str** |  | 
 **resource_id** | **str** |  | [optional] 
 **description** | **str** |  | 
-**changes** | **Dict[str, object]** |  | 
+**changes** | **object** |  | 
 **ip_address** | **str** |  | [optional] 
 **user_agent** | **str** |  | [optional] 
 **http_method** | **str** |  | 

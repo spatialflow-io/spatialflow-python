@@ -21,6 +21,8 @@ Name | Type | Description | Notes
 **default_map_style** | **str** |  | [optional] 
 **default_geofence_color** | **str** |  | [optional] 
 **show_tutorial_tooltips** | **bool** |  | [optional] 
+**has_completed_tour** | **bool** |  | [optional] 
+**has_completed_workflow_tour** | **bool** |  | [optional] 
 **default_api_version** | **str** |  | [optional] 
 
 ## Example

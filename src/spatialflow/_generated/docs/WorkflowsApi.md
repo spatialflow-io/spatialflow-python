@@ -211,8 +211,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
+**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 
@@ -303,16 +303,15 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
-**400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_delete_workflow**
-> Dict[str, object] apps_workflows_api_delete_workflow(workflow_id)
+> apps_workflows_api_delete_workflow(workflow_id)
 
 Delete Workflow
 
@@ -358,9 +357,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete Workflow
-        api_response = await api_instance.apps_workflows_api_delete_workflow(workflow_id)
-        print("The response of WorkflowsApi->apps_workflows_api_delete_workflow:\n")
-        pprint(api_response)
+        await api_instance.apps_workflows_api_delete_workflow(workflow_id)
     except Exception as e:
         print("Exception when calling WorkflowsApi->apps_workflows_api_delete_workflow: %s\n" % e)
 ```
@@ -376,7 +373,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -391,7 +388,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -576,10 +573,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -758,7 +755,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_execution_details**
-> Dict[str, object] apps_workflows_api_get_execution_details(execution_id)
+> ExecutionDetailOut apps_workflows_api_get_execution_details(execution_id)
 
 Get Execution Details
 
@@ -771,6 +768,7 @@ Get detailed execution information including steps.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.execution_detail_out import ExecutionDetailOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -822,7 +820,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**ExecutionDetailOut**](ExecutionDetailOut.md)
 
 ### Authorization
 
@@ -838,7 +836,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -847,7 +844,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_system_performance_summary**
-> Dict[str, object] apps_workflows_api_get_system_performance_summary()
+> PerformanceSummaryOut apps_workflows_api_get_system_performance_summary()
 
 Get System Performance Summary
 
@@ -860,6 +857,7 @@ Get overall system performance summary for the user.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.performance_summary_out import PerformanceSummaryOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -907,7 +905,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**PerformanceSummaryOut**](PerformanceSummaryOut.md)
 
 ### Authorization
 
@@ -1110,7 +1108,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_bottlenecks**
-> List[Dict[str, object]] apps_workflows_api_get_workflow_bottlenecks(workflow_id)
+> List[Optional[Dict[str, object]]] apps_workflows_api_get_workflow_bottlenecks(workflow_id)
 
 Get Workflow Bottlenecks
 
@@ -1174,7 +1172,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -1198,7 +1196,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_execution_detail**
-> Dict[str, object] apps_workflows_api_get_workflow_execution_detail(workflow_id, execution_id)
+> WorkflowExecutionDetailOut apps_workflows_api_get_workflow_execution_detail(workflow_id, execution_id)
 
 Get Workflow Execution Detail
 
@@ -1211,6 +1209,7 @@ Get detailed execution information for a specific workflow execution.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.workflow_execution_detail_out import WorkflowExecutionDetailOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1264,7 +1263,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**WorkflowExecutionDetailOut**](WorkflowExecutionDetailOut.md)
 
 ### Authorization
 
@@ -1563,7 +1562,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_statistics**
-> Dict[str, object] apps_workflows_api_get_workflow_statistics(workflow_id)
+> WorkflowStatisticsOut apps_workflows_api_get_workflow_statistics(workflow_id)
 
 Get Workflow Statistics
 
@@ -1576,6 +1575,7 @@ Get detailed statistics for a workflow.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.workflow_statistics_out import WorkflowStatisticsOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1627,7 +1627,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**WorkflowStatisticsOut**](WorkflowStatisticsOut.md)
 
 ### Authorization
 
@@ -1651,7 +1651,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_step_performance**
-> List[Dict[str, object]] apps_workflows_api_get_workflow_step_performance(workflow_id)
+> List[Optional[Dict[str, object]]] apps_workflows_api_get_workflow_step_performance(workflow_id)
 
 Get Workflow Step Performance
 
@@ -1715,7 +1715,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -1739,7 +1739,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_template**
-> Dict[str, object] apps_workflows_api_get_workflow_template(template_id)
+> WorkflowTemplateDetailOut apps_workflows_api_get_workflow_template(template_id)
 
 Get Workflow Template
 
@@ -1752,6 +1752,7 @@ Get workflow template details.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.workflow_template_detail_out import WorkflowTemplateDetailOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1803,7 +1804,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**WorkflowTemplateDetailOut**](WorkflowTemplateDetailOut.md)
 
 ### Authorization
 
@@ -1976,10 +1977,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
-**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -2172,7 +2172,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_list_workflow_versions**
-> List[Dict[str, object]] apps_workflows_api_list_workflow_versions(workflow_id)
+> List[Optional[Dict[str, object]]] apps_workflows_api_list_workflow_versions(workflow_id)
 
 List Workflow Versions
 
@@ -2236,7 +2236,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Dict[str, object]]**
+**List[Optional[Dict[str, object]]]**
 
 ### Authorization
 
@@ -2531,10 +2531,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**500** | Internal Server Error |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -2715,10 +2715,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**422** | Validation Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
-**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

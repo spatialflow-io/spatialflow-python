@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_storage_api_delete_file**
-> DeleteFileResponse apps_storage_api_delete_file(file_type, filename)
+> apps_storage_api_delete_file(file_type, filename)
 
 Delete File
 
@@ -118,7 +118,6 @@ Delete a file from storage.
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.delete_file_response import DeleteFileResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -153,9 +152,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete File
-        api_response = await api_instance.apps_storage_api_delete_file(file_type, filename)
-        print("The response of StorageApi->apps_storage_api_delete_file:\n")
-        pprint(api_response)
+        await api_instance.apps_storage_api_delete_file(file_type, filename)
     except Exception as e:
         print("Exception when calling StorageApi->apps_storage_api_delete_file: %s\n" % e)
 ```
@@ -172,7 +169,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**DeleteFileResponse**](DeleteFileResponse.md)
+void (empty response body)
 
 ### Authorization
 
@@ -187,12 +184,12 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
 **400** | Bad Request |  -  |
-**403** | Forbidden |  -  |
-**404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -287,7 +284,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_storage_api_get_file_types**
-> Dict[str, object] apps_storage_api_get_file_types()
+> FileTypesOut apps_storage_api_get_file_types()
 
 Get File Types
 
@@ -298,6 +295,7 @@ Get available file types and their configurations.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.file_types_out import FileTypesOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -330,7 +328,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**FileTypesOut**](FileTypesOut.md)
 
 ### Authorization
 

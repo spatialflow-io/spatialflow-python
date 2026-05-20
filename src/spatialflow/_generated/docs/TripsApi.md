@@ -6,15 +6,17 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**apps_devices_api_trips_cancel_trip**](TripsApi.md#apps_devices_api_trips_cancel_trip) | **POST** /api/v1/trips/{trip_id}/cancel | Cancel a planned trip
 [**apps_devices_api_trips_create_trip**](TripsApi.md#apps_devices_api_trips_create_trip) | **POST** /api/v1/trips/ | Create a planned trip
-[**apps_devices_api_trips_get_trip**](TripsApi.md#apps_devices_api_trips_get_trip) | **GET** /api/v1/trips/{trip_id}/ | Get trip detail
+[**apps_devices_api_trips_get_trip**](TripsApi.md#apps_devices_api_trips_get_trip) | **GET** /api/v1/trips/{trip_id} | Get trip detail
 [**apps_devices_api_trips_list_trips**](TripsApi.md#apps_devices_api_trips_list_trips) | **GET** /api/v1/trips/ | List trips
-[**apps_devices_api_trips_update_trip**](TripsApi.md#apps_devices_api_trips_update_trip) | **PUT** /api/v1/trips/{trip_id}/ | Update a trip
+[**apps_devices_api_trips_update_trip**](TripsApi.md#apps_devices_api_trips_update_trip) | **PUT** /api/v1/trips/{trip_id} | Update a trip
 
 
 # **apps_devices_api_trips_cancel_trip**
 > TripOut apps_devices_api_trips_cancel_trip(trip_id)
 
 Cancel a planned trip
+
+Cancel a planned trip. Only trips with status 'planned' can be cancelled.
 
 ### Example
 
@@ -96,6 +98,8 @@ Name | Type | Description  | Notes
 > TripOut apps_devices_api_trips_create_trip(trip_create_in)
 
 Create a planned trip
+
+Create a new planned trip for a device with an optional route.
 
 ### Example
 
@@ -179,6 +183,8 @@ Name | Type | Description  | Notes
 
 Get trip detail
 
+Retrieve a single trip with planned route and track geometry.
+
 ### Example
 
 * Bearer Authentication (JWTBearer):
@@ -258,6 +264,8 @@ Name | Type | Description  | Notes
 > TripsListOut apps_devices_api_trips_list_trips(device_id=device_id, status=status, start_date=start_date, end_date=end_date, limit=limit, offset=offset)
 
 List trips
+
+List trips for the authenticated user's workspace with optional filtering.
 
 ### Example
 
@@ -349,6 +357,8 @@ Name | Type | Description  | Notes
 > TripOut apps_devices_api_trips_update_trip(trip_id, trip_update_in)
 
 Update a trip
+
+Update a trip's name, planned route, or metadata.
 
 ### Example
 

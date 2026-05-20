@@ -211,7 +211,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_delete_geofence**
-> Dict[str, object] apps_geofences_api_delete_geofence(geofence_id)
+> apps_geofences_api_delete_geofence(geofence_id)
 
 Delete Geofence
 
@@ -257,9 +257,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Delete Geofence
-        api_response = await api_instance.apps_geofences_api_delete_geofence(geofence_id)
-        print("The response of GeofencesApi->apps_geofences_api_delete_geofence:\n")
-        pprint(api_response)
+        await api_instance.apps_geofences_api_delete_geofence(geofence_id)
     except Exception as e:
         print("Exception when calling GeofencesApi->apps_geofences_api_delete_geofence: %s\n" % e)
 ```
@@ -275,7 +273,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -290,7 +288,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
@@ -371,7 +369,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_get_active_geofences_summary**
-> Dict[str, object] apps_geofences_api_get_active_geofences_summary()
+> ActiveGeofenceSummaryOut apps_geofences_api_get_active_geofences_summary()
 
 Get Active Geofences Summary
 
@@ -384,6 +382,7 @@ Get summary of active geofences with event counts for dashboard map widget.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.active_geofence_summary_out import ActiveGeofenceSummaryOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -431,7 +430,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**ActiveGeofenceSummaryOut**](ActiveGeofenceSummaryOut.md)
 
 ### Authorization
 
@@ -549,7 +548,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_get_test_event_history**
-> Dict[str, object] apps_geofences_api_get_test_event_history(geofence_id, limit=limit, offset=offset)
+> TestEventHistoryOut apps_geofences_api_get_test_event_history(geofence_id, limit=limit, offset=offset)
 
 Get Test Event History
 
@@ -562,6 +561,7 @@ Get test event history for a geofence.  Args:     geofence_id: ID of the geofenc
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.test_event_history_out import TestEventHistoryOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -617,7 +617,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**TestEventHistoryOut**](TestEventHistoryOut.md)
 
 ### Authorization
 
@@ -735,7 +735,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_list_geofence_groups**
-> Dict[str, object] apps_geofences_api_list_geofence_groups()
+> GeofenceGroupsOut apps_geofences_api_list_geofence_groups()
 
 List Geofence Groups
 
@@ -748,6 +748,7 @@ List all unique groups for the current user.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.geofence_groups_out import GeofenceGroupsOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -795,7 +796,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+[**GeofenceGroupsOut**](GeofenceGroupsOut.md)
 
 ### Authorization
 
@@ -919,7 +920,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_list_group_geofences**
-> Dict[str, object] apps_geofences_api_list_group_geofences(group_id)
+> GroupGeofencesOut apps_geofences_api_list_group_geofences(group_id)
 
 List Group Geofences
 
@@ -932,6 +933,7 @@ List all geofences in a specific group.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.group_geofences_out import GroupGeofencesOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -983,7 +985,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**GroupGeofencesOut**](GroupGeofencesOut.md)
 
 ### Authorization
 
@@ -1008,7 +1010,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_test_group_point**
-> Dict[str, object] apps_geofences_api_test_group_point(group_id, test_point_request)
+> GroupTestPointOut apps_geofences_api_test_group_point(group_id, test_point_request)
 
 Test Group Point
 
@@ -1021,6 +1023,7 @@ Test a point against all geofences in a group.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.group_test_point_out import GroupTestPointOut
 from spatialflow_generated.models.test_point_request import TestPointRequest
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
@@ -1075,7 +1078,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**GroupTestPointOut**](GroupTestPointOut.md)
 
 ### Authorization
 
@@ -1198,7 +1201,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_trigger_test_event**
-> Dict[str, object] apps_geofences_api_trigger_test_event(geofence_id, event_type, test_event_request=test_event_request)
+> Dict[str, object] apps_geofences_api_trigger_test_event(geofence_id, test_event_request)
 
 Trigger Test Event
 
@@ -1242,12 +1245,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
     geofence_id = 'geofence_id_example' # str | 
-    event_type = 'event_type_example' # str | 
-    test_event_request = spatialflow_generated.TestEventRequest() # TestEventRequest |  (optional)
+    test_event_request = spatialflow_generated.TestEventRequest() # TestEventRequest | 
 
     try:
         # Trigger Test Event
-        api_response = await api_instance.apps_geofences_api_trigger_test_event(geofence_id, event_type, test_event_request=test_event_request)
+        api_response = await api_instance.apps_geofences_api_trigger_test_event(geofence_id, test_event_request)
         print("The response of GeofencesApi->apps_geofences_api_trigger_test_event:\n")
         pprint(api_response)
     except Exception as e:
@@ -1262,8 +1264,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **geofence_id** | **str**|  | 
- **event_type** | **str**|  | 
- **test_event_request** | [**TestEventRequest**](TestEventRequest.md)|  | [optional] 
+ **test_event_request** | [**TestEventRequest**](TestEventRequest.md)|  | 
 
 ### Return type
 
@@ -1395,7 +1396,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_geofences_api_update_geofence_group**
-> Dict[str, object] apps_geofences_api_update_geofence_group(geofence_id, group_name=group_name)
+> GeofenceGroupUpdateOut apps_geofences_api_update_geofence_group(geofence_id, body=body)
 
 Update Geofence Group
 
@@ -1408,6 +1409,7 @@ Assign or update a geofence's group.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.geofence_group_update_out import GeofenceGroupUpdateOut
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1438,11 +1440,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
     geofence_id = 'geofence_id_example' # str | 
-    group_name = 'group_name_example' # str |  (optional)
+    body = 'body_example' # str |  (optional)
 
     try:
         # Update Geofence Group
-        api_response = await api_instance.apps_geofences_api_update_geofence_group(geofence_id, group_name=group_name)
+        api_response = await api_instance.apps_geofences_api_update_geofence_group(geofence_id, body=body)
         print("The response of GeofencesApi->apps_geofences_api_update_geofence_group:\n")
         pprint(api_response)
     except Exception as e:
@@ -1457,11 +1459,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **geofence_id** | **str**|  | 
- **group_name** | **str**|  | [optional] 
+ **body** | **str**|  | [optional] 
 
 ### Return type
 
-**Dict[str, object]**
+[**GeofenceGroupUpdateOut**](GeofenceGroupUpdateOut.md)
 
 ### Authorization
 
@@ -1469,7 +1471,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

@@ -42,7 +42,8 @@ class UserUsageResponse(BaseModel):
     recent_activities: List[RecentActivity]
     account_created: Optional[StrictStr]
     last_login: Optional[StrictStr]
-    __properties: ClassVar[List[str]] = ["user_id", "email", "workspace", "api_usage", "email_stats", "geofence_stats", "activity_summary", "recent_activities", "account_created", "last_login"]
+    last_seen_at: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["user_id", "email", "workspace", "api_usage", "email_stats", "geofence_stats", "activity_summary", "recent_activities", "account_created", "last_login", "last_seen_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -124,6 +125,11 @@ class UserUsageResponse(BaseModel):
         if self.last_login is None and "last_login" in self.model_fields_set:
             _dict['last_login'] = None
 
+        # set to None if last_seen_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_seen_at is None and "last_seen_at" in self.model_fields_set:
+            _dict['last_seen_at'] = None
+
         return _dict
 
     @classmethod
@@ -145,7 +151,8 @@ class UserUsageResponse(BaseModel):
             "activity_summary": [ActivitySummary.from_dict(_item) for _item in obj["activity_summary"]] if obj.get("activity_summary") is not None else None,
             "recent_activities": [RecentActivity.from_dict(_item) for _item in obj["recent_activities"]] if obj.get("recent_activities") is not None else None,
             "account_created": obj.get("account_created"),
-            "last_login": obj.get("last_login")
+            "last_login": obj.get("last_login"),
+            "last_seen_at": obj.get("last_seen_at")
         })
         return _obj
 

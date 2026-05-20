@@ -20,9 +20,23 @@ Method | HTTP request | Description
 [**apps_authentication_api_resend_verification_alias**](AuthenticationApi.md#apps_authentication_api_resend_verification_alias) | **POST** /api/v1/auth/resend-verification | Resend Verification Alias
 [**apps_authentication_api_resend_verification_email**](AuthenticationApi.md#apps_authentication_api_resend_verification_email) | **POST** /api/v1/auth/resend-verification-email | Resend Verification Email
 [**apps_authentication_api_reset_password**](AuthenticationApi.md#apps_authentication_api_reset_password) | **POST** /api/v1/auth/reset-password | Reset Password
+[**apps_authentication_api_sso_start**](AuthenticationApi.md#apps_authentication_api_sso_start) | **GET** /api/v1/auth/sso/start | Sso Start
 [**apps_authentication_api_verify_email**](AuthenticationApi.md#apps_authentication_api_verify_email) | **GET** /api/v1/auth/verify-email | Verify Email
 [**apps_authentication_api_verify_email_path**](AuthenticationApi.md#apps_authentication_api_verify_email_path) | **GET** /api/v1/auth/verify-email/{token} | Verify Email Path
 [**apps_authentication_api_verify_email_post**](AuthenticationApi.md#apps_authentication_api_verify_email_post) | **POST** /api/v1/auth/verify-email | Verify Email Post
+[**apps_authentication_apple_mobile_api_apple_nonce**](AuthenticationApi.md#apps_authentication_apple_mobile_api_apple_nonce) | **POST** /api/v1/auth/apple/nonce | Apple Nonce
+[**apps_authentication_apple_mobile_api_apple_token_exchange**](AuthenticationApi.md#apps_authentication_apple_mobile_api_apple_token_exchange) | **POST** /api/v1/auth/apple/token-exchange | Apple Token Exchange
+[**apps_authentication_google_mobile_api_google_token_exchange**](AuthenticationApi.md#apps_authentication_google_mobile_api_google_token_exchange) | **POST** /api/v1/auth/google/token-exchange | Google Token Exchange
+[**apps_authentication_oauth_api_disconnect_oauth_account**](AuthenticationApi.md#apps_authentication_oauth_api_disconnect_oauth_account) | **DELETE** /api/v1/auth/oauth/{provider}/disconnect | Disconnect Oauth Account
+[**apps_authentication_oauth_api_get_linked_accounts**](AuthenticationApi.md#apps_authentication_oauth_api_get_linked_accounts) | **GET** /api/v1/auth/oauth/user/linked-accounts | Get Linked Accounts
+[**apps_authentication_oauth_api_get_oauth_providers**](AuthenticationApi.md#apps_authentication_oauth_api_get_oauth_providers) | **GET** /api/v1/auth/oauth/providers | Get Oauth Providers
+[**apps_authentication_oauth_api_link_oauth_account**](AuthenticationApi.md#apps_authentication_oauth_api_link_oauth_account) | **POST** /api/v1/auth/oauth/{provider}/link | Link Oauth Account
+[**apps_authentication_oauth_api_oauth_authorize**](AuthenticationApi.md#apps_authentication_oauth_api_oauth_authorize) | **GET** /api/v1/auth/oauth/{provider}/authorize | Oauth Authorize
+[**apps_authentication_oauth_api_oauth_callback**](AuthenticationApi.md#apps_authentication_oauth_api_oauth_callback) | **GET** /api/v1/auth/oauth/{provider}/callback | Oauth Callback
+[**apps_authentication_saml_api_detect_method**](AuthenticationApi.md#apps_authentication_saml_api_detect_method) | **POST** /api/v1/auth/saml/detect-method | Detect Method
+[**apps_authentication_saml_api_initiate**](AuthenticationApi.md#apps_authentication_saml_api_initiate) | **GET** /api/v1/auth/saml/{slug}/initiate | Initiate
+[**apps_authentication_saml_api_metadata**](AuthenticationApi.md#apps_authentication_saml_api_metadata) | **GET** /api/v1/auth/saml/{slug}/metadata | Metadata
+[**apps_authentication_saml_api_saml_acs**](AuthenticationApi.md#apps_authentication_saml_api_saml_acs) | **POST** /api/v1/auth/saml/{slug}/acs | Saml Acs
 
 
 # **apps_authentication_api_accept_invitation**
@@ -30,7 +44,7 @@ Method | HTTP request | Description
 
 Accept Invitation
 
-Accept a workspace invitation and optionally set password.  Security features (Issue #67): - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination
+Accept a workspace invitation and optionally set password.  Security features (Issue #67): - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Phase 77 WR-03 — strict email-match guard against authenticated session. If the request carries a valid JWT and the authenticated user's email does NOT match the invitation's email, reject with 409 + error_code INVITE_EMAIL_MISMATCH. Mirrors the guard in google_mobile_api.py and invite_sso_service.resolve_for_callback so the threat-model claim \"Email-mismatch: must NOT add user to workspace\" is enforced on the password path as well as the Google path. The mobile client now force-logs-out before reaching this endpoint (CR-01), so this is a defense-in-depth check for any other caller (web, raw API consumers).  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination     409: Authenticated session email does not match invitation email
 
 ### Example
 
@@ -92,6 +106,7 @@ No authorization required
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
 **404** | Not Found |  -  |
+**409** | Conflict |  -  |
 **429** | Too Many Requests |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -557,7 +572,7 @@ No authorization required
 
 Login
 
-User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 60/min per IP, 5/min per email (Issue #67 security hardening).
+User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 60/min per IP, 15/min per email. Per-email limit raised from 5/m (Issue #67) to 15/m (Issue #242) to reduce false lockouts from mobile retries on flaky networks, typos, and app restarts. IP limit remains the primary abuse deterrent.
 
 ### Example
 
@@ -628,7 +643,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_authentication_api_logout**
-> Dict[str, object] apps_authentication_api_logout()
+> apps_authentication_api_logout()
 
 Logout
 
@@ -666,9 +681,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Logout
-        api_response = await api_instance.apps_authentication_api_logout()
-        print("The response of AuthenticationApi->apps_authentication_api_logout:\n")
-        pprint(api_response)
+        await api_instance.apps_authentication_api_logout()
     except Exception as e:
         print("Exception when calling AuthenticationApi->apps_authentication_api_logout: %s\n" % e)
 ```
@@ -681,7 +694,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dict[str, object]**
+void (empty response body)
 
 ### Authorization
 
@@ -1216,6 +1229,78 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_authentication_api_sso_start**
+> apps_authentication_api_sso_start(var_return, workspace_slug)
+
+Sso Start
+
+Initiate SAML SSO from mobile app.  Validates the `return` deeplink URL against an allowlist (spatialflow://, spatialflowdev://) to prevent open-redirect abuse (D-06), then delegates to the existing SP-initiated SAML flow for the given workspace slug. On success, the SAML ACS handler will redirect back to `return` with ?token=<jwt>&refresh=<refresh> appended (D-04).  Returns:     302: Redirect to IdP login page.     400: Invalid return URL or SAML configuration error.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    var_return = 'var_return_example' # str | 
+    workspace_slug = 'workspace_slug_example' # str | 
+
+    try:
+        # Sso Start
+        await api_instance.apps_authentication_api_sso_start(var_return, workspace_slug)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_api_sso_start: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **var_return** | **str**|  | 
+ **workspace_slug** | **str**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**302** | Found |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_authentication_api_verify_email**
 > Dict[str, object] apps_authentication_api_verify_email(token)
 
@@ -1427,6 +1512,970 @@ No authorization required
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
 **429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_apple_mobile_api_apple_nonce**
+> AppleNonceResponse apps_authentication_apple_mobile_api_apple_nonce()
+
+Apple Nonce
+
+Generate a server-side nonce for Apple Sign-In replay protection.  Clients should call this before initiating Apple Sign-In, then pass the returned nonce to the Apple SDK. The nonce claim in the resulting identity token will be validated server-side during token exchange.  Rate limited: 10/min per IP.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.apple_nonce_response import AppleNonceResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+
+    try:
+        # Apple Nonce
+        api_response = await api_instance.apps_authentication_apple_mobile_api_apple_nonce()
+        print("The response of AuthenticationApi->apps_authentication_apple_mobile_api_apple_nonce:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_apple_mobile_api_apple_nonce: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AppleNonceResponse**](AppleNonceResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_apple_mobile_api_apple_token_exchange**
+> AppleTokenExchangeResponse apps_authentication_apple_mobile_api_apple_token_exchange(apple_token_exchange_request)
+
+Apple Token Exchange
+
+Exchange an Apple identity token (from mobile SDK) for a SpatialFlow JWT.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.apple_token_exchange_request import AppleTokenExchangeRequest
+from spatialflow_generated.models.apple_token_exchange_response import AppleTokenExchangeResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    apple_token_exchange_request = spatialflow_generated.AppleTokenExchangeRequest() # AppleTokenExchangeRequest | 
+
+    try:
+        # Apple Token Exchange
+        api_response = await api_instance.apps_authentication_apple_mobile_api_apple_token_exchange(apple_token_exchange_request)
+        print("The response of AuthenticationApi->apps_authentication_apple_mobile_api_apple_token_exchange:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_apple_mobile_api_apple_token_exchange: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **apple_token_exchange_request** | [**AppleTokenExchangeRequest**](AppleTokenExchangeRequest.md)|  | 
+
+### Return type
+
+[**AppleTokenExchangeResponse**](AppleTokenExchangeResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**503** | Service Unavailable |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_google_mobile_api_google_token_exchange**
+> GoogleTokenExchangeResponse apps_authentication_google_mobile_api_google_token_exchange(google_token_exchange_request)
+
+Google Token Exchange
+
+Exchange a Google ID token (from mobile SDK) for a SpatialFlow JWT.  Phase 74: when both `invite_id` and `invite_token` are provided, the request is routed through invite_sso_service for strict email-match reconciliation against the targeted Invitation (INVT-IDENT-01). On mismatch, no User/SocialAccount/Membership/Invitation mutation occurs. When invite params are absent, the call falls through to today's implicit email-match auto-join via provision_workspace_for_new_user (D-22).
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.google_token_exchange_request import GoogleTokenExchangeRequest
+from spatialflow_generated.models.google_token_exchange_response import GoogleTokenExchangeResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    google_token_exchange_request = spatialflow_generated.GoogleTokenExchangeRequest() # GoogleTokenExchangeRequest | 
+
+    try:
+        # Google Token Exchange
+        api_response = await api_instance.apps_authentication_google_mobile_api_google_token_exchange(google_token_exchange_request)
+        print("The response of AuthenticationApi->apps_authentication_google_mobile_api_google_token_exchange:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_google_mobile_api_google_token_exchange: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **google_token_exchange_request** | [**GoogleTokenExchangeRequest**](GoogleTokenExchangeRequest.md)|  | 
+
+### Return type
+
+[**GoogleTokenExchangeResponse**](GoogleTokenExchangeResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**503** | Service Unavailable |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_oauth_api_disconnect_oauth_account**
+> Dict[str, object] apps_authentication_oauth_api_disconnect_oauth_account(provider)
+
+Disconnect Oauth Account
+
+Disconnect an OAuth provider from user account.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    provider = 'provider_example' # str | 
+
+    try:
+        # Disconnect Oauth Account
+        api_response = await api_instance.apps_authentication_oauth_api_disconnect_oauth_account(provider)
+        print("The response of AuthenticationApi->apps_authentication_oauth_api_disconnect_oauth_account:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_disconnect_oauth_account: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **str**|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_oauth_api_get_linked_accounts**
+> apps_authentication_oauth_api_get_linked_accounts()
+
+Get Linked Accounts
+
+Get list of OAuth providers linked to user account.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+
+    try:
+        # Get Linked Accounts
+        await api_instance.apps_authentication_oauth_api_get_linked_accounts()
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_get_linked_accounts: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_oauth_api_get_oauth_providers**
+> OAuthProvidersResponse apps_authentication_oauth_api_get_oauth_providers()
+
+Get Oauth Providers
+
+Get list of available OAuth providers.  Providers are shown only if: 1. SSO toggle is enabled in Admin UI (Issue #119) 2. Valid credentials are configured (non-placeholder)
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.o_auth_providers_response import OAuthProvidersResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+
+    try:
+        # Get Oauth Providers
+        api_response = await api_instance.apps_authentication_oauth_api_get_oauth_providers()
+        print("The response of AuthenticationApi->apps_authentication_oauth_api_get_oauth_providers:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_get_oauth_providers: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**OAuthProvidersResponse**](OAuthProvidersResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_oauth_api_link_oauth_account**
+> OAuthLinkResponse apps_authentication_oauth_api_link_oauth_account(provider)
+
+Link Oauth Account
+
+Link an OAuth provider to an existing authenticated user account.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.o_auth_link_response import OAuthLinkResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    provider = 'provider_example' # str | 
+
+    try:
+        # Link Oauth Account
+        api_response = await api_instance.apps_authentication_oauth_api_link_oauth_account(provider)
+        print("The response of AuthenticationApi->apps_authentication_oauth_api_link_oauth_account:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_link_oauth_account: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **str**|  | 
+
+### Return type
+
+[**OAuthLinkResponse**](OAuthLinkResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_oauth_api_oauth_authorize**
+> OAuthAuthorizeResponse apps_authentication_oauth_api_oauth_authorize(provider, next=next, invite_id=invite_id, invite_token=invite_token)
+
+Oauth Authorize
+
+Initialize OAuth flow for a provider.  When `invite_id` and `invite_token` are both provided (Phase 74 / D-02), the invitation is validated server-side and bound to the AuthOAuthState for recovery on the callback. Either-missing falls through to the standard sign-in flow (D-22 backward compat).
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.o_auth_authorize_response import OAuthAuthorizeResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    provider = 'provider_example' # str | 
+    next = 'next_example' # str |  (optional)
+    invite_id = 'invite_id_example' # str |  (optional)
+    invite_token = 'invite_token_example' # str |  (optional)
+
+    try:
+        # Oauth Authorize
+        api_response = await api_instance.apps_authentication_oauth_api_oauth_authorize(provider, next=next, invite_id=invite_id, invite_token=invite_token)
+        print("The response of AuthenticationApi->apps_authentication_oauth_api_oauth_authorize:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_oauth_authorize: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **str**|  | 
+ **next** | **str**|  | [optional] 
+ **invite_id** | **str**|  | [optional] 
+ **invite_token** | **str**|  | [optional] 
+
+### Return type
+
+[**OAuthAuthorizeResponse**](OAuthAuthorizeResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_oauth_api_oauth_callback**
+> apps_authentication_oauth_api_oauth_callback(provider, code, state, error=error, error_description=error_description)
+
+Oauth Callback
+
+Handle OAuth callback from provider. Exchanges code for tokens and creates/links user account.  OAuth state is always invalidated on callback (success, error, or exception) to prevent replay attacks. State tokens are one-time use for CSRF protection.  Phase 74: When the OAuth state has a bound Invitation (invite-driven SSO flow), recovers the FK and routes through invite_sso_service.resolve_for_callback. On email match: creates WorkspaceMembership, marks invite used, delivers JWT. On mismatch: redirects to accept-invite page with error_code (D-12).
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    provider = 'provider_example' # str | 
+    code = 'code_example' # str | 
+    state = 'state_example' # str | 
+    error = 'error_example' # str |  (optional)
+    error_description = 'error_description_example' # str |  (optional)
+
+    try:
+        # Oauth Callback
+        await api_instance.apps_authentication_oauth_api_oauth_callback(provider, code, state, error=error, error_description=error_description)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_oauth_callback: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **str**|  | 
+ **code** | **str**|  | 
+ **state** | **str**|  | 
+ **error** | **str**|  | [optional] 
+ **error_description** | **str**|  | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_saml_api_detect_method**
+> DetectMethodResponse apps_authentication_saml_api_detect_method(detect_method_request)
+
+Detect Method
+
+Detect authentication method for an email address.  Returns 'saml' with workspace slug if the email domain has a SAML configuration, otherwise returns 'password'.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.detect_method_request import DetectMethodRequest
+from spatialflow_generated.models.detect_method_response import DetectMethodResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    detect_method_request = spatialflow_generated.DetectMethodRequest() # DetectMethodRequest | 
+
+    try:
+        # Detect Method
+        api_response = await api_instance.apps_authentication_saml_api_detect_method(detect_method_request)
+        print("The response of AuthenticationApi->apps_authentication_saml_api_detect_method:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_saml_api_detect_method: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **detect_method_request** | [**DetectMethodRequest**](DetectMethodRequest.md)|  | 
+
+### Return type
+
+[**DetectMethodResponse**](DetectMethodResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_saml_api_initiate**
+> apps_authentication_saml_api_initiate(slug)
+
+Initiate
+
+Initiate SP-initiated SAML login.  Looks up the SAMLConfiguration for the given workspace slug, creates an AuthnRequest via SAMLService, and redirects the browser to the IdP.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    slug = 'slug_example' # str | 
+
+    try:
+        # Initiate
+        await api_instance.apps_authentication_saml_api_initiate(slug)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_saml_api_initiate: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **slug** | **str**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_saml_api_metadata**
+> apps_authentication_saml_api_metadata(slug)
+
+Metadata
+
+Serve SP metadata XML for IdP configuration.  Returns the SP metadata as application/xml for the given workspace.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    slug = 'slug_example' # str | 
+
+    try:
+        # Metadata
+        await api_instance.apps_authentication_saml_api_metadata(slug)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_saml_api_metadata: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **slug** | **str**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_saml_api_saml_acs**
+> apps_authentication_saml_api_saml_acs(slug)
+
+Saml Acs
+
+Assertion Consumer Service endpoint.  Receives the SAML response (form POST from IdP), validates the assertion, provisions or links the user, issues JWT tokens via HttpOnly cookies, and redirects to the frontend callback URL.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    slug = 'slug_example' # str | 
+
+    try:
+        # Saml Acs
+        await api_instance.apps_authentication_saml_api_saml_acs(slug)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_saml_api_saml_acs: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **slug** | **str**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |

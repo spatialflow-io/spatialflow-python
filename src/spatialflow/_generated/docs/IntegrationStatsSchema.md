@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **health_status** | **str** |  | 
 **last_used_at** | **str** |  | 
 **last_health_check_at** | **str** |  | 
-**recent_errors** | **List[Optional[Dict[str, object]]]** |  | 
+**recent_errors** | **List[Dict[str, object]]** |  | 
 
 ## Example
 

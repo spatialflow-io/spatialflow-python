@@ -21,15 +21,20 @@ from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from ..models.create_from_template_in import CreateFromTemplateIn
+from ..models.execution_detail_out import ExecutionDetailOut
 from ..models.execution_out import ExecutionOut
+from ..models.performance_summary_out import PerformanceSummaryOut
 from ..models.retry_policy_response_schema import RetryPolicyResponseSchema
 from ..models.template_out import TemplateOut
 from ..models.test_workflow_in import TestWorkflowIn
+from ..models.workflow_execution_detail_out import WorkflowExecutionDetailOut
 from ..models.workflow_import_schema import WorkflowImportSchema
 from ..models.workflow_in import WorkflowIn
 from ..models.workflow_list_response import WorkflowListResponse
 from ..models.workflow_out import WorkflowOut
 from ..models.workflow_retry_policy_update_schema import WorkflowRetryPolicyUpdateSchema
+from ..models.workflow_statistics_out import WorkflowStatisticsOut
+from ..models.workflow_template_detail_out import WorkflowTemplateDetailOut
 from ..models.workflow_update import WorkflowUpdate
 
 from ..api_client import ApiClient, RequestSerialized
@@ -383,8 +388,8 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
             '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '422': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
         }
@@ -455,8 +460,8 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
             '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '422': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
         }
@@ -527,8 +532,8 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
             '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '422': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
         }
@@ -676,9 +681,8 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -752,9 +756,8 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -828,9 +831,8 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
-            '400': "Dict[str, object]",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -938,7 +940,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Delete Workflow
 
         Delete a workflow.
@@ -976,7 +978,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -1010,7 +1012,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Delete Workflow
 
         Delete a workflow.
@@ -1048,7 +1050,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -1120,7 +1122,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '204': None,
             '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -1553,10 +1555,10 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1630,10 +1632,10 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1707,10 +1709,10 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -2339,7 +2341,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> ExecutionDetailOut:
         """Get Execution Details
 
         Get detailed execution information including steps.
@@ -2377,8 +2379,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "Dict[str, object]",
+            '200': "ExecutionDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2411,7 +2412,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[ExecutionDetailOut]:
         """Get Execution Details
 
         Get detailed execution information including steps.
@@ -2449,8 +2450,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "Dict[str, object]",
+            '200': "ExecutionDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2521,8 +2521,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "Dict[str, object]",
+            '200': "ExecutionDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2615,7 +2614,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> PerformanceSummaryOut:
         """Get System Performance Summary
 
         Get overall system performance summary for the user.
@@ -2650,7 +2649,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "PerformanceSummaryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2682,7 +2681,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[PerformanceSummaryOut]:
         """Get System Performance Summary
 
         Get overall system performance summary for the user.
@@ -2717,7 +2716,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "PerformanceSummaryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2784,7 +2783,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "PerformanceSummaryOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3438,7 +3437,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """Get Workflow Bottlenecks
 
         Identify performance bottlenecks in a workflow.
@@ -3476,7 +3475,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3509,7 +3508,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """Get Workflow Bottlenecks
 
         Identify performance bottlenecks in a workflow.
@@ -3547,7 +3546,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3618,7 +3617,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3713,7 +3712,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> WorkflowExecutionDetailOut:
         """Get Workflow Execution Detail
 
         Get detailed execution information for a specific workflow execution.
@@ -3754,7 +3753,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowExecutionDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3788,7 +3787,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[WorkflowExecutionDetailOut]:
         """Get Workflow Execution Detail
 
         Get detailed execution information for a specific workflow execution.
@@ -3829,7 +3828,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowExecutionDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3904,7 +3903,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowExecutionDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4926,7 +4925,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> WorkflowStatisticsOut:
         """Get Workflow Statistics
 
         Get detailed statistics for a workflow.
@@ -4964,7 +4963,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowStatisticsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4997,7 +4996,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[WorkflowStatisticsOut]:
         """Get Workflow Statistics
 
         Get detailed statistics for a workflow.
@@ -5035,7 +5034,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowStatisticsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5106,7 +5105,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowStatisticsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5200,7 +5199,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """Get Workflow Step Performance
 
         Get performance breakdown by workflow step.
@@ -5238,7 +5237,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5271,7 +5270,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """Get Workflow Step Performance
 
         Get performance breakdown by workflow step.
@@ -5309,7 +5308,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5380,7 +5379,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5474,7 +5473,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> WorkflowTemplateDetailOut:
         """Get Workflow Template
 
         Get workflow template details.
@@ -5512,7 +5511,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowTemplateDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5545,7 +5544,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[WorkflowTemplateDetailOut]:
         """Get Workflow Template
 
         Get workflow template details.
@@ -5583,7 +5582,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowTemplateDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -5654,7 +5653,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "WorkflowTemplateDetailOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -6044,10 +6043,9 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
-            '400': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6116,10 +6114,9 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
-            '400': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6188,10 +6185,9 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WorkflowOut",
-            '400': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6918,7 +6914,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[Optional[Dict[str, object]]]:
         """List Workflow Versions
 
         List all versions of a workflow.  Returns versions in descending order (newest first).
@@ -6956,7 +6952,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -6989,7 +6985,7 @@ class WorkflowsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[Optional[Dict[str, object]]]]:
         """List Workflow Versions
 
         List all versions of a workflow.  Returns versions in descending order (newest first).
@@ -7027,7 +7023,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -7098,7 +7094,7 @@ class WorkflowsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[Optional[Dict[str, object]]]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -7868,10 +7864,10 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -7944,10 +7940,10 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -8020,10 +8016,10 @@ class WorkflowsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -8451,10 +8447,10 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WorkflowOut",
             '400': "Dict[str, object]",
+            '422': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -8527,10 +8523,10 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WorkflowOut",
             '400': "Dict[str, object]",
+            '422': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -8603,10 +8599,10 @@ class WorkflowsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WorkflowOut",
             '400': "Dict[str, object]",
+            '422': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -63,6 +63,7 @@ class TripsApi:
     ) -> TripOut:
         """Cancel a planned trip
 
+        Cancel a planned trip. Only trips with status 'planned' can be cancelled.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -134,6 +135,7 @@ class TripsApi:
     ) -> ApiResponse[TripOut]:
         """Cancel a planned trip
 
+        Cancel a planned trip. Only trips with status 'planned' can be cancelled.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -205,6 +207,7 @@ class TripsApi:
     ) -> RESTResponseType:
         """Cancel a planned trip
 
+        Cancel a planned trip. Only trips with status 'planned' can be cancelled.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -336,6 +339,7 @@ class TripsApi:
     ) -> TripOut:
         """Create a planned trip
 
+        Create a new planned trip for a device with an optional route.
 
         :param trip_create_in: (required)
         :type trip_create_in: TripCreateIn
@@ -407,6 +411,7 @@ class TripsApi:
     ) -> ApiResponse[TripOut]:
         """Create a planned trip
 
+        Create a new planned trip for a device with an optional route.
 
         :param trip_create_in: (required)
         :type trip_create_in: TripCreateIn
@@ -478,6 +483,7 @@ class TripsApi:
     ) -> RESTResponseType:
         """Create a planned trip
 
+        Create a new planned trip for a device with an optional route.
 
         :param trip_create_in: (required)
         :type trip_create_in: TripCreateIn
@@ -622,6 +628,7 @@ class TripsApi:
     ) -> TripDetailOut:
         """Get trip detail
 
+        Retrieve a single trip with planned route and track geometry.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -692,6 +699,7 @@ class TripsApi:
     ) -> ApiResponse[TripDetailOut]:
         """Get trip detail
 
+        Retrieve a single trip with planned route and track geometry.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -762,6 +770,7 @@ class TripsApi:
     ) -> RESTResponseType:
         """Get trip detail
 
+        Retrieve a single trip with planned route and track geometry.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -857,7 +866,7 @@ class TripsApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/trips/{trip_id}/',
+            resource_path='/api/v1/trips/{trip_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -897,6 +906,7 @@ class TripsApi:
     ) -> TripsListOut:
         """List trips
 
+        List trips for the authenticated user's workspace with optional filtering.
 
         :param device_id:
         :type device_id: str
@@ -988,6 +998,7 @@ class TripsApi:
     ) -> ApiResponse[TripsListOut]:
         """List trips
 
+        List trips for the authenticated user's workspace with optional filtering.
 
         :param device_id:
         :type device_id: str
@@ -1079,6 +1090,7 @@ class TripsApi:
     ) -> RESTResponseType:
         """List trips
 
+        List trips for the authenticated user's workspace with optional filtering.
 
         :param device_id:
         :type device_id: str
@@ -1271,6 +1283,7 @@ class TripsApi:
     ) -> TripOut:
         """Update a trip
 
+        Update a trip's name, planned route, or metadata.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -1346,6 +1359,7 @@ class TripsApi:
     ) -> ApiResponse[TripOut]:
         """Update a trip
 
+        Update a trip's name, planned route, or metadata.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -1421,6 +1435,7 @@ class TripsApi:
     ) -> RESTResponseType:
         """Update a trip
 
+        Update a trip's name, planned route, or metadata.
 
         :param trip_id: (required)
         :type trip_id: str
@@ -1536,7 +1551,7 @@ class TripsApi:
 
         return self.api_client.param_serialize(
             method='PUT',
-            resource_path='/api/v1/trips/{trip_id}/',
+            resource_path='/api/v1/trips/{trip_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

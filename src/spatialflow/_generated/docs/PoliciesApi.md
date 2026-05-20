@@ -5,11 +5,11 @@ All URIs are relative to *https://api.spatialflow.io*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**apps_devices_api_policies_create_policy**](PoliciesApi.md#apps_devices_api_policies_create_policy) | **POST** /api/v1/policies/ | Create policy
-[**apps_devices_api_policies_delete_policy**](PoliciesApi.md#apps_devices_api_policies_delete_policy) | **DELETE** /api/v1/policies/{policy_id}/ | Delete policy
-[**apps_devices_api_policies_get_policy**](PoliciesApi.md#apps_devices_api_policies_get_policy) | **GET** /api/v1/policies/{policy_id}/ | Get policy detail
+[**apps_devices_api_policies_delete_policy**](PoliciesApi.md#apps_devices_api_policies_delete_policy) | **DELETE** /api/v1/policies/{policy_id} | Delete policy
+[**apps_devices_api_policies_get_policy**](PoliciesApi.md#apps_devices_api_policies_get_policy) | **GET** /api/v1/policies/{policy_id} | Get policy detail
 [**apps_devices_api_policies_list_policies**](PoliciesApi.md#apps_devices_api_policies_list_policies) | **GET** /api/v1/policies/ | List policies
 [**apps_devices_api_policies_list_templates**](PoliciesApi.md#apps_devices_api_policies_list_templates) | **GET** /api/v1/policies/templates | List policy templates
-[**apps_devices_api_policies_update_policy**](PoliciesApi.md#apps_devices_api_policies_update_policy) | **PUT** /api/v1/policies/{policy_id}/ | Update policy
+[**apps_devices_api_policies_update_policy**](PoliciesApi.md#apps_devices_api_policies_update_policy) | **PUT** /api/v1/policies/{policy_id} | Update policy
 
 
 # **apps_devices_api_policies_create_policy**
@@ -168,9 +168,9 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
-**403** | Forbidden |  -  |
-**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

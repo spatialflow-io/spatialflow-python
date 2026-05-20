@@ -17,26 +17,38 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictBool, StrictStr
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from ..models.admin_user_stats_response import AdminUserStatsResponse
+from ..models.bulk_approve_request import BulkApproveRequest
+from ..models.bulk_deactivate_request import BulkDeactivateRequest
+from ..models.bulk_invite_request import BulkInviteRequest
+from ..models.bulk_operation_response import BulkOperationResponse
 from ..models.configuration_item import ConfigurationItem
 from ..models.configuration_list_response import ConfigurationListResponse
 from ..models.configuration_reset_response import ConfigurationResetResponse
 from ..models.configuration_update_request import ConfigurationUpdateRequest
 from ..models.configuration_update_response import ConfigurationUpdateResponse
-from ..models.dashboard_stats_response import DashboardStatsResponse
+from ..models.dashboard_trends_response import DashboardTrendsResponse
+from ..models.dormant_workspace_response import DormantWorkspaceResponse
 from ..models.email_test_response import EmailTestResponse
+from ..models.enhanced_dashboard_stats_response import EnhancedDashboardStatsResponse
+from ..models.enhanced_workspace_detail_response import EnhancedWorkspaceDetailResponse
+from ..models.enhanced_workspace_list_response import EnhancedWorkspaceListResponse
 from ..models.health_check_response import HealthCheckResponse
 from ..models.marketing_subscriber_export_response import MarketingSubscriberExportResponse
 from ..models.member_action_response import MemberActionResponse
 from ..models.notification_config_response import NotificationConfigResponse
 from ..models.notification_config_update_request import NotificationConfigUpdateRequest
 from ..models.notification_test_response import NotificationTestResponse
+from ..models.ownership_transfer_request import OwnershipTransferRequest
+from ..models.ownership_transfer_response import OwnershipTransferResponse
 from ..models.ping_response import PingResponse
+from ..models.system_health_response import SystemHealthResponse
 from ..models.update_member_role_request import UpdateMemberRoleRequest
 from ..models.update_user_workspace_request import UpdateUserWorkspaceRequest
 from ..models.user_action_response import UserActionResponse
+from ..models.user_activity_response import UserActivityResponse
 from ..models.user_approval_request import UserApprovalRequest
 from ..models.user_invite_request import UserInviteRequest
 from ..models.user_invite_response import UserInviteResponse
@@ -45,9 +57,8 @@ from ..models.user_rejection_request import UserRejectionRequest
 from ..models.user_summary import UserSummary
 from ..models.user_usage_response import UserUsageResponse
 from ..models.user_workspace_response import UserWorkspaceResponse
+from ..models.workspace_analytics_response import WorkspaceAnalyticsResponse
 from ..models.workspace_delete_response import WorkspaceDeleteResponse
-from ..models.workspace_detail_response import WorkspaceDetailResponse
-from ..models.workspace_list_response import WorkspaceListResponse
 from ..models.workspace_members_response import WorkspaceMembersResponse
 from ..models.workspace_update_request import WorkspaceUpdateRequest
 from ..models.workspace_update_response import WorkspaceUpdateResponse
@@ -1445,6 +1456,873 @@ class AdminApi:
 
 
     @validate_call
+    async def apps_admin_portal_api_bulk_approve_users(
+        self,
+        bulk_approve_request: BulkApproveRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> BulkOperationResponse:
+        """Bulk Approve Users
+
+        Bulk approve multiple pending users.
+
+        :param bulk_approve_request: (required)
+        :type bulk_approve_request: BulkApproveRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_approve_users_serialize(
+            bulk_approve_request=bulk_approve_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_approve_users_with_http_info(
+        self,
+        bulk_approve_request: BulkApproveRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[BulkOperationResponse]:
+        """Bulk Approve Users
+
+        Bulk approve multiple pending users.
+
+        :param bulk_approve_request: (required)
+        :type bulk_approve_request: BulkApproveRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_approve_users_serialize(
+            bulk_approve_request=bulk_approve_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_approve_users_without_preload_content(
+        self,
+        bulk_approve_request: BulkApproveRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Bulk Approve Users
+
+        Bulk approve multiple pending users.
+
+        :param bulk_approve_request: (required)
+        :type bulk_approve_request: BulkApproveRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_approve_users_serialize(
+            bulk_approve_request=bulk_approve_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_bulk_approve_users_serialize(
+        self,
+        bulk_approve_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if bulk_approve_request is not None:
+            _body_params = bulk_approve_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/admin/users/bulk-approve',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_deactivate_users(
+        self,
+        bulk_deactivate_request: BulkDeactivateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> BulkOperationResponse:
+        """Bulk Deactivate Users
+
+        Bulk deactivate multiple users.
+
+        :param bulk_deactivate_request: (required)
+        :type bulk_deactivate_request: BulkDeactivateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_deactivate_users_serialize(
+            bulk_deactivate_request=bulk_deactivate_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_deactivate_users_with_http_info(
+        self,
+        bulk_deactivate_request: BulkDeactivateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[BulkOperationResponse]:
+        """Bulk Deactivate Users
+
+        Bulk deactivate multiple users.
+
+        :param bulk_deactivate_request: (required)
+        :type bulk_deactivate_request: BulkDeactivateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_deactivate_users_serialize(
+            bulk_deactivate_request=bulk_deactivate_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_deactivate_users_without_preload_content(
+        self,
+        bulk_deactivate_request: BulkDeactivateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Bulk Deactivate Users
+
+        Bulk deactivate multiple users.
+
+        :param bulk_deactivate_request: (required)
+        :type bulk_deactivate_request: BulkDeactivateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_deactivate_users_serialize(
+            bulk_deactivate_request=bulk_deactivate_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_bulk_deactivate_users_serialize(
+        self,
+        bulk_deactivate_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if bulk_deactivate_request is not None:
+            _body_params = bulk_deactivate_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/admin/users/bulk-deactivate',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_invite_users(
+        self,
+        bulk_invite_request: BulkInviteRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> BulkOperationResponse:
+        """Bulk Invite Users
+
+        Bulk invite multiple users.
+
+        :param bulk_invite_request: (required)
+        :type bulk_invite_request: BulkInviteRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_invite_users_serialize(
+            bulk_invite_request=bulk_invite_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_invite_users_with_http_info(
+        self,
+        bulk_invite_request: BulkInviteRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[BulkOperationResponse]:
+        """Bulk Invite Users
+
+        Bulk invite multiple users.
+
+        :param bulk_invite_request: (required)
+        :type bulk_invite_request: BulkInviteRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_invite_users_serialize(
+            bulk_invite_request=bulk_invite_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_bulk_invite_users_without_preload_content(
+        self,
+        bulk_invite_request: BulkInviteRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Bulk Invite Users
+
+        Bulk invite multiple users.
+
+        :param bulk_invite_request: (required)
+        :type bulk_invite_request: BulkInviteRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_bulk_invite_users_serialize(
+            bulk_invite_request=bulk_invite_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BulkOperationResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_bulk_invite_users_serialize(
+        self,
+        bulk_invite_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if bulk_invite_request is not None:
+            _body_params = bulk_invite_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/admin/users/bulk-invite',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_admin_portal_api_deactivate_user(
         self,
         user_id: StrictStr,
@@ -2074,10 +2952,8 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WorkspaceDeleteResponse",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2147,10 +3023,8 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WorkspaceDeleteResponse",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2220,10 +3094,8 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WorkspaceDeleteResponse",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -2580,6 +3452,545 @@ class AdminApi:
 
 
     @validate_call
+    async def apps_admin_portal_api_export_users(
+        self,
+        format: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[object]:
+        """Export Users
+
+        Export full user list.
+
+        :param format:
+        :type format: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_export_users_serialize(
+            format=format,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[object]",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_export_users_with_http_info(
+        self,
+        format: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[object]]:
+        """Export Users
+
+        Export full user list.
+
+        :param format:
+        :type format: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_export_users_serialize(
+            format=format,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[object]",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_export_users_without_preload_content(
+        self,
+        format: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Export Users
+
+        Export full user list.
+
+        :param format:
+        :type format: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_export_users_serialize(
+            format=format,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[object]",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_export_users_serialize(
+        self,
+        format,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if format is not None:
+            
+            _query_params.append(('format', format))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/users/export',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_admin_system_health(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SystemHealthResponse:
+        """Get Admin System Health
+
+        Read-only system health snapshot for the admin portal.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_admin_system_health_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SystemHealthResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_admin_system_health_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SystemHealthResponse]:
+        """Get Admin System Health
+
+        Read-only system health snapshot for the admin portal.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_admin_system_health_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SystemHealthResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_admin_system_health_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Admin System Health
+
+        Read-only system health snapshot for the admin portal.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_admin_system_health_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SystemHealthResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_get_admin_system_health_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/system-health',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_admin_portal_api_get_configuration(
         self,
         key: StrictStr,
@@ -2870,7 +4281,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> DashboardStatsResponse:
+    ) -> EnhancedDashboardStatsResponse:
         """Get Dashboard Stats
 
         Get aggregated dashboard statistics.
@@ -2905,7 +4316,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DashboardStatsResponse",
+            '200': "EnhancedDashboardStatsResponse",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -2938,7 +4349,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[DashboardStatsResponse]:
+    ) -> ApiResponse[EnhancedDashboardStatsResponse]:
         """Get Dashboard Stats
 
         Get aggregated dashboard statistics.
@@ -2973,7 +4384,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DashboardStatsResponse",
+            '200': "EnhancedDashboardStatsResponse",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -3041,7 +4452,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DashboardStatsResponse",
+            '200': "EnhancedDashboardStatsResponse",
             '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -3101,6 +4512,562 @@ class AdminApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/admin/dashboard-stats',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_dashboard_trends(
+        self,
+        days: Optional[Annotated[int, Field(le=90, strict=True, ge=1)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DashboardTrendsResponse:
+        """Get Dashboard Trends
+
+        Get time-series trend data for dashboard charts.
+
+        :param days:
+        :type days: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_dashboard_trends_serialize(
+            days=days,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DashboardTrendsResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_dashboard_trends_with_http_info(
+        self,
+        days: Optional[Annotated[int, Field(le=90, strict=True, ge=1)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DashboardTrendsResponse]:
+        """Get Dashboard Trends
+
+        Get time-series trend data for dashboard charts.
+
+        :param days:
+        :type days: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_dashboard_trends_serialize(
+            days=days,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DashboardTrendsResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_dashboard_trends_without_preload_content(
+        self,
+        days: Optional[Annotated[int, Field(le=90, strict=True, ge=1)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Dashboard Trends
+
+        Get time-series trend data for dashboard charts.
+
+        :param days:
+        :type days: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_dashboard_trends_serialize(
+            days=days,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DashboardTrendsResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_get_dashboard_trends_serialize(
+        self,
+        days,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if days is not None:
+            
+            _query_params.append(('days', days))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/dashboard-stats/trends',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_dormant_workspaces(
+        self,
+        inactive_days: Optional[Annotated[int, Field(le=365, strict=True, ge=1)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DormantWorkspaceResponse:
+        """Get Dormant Workspaces
+
+        Find workspaces with no recent activity.
+
+        :param inactive_days:
+        :type inactive_days: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_dormant_workspaces_serialize(
+            inactive_days=inactive_days,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DormantWorkspaceResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_dormant_workspaces_with_http_info(
+        self,
+        inactive_days: Optional[Annotated[int, Field(le=365, strict=True, ge=1)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DormantWorkspaceResponse]:
+        """Get Dormant Workspaces
+
+        Find workspaces with no recent activity.
+
+        :param inactive_days:
+        :type inactive_days: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_dormant_workspaces_serialize(
+            inactive_days=inactive_days,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DormantWorkspaceResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_dormant_workspaces_without_preload_content(
+        self,
+        inactive_days: Optional[Annotated[int, Field(le=365, strict=True, ge=1)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Dormant Workspaces
+
+        Find workspaces with no recent activity.
+
+        :param inactive_days:
+        :type inactive_days: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_dormant_workspaces_serialize(
+            inactive_days=inactive_days,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DormantWorkspaceResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_get_dormant_workspaces_serialize(
+        self,
+        inactive_days,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if inactive_days is not None:
+            
+            _query_params.append(('inactive_days', inactive_days))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/workspaces/dormant',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3362,6 +5329,316 @@ class AdminApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/admin/slack-config',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_user_activity(
+        self,
+        user_id: StrictStr,
+        limit: Optional[Annotated[int, Field(le=200, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UserActivityResponse:
+        """Get User Activity
+
+        Get activity timeline for a specific user.
+
+        :param user_id: (required)
+        :type user_id: str
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_user_activity_serialize(
+            user_id=user_id,
+            limit=limit,
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserActivityResponse",
+            '404': "ErrorResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_user_activity_with_http_info(
+        self,
+        user_id: StrictStr,
+        limit: Optional[Annotated[int, Field(le=200, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UserActivityResponse]:
+        """Get User Activity
+
+        Get activity timeline for a specific user.
+
+        :param user_id: (required)
+        :type user_id: str
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_user_activity_serialize(
+            user_id=user_id,
+            limit=limit,
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserActivityResponse",
+            '404': "ErrorResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_user_activity_without_preload_content(
+        self,
+        user_id: StrictStr,
+        limit: Optional[Annotated[int, Field(le=200, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get User Activity
+
+        Get activity timeline for a specific user.
+
+        :param user_id: (required)
+        :type user_id: str
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_user_activity_serialize(
+            user_id=user_id,
+            limit=limit,
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserActivityResponse",
+            '404': "ErrorResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_get_user_activity_serialize(
+        self,
+        user_id,
+        limit,
+        offset,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if user_id is not None:
+            _path_params['user_id'] = user_id
+        # process the query parameters
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/users/{user_id}/activity',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3955,7 +6232,7 @@ class AdminApi:
     ) -> AdminUserStatsResponse:
         """Get Users With Stats
 
-        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
 
         :param days:
         :type days: int
@@ -4043,7 +6320,7 @@ class AdminApi:
     ) -> ApiResponse[AdminUserStatsResponse]:
         """Get Users With Stats
 
-        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
 
         :param days:
         :type days: int
@@ -4131,7 +6408,7 @@ class AdminApi:
     ) -> RESTResponseType:
         """Get Users With Stats
 
-        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range. Health/admin/docs paths are already excluded by APIUsageTrackingMiddleware.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
+        Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
 
         :param days:
         :type days: int
@@ -4294,7 +6571,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> WorkspaceDetailResponse:
+    ) -> EnhancedWorkspaceDetailResponse:
         """Get Workspace
 
         Get detailed information about a specific workspace.
@@ -4332,11 +6609,10 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WorkspaceDetailResponse",
+            '200': "EnhancedWorkspaceDetailResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4366,7 +6642,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[WorkspaceDetailResponse]:
+    ) -> ApiResponse[EnhancedWorkspaceDetailResponse]:
         """Get Workspace
 
         Get detailed information about a specific workspace.
@@ -4404,11 +6680,10 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WorkspaceDetailResponse",
+            '200': "EnhancedWorkspaceDetailResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4476,11 +6751,10 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WorkspaceDetailResponse",
+            '200': "EnhancedWorkspaceDetailResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4539,6 +6813,318 @@ class AdminApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/admin/workspaces/{workspace_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_workspace_analytics(
+        self,
+        sort: Optional[StrictStr] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> WorkspaceAnalyticsResponse:
+        """Get Workspace Analytics
+
+        Get workspace analytics with usage rankings.
+
+        :param sort:
+        :type sort: str
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_workspace_analytics_serialize(
+            sort=sort,
+            limit=limit,
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkspaceAnalyticsResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_workspace_analytics_with_http_info(
+        self,
+        sort: Optional[StrictStr] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[WorkspaceAnalyticsResponse]:
+        """Get Workspace Analytics
+
+        Get workspace analytics with usage rankings.
+
+        :param sort:
+        :type sort: str
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_workspace_analytics_serialize(
+            sort=sort,
+            limit=limit,
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkspaceAnalyticsResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_get_workspace_analytics_without_preload_content(
+        self,
+        sort: Optional[StrictStr] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Workspace Analytics
+
+        Get workspace analytics with usage rankings.
+
+        :param sort:
+        :type sort: str
+        :param limit:
+        :type limit: int
+        :param offset:
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_get_workspace_analytics_serialize(
+            sort=sort,
+            limit=limit,
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkspaceAnalyticsResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_get_workspace_analytics_serialize(
+        self,
+        sort,
+        limit,
+        offset,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/admin/workspaces/analytics',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4620,7 +7206,6 @@ class AdminApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4700,7 +7285,6 @@ class AdminApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4780,7 +7364,6 @@ class AdminApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4919,10 +7502,8 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserInviteResponse",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -4992,10 +7573,8 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserInviteResponse",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -5065,10 +7644,8 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserInviteResponse",
-            '400': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -5478,7 +8055,6 @@ class AdminApi:
             '200': "UserListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -5554,7 +8130,6 @@ class AdminApi:
             '200': "UserListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -5630,7 +8205,6 @@ class AdminApi:
             '200': "UserListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -5720,6 +8294,9 @@ class AdminApi:
         search: Optional[StrictStr] = None,
         role: Optional[StrictStr] = None,
         status: Optional[StrictStr] = None,
+        workspace_id: Optional[StrictStr] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5747,6 +8324,12 @@ class AdminApi:
         :type role: str
         :param status:
         :type status: str
+        :param workspace_id:
+        :type workspace_id: str
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5775,6 +8358,9 @@ class AdminApi:
             search=search,
             role=role,
             status=status,
+            workspace_id=workspace_id,
+            sort_by=sort_by,
+            sort_order=sort_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5808,6 +8394,9 @@ class AdminApi:
         search: Optional[StrictStr] = None,
         role: Optional[StrictStr] = None,
         status: Optional[StrictStr] = None,
+        workspace_id: Optional[StrictStr] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5835,6 +8424,12 @@ class AdminApi:
         :type role: str
         :param status:
         :type status: str
+        :param workspace_id:
+        :type workspace_id: str
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5863,6 +8458,9 @@ class AdminApi:
             search=search,
             role=role,
             status=status,
+            workspace_id=workspace_id,
+            sort_by=sort_by,
+            sort_order=sort_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5896,6 +8494,9 @@ class AdminApi:
         search: Optional[StrictStr] = None,
         role: Optional[StrictStr] = None,
         status: Optional[StrictStr] = None,
+        workspace_id: Optional[StrictStr] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5923,6 +8524,12 @@ class AdminApi:
         :type role: str
         :param status:
         :type status: str
+        :param workspace_id:
+        :type workspace_id: str
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5951,6 +8558,9 @@ class AdminApi:
             search=search,
             role=role,
             status=status,
+            workspace_id=workspace_id,
+            sort_by=sort_by,
+            sort_order=sort_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5979,6 +8589,9 @@ class AdminApi:
         search,
         role,
         status,
+        workspace_id,
+        sort_by,
+        sort_order,
         _request_auth,
         _content_type,
         _headers,
@@ -6020,6 +8633,18 @@ class AdminApi:
         if status is not None:
             
             _query_params.append(('status', status))
+            
+        if workspace_id is not None:
+            
+            _query_params.append(('workspace_id', workspace_id))
+            
+        if sort_by is not None:
+            
+            _query_params.append(('sort_by', sort_by))
+            
+        if sort_order is not None:
+            
+            _query_params.append(('sort_order', sort_order))
             
         # process the header parameters
         # process the form parameters
@@ -6064,6 +8689,8 @@ class AdminApi:
         page: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
         search: Optional[StrictStr] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6076,7 +8703,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> WorkspaceListResponse:
+    ) -> EnhancedWorkspaceListResponse:
         """List Workspaces
 
         Get paginated list of workspaces with filtering options.
@@ -6087,6 +8714,10 @@ class AdminApi:
         :type limit: int
         :param search:
         :type search: str
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6113,6 +8744,8 @@ class AdminApi:
             page=page,
             limit=limit,
             search=search,
+            sort_by=sort_by,
+            sort_order=sort_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6120,10 +8753,9 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WorkspaceListResponse",
+            '200': "EnhancedWorkspaceListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6144,6 +8776,8 @@ class AdminApi:
         page: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
         search: Optional[StrictStr] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6156,7 +8790,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[WorkspaceListResponse]:
+    ) -> ApiResponse[EnhancedWorkspaceListResponse]:
         """List Workspaces
 
         Get paginated list of workspaces with filtering options.
@@ -6167,6 +8801,10 @@ class AdminApi:
         :type limit: int
         :param search:
         :type search: str
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6193,6 +8831,8 @@ class AdminApi:
             page=page,
             limit=limit,
             search=search,
+            sort_by=sort_by,
+            sort_order=sort_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6200,10 +8840,9 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WorkspaceListResponse",
+            '200': "EnhancedWorkspaceListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6224,6 +8863,8 @@ class AdminApi:
         page: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
         search: Optional[StrictStr] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6247,6 +8888,10 @@ class AdminApi:
         :type limit: int
         :param search:
         :type search: str
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6273,6 +8918,8 @@ class AdminApi:
             page=page,
             limit=limit,
             search=search,
+            sort_by=sort_by,
+            sort_order=sort_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6280,10 +8927,9 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WorkspaceListResponse",
+            '200': "EnhancedWorkspaceListResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6299,6 +8945,8 @@ class AdminApi:
         page,
         limit,
         search,
+        sort_by,
+        sort_order,
         _request_auth,
         _content_type,
         _headers,
@@ -6332,6 +8980,14 @@ class AdminApi:
         if search is not None:
             
             _query_params.append(('search', search))
+            
+        if sort_by is not None:
+            
+            _query_params.append(('sort_by', sort_by))
+            
+        if sort_order is not None:
+            
+            _query_params.append(('sort_order', sort_order))
             
         # process the header parameters
         # process the form parameters
@@ -6737,9 +9393,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberActionResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6814,9 +9470,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberActionResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -6891,9 +9547,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberActionResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -7027,9 +9683,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserWorkspaceResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -7100,9 +9756,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserWorkspaceResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -7173,9 +9829,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserWorkspaceResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -8898,6 +11554,313 @@ class AdminApi:
 
 
     @validate_call
+    async def apps_admin_portal_api_transfer_workspace_ownership(
+        self,
+        workspace_id: StrictStr,
+        ownership_transfer_request: OwnershipTransferRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> OwnershipTransferResponse:
+        """Transfer Workspace Ownership
+
+        Transfer workspace ownership to a different member.
+
+        :param workspace_id: (required)
+        :type workspace_id: str
+        :param ownership_transfer_request: (required)
+        :type ownership_transfer_request: OwnershipTransferRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_transfer_workspace_ownership_serialize(
+            workspace_id=workspace_id,
+            ownership_transfer_request=ownership_transfer_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "OwnershipTransferResponse",
+            '400': "Dict[str, object]",
+            '404': "ErrorResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_admin_portal_api_transfer_workspace_ownership_with_http_info(
+        self,
+        workspace_id: StrictStr,
+        ownership_transfer_request: OwnershipTransferRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[OwnershipTransferResponse]:
+        """Transfer Workspace Ownership
+
+        Transfer workspace ownership to a different member.
+
+        :param workspace_id: (required)
+        :type workspace_id: str
+        :param ownership_transfer_request: (required)
+        :type ownership_transfer_request: OwnershipTransferRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_transfer_workspace_ownership_serialize(
+            workspace_id=workspace_id,
+            ownership_transfer_request=ownership_transfer_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "OwnershipTransferResponse",
+            '400': "Dict[str, object]",
+            '404': "ErrorResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_admin_portal_api_transfer_workspace_ownership_without_preload_content(
+        self,
+        workspace_id: StrictStr,
+        ownership_transfer_request: OwnershipTransferRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Transfer Workspace Ownership
+
+        Transfer workspace ownership to a different member.
+
+        :param workspace_id: (required)
+        :type workspace_id: str
+        :param ownership_transfer_request: (required)
+        :type ownership_transfer_request: OwnershipTransferRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_admin_portal_api_transfer_workspace_ownership_serialize(
+            workspace_id=workspace_id,
+            ownership_transfer_request=ownership_transfer_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "OwnershipTransferResponse",
+            '400': "Dict[str, object]",
+            '404': "ErrorResponse",
+            '500': "Dict[str, object]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_admin_portal_api_transfer_workspace_ownership_serialize(
+        self,
+        workspace_id,
+        ownership_transfer_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if workspace_id is not None:
+            _path_params['workspace_id'] = workspace_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if ownership_transfer_request is not None:
+            _body_params = ownership_transfer_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/admin/workspaces/{workspace_id}/transfer-ownership',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_admin_portal_api_update_configuration(
         self,
         key: StrictStr,
@@ -9268,9 +12231,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberActionResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -9349,9 +12312,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberActionResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -9430,9 +12393,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberActionResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -9878,9 +12841,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserWorkspaceResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -9955,9 +12918,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserWorkspaceResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -10032,9 +12995,9 @@ class AdminApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserWorkspaceResponse",
             '400': "Dict[str, object]",
+            '500': "Dict[str, object]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '500': "Dict[str, object]",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -10187,7 +13150,6 @@ class AdminApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -10263,7 +13225,6 @@ class AdminApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -10339,7 +13300,6 @@ class AdminApi:
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
-            '500': "Dict[str, object]",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(

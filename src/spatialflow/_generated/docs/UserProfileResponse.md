@@ -29,6 +29,8 @@ Name | Type | Description | Notes
 **default_map_style** | **str** |  | [optional] [default to 'streets']
 **default_geofence_color** | **str** |  | [optional] [default to '#3B82F6']
 **show_tutorial_tooltips** | **bool** |  | [optional] [default to True]
+**has_completed_tour** | **bool** |  | [optional] [default to False]
+**has_completed_workflow_tour** | **bool** |  | [optional] [default to False]
 **default_api_version** | **str** |  | [optional] [default to 'v1']
 **workspace_role** | **str** |  | [optional] 
 **workspace_id** | **str** |  | [optional] 

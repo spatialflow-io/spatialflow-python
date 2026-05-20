@@ -18,8 +18,8 @@ from typing_extensions import Annotated
 
 from pydantic import StrictStr
 from typing import Any, Dict
-from ..models.delete_file_response import DeleteFileResponse
 from ..models.file_list_response import FileListResponse
+from ..models.file_types_out import FileTypesOut
 from ..models.presigned_url_request import PresignedUrlRequest
 from ..models.presigned_url_response import PresignedUrlResponse
 
@@ -351,7 +351,7 @@ class StorageApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> DeleteFileResponse:
+    ) -> None:
         """Delete File
 
         Delete a file from storage.
@@ -392,12 +392,12 @@ class StorageApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFileResponse",
+            '204': None,
             '400': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '500': "ErrorResponse",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -428,7 +428,7 @@ class StorageApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[DeleteFileResponse]:
+    ) -> ApiResponse[None]:
         """Delete File
 
         Delete a file from storage.
@@ -469,12 +469,12 @@ class StorageApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFileResponse",
+            '204': None,
             '400': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '500': "ErrorResponse",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -546,12 +546,12 @@ class StorageApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFileResponse",
+            '204': None,
             '400': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '500': "ErrorResponse",
             '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -921,7 +921,7 @@ class StorageApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> FileTypesOut:
         """Get File Types
 
         Get available file types and their configurations.
@@ -956,7 +956,7 @@ class StorageApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "FileTypesOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -988,7 +988,7 @@ class StorageApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[FileTypesOut]:
         """Get File Types
 
         Get available file types and their configurations.
@@ -1023,7 +1023,7 @@ class StorageApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "FileTypesOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1090,7 +1090,7 @@ class StorageApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "FileTypesOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",

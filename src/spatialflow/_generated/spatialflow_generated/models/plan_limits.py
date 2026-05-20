@@ -31,9 +31,10 @@ class PlanLimits(BaseModel):
     webhooks_delivered: StrictInt = Field(description="Monthly webhook delivery limit (-1 for unlimited)")
     test_points: StrictInt = Field(description="Monthly test point limit (-1 for unlimited)")
     rate_limit_per_hour: StrictInt = Field(description="Hourly rate limit")
+    devices: Optional[StrictInt] = Field(default=5, description="Maximum devices per workspace (-1 for unlimited)")
     log_retention_days: Optional[StrictInt] = Field(default=7, description="Log retention in days (-1 for unlimited)")
     location_retention_days: Optional[StrictInt] = Field(default=90, description="Location data retention in days")
-    __properties: ClassVar[List[str]] = ["api_calls", "geofences", "webhooks_delivered", "test_points", "rate_limit_per_hour", "log_retention_days", "location_retention_days"]
+    __properties: ClassVar[List[str]] = ["api_calls", "geofences", "webhooks_delivered", "test_points", "rate_limit_per_hour", "devices", "log_retention_days", "location_retention_days"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,6 +92,7 @@ class PlanLimits(BaseModel):
             "webhooks_delivered": obj.get("webhooks_delivered"),
             "test_points": obj.get("test_points"),
             "rate_limit_per_hour": obj.get("rate_limit_per_hour"),
+            "devices": obj.get("devices") if obj.get("devices") is not None else 5,
             "log_retention_days": obj.get("log_retention_days") if obj.get("log_retention_days") is not None else 7,
             "location_retention_days": obj.get("location_retention_days") if obj.get("location_retention_days") is not None else 90
         })

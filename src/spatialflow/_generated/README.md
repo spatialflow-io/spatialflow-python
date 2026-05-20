@@ -129,17 +129,26 @@ Class | Method | HTTP request | Description
 *AdminApi* | [**apps_admin_portal_api_admin_ping**](docs/AdminApi.md#apps_admin_portal_api_admin_ping) | **GET** /api/v1/admin/ping | Admin Ping
 *AdminApi* | [**apps_admin_portal_api_admin_reset_password**](docs/AdminApi.md#apps_admin_portal_api_admin_reset_password) | **POST** /api/v1/admin/users/{user_id}/reset-password | Admin Reset Password
 *AdminApi* | [**apps_admin_portal_api_approve_user**](docs/AdminApi.md#apps_admin_portal_api_approve_user) | **POST** /api/v1/admin/users/{user_id}/approve | Approve User
+*AdminApi* | [**apps_admin_portal_api_bulk_approve_users**](docs/AdminApi.md#apps_admin_portal_api_bulk_approve_users) | **POST** /api/v1/admin/users/bulk-approve | Bulk Approve Users
+*AdminApi* | [**apps_admin_portal_api_bulk_deactivate_users**](docs/AdminApi.md#apps_admin_portal_api_bulk_deactivate_users) | **POST** /api/v1/admin/users/bulk-deactivate | Bulk Deactivate Users
+*AdminApi* | [**apps_admin_portal_api_bulk_invite_users**](docs/AdminApi.md#apps_admin_portal_api_bulk_invite_users) | **POST** /api/v1/admin/users/bulk-invite | Bulk Invite Users
 *AdminApi* | [**apps_admin_portal_api_deactivate_user**](docs/AdminApi.md#apps_admin_portal_api_deactivate_user) | **PUT** /api/v1/admin/users/{user_id}/deactivate | Deactivate User
 *AdminApi* | [**apps_admin_portal_api_delete_user**](docs/AdminApi.md#apps_admin_portal_api_delete_user) | **DELETE** /api/v1/admin/users/{user_id} | Delete User
 *AdminApi* | [**apps_admin_portal_api_delete_workspace**](docs/AdminApi.md#apps_admin_portal_api_delete_workspace) | **DELETE** /api/v1/admin/workspaces/{workspace_id} | Delete Workspace
 *AdminApi* | [**apps_admin_portal_api_export_marketing_subscribers**](docs/AdminApi.md#apps_admin_portal_api_export_marketing_subscribers) | **GET** /api/v1/admin/users/marketing-subscribers | Export Marketing Subscribers
+*AdminApi* | [**apps_admin_portal_api_export_users**](docs/AdminApi.md#apps_admin_portal_api_export_users) | **GET** /api/v1/admin/users/export | Export Users
+*AdminApi* | [**apps_admin_portal_api_get_admin_system_health**](docs/AdminApi.md#apps_admin_portal_api_get_admin_system_health) | **GET** /api/v1/admin/system-health | Get Admin System Health
 *AdminApi* | [**apps_admin_portal_api_get_configuration**](docs/AdminApi.md#apps_admin_portal_api_get_configuration) | **GET** /api/v1/admin/configurations/{key} | Get Configuration
 *AdminApi* | [**apps_admin_portal_api_get_dashboard_stats**](docs/AdminApi.md#apps_admin_portal_api_get_dashboard_stats) | **GET** /api/v1/admin/dashboard-stats | Get Dashboard Stats
+*AdminApi* | [**apps_admin_portal_api_get_dashboard_trends**](docs/AdminApi.md#apps_admin_portal_api_get_dashboard_trends) | **GET** /api/v1/admin/dashboard-stats/trends | Get Dashboard Trends
+*AdminApi* | [**apps_admin_portal_api_get_dormant_workspaces**](docs/AdminApi.md#apps_admin_portal_api_get_dormant_workspaces) | **GET** /api/v1/admin/workspaces/dormant | Get Dormant Workspaces
 *AdminApi* | [**apps_admin_portal_api_get_notification_config**](docs/AdminApi.md#apps_admin_portal_api_get_notification_config) | **GET** /api/v1/admin/slack-config | Get Notification Config
+*AdminApi* | [**apps_admin_portal_api_get_user_activity**](docs/AdminApi.md#apps_admin_portal_api_get_user_activity) | **GET** /api/v1/admin/users/{user_id}/activity | Get User Activity
 *AdminApi* | [**apps_admin_portal_api_get_user_detail**](docs/AdminApi.md#apps_admin_portal_api_get_user_detail) | **GET** /api/v1/admin/users/{user_id} | Get User Detail
 *AdminApi* | [**apps_admin_portal_api_get_user_usage**](docs/AdminApi.md#apps_admin_portal_api_get_user_usage) | **GET** /api/v1/admin/users/{user_id}/usage | Get User Usage
 *AdminApi* | [**apps_admin_portal_api_get_users_with_stats**](docs/AdminApi.md#apps_admin_portal_api_get_users_with_stats) | **GET** /api/v1/admin/users/stats | Get Users With Stats
 *AdminApi* | [**apps_admin_portal_api_get_workspace**](docs/AdminApi.md#apps_admin_portal_api_get_workspace) | **GET** /api/v1/admin/workspaces/{workspace_id} | Get Workspace
+*AdminApi* | [**apps_admin_portal_api_get_workspace_analytics**](docs/AdminApi.md#apps_admin_portal_api_get_workspace_analytics) | **GET** /api/v1/admin/workspaces/analytics | Get Workspace Analytics
 *AdminApi* | [**apps_admin_portal_api_get_workspace_members**](docs/AdminApi.md#apps_admin_portal_api_get_workspace_members) | **GET** /api/v1/admin/workspaces/{workspace_id}/members | Get Workspace Members
 *AdminApi* | [**apps_admin_portal_api_invite_user**](docs/AdminApi.md#apps_admin_portal_api_invite_user) | **POST** /api/v1/admin/users/invite | Invite User
 *AdminApi* | [**apps_admin_portal_api_list_configurations**](docs/AdminApi.md#apps_admin_portal_api_list_configurations) | **GET** /api/v1/admin/configurations | List Configurations
@@ -155,6 +164,7 @@ Class | Method | HTTP request | Description
 *AdminApi* | [**apps_admin_portal_api_revoke_invitation**](docs/AdminApi.md#apps_admin_portal_api_revoke_invitation) | **DELETE** /api/v1/admin/invitations/{invite_id} | Revoke Invitation
 *AdminApi* | [**apps_admin_portal_api_send_test_email**](docs/AdminApi.md#apps_admin_portal_api_send_test_email) | **POST** /api/v1/admin/email/test | Send Test Email
 *AdminApi* | [**apps_admin_portal_api_test_notification**](docs/AdminApi.md#apps_admin_portal_api_test_notification) | **POST** /api/v1/admin/slack-config/test | Test Notification
+*AdminApi* | [**apps_admin_portal_api_transfer_workspace_ownership**](docs/AdminApi.md#apps_admin_portal_api_transfer_workspace_ownership) | **POST** /api/v1/admin/workspaces/{workspace_id}/transfer-ownership | Transfer Workspace Ownership
 *AdminApi* | [**apps_admin_portal_api_update_configuration**](docs/AdminApi.md#apps_admin_portal_api_update_configuration) | **PUT** /api/v1/admin/configurations/{key} | Update Configuration
 *AdminApi* | [**apps_admin_portal_api_update_member_role**](docs/AdminApi.md#apps_admin_portal_api_update_member_role) | **PATCH** /api/v1/admin/workspaces/{workspace_id}/members/{user_id} | Update Member Role
 *AdminApi* | [**apps_admin_portal_api_update_notification_config**](docs/AdminApi.md#apps_admin_portal_api_update_notification_config) | **PUT** /api/v1/admin/slack-config | Update Notification Config
@@ -178,9 +188,23 @@ Class | Method | HTTP request | Description
 *AuthenticationApi* | [**apps_authentication_api_resend_verification_alias**](docs/AuthenticationApi.md#apps_authentication_api_resend_verification_alias) | **POST** /api/v1/auth/resend-verification | Resend Verification Alias
 *AuthenticationApi* | [**apps_authentication_api_resend_verification_email**](docs/AuthenticationApi.md#apps_authentication_api_resend_verification_email) | **POST** /api/v1/auth/resend-verification-email | Resend Verification Email
 *AuthenticationApi* | [**apps_authentication_api_reset_password**](docs/AuthenticationApi.md#apps_authentication_api_reset_password) | **POST** /api/v1/auth/reset-password | Reset Password
+*AuthenticationApi* | [**apps_authentication_api_sso_start**](docs/AuthenticationApi.md#apps_authentication_api_sso_start) | **GET** /api/v1/auth/sso/start | Sso Start
 *AuthenticationApi* | [**apps_authentication_api_verify_email**](docs/AuthenticationApi.md#apps_authentication_api_verify_email) | **GET** /api/v1/auth/verify-email | Verify Email
 *AuthenticationApi* | [**apps_authentication_api_verify_email_path**](docs/AuthenticationApi.md#apps_authentication_api_verify_email_path) | **GET** /api/v1/auth/verify-email/{token} | Verify Email Path
 *AuthenticationApi* | [**apps_authentication_api_verify_email_post**](docs/AuthenticationApi.md#apps_authentication_api_verify_email_post) | **POST** /api/v1/auth/verify-email | Verify Email Post
+*AuthenticationApi* | [**apps_authentication_apple_mobile_api_apple_nonce**](docs/AuthenticationApi.md#apps_authentication_apple_mobile_api_apple_nonce) | **POST** /api/v1/auth/apple/nonce | Apple Nonce
+*AuthenticationApi* | [**apps_authentication_apple_mobile_api_apple_token_exchange**](docs/AuthenticationApi.md#apps_authentication_apple_mobile_api_apple_token_exchange) | **POST** /api/v1/auth/apple/token-exchange | Apple Token Exchange
+*AuthenticationApi* | [**apps_authentication_google_mobile_api_google_token_exchange**](docs/AuthenticationApi.md#apps_authentication_google_mobile_api_google_token_exchange) | **POST** /api/v1/auth/google/token-exchange | Google Token Exchange
+*AuthenticationApi* | [**apps_authentication_oauth_api_disconnect_oauth_account**](docs/AuthenticationApi.md#apps_authentication_oauth_api_disconnect_oauth_account) | **DELETE** /api/v1/auth/oauth/{provider}/disconnect | Disconnect Oauth Account
+*AuthenticationApi* | [**apps_authentication_oauth_api_get_linked_accounts**](docs/AuthenticationApi.md#apps_authentication_oauth_api_get_linked_accounts) | **GET** /api/v1/auth/oauth/user/linked-accounts | Get Linked Accounts
+*AuthenticationApi* | [**apps_authentication_oauth_api_get_oauth_providers**](docs/AuthenticationApi.md#apps_authentication_oauth_api_get_oauth_providers) | **GET** /api/v1/auth/oauth/providers | Get Oauth Providers
+*AuthenticationApi* | [**apps_authentication_oauth_api_link_oauth_account**](docs/AuthenticationApi.md#apps_authentication_oauth_api_link_oauth_account) | **POST** /api/v1/auth/oauth/{provider}/link | Link Oauth Account
+*AuthenticationApi* | [**apps_authentication_oauth_api_oauth_authorize**](docs/AuthenticationApi.md#apps_authentication_oauth_api_oauth_authorize) | **GET** /api/v1/auth/oauth/{provider}/authorize | Oauth Authorize
+*AuthenticationApi* | [**apps_authentication_oauth_api_oauth_callback**](docs/AuthenticationApi.md#apps_authentication_oauth_api_oauth_callback) | **GET** /api/v1/auth/oauth/{provider}/callback | Oauth Callback
+*AuthenticationApi* | [**apps_authentication_saml_api_detect_method**](docs/AuthenticationApi.md#apps_authentication_saml_api_detect_method) | **POST** /api/v1/auth/saml/detect-method | Detect Method
+*AuthenticationApi* | [**apps_authentication_saml_api_initiate**](docs/AuthenticationApi.md#apps_authentication_saml_api_initiate) | **GET** /api/v1/auth/saml/{slug}/initiate | Initiate
+*AuthenticationApi* | [**apps_authentication_saml_api_metadata**](docs/AuthenticationApi.md#apps_authentication_saml_api_metadata) | **GET** /api/v1/auth/saml/{slug}/metadata | Metadata
+*AuthenticationApi* | [**apps_authentication_saml_api_saml_acs**](docs/AuthenticationApi.md#apps_authentication_saml_api_saml_acs) | **POST** /api/v1/auth/saml/{slug}/acs | Saml Acs
 *BillingApi* | [**apps_subscriptions_billing_api_add_payment_method**](docs/BillingApi.md#apps_subscriptions_billing_api_add_payment_method) | **POST** /api/v1/billing/payment-methods | Add Payment Method
 *BillingApi* | [**apps_subscriptions_billing_api_change_plan**](docs/BillingApi.md#apps_subscriptions_billing_api_change_plan) | **POST** /api/v1/billing/change-plan | Change Plan
 *BillingApi* | [**apps_subscriptions_billing_api_create_setup_intent**](docs/BillingApi.md#apps_subscriptions_billing_api_create_setup_intent) | **POST** /api/v1/billing/create-setup-intent | Create Setup Intent
@@ -191,32 +215,38 @@ Class | Method | HTTP request | Description
 *BillingApi* | [**apps_subscriptions_billing_api_preview_plan_change**](docs/BillingApi.md#apps_subscriptions_billing_api_preview_plan_change) | **POST** /api/v1/billing/preview-plan-change | Preview Plan Change
 *BillingApi* | [**apps_subscriptions_billing_api_remove_payment_method**](docs/BillingApi.md#apps_subscriptions_billing_api_remove_payment_method) | **DELETE** /api/v1/billing/payment-methods/{pm_id} | Remove Payment Method
 *BillingApi* | [**apps_subscriptions_billing_api_set_default_payment_method**](docs/BillingApi.md#apps_subscriptions_billing_api_set_default_payment_method) | **PUT** /api/v1/billing/payment-methods/{pm_id}/default | Set Default Payment Method
-*DevicesApi* | [**apps_devices_api_activate_device**](docs/DevicesApi.md#apps_devices_api_activate_device) | **POST** /api/v1/devices/{uuid}/activate | Activate Device
+*DevicesApi* | [**apps_devices_api_activate_device**](docs/DevicesApi.md#apps_devices_api_activate_device) | **POST** /api/v1/devices/{device_id}/activate | Activate Device
 *DevicesApi* | [**apps_devices_api_batch_update_locations**](docs/DevicesApi.md#apps_devices_api_batch_update_locations) | **POST** /api/v1/devices/batch-update | Batch Update Locations
 *DevicesApi* | [**apps_devices_api_create_device**](docs/DevicesApi.md#apps_devices_api_create_device) | **POST** /api/v1/devices/ | Create Device
-*DevicesApi* | [**apps_devices_api_deactivate_device**](docs/DevicesApi.md#apps_devices_api_deactivate_device) | **POST** /api/v1/devices/{uuid}/deactivate | Deactivate Device
-*DevicesApi* | [**apps_devices_api_delete_device**](docs/DevicesApi.md#apps_devices_api_delete_device) | **DELETE** /api/v1/devices/{uuid} | Delete Device
-*DevicesApi* | [**apps_devices_api_end_shift**](docs/DevicesApi.md#apps_devices_api_end_shift) | **POST** /api/v1/devices/{uuid}/end-shift | End Shift
+*DevicesApi* | [**apps_devices_api_create_manager_session_note**](docs/DevicesApi.md#apps_devices_api_create_manager_session_note) | **POST** /api/v1/devices/{device_uuid}/sessions/{session_id}/notes | Create Manager Session Note
+*DevicesApi* | [**apps_devices_api_deactivate_device**](docs/DevicesApi.md#apps_devices_api_deactivate_device) | **POST** /api/v1/devices/{device_id}/deactivate | Deactivate Device
+*DevicesApi* | [**apps_devices_api_delete_device**](docs/DevicesApi.md#apps_devices_api_delete_device) | **DELETE** /api/v1/devices/{device_id} | Delete Device
+*DevicesApi* | [**apps_devices_api_end_shift**](docs/DevicesApi.md#apps_devices_api_end_shift) | **POST** /api/v1/devices/{device_id}/end-shift | End Shift
 *DevicesApi* | [**apps_devices_api_export_events_endpoint**](docs/DevicesApi.md#apps_devices_api_export_events_endpoint) | **GET** /api/v1/devices/events/export | Export Events Endpoint
+*DevicesApi* | [**apps_devices_api_get_active_session**](docs/DevicesApi.md#apps_devices_api_get_active_session) | **GET** /api/v1/devices/{device_uuid}/active-session | Get Active Session
 *DevicesApi* | [**apps_devices_api_get_dashboard_stats**](docs/DevicesApi.md#apps_devices_api_get_dashboard_stats) | **GET** /api/v1/devices/dashboard-stats | Get Dashboard Stats
 *DevicesApi* | [**apps_devices_api_get_dashboard_stats_timeline**](docs/DevicesApi.md#apps_devices_api_get_dashboard_stats_timeline) | **GET** /api/v1/devices/dashboard-stats/timeline | Get Dashboard Stats Timeline
-*DevicesApi* | [**apps_devices_api_get_device**](docs/DevicesApi.md#apps_devices_api_get_device) | **GET** /api/v1/devices/{uuid} | Get Device
-*DevicesApi* | [**apps_devices_api_get_device_events**](docs/DevicesApi.md#apps_devices_api_get_device_events) | **GET** /api/v1/devices/{uuid}/events | Get Device Events
-*DevicesApi* | [**apps_devices_api_get_device_sessions**](docs/DevicesApi.md#apps_devices_api_get_device_sessions) | **GET** /api/v1/devices/{uuid}/sessions | Get Device Sessions
+*DevicesApi* | [**apps_devices_api_get_device**](docs/DevicesApi.md#apps_devices_api_get_device) | **GET** /api/v1/devices/{device_id} | Get Device
+*DevicesApi* | [**apps_devices_api_get_device_events**](docs/DevicesApi.md#apps_devices_api_get_device_events) | **GET** /api/v1/devices/{device_id}/events | Get Device Events
+*DevicesApi* | [**apps_devices_api_get_device_sessions**](docs/DevicesApi.md#apps_devices_api_get_device_sessions) | **GET** /api/v1/devices/{device_id}/sessions | Get Device Sessions
 *DevicesApi* | [**apps_devices_api_get_event_detail**](docs/DevicesApi.md#apps_devices_api_get_event_detail) | **GET** /api/v1/devices/events/{event_id} | Get Event Detail
 *DevicesApi* | [**apps_devices_api_get_import_job**](docs/DevicesApi.md#apps_devices_api_get_import_job) | **GET** /api/v1/devices/locations/import/{job_id} | Get Import Job
 *DevicesApi* | [**apps_devices_api_get_location_stats**](docs/DevicesApi.md#apps_devices_api_get_location_stats) | **GET** /api/v1/devices/stats | Get Location Stats
 *DevicesApi* | [**apps_devices_api_get_recent_events**](docs/DevicesApi.md#apps_devices_api_get_recent_events) | **GET** /api/v1/devices/events/recent | Get Recent Events
-*DevicesApi* | [**apps_devices_api_get_recent_locations**](docs/DevicesApi.md#apps_devices_api_get_recent_locations) | **GET** /api/v1/devices/{uuid}/locations/recent | Get Recent Locations
-*DevicesApi* | [**apps_devices_api_get_session_detail**](docs/DevicesApi.md#apps_devices_api_get_session_detail) | **GET** /api/v1/devices/{uuid}/sessions/{session_id} | Get Session Detail
-*DevicesApi* | [**apps_devices_api_get_session_locations**](docs/DevicesApi.md#apps_devices_api_get_session_locations) | **GET** /api/v1/devices/{uuid}/sessions/{session_id}/locations | Get Session Locations
+*DevicesApi* | [**apps_devices_api_get_recent_locations**](docs/DevicesApi.md#apps_devices_api_get_recent_locations) | **GET** /api/v1/devices/{device_id}/locations/recent | Get Recent Locations
+*DevicesApi* | [**apps_devices_api_get_session_detail**](docs/DevicesApi.md#apps_devices_api_get_session_detail) | **GET** /api/v1/devices/{device_id}/sessions/{session_id} | Get Session Detail
+*DevicesApi* | [**apps_devices_api_get_session_locations**](docs/DevicesApi.md#apps_devices_api_get_session_locations) | **GET** /api/v1/devices/{device_id}/sessions/{session_id}/locations | Get Session Locations
 *DevicesApi* | [**apps_devices_api_list_devices**](docs/DevicesApi.md#apps_devices_api_list_devices) | **GET** /api/v1/devices/ | List Devices
-*DevicesApi* | [**apps_devices_api_pause_shift**](docs/DevicesApi.md#apps_devices_api_pause_shift) | **POST** /api/v1/devices/{uuid}/pause-shift | Pause Shift
-*DevicesApi* | [**apps_devices_api_resume_shift**](docs/DevicesApi.md#apps_devices_api_resume_shift) | **POST** /api/v1/devices/{uuid}/resume-shift | Resume Shift
-*DevicesApi* | [**apps_devices_api_start_shift**](docs/DevicesApi.md#apps_devices_api_start_shift) | **POST** /api/v1/devices/{uuid}/start-shift | Start Shift
-*DevicesApi* | [**apps_devices_api_update_device**](docs/DevicesApi.md#apps_devices_api_update_device) | **PUT** /api/v1/devices/{uuid} | Update Device
-*DevicesApi* | [**apps_devices_api_update_device_location**](docs/DevicesApi.md#apps_devices_api_update_device_location) | **POST** /api/v1/devices/{uuid}/location | Update Device Location
-*DevicesApi* | [**apps_devices_api_update_session_notes**](docs/DevicesApi.md#apps_devices_api_update_session_notes) | **POST** /api/v1/devices/{uuid}/notes | Update Session Notes
+*DevicesApi* | [**apps_devices_api_list_session_attachments**](docs/DevicesApi.md#apps_devices_api_list_session_attachments) | **GET** /api/v1/devices/{device_uuid}/sessions/{session_id}/attachments | List Session Attachments
+*DevicesApi* | [**apps_devices_api_list_session_notes**](docs/DevicesApi.md#apps_devices_api_list_session_notes) | **GET** /api/v1/devices/{device_uuid}/sessions/{session_id}/notes | List Session Notes
+*DevicesApi* | [**apps_devices_api_list_session_photos**](docs/DevicesApi.md#apps_devices_api_list_session_photos) | **GET** /api/v1/devices/{device_uuid}/sessions/{session_id}/photos | List Session Photos
+*DevicesApi* | [**apps_devices_api_list_workspace_photos**](docs/DevicesApi.md#apps_devices_api_list_workspace_photos) | **GET** /api/v1/devices/photos | List Workspace Photos
+*DevicesApi* | [**apps_devices_api_pause_shift**](docs/DevicesApi.md#apps_devices_api_pause_shift) | **POST** /api/v1/devices/{device_id}/pause-shift | Pause Shift
+*DevicesApi* | [**apps_devices_api_resume_shift**](docs/DevicesApi.md#apps_devices_api_resume_shift) | **POST** /api/v1/devices/{device_id}/resume-shift | Resume Shift
+*DevicesApi* | [**apps_devices_api_start_shift**](docs/DevicesApi.md#apps_devices_api_start_shift) | **POST** /api/v1/devices/{device_id}/start-shift | Start Shift
+*DevicesApi* | [**apps_devices_api_update_device**](docs/DevicesApi.md#apps_devices_api_update_device) | **PUT** /api/v1/devices/{device_id} | Update Device
+*DevicesApi* | [**apps_devices_api_update_device_location**](docs/DevicesApi.md#apps_devices_api_update_device_location) | **POST** /api/v1/devices/{device_id}/location | Update Device Location
+*DevicesApi* | [**apps_devices_api_update_session_notes**](docs/DevicesApi.md#apps_devices_api_update_session_notes) | **POST** /api/v1/devices/{device_id}/notes | Update Session Notes
 *DevicesApi* | [**apps_devices_api_upload_csv_import**](docs/DevicesApi.md#apps_devices_api_upload_csv_import) | **POST** /api/v1/devices/locations/import | Upload Csv Import
 *E2ETestApi* | [**apps_test_api_cleanup_e2e_data**](docs/E2ETestApi.md#apps_test_api_cleanup_e2e_data) | **POST** /api/v1/test/cleanup-e2e-data | Cleanup E2E Data
 *E2ETestApi* | [**apps_test_api_cleanup_test_data**](docs/E2ETestApi.md#apps_test_api_cleanup_test_data) | **DELETE** /api/v1/test/cleanup | Cleanup Test Data
@@ -229,6 +259,8 @@ Class | Method | HTTP request | Description
 *EmailApi* | [**apps_email_api_preview_email_template**](docs/EmailApi.md#apps_email_api_preview_email_template) | **GET** /api/v1/email/preview/{template_name} | Preview Email Template
 *EmailApi* | [**apps_email_api_send_email**](docs/EmailApi.md#apps_email_api_send_email) | **POST** /api/v1/email/send | Send Email
 *EmailApi* | [**apps_email_api_send_test_email**](docs/EmailApi.md#apps_email_api_send_test_email) | **POST** /api/v1/email/test | Send Test Email
+*EmailApi* | [**apps_email_unsubscribe_unsubscribe**](docs/EmailApi.md#apps_email_unsubscribe_unsubscribe) | **POST** /api/v1/email/unsubscribe | Unsubscribe
+*EmailApi* | [**apps_email_unsubscribe_verify_unsubscribe_token**](docs/EmailApi.md#apps_email_unsubscribe_verify_unsubscribe_token) | **GET** /api/v1/email/unsubscribe/verify | Verify Unsubscribe Token
 *GPXSimulatorApi* | [**apps_devices_api_gpx_cancel_gpx_playback**](docs/GPXSimulatorApi.md#apps_devices_api_gpx_cancel_gpx_playback) | **POST** /api/v1/gpx/playbacks/{playback_id}/cancel | Cancel Gpx Playback
 *GPXSimulatorApi* | [**apps_devices_api_gpx_delete_gpx_route**](docs/GPXSimulatorApi.md#apps_devices_api_gpx_delete_gpx_route) | **DELETE** /api/v1/gpx/routes/{route_id} | Delete Gpx Route
 *GPXSimulatorApi* | [**apps_devices_api_gpx_get_gpx_playback**](docs/GPXSimulatorApi.md#apps_devices_api_gpx_get_gpx_playback) | **GET** /api/v1/gpx/playbacks/{playback_id} | Get Gpx Playback
@@ -282,11 +314,11 @@ Class | Method | HTTP request | Description
 *IntegrationsApi* | [**apps_integrations_api_update_integration**](docs/IntegrationsApi.md#apps_integrations_api_update_integration) | **PUT** /api/v1/integrations/{integration_id} | Update Integration
 *IntegrationsApi* | [**apps_integrations_api_update_integration_type**](docs/IntegrationsApi.md#apps_integrations_api_update_integration_type) | **PUT** /api/v1/integrations/admin/integration-types/{integration_type_id} | Update Integration Type
 *PoliciesApi* | [**apps_devices_api_policies_create_policy**](docs/PoliciesApi.md#apps_devices_api_policies_create_policy) | **POST** /api/v1/policies/ | Create policy
-*PoliciesApi* | [**apps_devices_api_policies_delete_policy**](docs/PoliciesApi.md#apps_devices_api_policies_delete_policy) | **DELETE** /api/v1/policies/{policy_id}/ | Delete policy
-*PoliciesApi* | [**apps_devices_api_policies_get_policy**](docs/PoliciesApi.md#apps_devices_api_policies_get_policy) | **GET** /api/v1/policies/{policy_id}/ | Get policy detail
+*PoliciesApi* | [**apps_devices_api_policies_delete_policy**](docs/PoliciesApi.md#apps_devices_api_policies_delete_policy) | **DELETE** /api/v1/policies/{policy_id} | Delete policy
+*PoliciesApi* | [**apps_devices_api_policies_get_policy**](docs/PoliciesApi.md#apps_devices_api_policies_get_policy) | **GET** /api/v1/policies/{policy_id} | Get policy detail
 *PoliciesApi* | [**apps_devices_api_policies_list_policies**](docs/PoliciesApi.md#apps_devices_api_policies_list_policies) | **GET** /api/v1/policies/ | List policies
 *PoliciesApi* | [**apps_devices_api_policies_list_templates**](docs/PoliciesApi.md#apps_devices_api_policies_list_templates) | **GET** /api/v1/policies/templates | List policy templates
-*PoliciesApi* | [**apps_devices_api_policies_update_policy**](docs/PoliciesApi.md#apps_devices_api_policies_update_policy) | **PUT** /api/v1/policies/{policy_id}/ | Update policy
+*PoliciesApi* | [**apps_devices_api_policies_update_policy**](docs/PoliciesApi.md#apps_devices_api_policies_update_policy) | **PUT** /api/v1/policies/{policy_id} | Update policy
 *PublicApi* | [**apps_public_api_contact_sales**](docs/PublicApi.md#apps_public_api_contact_sales) | **POST** /api/v1/public/contact | Contact Sales
 *PublicApi* | [**apps_public_api_get_api_docs**](docs/PublicApi.md#apps_public_api_get_api_docs) | **GET** /api/v1/public/docs | Get Api Docs
 *PublicApi* | [**apps_public_api_get_websocket_routes**](docs/PublicApi.md#apps_public_api_get_websocket_routes) | **GET** /api/v1/public/websocket-routes | Get Websocket Routes
@@ -298,25 +330,8 @@ Class | Method | HTTP request | Description
 *PublicLocationIngestApi* | [**apps_public_locations_api_get_ingest_stats**](docs/PublicLocationIngestApi.md#apps_public_locations_api_get_ingest_stats) | **GET** /api/v1/locations/stats | Get Ingest Stats
 *PublicLocationIngestApi* | [**apps_public_locations_api_ingest_location**](docs/PublicLocationIngestApi.md#apps_public_locations_api_ingest_location) | **POST** /api/v1/locations | Ingest Location
 *PublicLocationIngestApi* | [**apps_public_locations_api_ingest_location_batch**](docs/PublicLocationIngestApi.md#apps_public_locations_api_ingest_location_batch) | **POST** /api/v1/locations/batch | Ingest Location Batch
-*RouteTesterApi* | [**apps_devices_api_route_tester_create_route_test**](docs/RouteTesterApi.md#apps_devices_api_route_tester_create_route_test) | **POST** /api/v1/route-tester/test | Run route test
-*RouteTesterApi* | [**apps_devices_api_route_tester_get_route_test**](docs/RouteTesterApi.md#apps_devices_api_route_tester_get_route_test) | **GET** /api/v1/route-tester/test/{test_id} | Get route test status/results
-*SignalsApi* | [**apps_devices_api_signals_get_signal**](docs/SignalsApi.md#apps_devices_api_signals_get_signal) | **GET** /api/v1/signals/{signal_id}/ | Get signal event detail
+*SignalsApi* | [**apps_devices_api_signals_get_signal**](docs/SignalsApi.md#apps_devices_api_signals_get_signal) | **GET** /api/v1/signals/{signal_id} | Get signal event detail
 *SignalsApi* | [**apps_devices_api_signals_list_signals**](docs/SignalsApi.md#apps_devices_api_signals_list_signals) | **GET** /api/v1/signals/ | List signal events
-*SimulationCenterApi* | [**apps_devices_api_simulation_create_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_create_simulation) | **POST** /api/v1/simulations | Create Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_delete_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_delete_simulation) | **DELETE** /api/v1/simulations/{simulation_id} | Delete Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_get_route_track_points**](docs/SimulationCenterApi.md#apps_devices_api_simulation_get_route_track_points) | **GET** /api/v1/simulations/{simulation_id}/routes/{route_id}/track-points | Get Route Track Points
-*SimulationCenterApi* | [**apps_devices_api_simulation_get_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_get_simulation) | **GET** /api/v1/simulations/{simulation_id} | Get Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_list_simulation_events**](docs/SimulationCenterApi.md#apps_devices_api_simulation_list_simulation_events) | **GET** /api/v1/simulations/{simulation_id}/events | List Simulation Events
-*SimulationCenterApi* | [**apps_devices_api_simulation_list_simulations**](docs/SimulationCenterApi.md#apps_devices_api_simulation_list_simulations) | **GET** /api/v1/simulations | List Simulations
-*SimulationCenterApi* | [**apps_devices_api_simulation_pause_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_pause_simulation) | **POST** /api/v1/simulations/{simulation_id}/pause | Pause Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_remove_route**](docs/SimulationCenterApi.md#apps_devices_api_simulation_remove_route) | **DELETE** /api/v1/simulations/{simulation_id}/routes/{route_id} | Remove Route
-*SimulationCenterApi* | [**apps_devices_api_simulation_reset_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_reset_simulation) | **POST** /api/v1/simulations/{simulation_id}/reset | Reset Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_resume_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_resume_simulation) | **POST** /api/v1/simulations/{simulation_id}/resume | Resume Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_start_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_start_simulation) | **POST** /api/v1/simulations/{simulation_id}/start | Start Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_stop_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_stop_simulation) | **POST** /api/v1/simulations/{simulation_id}/stop | Stop Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_update_simulation**](docs/SimulationCenterApi.md#apps_devices_api_simulation_update_simulation) | **PATCH** /api/v1/simulations/{simulation_id} | Update Simulation
-*SimulationCenterApi* | [**apps_devices_api_simulation_upload_csv_route**](docs/SimulationCenterApi.md#apps_devices_api_simulation_upload_csv_route) | **POST** /api/v1/simulations/{simulation_id}/routes/upload-csv | Upload Csv Route
-*SimulationCenterApi* | [**apps_devices_api_simulation_upload_gpx_route**](docs/SimulationCenterApi.md#apps_devices_api_simulation_upload_gpx_route) | **POST** /api/v1/simulations/{simulation_id}/routes/upload-gpx | Upload Gpx Route
 *StorageApi* | [**apps_storage_api_create_presigned_url**](docs/StorageApi.md#apps_storage_api_create_presigned_url) | **POST** /api/v1/storage/presigned-url | Create Presigned Url
 *StorageApi* | [**apps_storage_api_delete_file**](docs/StorageApi.md#apps_storage_api_delete_file) | **DELETE** /api/v1/storage/{file_type}/{filename} | Delete File
 *StorageApi* | [**apps_storage_api_get_download_url**](docs/StorageApi.md#apps_storage_api_get_download_url) | **GET** /api/v1/storage/download/{file_id} | Get Download Url
@@ -342,9 +357,9 @@ Class | Method | HTTP request | Description
 *TilesApi* | [**apps_tiles_api_invalidate_tiles**](docs/TilesApi.md#apps_tiles_api_invalidate_tiles) | **POST** /api/v1/tiles/invalidate | Invalidate Tiles
 *TripsApi* | [**apps_devices_api_trips_cancel_trip**](docs/TripsApi.md#apps_devices_api_trips_cancel_trip) | **POST** /api/v1/trips/{trip_id}/cancel | Cancel a planned trip
 *TripsApi* | [**apps_devices_api_trips_create_trip**](docs/TripsApi.md#apps_devices_api_trips_create_trip) | **POST** /api/v1/trips/ | Create a planned trip
-*TripsApi* | [**apps_devices_api_trips_get_trip**](docs/TripsApi.md#apps_devices_api_trips_get_trip) | **GET** /api/v1/trips/{trip_id}/ | Get trip detail
+*TripsApi* | [**apps_devices_api_trips_get_trip**](docs/TripsApi.md#apps_devices_api_trips_get_trip) | **GET** /api/v1/trips/{trip_id} | Get trip detail
 *TripsApi* | [**apps_devices_api_trips_list_trips**](docs/TripsApi.md#apps_devices_api_trips_list_trips) | **GET** /api/v1/trips/ | List trips
-*TripsApi* | [**apps_devices_api_trips_update_trip**](docs/TripsApi.md#apps_devices_api_trips_update_trip) | **PUT** /api/v1/trips/{trip_id}/ | Update a trip
+*TripsApi* | [**apps_devices_api_trips_update_trip**](docs/TripsApi.md#apps_devices_api_trips_update_trip) | **PUT** /api/v1/trips/{trip_id} | Update a trip
 *WebhooksApi* | [**apps_webhooks_api_create_webhook**](docs/WebhooksApi.md#apps_webhooks_api_create_webhook) | **POST** /api/v1/webhooks/ | Create Webhook
 *WebhooksApi* | [**apps_webhooks_api_delete_webhook**](docs/WebhooksApi.md#apps_webhooks_api_delete_webhook) | **DELETE** /api/v1/webhooks/{webhook_id} | Delete Webhook
 *WebhooksApi* | [**apps_webhooks_api_get_dlq_stats**](docs/WebhooksApi.md#apps_webhooks_api_get_dlq_stats) | **GET** /api/v1/webhooks/dlq/stats | Get Dlq Stats
@@ -395,32 +410,20 @@ Class | Method | HTTP request | Description
 *WorkspacesApi* | [**apps_workspaces_api_cancel_invitation**](docs/WorkspacesApi.md#apps_workspaces_api_cancel_invitation) | **DELETE** /api/v1/workspaces/invitations/{invite_id} | Cancel Invitation
 *WorkspacesApi* | [**apps_workspaces_api_create_invitation**](docs/WorkspacesApi.md#apps_workspaces_api_create_invitation) | **POST** /api/v1/workspaces/invitations | Create Invitation
 *WorkspacesApi* | [**apps_workspaces_api_delete_saml_config**](docs/WorkspacesApi.md#apps_workspaces_api_delete_saml_config) | **DELETE** /api/v1/workspaces/saml-config | Delete Saml Config
+*WorkspacesApi* | [**apps_workspaces_api_extend_invitation**](docs/WorkspacesApi.md#apps_workspaces_api_extend_invitation) | **PATCH** /api/v1/workspaces/invitations/{invite_id} | Extend Invitation
 *WorkspacesApi* | [**apps_workspaces_api_get_saml_config**](docs/WorkspacesApi.md#apps_workspaces_api_get_saml_config) | **GET** /api/v1/workspaces/saml-config | Get Saml Config
 *WorkspacesApi* | [**apps_workspaces_api_get_workspace**](docs/WorkspacesApi.md#apps_workspaces_api_get_workspace) | **GET** /api/v1/workspaces/ | Get Workspace
 *WorkspacesApi* | [**apps_workspaces_api_get_workspace_usage**](docs/WorkspacesApi.md#apps_workspaces_api_get_workspace_usage) | **GET** /api/v1/workspaces/usage | Get Workspace Usage
 *WorkspacesApi* | [**apps_workspaces_api_list_invitations**](docs/WorkspacesApi.md#apps_workspaces_api_list_invitations) | **GET** /api/v1/workspaces/invitations | List Invitations
 *WorkspacesApi* | [**apps_workspaces_api_list_workspace_members**](docs/WorkspacesApi.md#apps_workspaces_api_list_workspace_members) | **GET** /api/v1/workspaces/members | List Workspace Members
+*WorkspacesApi* | [**apps_workspaces_api_mobile_workspace_bootstrap**](docs/WorkspacesApi.md#apps_workspaces_api_mobile_workspace_bootstrap) | **GET** /api/v1/workspaces/mobile/bootstrap | Mobile Workspace Bootstrap
 *WorkspacesApi* | [**apps_workspaces_api_remove_member**](docs/WorkspacesApi.md#apps_workspaces_api_remove_member) | **DELETE** /api/v1/workspaces/members/{user_id} | Remove Member
 *WorkspacesApi* | [**apps_workspaces_api_resend_invitation**](docs/WorkspacesApi.md#apps_workspaces_api_resend_invitation) | **POST** /api/v1/workspaces/invitations/{invite_id}/resend | Resend Invitation
 *WorkspacesApi* | [**apps_workspaces_api_revoke_all_workspace_sessions**](docs/WorkspacesApi.md#apps_workspaces_api_revoke_all_workspace_sessions) | **POST** /api/v1/workspaces/revoke-all-sessions | Revoke All Workspace Sessions
+*WorkspacesApi* | [**apps_workspaces_api_select_mobile_workspace**](docs/WorkspacesApi.md#apps_workspaces_api_select_mobile_workspace) | **POST** /api/v1/workspaces/mobile/select | Select Mobile Workspace
 *WorkspacesApi* | [**apps_workspaces_api_update_member_role**](docs/WorkspacesApi.md#apps_workspaces_api_update_member_role) | **PATCH** /api/v1/workspaces/members/{user_id} | Update Member Role
 *WorkspacesApi* | [**apps_workspaces_api_update_workspace**](docs/WorkspacesApi.md#apps_workspaces_api_update_workspace) | **PUT** /api/v1/workspaces/ | Update Workspace
 *WorkspacesApi* | [**apps_workspaces_api_upsert_saml_config**](docs/WorkspacesApi.md#apps_workspaces_api_upsert_saml_config) | **PUT** /api/v1/workspaces/saml-config | Upsert Saml Config
-*DefaultApi* | [**apps_authentication_apple_mobile_api_apple_nonce**](docs/DefaultApi.md#apps_authentication_apple_mobile_api_apple_nonce) | **POST** /api/v1/auth/apple/nonce | Apple Nonce
-*DefaultApi* | [**apps_authentication_apple_mobile_api_apple_token_exchange**](docs/DefaultApi.md#apps_authentication_apple_mobile_api_apple_token_exchange) | **POST** /api/v1/auth/apple/token-exchange | Apple Token Exchange
-*DefaultApi* | [**apps_authentication_google_mobile_api_google_token_exchange**](docs/DefaultApi.md#apps_authentication_google_mobile_api_google_token_exchange) | **POST** /api/v1/auth/google/token-exchange | Google Token Exchange
-*DefaultApi* | [**apps_authentication_oauth_api_disconnect_oauth_account**](docs/DefaultApi.md#apps_authentication_oauth_api_disconnect_oauth_account) | **DELETE** /api/v1/auth/oauth/{provider}/disconnect | Disconnect Oauth Account
-*DefaultApi* | [**apps_authentication_oauth_api_get_linked_accounts**](docs/DefaultApi.md#apps_authentication_oauth_api_get_linked_accounts) | **GET** /api/v1/auth/oauth/user/linked-accounts | Get Linked Accounts
-*DefaultApi* | [**apps_authentication_oauth_api_get_oauth_providers**](docs/DefaultApi.md#apps_authentication_oauth_api_get_oauth_providers) | **GET** /api/v1/auth/oauth/providers | Get Oauth Providers
-*DefaultApi* | [**apps_authentication_oauth_api_link_oauth_account**](docs/DefaultApi.md#apps_authentication_oauth_api_link_oauth_account) | **POST** /api/v1/auth/oauth/{provider}/link | Link Oauth Account
-*DefaultApi* | [**apps_authentication_oauth_api_oauth_authorize**](docs/DefaultApi.md#apps_authentication_oauth_api_oauth_authorize) | **GET** /api/v1/auth/oauth/{provider}/authorize | Oauth Authorize
-*DefaultApi* | [**apps_authentication_oauth_api_oauth_callback**](docs/DefaultApi.md#apps_authentication_oauth_api_oauth_callback) | **GET** /api/v1/auth/oauth/{provider}/callback | Oauth Callback
-*DefaultApi* | [**apps_authentication_saml_api_detect_method**](docs/DefaultApi.md#apps_authentication_saml_api_detect_method) | **POST** /api/v1/auth/saml/detect-method | Detect Method
-*DefaultApi* | [**apps_authentication_saml_api_initiate**](docs/DefaultApi.md#apps_authentication_saml_api_initiate) | **GET** /api/v1/auth/saml/{slug}/initiate | Initiate
-*DefaultApi* | [**apps_authentication_saml_api_metadata**](docs/DefaultApi.md#apps_authentication_saml_api_metadata) | **GET** /api/v1/auth/saml/{slug}/metadata | Metadata
-*DefaultApi* | [**apps_authentication_saml_api_saml_acs**](docs/DefaultApi.md#apps_authentication_saml_api_saml_acs) | **POST** /api/v1/auth/saml/{slug}/acs | Saml Acs
-*DefaultApi* | [**apps_email_unsubscribe_unsubscribe**](docs/DefaultApi.md#apps_email_unsubscribe_unsubscribe) | **POST** /api/v1/email/unsubscribe | Unsubscribe
-*DefaultApi* | [**apps_email_unsubscribe_verify_unsubscribe_token**](docs/DefaultApi.md#apps_email_unsubscribe_verify_unsubscribe_token) | **GET** /api/v1/email/unsubscribe/verify | Verify Unsubscribe Token
 
 
 ## Documentation For Models
@@ -430,8 +433,11 @@ Class | Method | HTTP request | Description
  - [ActionDeliverySuccessMetrics](docs/ActionDeliverySuccessMetrics.md)
  - [ActionResponse](docs/ActionResponse.md)
  - [ActionRetryConfigSchema](docs/ActionRetryConfigSchema.md)
+ - [ActiveGeofenceSummaryItemOut](docs/ActiveGeofenceSummaryItemOut.md)
+ - [ActiveGeofenceSummaryOut](docs/ActiveGeofenceSummaryOut.md)
  - [ActivitySummary](docs/ActivitySummary.md)
  - [AdminUserStatsResponse](docs/AdminUserStatsResponse.md)
+ - [ApiDocsOut](docs/ApiDocsOut.md)
  - [ApiKeyCreateRequest](docs/ApiKeyCreateRequest.md)
  - [ApiKeyCreateResponse](docs/ApiKeyCreateResponse.md)
  - [ApiKeyDetailSchema](docs/ApiKeyDetailSchema.md)
@@ -446,7 +452,13 @@ Class | Method | HTTP request | Description
  - [AuditLogOut](docs/AuditLogOut.md)
  - [AuthTypeEnum](docs/AuthTypeEnum.md)
  - [BatchLocationUpdateIn](docs/BatchLocationUpdateIn.md)
+ - [BulkApproveRequest](docs/BulkApproveRequest.md)
+ - [BulkDeactivateRequest](docs/BulkDeactivateRequest.md)
  - [BulkGeofenceRequest](docs/BulkGeofenceRequest.md)
+ - [BulkInviteItem](docs/BulkInviteItem.md)
+ - [BulkInviteRequest](docs/BulkInviteRequest.md)
+ - [BulkOperationResponse](docs/BulkOperationResponse.md)
+ - [BulkResultItem](docs/BulkResultItem.md)
  - [CategoryInfo](docs/CategoryInfo.md)
  - [ChangePasswordSchema](docs/ChangePasswordSchema.md)
  - [CheckoutSessionRequest](docs/CheckoutSessionRequest.md)
@@ -466,13 +478,13 @@ Class | Method | HTTP request | Description
  - [CreateGeofenceRequest](docs/CreateGeofenceRequest.md)
  - [CreateIntegrationSchema](docs/CreateIntegrationSchema.md)
  - [CreateInvitationIn](docs/CreateInvitationIn.md)
- - [CreateSimulationRequest](docs/CreateSimulationRequest.md)
  - [CreateUserSchema](docs/CreateUserSchema.md)
  - [CreateWebhookRequest](docs/CreateWebhookRequest.md)
  - [DashboardComparisonMetrics](docs/DashboardComparisonMetrics.md)
  - [DashboardMetricsResponse](docs/DashboardMetricsResponse.md)
- - [DashboardStatsResponse](docs/DashboardStatsResponse.md)
- - [DeleteFileResponse](docs/DeleteFileResponse.md)
+ - [DashboardStatsOut](docs/DashboardStatsOut.md)
+ - [DashboardStatsTimelineOut](docs/DashboardStatsTimelineOut.md)
+ - [DashboardTrendsResponse](docs/DashboardTrendsResponse.md)
  - [DeliveryStatusEnum](docs/DeliveryStatusEnum.md)
  - [DetectMethodRequest](docs/DetectMethodRequest.md)
  - [DetectMethodResponse](docs/DetectMethodResponse.md)
@@ -480,16 +492,34 @@ Class | Method | HTTP request | Description
  - [DeviceOut](docs/DeviceOut.md)
  - [DeviceSessionOut](docs/DeviceSessionOut.md)
  - [DeviceSessionsOut](docs/DeviceSessionsOut.md)
+ - [DeviceStatsOut](docs/DeviceStatsOut.md)
+ - [DocsUiOut](docs/DocsUiOut.md)
+ - [DormantWorkspaceItem](docs/DormantWorkspaceItem.md)
+ - [DormantWorkspaceResponse](docs/DormantWorkspaceResponse.md)
  - [EmailConfigInfo](docs/EmailConfigInfo.md)
  - [EmailHealthResponse](docs/EmailHealthResponse.md)
+ - [EmailHistoryItemOut](docs/EmailHistoryItemOut.md)
+ - [EmailHistoryOut](docs/EmailHistoryOut.md)
  - [EmailQueueStats](docs/EmailQueueStats.md)
  - [EmailStats](docs/EmailStats.md)
  - [EmailStatusResponse](docs/EmailStatusResponse.md)
  - [EmailTestResponse](docs/EmailTestResponse.md)
+ - [EnhancedDashboardStatsResponse](docs/EnhancedDashboardStatsResponse.md)
+ - [EnhancedWorkspaceDetailResponse](docs/EnhancedWorkspaceDetailResponse.md)
+ - [EnhancedWorkspaceListItem](docs/EnhancedWorkspaceListItem.md)
+ - [EnhancedWorkspaceListResponse](docs/EnhancedWorkspaceListResponse.md)
  - [ErrorResponse](docs/ErrorResponse.md)
+ - [EventDeviceOut](docs/EventDeviceOut.md)
+ - [EventGeofenceOut](docs/EventGeofenceOut.md)
+ - [EventLocationOut](docs/EventLocationOut.md)
+ - [ExecutionDetailOut](docs/ExecutionDetailOut.md)
  - [ExecutionOut](docs/ExecutionOut.md)
+ - [ExecutionStepDetailOut](docs/ExecutionStepDetailOut.md)
  - [ExportIntegrationSchema](docs/ExportIntegrationSchema.md)
+ - [ExtendInvitationIn](docs/ExtendInvitationIn.md)
  - [FileListResponse](docs/FileListResponse.md)
+ - [FileTypeConfigOut](docs/FileTypeConfigOut.md)
+ - [FileTypesOut](docs/FileTypesOut.md)
  - [ForgotPasswordSchema](docs/ForgotPasswordSchema.md)
  - [GPXPlaybackOut](docs/GPXPlaybackOut.md)
  - [GPXRouteOut](docs/GPXRouteOut.md)
@@ -497,19 +527,31 @@ Class | Method | HTTP request | Description
  - [GeoJSONMultiPolygon](docs/GeoJSONMultiPolygon.md)
  - [GeoJSONPoint](docs/GeoJSONPoint.md)
  - [GeoJSONPolygon](docs/GeoJSONPolygon.md)
+ - [GeofenceEventOut](docs/GeofenceEventOut.md)
  - [GeofenceGeometryOut](docs/GeofenceGeometryOut.md)
+ - [GeofenceGroupItemOut](docs/GeofenceGroupItemOut.md)
+ - [GeofenceGroupUpdateOut](docs/GeofenceGroupUpdateOut.md)
+ - [GeofenceGroupsOut](docs/GeofenceGroupsOut.md)
  - [GeofenceListResponse](docs/GeofenceListResponse.md)
  - [GeofenceResponse](docs/GeofenceResponse.md)
  - [GeofenceStats](docs/GeofenceStats.md)
  - [GeofenceTestResult](docs/GeofenceTestResult.md)
  - [Geometry](docs/Geometry.md)
+ - [Geometry1](docs/Geometry1.md)
  - [GoogleTokenExchangeRequest](docs/GoogleTokenExchangeRequest.md)
  - [GoogleTokenExchangeResponse](docs/GoogleTokenExchangeResponse.md)
+ - [GroupGeofenceItemOut](docs/GroupGeofenceItemOut.md)
+ - [GroupGeofencesOut](docs/GroupGeofencesOut.md)
+ - [GroupTestPointOut](docs/GroupTestPointOut.md)
  - [HealthCheckResponse](docs/HealthCheckResponse.md)
+ - [HealthChecksOut](docs/HealthChecksOut.md)
+ - [HealthOut](docs/HealthOut.md)
  - [HealthResponse](docs/HealthResponse.md)
  - [ImportIntegrationSchema](docs/ImportIntegrationSchema.md)
  - [ImportResultSchema](docs/ImportResultSchema.md)
+ - [IngestStatsOut](docs/IngestStatsOut.md)
  - [IntegrationDetailSchema](docs/IntegrationDetailSchema.md)
+ - [IntegrationErrorStatsOut](docs/IntegrationErrorStatsOut.md)
  - [IntegrationResponseSchema](docs/IntegrationResponseSchema.md)
  - [IntegrationStatsSchema](docs/IntegrationStatsSchema.md)
  - [IntegrationTypeListResponse](docs/IntegrationTypeListResponse.md)
@@ -520,6 +562,7 @@ Class | Method | HTTP request | Description
  - [InvoiceLineItem](docs/InvoiceLineItem.md)
  - [InvoiceListResponse](docs/InvoiceListResponse.md)
  - [InvoiceResponse](docs/InvoiceResponse.md)
+ - [LatLonOut](docs/LatLonOut.md)
  - [LocationBatchIn](docs/LocationBatchIn.md)
  - [LocationImportResponse](docs/LocationImportResponse.md)
  - [LocationIngestResponse](docs/LocationIngestResponse.md)
@@ -538,6 +581,10 @@ Class | Method | HTTP request | Description
  - [MemberOut](docs/MemberOut.md)
  - [MemberSummary](docs/MemberSummary.md)
  - [MethodEnum](docs/MethodEnum.md)
+ - [MobileWorkspaceBootstrapOut](docs/MobileWorkspaceBootstrapOut.md)
+ - [MobileWorkspaceRow](docs/MobileWorkspaceRow.md)
+ - [MobileWorkspaceSelectIn](docs/MobileWorkspaceSelectIn.md)
+ - [MobileWorkspaceSelectionOut](docs/MobileWorkspaceSelectionOut.md)
  - [NotesUpdateIn](docs/NotesUpdateIn.md)
  - [NotesUpdateOut](docs/NotesUpdateOut.md)
  - [NotificationConfigResponse](docs/NotificationConfigResponse.md)
@@ -547,8 +594,12 @@ Class | Method | HTTP request | Description
  - [OAuthCallbackQuery](docs/OAuthCallbackQuery.md)
  - [OAuthLinkResponse](docs/OAuthLinkResponse.md)
  - [OAuthProvidersResponse](docs/OAuthProvidersResponse.md)
+ - [OwnershipTransferRequest](docs/OwnershipTransferRequest.md)
+ - [OwnershipTransferResponse](docs/OwnershipTransferResponse.md)
  - [PaymentMethodRequest](docs/PaymentMethodRequest.md)
  - [PaymentMethodResponse](docs/PaymentMethodResponse.md)
+ - [PerformanceSummaryOut](docs/PerformanceSummaryOut.md)
+ - [PhotoOut](docs/PhotoOut.md)
  - [PingResponse](docs/PingResponse.md)
  - [PlanChangePreviewResponse](docs/PlanChangePreviewResponse.md)
  - [PlanChangeRequest](docs/PlanChangeRequest.md)
@@ -568,6 +619,8 @@ Class | Method | HTTP request | Description
  - [PrivacyErasureResponse](docs/PrivacyErasureResponse.md)
  - [RateLimitResponse](docs/RateLimitResponse.md)
  - [RecentActivity](docs/RecentActivity.md)
+ - [RecentEventsOut](docs/RecentEventsOut.md)
+ - [RecentExecutionOut](docs/RecentExecutionOut.md)
  - [RecentLocationsOut](docs/RecentLocationsOut.md)
  - [RefreshTokenSchema](docs/RefreshTokenSchema.md)
  - [RegisterSchema](docs/RegisterSchema.md)
@@ -577,42 +630,49 @@ Class | Method | HTTP request | Description
  - [RetryPolicySchema](docs/RetryPolicySchema.md)
  - [RetryStrategyEnum](docs/RetryStrategyEnum.md)
  - [RevokeAllSessionsOut](docs/RevokeAllSessionsOut.md)
- - [RouteTestErrorOut](docs/RouteTestErrorOut.md)
- - [RouteTestProgress](docs/RouteTestProgress.md)
- - [RouteTestResultsOut](docs/RouteTestResultsOut.md)
- - [RouteTestStatusOut](docs/RouteTestStatusOut.md)
- - [RouteTestSummary](docs/RouteTestSummary.md)
- - [RouteTrackPointsOut](docs/RouteTrackPointsOut.md)
- - [RouteUploadResponse](docs/RouteUploadResponse.md)
+ - [RuntimeConfigAnalyticsOut](docs/RuntimeConfigAnalyticsOut.md)
+ - [RuntimeConfigFeaturesOut](docs/RuntimeConfigFeaturesOut.md)
+ - [RuntimeConfigMapsOut](docs/RuntimeConfigMapsOut.md)
+ - [RuntimeConfigOut](docs/RuntimeConfigOut.md)
  - [SAMLConfigIn](docs/SAMLConfigIn.md)
  - [SAMLConfigOut](docs/SAMLConfigOut.md)
  - [SeedDataResponseSchema](docs/SeedDataResponseSchema.md)
  - [SendEmailRequest](docs/SendEmailRequest.md)
  - [SessionLocationsOut](docs/SessionLocationsOut.md)
+ - [SessionNoteIn](docs/SessionNoteIn.md)
+ - [SessionNoteOut](docs/SessionNoteOut.md)
  - [SetupIntentResponse](docs/SetupIntentResponse.md)
  - [ShiftActionOut](docs/ShiftActionOut.md)
  - [SignalEventDetailOut](docs/SignalEventDetailOut.md)
  - [SignalEventOut](docs/SignalEventOut.md)
  - [SignalEventsListOut](docs/SignalEventsListOut.md)
  - [SignupRequest](docs/SignupRequest.md)
- - [SimulationDetailOut](docs/SimulationDetailOut.md)
- - [SimulationEventOut](docs/SimulationEventOut.md)
- - [SimulationOut](docs/SimulationOut.md)
- - [SimulationRouteOut](docs/SimulationRouteOut.md)
  - [StartPlaybackRequest](docs/StartPlaybackRequest.md)
+ - [StatusOut](docs/StatusOut.md)
+ - [StoredFileAttachmentOut](docs/StoredFileAttachmentOut.md)
  - [SubscriptionActionResponse](docs/SubscriptionActionResponse.md)
+ - [SubscriptionInfo](docs/SubscriptionInfo.md)
  - [SubscriptionResponse](docs/SubscriptionResponse.md)
  - [SuccessResponse](docs/SuccessResponse.md)
+ - [SystemHealthComponent](docs/SystemHealthComponent.md)
+ - [SystemHealthResponse](docs/SystemHealthResponse.md)
  - [TemplateOut](docs/TemplateOut.md)
  - [TemplateWarnings](docs/TemplateWarnings.md)
+ - [TestEventHistoryOut](docs/TestEventHistoryOut.md)
+ - [TestEventItemOut](docs/TestEventItemOut.md)
  - [TestEventRequest](docs/TestEventRequest.md)
  - [TestIntegrationResponseSchema](docs/TestIntegrationResponseSchema.md)
+ - [TestPointCoordinateOut](docs/TestPointCoordinateOut.md)
  - [TestPointRequest](docs/TestPointRequest.md)
  - [TestPointResponse](docs/TestPointResponse.md)
+ - [TestPointResultOut](docs/TestPointResultOut.md)
  - [TestWebhookRequest](docs/TestWebhookRequest.md)
  - [TestWorkflowIn](docs/TestWorkflowIn.md)
  - [TileMetadata](docs/TileMetadata.md)
- - [TrackPointOut](docs/TrackPointOut.md)
+ - [TimelineBucketOut](docs/TimelineBucketOut.md)
+ - [TimelinePreviousOut](docs/TimelinePreviousOut.md)
+ - [TrendDataPoint](docs/TrendDataPoint.md)
+ - [TrendSeries](docs/TrendSeries.md)
  - [TripCreateIn](docs/TripCreateIn.md)
  - [TripDetailOut](docs/TripDetailOut.md)
  - [TripOut](docs/TripOut.md)
@@ -626,15 +686,16 @@ Class | Method | HTTP request | Description
  - [UpdateMemberRoleIn](docs/UpdateMemberRoleIn.md)
  - [UpdateMemberRoleRequest](docs/UpdateMemberRoleRequest.md)
  - [UpdateProfileRequest](docs/UpdateProfileRequest.md)
- - [UpdateSimulationRequest](docs/UpdateSimulationRequest.md)
  - [UpdateUserWorkspaceRequest](docs/UpdateUserWorkspaceRequest.md)
  - [UpdateWebhookRequest](docs/UpdateWebhookRequest.md)
  - [UploadGeofencesRequest](docs/UploadGeofencesRequest.md)
  - [UploadJobStatus](docs/UploadJobStatus.md)
+ - [UsageLimits](docs/UsageLimits.md)
  - [UsageMetrics](docs/UsageMetrics.md)
  - [UsageResponse](docs/UsageResponse.md)
- - [UsageStats](docs/UsageStats.md)
  - [UserActionResponse](docs/UserActionResponse.md)
+ - [UserActivityItem](docs/UserActivityItem.md)
+ - [UserActivityResponse](docs/UserActivityResponse.md)
  - [UserApiStats](docs/UserApiStats.md)
  - [UserApprovalRequest](docs/UserApprovalRequest.md)
  - [UserInviteRequest](docs/UserInviteRequest.md)
@@ -647,6 +708,7 @@ Class | Method | HTTP request | Description
  - [UserUsageResponse](docs/UserUsageResponse.md)
  - [UserWorkspaceResponse](docs/UserWorkspaceResponse.md)
  - [VerifyEmailSchema](docs/VerifyEmailSchema.md)
+ - [WebSocketRoutesOut](docs/WebSocketRoutesOut.md)
  - [WebhookDeliveryDetailResponse](docs/WebhookDeliveryDetailResponse.md)
  - [WebhookDeliveryListResponse](docs/WebhookDeliveryListResponse.md)
  - [WebhookDeliveryResponse](docs/WebhookDeliveryResponse.md)
@@ -654,6 +716,7 @@ Class | Method | HTTP request | Description
  - [WebhookMetricsResponse](docs/WebhookMetricsResponse.md)
  - [WebhookResponse](docs/WebhookResponse.md)
  - [WebhookTestResponse](docs/WebhookTestResponse.md)
+ - [WorkflowExecutionDetailOut](docs/WorkflowExecutionDetailOut.md)
  - [WorkflowImportDataSchema](docs/WorkflowImportDataSchema.md)
  - [WorkflowImportSchema](docs/WorkflowImportSchema.md)
  - [WorkflowIn](docs/WorkflowIn.md)
@@ -661,16 +724,18 @@ Class | Method | HTTP request | Description
  - [WorkflowListResponse](docs/WorkflowListResponse.md)
  - [WorkflowOut](docs/WorkflowOut.md)
  - [WorkflowRetryPolicyUpdateSchema](docs/WorkflowRetryPolicyUpdateSchema.md)
+ - [WorkflowStatisticsOut](docs/WorkflowStatisticsOut.md)
  - [WorkflowStepRetrySchema](docs/WorkflowStepRetrySchema.md)
+ - [WorkflowTemplateDetailOut](docs/WorkflowTemplateDetailOut.md)
  - [WorkflowUpdate](docs/WorkflowUpdate.md)
+ - [WorkspaceAnalyticsItem](docs/WorkspaceAnalyticsItem.md)
+ - [WorkspaceAnalyticsResponse](docs/WorkspaceAnalyticsResponse.md)
  - [WorkspaceDeleteResponse](docs/WorkspaceDeleteResponse.md)
  - [WorkspaceDetail](docs/WorkspaceDetail.md)
- - [WorkspaceDetailResponse](docs/WorkspaceDetailResponse.md)
  - [WorkspaceIn](docs/WorkspaceIn.md)
- - [WorkspaceListItem](docs/WorkspaceListItem.md)
- - [WorkspaceListResponse](docs/WorkspaceListResponse.md)
  - [WorkspaceMembersResponse](docs/WorkspaceMembersResponse.md)
  - [WorkspaceOut](docs/WorkspaceOut.md)
+ - [WorkspacePhotosOut](docs/WorkspacePhotosOut.md)
  - [WorkspaceSummary](docs/WorkspaceSummary.md)
  - [WorkspaceUpdateRequest](docs/WorkspaceUpdateRequest.md)
  - [WorkspaceUpdateResponse](docs/WorkspaceUpdateResponse.md)

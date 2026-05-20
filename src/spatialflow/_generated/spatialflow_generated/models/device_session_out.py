@@ -25,17 +25,16 @@ from typing_extensions import Self
 
 class DeviceSessionOut(BaseModel):
     """
-    Response schema for a completed tracking session.
+    Response schema for a tracking session (active or completed).
     """ # noqa: E501
     id: StrictStr
     started_at: datetime
-    ended_at: datetime
-    duration_seconds: StrictInt
+    ended_at: Optional[datetime] = None
+    duration_seconds: Optional[StrictInt] = None
     location_count: StrictInt
     distance_meters: Optional[Union[StrictFloat, StrictInt]] = None
-    notes: StrictStr
     has_track_geometry: Optional[StrictBool] = False
-    __properties: ClassVar[List[str]] = ["id", "started_at", "ended_at", "duration_seconds", "location_count", "distance_meters", "notes", "has_track_geometry"]
+    __properties: ClassVar[List[str]] = ["id", "started_at", "ended_at", "duration_seconds", "location_count", "distance_meters", "has_track_geometry"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,6 +75,16 @@ class DeviceSessionOut(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if ended_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.ended_at is None and "ended_at" in self.model_fields_set:
+            _dict['ended_at'] = None
+
+        # set to None if duration_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.duration_seconds is None and "duration_seconds" in self.model_fields_set:
+            _dict['duration_seconds'] = None
+
         # set to None if distance_meters (nullable) is None
         # and model_fields_set contains the field
         if self.distance_meters is None and "distance_meters" in self.model_fields_set:
@@ -99,7 +108,6 @@ class DeviceSessionOut(BaseModel):
             "duration_seconds": obj.get("duration_seconds"),
             "location_count": obj.get("location_count"),
             "distance_meters": obj.get("distance_meters"),
-            "notes": obj.get("notes"),
             "has_track_geometry": obj.get("has_track_geometry") if obj.get("has_track_geometry") is not None else False
         })
         return _obj

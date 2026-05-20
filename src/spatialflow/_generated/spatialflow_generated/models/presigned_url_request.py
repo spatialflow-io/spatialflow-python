@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,9 @@ class PresignedUrlRequest(BaseModel):
     file_type: StrictStr
     filename: StrictStr
     file_size: StrictInt
-    __properties: ClassVar[List[str]] = ["file_type", "filename", "file_size"]
+    related_object_type: Optional[StrictStr] = None
+    related_object_id: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["file_type", "filename", "file_size", "related_object_type", "related_object_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -70,6 +72,16 @@ class PresignedUrlRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if related_object_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.related_object_type is None and "related_object_type" in self.model_fields_set:
+            _dict['related_object_type'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.related_object_id is None and "related_object_id" in self.model_fields_set:
+            _dict['related_object_id'] = None
+
         return _dict
 
     @classmethod
@@ -84,7 +96,9 @@ class PresignedUrlRequest(BaseModel):
         _obj = cls.model_validate({
             "file_type": obj.get("file_type"),
             "filename": obj.get("filename"),
-            "file_size": obj.get("file_size")
+            "file_size": obj.get("file_size"),
+            "related_object_type": obj.get("related_object_type"),
+            "related_object_id": obj.get("related_object_id")
         })
         return _obj
 

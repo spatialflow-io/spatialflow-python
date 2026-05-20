@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **file_type** | **str** |  | 
 **filename** | **str** |  | 
 **file_size** | **int** |  | 
+**related_object_type** | **str** |  | [optional] 
+**related_object_id** | **str** |  | [optional] 
 
 ## Example
 

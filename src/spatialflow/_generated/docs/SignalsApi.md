@@ -4,7 +4,7 @@ All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apps_devices_api_signals_get_signal**](SignalsApi.md#apps_devices_api_signals_get_signal) | **GET** /api/v1/signals/{signal_id}/ | Get signal event detail
+[**apps_devices_api_signals_get_signal**](SignalsApi.md#apps_devices_api_signals_get_signal) | **GET** /api/v1/signals/{signal_id} | Get signal event detail
 [**apps_devices_api_signals_list_signals**](SignalsApi.md#apps_devices_api_signals_list_signals) | **GET** /api/v1/signals/ | List signal events
 
 
@@ -12,6 +12,8 @@ Method | HTTP request | Description
 > SignalEventDetailOut apps_devices_api_signals_get_signal(signal_id)
 
 Get signal event detail
+
+Retrieve a single signal event with contributing locations and geofence geometry.
 
 ### Example
 
@@ -92,6 +94,8 @@ Name | Type | Description  | Notes
 > SignalEventsListOut apps_devices_api_signals_list_signals(signal_type=signal_type, state=state, device_id=device_id, geofence_id=geofence_id, start_date=start_date, end_date=end_date, limit=limit, offset=offset)
 
 List signal events
+
+List signal events for the authenticated user's workspace with optional filtering.
 
 ### Example
 

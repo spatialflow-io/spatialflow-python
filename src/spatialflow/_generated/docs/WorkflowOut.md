@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **description** | **str** |  | 
 **status** | **str** |  | 
-**nodes** | **List[Optional[Dict[str, object]]]** |  | 
-**edges** | **List[Optional[Dict[str, object]]]** |  | 
+**nodes** | **List[Dict[str, object]]** |  | 
+**edges** | **List[Dict[str, object]]** |  | 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 
 **last_run** | **str** |  | 

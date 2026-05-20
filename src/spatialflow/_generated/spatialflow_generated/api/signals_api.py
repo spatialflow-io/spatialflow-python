@@ -60,6 +60,7 @@ class SignalsApi:
     ) -> SignalEventDetailOut:
         """Get signal event detail
 
+        Retrieve a single signal event with contributing locations and geofence geometry.
 
         :param signal_id: (required)
         :type signal_id: str
@@ -130,6 +131,7 @@ class SignalsApi:
     ) -> ApiResponse[SignalEventDetailOut]:
         """Get signal event detail
 
+        Retrieve a single signal event with contributing locations and geofence geometry.
 
         :param signal_id: (required)
         :type signal_id: str
@@ -200,6 +202,7 @@ class SignalsApi:
     ) -> RESTResponseType:
         """Get signal event detail
 
+        Retrieve a single signal event with contributing locations and geofence geometry.
 
         :param signal_id: (required)
         :type signal_id: str
@@ -295,7 +298,7 @@ class SignalsApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/signals/{signal_id}/',
+            resource_path='/api/v1/signals/{signal_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -337,6 +340,7 @@ class SignalsApi:
     ) -> SignalEventsListOut:
         """List signal events
 
+        List signal events for the authenticated user's workspace with optional filtering.
 
         :param signal_type:
         :type signal_type: str
@@ -436,6 +440,7 @@ class SignalsApi:
     ) -> ApiResponse[SignalEventsListOut]:
         """List signal events
 
+        List signal events for the authenticated user's workspace with optional filtering.
 
         :param signal_type:
         :type signal_type: str
@@ -535,6 +540,7 @@ class SignalsApi:
     ) -> RESTResponseType:
         """List signal events
 
+        List signal events for the authenticated user's workspace with optional filtering.
 
         :param signal_type:
         :type signal_type: str

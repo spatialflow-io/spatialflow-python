@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +27,9 @@ class GoogleTokenExchangeRequest(BaseModel):
     GoogleTokenExchangeRequest
     """ # noqa: E501
     id_token: StrictStr
-    __properties: ClassVar[List[str]] = ["id_token"]
+    invite_id: Optional[StrictStr] = None
+    invite_token: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["id_token", "invite_id", "invite_token"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -68,6 +70,16 @@ class GoogleTokenExchangeRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if invite_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.invite_id is None and "invite_id" in self.model_fields_set:
+            _dict['invite_id'] = None
+
+        # set to None if invite_token (nullable) is None
+        # and model_fields_set contains the field
+        if self.invite_token is None and "invite_token" in self.model_fields_set:
+            _dict['invite_token'] = None
+
         return _dict
 
     @classmethod
@@ -80,7 +92,9 @@ class GoogleTokenExchangeRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id_token": obj.get("id_token")
+            "id_token": obj.get("id_token"),
+            "invite_id": obj.get("invite_id"),
+            "invite_token": obj.get("invite_token")
         })
         return _obj
 

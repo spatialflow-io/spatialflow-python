@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +26,7 @@ class OAuthProvidersResponse(BaseModel):
     """
     OAuthProvidersResponse
     """ # noqa: E501
-    providers: List[Optional[Dict[str, Any]]]
+    providers: List[Dict[str, Any]]
     __properties: ClassVar[List[str]] = ["providers"]
 
     model_config = ConfigDict(

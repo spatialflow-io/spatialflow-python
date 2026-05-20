@@ -32,8 +32,8 @@ class WorkflowOut(BaseModel):
     name: StrictStr
     description: Optional[StrictStr]
     status: StrictStr
-    nodes: List[Optional[Dict[str, Any]]]
-    edges: List[Optional[Dict[str, Any]]]
+    nodes: List[Dict[str, Any]]
+    edges: List[Dict[str, Any]]
     created_at: datetime
     updated_at: datetime
     last_run: Optional[StrictStr]

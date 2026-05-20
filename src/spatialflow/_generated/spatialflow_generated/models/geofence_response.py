@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from .geometry import Geometry
 from typing import Optional, Set
@@ -43,6 +43,13 @@ class GeofenceResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
     __properties: ClassVar[List[str]] = ["id", "name", "description", "geometry", "geometry_type", "radius_meters", "webhook_url", "webhook_events", "metadata", "is_active", "group_id", "group_name", "created_at", "updated_at"]
+
+    @field_validator('geometry_type')
+    def geometry_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['Polygon', 'MultiPolygon', 'Circle']):
+            raise ValueError("must be one of enum values ('Polygon', 'MultiPolygon', 'Circle')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

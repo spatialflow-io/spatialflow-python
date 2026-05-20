@@ -387,9 +387,9 @@ class PoliciesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '403': "ErrorResponse",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -458,9 +458,9 @@ class PoliciesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '403': "ErrorResponse",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -529,9 +529,9 @@ class PoliciesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '403': "ErrorResponse",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -589,7 +589,7 @@ class PoliciesApi:
 
         return self.api_client.param_serialize(
             method='DELETE',
-            resource_path='/api/v1/policies/{policy_id}/',
+            resource_path='/api/v1/policies/{policy_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -862,7 +862,7 @@ class PoliciesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/policies/{policy_id}/',
+            resource_path='/api/v1/policies/{policy_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1736,7 +1736,7 @@ class PoliciesApi:
 
         return self.api_client.param_serialize(
             method='PUT',
-            resource_path='/api/v1/policies/{policy_id}/',
+            resource_path='/api/v1/policies/{policy_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

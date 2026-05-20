@@ -6,7 +6,7 @@ Schema for test point response.  Provides both the legacy `results` array (uncha
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**point** | **Dict[str, object]** |  | 
+**point** | [**GeoJSONPoint**](GeoJSONPoint.md) |  | 
 **inside_geofences** | **int** |  | 
 **total_geofences** | **int** |  | 
 **results** | [**List[GeofenceTestResult]**](GeofenceTestResult.md) |  | 

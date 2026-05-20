@@ -16,23 +16,34 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 from ..models.batch_location_update_in import BatchLocationUpdateIn
+from ..models.dashboard_stats_out import DashboardStatsOut
+from ..models.dashboard_stats_timeline_out import DashboardStatsTimelineOut
 from ..models.device_in import DeviceIn
 from ..models.device_out import DeviceOut
 from ..models.device_session_out import DeviceSessionOut
 from ..models.device_sessions_out import DeviceSessionsOut
+from ..models.device_stats_out import DeviceStatsOut
+from ..models.geofence_event_out import GeofenceEventOut
 from ..models.location_import_response import LocationImportResponse
 from ..models.location_update_in import LocationUpdateIn
 from ..models.location_update_out import LocationUpdateOut
 from ..models.notes_update_in import NotesUpdateIn
 from ..models.notes_update_out import NotesUpdateOut
+from ..models.photo_out import PhotoOut
+from ..models.recent_events_out import RecentEventsOut
 from ..models.recent_locations_out import RecentLocationsOut
 from ..models.session_locations_out import SessionLocationsOut
+from ..models.session_note_in import SessionNoteIn
+from ..models.session_note_out import SessionNoteOut
 from ..models.shift_action_out import ShiftActionOut
+from ..models.stored_file_attachment_out import StoredFileAttachmentOut
 from ..models.update_device_in import UpdateDeviceIn
+from ..models.workspace_photos_out import WorkspacePhotosOut
 
 from ..api_client import ApiClient, RequestSerialized
 from ..api_response import ApiResponse
@@ -55,7 +66,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_activate_device(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -73,8 +84,8 @@ class DevicesApi:
 
         Activate a device - admin/manager action (PRD §4.2).  This is an administrative action that enables the device. - Managers/owners: Can activate any workspace device - Field workers: Can only activate their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -98,7 +109,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_activate_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -126,7 +137,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_activate_device_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -144,8 +155,8 @@ class DevicesApi:
 
         Activate a device - admin/manager action (PRD §4.2).  This is an administrative action that enables the device. - Managers/owners: Can activate any workspace device - Field workers: Can only activate their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -169,7 +180,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_activate_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -197,7 +208,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_activate_device_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -215,8 +226,8 @@ class DevicesApi:
 
         Activate a device - admin/manager action (PRD §4.2).  This is an administrative action that enables the device. - Managers/owners: Can activate any workspace device - Field workers: Can only activate their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -240,7 +251,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_activate_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -263,7 +274,7 @@ class DevicesApi:
 
     def _apps_devices_api_activate_device_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -285,8 +296,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -310,7 +321,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/activate',
+            resource_path='/api/v1/devices/{device_id}/activate',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -671,10 +682,11 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceOut",
             '201': "DeviceOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
+            '401': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -743,10 +755,11 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceOut",
             '201': "DeviceOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
+            '401': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -815,10 +828,11 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceOut",
             '201': "DeviceOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
+            '401': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
@@ -908,9 +922,329 @@ class DevicesApi:
 
 
     @validate_call
+    async def apps_devices_api_create_manager_session_note(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        session_note_in: SessionNoteIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SessionNoteOut:
+        """Create Manager Session Note
+
+        Append a manager-authored SessionNote (manager + owner only per D-04, append-only per D-03).  Body is truncated to 2000 chars to match the field-worker constraint. Allowed on active OR closed sessions (D-03 supports retroactive annotation). Each POST inserts a NEW SessionNote row — no upsert.  WR-05: returns 201 Created (RFC 7231 §6.3.2) since this is genuine resource creation. The mobile NotesUpdateOut endpoint still returns 200 because it is an upsert, not a create.  WR-06: rejects an empty / whitespace-only body with 400 + error_code=\"EMPTY_BODY\" rather than inserting a noise row.
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param session_note_in: (required)
+        :type session_note_in: SessionNoteIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_create_manager_session_note_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            session_note_in=session_note_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "SessionNoteOut",
+            '400': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_devices_api_create_manager_session_note_with_http_info(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        session_note_in: SessionNoteIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SessionNoteOut]:
+        """Create Manager Session Note
+
+        Append a manager-authored SessionNote (manager + owner only per D-04, append-only per D-03).  Body is truncated to 2000 chars to match the field-worker constraint. Allowed on active OR closed sessions (D-03 supports retroactive annotation). Each POST inserts a NEW SessionNote row — no upsert.  WR-05: returns 201 Created (RFC 7231 §6.3.2) since this is genuine resource creation. The mobile NotesUpdateOut endpoint still returns 200 because it is an upsert, not a create.  WR-06: rejects an empty / whitespace-only body with 400 + error_code=\"EMPTY_BODY\" rather than inserting a noise row.
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param session_note_in: (required)
+        :type session_note_in: SessionNoteIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_create_manager_session_note_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            session_note_in=session_note_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "SessionNoteOut",
+            '400': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_devices_api_create_manager_session_note_without_preload_content(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        session_note_in: SessionNoteIn,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Manager Session Note
+
+        Append a manager-authored SessionNote (manager + owner only per D-04, append-only per D-03).  Body is truncated to 2000 chars to match the field-worker constraint. Allowed on active OR closed sessions (D-03 supports retroactive annotation). Each POST inserts a NEW SessionNote row — no upsert.  WR-05: returns 201 Created (RFC 7231 §6.3.2) since this is genuine resource creation. The mobile NotesUpdateOut endpoint still returns 200 because it is an upsert, not a create.  WR-06: rejects an empty / whitespace-only body with 400 + error_code=\"EMPTY_BODY\" rather than inserting a noise row.
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param session_note_in: (required)
+        :type session_note_in: SessionNoteIn
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_create_manager_session_note_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            session_note_in=session_note_in,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "SessionNoteOut",
+            '400': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_devices_api_create_manager_session_note_serialize(
+        self,
+        device_uuid,
+        session_id,
+        session_note_in,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if device_uuid is not None:
+            _path_params['device_uuid'] = device_uuid
+        if session_id is not None:
+            _path_params['session_id'] = session_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if session_note_in is not None:
+            _body_params = session_note_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/devices/{device_uuid}/sessions/{session_id}/notes',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_devices_api_deactivate_device(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -928,8 +1262,8 @@ class DevicesApi:
 
         Deactivate a device - admin/manager action (PRD §4.2).  This is an administrative action that disables the device entirely. - Managers/owners: Can deactivate any workspace device - Field workers: Can only deactivate their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -953,7 +1287,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_deactivate_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -981,7 +1315,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_deactivate_device_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -999,8 +1333,8 @@ class DevicesApi:
 
         Deactivate a device - admin/manager action (PRD §4.2).  This is an administrative action that disables the device entirely. - Managers/owners: Can deactivate any workspace device - Field workers: Can only deactivate their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1024,7 +1358,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_deactivate_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1052,7 +1386,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_deactivate_device_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1070,8 +1404,8 @@ class DevicesApi:
 
         Deactivate a device - admin/manager action (PRD §4.2).  This is an administrative action that disables the device entirely. - Managers/owners: Can deactivate any workspace device - Field workers: Can only deactivate their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1095,7 +1429,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_deactivate_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1118,7 +1452,7 @@ class DevicesApi:
 
     def _apps_devices_api_deactivate_device_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1140,8 +1474,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1165,7 +1499,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/deactivate',
+            resource_path='/api/v1/devices/{device_id}/deactivate',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1184,7 +1518,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_delete_device(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1202,8 +1536,8 @@ class DevicesApi:
 
         Delete a device (PRD §4.2).  - Managers/owners: Can delete any workspace device - Field workers: Can only delete their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1227,7 +1561,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_delete_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1236,9 +1570,9 @@ class DevicesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '403': "ErrorResponse",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1255,7 +1589,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_delete_device_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1273,8 +1607,8 @@ class DevicesApi:
 
         Delete a device (PRD §4.2).  - Managers/owners: Can delete any workspace device - Field workers: Can only delete their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1298,7 +1632,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_delete_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1307,9 +1641,9 @@ class DevicesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '403': "ErrorResponse",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1326,7 +1660,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_delete_device_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1344,8 +1678,8 @@ class DevicesApi:
 
         Delete a device (PRD §4.2).  - Managers/owners: Can delete any workspace device - Field workers: Can only delete their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1369,7 +1703,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_delete_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1378,9 +1712,9 @@ class DevicesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '403': "ErrorResponse",
-            '401': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1392,7 +1726,7 @@ class DevicesApi:
 
     def _apps_devices_api_delete_device_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1414,8 +1748,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1439,7 +1773,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='DELETE',
-            resource_path='/api/v1/devices/{uuid}',
+            resource_path='/api/v1/devices/{device_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1458,7 +1792,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_end_shift(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1476,8 +1810,8 @@ class DevicesApi:
 
         End a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can end their shift. Location uploads stop. Offline-buffered locations with timestamps within the shift window will still be accepted.  State transition: ACTIVE → OFF (or PAUSED → OFF)
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1501,7 +1835,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_end_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1511,9 +1845,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1530,7 +1864,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_end_shift_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1548,8 +1882,8 @@ class DevicesApi:
 
         End a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can end their shift. Location uploads stop. Offline-buffered locations with timestamps within the shift window will still be accepted.  State transition: ACTIVE → OFF (or PAUSED → OFF)
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1573,7 +1907,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_end_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1583,9 +1917,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1602,7 +1936,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_end_shift_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1620,8 +1954,8 @@ class DevicesApi:
 
         End a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can end their shift. Location uploads stop. Offline-buffered locations with timestamps within the shift window will still be accepted.  State transition: ACTIVE → OFF (or PAUSED → OFF)
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1645,7 +1979,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_end_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1655,9 +1989,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1669,7 +2003,7 @@ class DevicesApi:
 
     def _apps_devices_api_end_shift_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1691,8 +2025,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1716,7 +2050,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/end-shift',
+            resource_path='/api/v1/devices/{device_id}/end-shift',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2096,6 +2430,280 @@ class DevicesApi:
 
 
     @validate_call
+    async def apps_devices_api_get_active_session(
+        self,
+        device_uuid: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DeviceSessionOut:
+        """Get Active Session
+
+        Get the open DeviceSession for the device's current shift.  Returns 200 + DeviceSessionOut when the device has an open session (ended_at IS NULL). Returns 404 when the device is not currently on shift (shift_status='off').  Lazy-creates a session row for legacy in-flight v1.19 shifts (device.shift_status='active' but no open DeviceSession row), using device.shift_started_at as the started_at value. This reconciliation is idempotent: a second call returns the same session row.  Role scoping (via get_device_with_permission): - field_worker: only own device (other device → 404) - manager/owner: any workspace device
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_get_active_session_serialize(
+            device_uuid=device_uuid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceSessionOut",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_devices_api_get_active_session_with_http_info(
+        self,
+        device_uuid: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DeviceSessionOut]:
+        """Get Active Session
+
+        Get the open DeviceSession for the device's current shift.  Returns 200 + DeviceSessionOut when the device has an open session (ended_at IS NULL). Returns 404 when the device is not currently on shift (shift_status='off').  Lazy-creates a session row for legacy in-flight v1.19 shifts (device.shift_status='active' but no open DeviceSession row), using device.shift_started_at as the started_at value. This reconciliation is idempotent: a second call returns the same session row.  Role scoping (via get_device_with_permission): - field_worker: only own device (other device → 404) - manager/owner: any workspace device
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_get_active_session_serialize(
+            device_uuid=device_uuid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceSessionOut",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_devices_api_get_active_session_without_preload_content(
+        self,
+        device_uuid: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Active Session
+
+        Get the open DeviceSession for the device's current shift.  Returns 200 + DeviceSessionOut when the device has an open session (ended_at IS NULL). Returns 404 when the device is not currently on shift (shift_status='off').  Lazy-creates a session row for legacy in-flight v1.19 shifts (device.shift_status='active' but no open DeviceSession row), using device.shift_started_at as the started_at value. This reconciliation is idempotent: a second call returns the same session row.  Role scoping (via get_device_with_permission): - field_worker: only own device (other device → 404) - manager/owner: any workspace device
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_get_active_session_serialize(
+            device_uuid=device_uuid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceSessionOut",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_devices_api_get_active_session_serialize(
+        self,
+        device_uuid,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if device_uuid is not None:
+            _path_params['device_uuid'] = device_uuid
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/devices/{device_uuid}/active-session',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def apps_devices_api_get_dashboard_stats(
         self,
         _request_timeout: Union[
@@ -2110,7 +2718,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> DashboardStatsOut:
         """Get Dashboard Stats
 
         Get KPI statistics for the dashboard ops view.  Returns counts for: - live_count: Devices with location update in the last 10 minutes - offline_stale_count: Active devices without recent location - in_geofence_count: Devices currently inside a geofence - alerts_open: Open alert notifications (dashboard alerts) - workflow_failures_1h: Failed workflow executions in the last hour - webhook_retries_1h: Webhook deliveries pending retry in the last hour  - Managers/owners: See stats for all workspace devices - Field workers: See stats for only their own device
@@ -2145,7 +2753,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DashboardStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2177,7 +2785,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[DashboardStatsOut]:
         """Get Dashboard Stats
 
         Get KPI statistics for the dashboard ops view.  Returns counts for: - live_count: Devices with location update in the last 10 minutes - offline_stale_count: Active devices without recent location - in_geofence_count: Devices currently inside a geofence - alerts_open: Open alert notifications (dashboard alerts) - workflow_failures_1h: Failed workflow executions in the last hour - webhook_retries_1h: Webhook deliveries pending retry in the last hour  - Managers/owners: See stats for all workspace devices - Field workers: See stats for only their own device
@@ -2212,7 +2820,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DashboardStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2279,7 +2887,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DashboardStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2372,7 +2980,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> DashboardStatsTimelineOut:
         """Get Dashboard Stats Timeline
 
         Get time-bucketed KPI counts for sparkline rendering and delta indicators.  Returns hourly-bucketed counts (today), 6-hour buckets (7d), or daily buckets (30d) for live, offline/stale, and in-geofence metrics, plus previous-period comparison values.
@@ -2416,8 +3024,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "Dict[str, object]",
+            '200': "DashboardStatsTimelineOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2452,7 +3059,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[DashboardStatsTimelineOut]:
         """Get Dashboard Stats Timeline
 
         Get time-bucketed KPI counts for sparkline rendering and delta indicators.  Returns hourly-bucketed counts (today), 6-hour buckets (7d), or daily buckets (30d) for live, offline/stale, and in-geofence metrics, plus previous-period comparison values.
@@ -2496,8 +3103,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "Dict[str, object]",
+            '200': "DashboardStatsTimelineOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2576,8 +3182,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
-            '400': "Dict[str, object]",
+            '200': "DashboardStatsTimelineOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -2670,7 +3275,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2688,8 +3293,8 @@ class DevicesApi:
 
         Get device details by UUID (PRD §4).  - Managers/owners: Can view any workspace device - Field workers: Can only view their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2713,7 +3318,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2741,7 +3346,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2759,8 +3364,8 @@ class DevicesApi:
 
         Get device details by UUID (PRD §4).  - Managers/owners: Can view any workspace device - Field workers: Can only view their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2784,7 +3389,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2812,7 +3417,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2830,8 +3435,8 @@ class DevicesApi:
 
         Get device details by UUID (PRD §4).  - Managers/owners: Can view any workspace device - Field workers: Can only view their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2855,7 +3460,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2878,7 +3483,7 @@ class DevicesApi:
 
     def _apps_devices_api_get_device_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -2900,8 +3505,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -2925,7 +3530,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/devices/{uuid}',
+            resource_path='/api/v1/devices/{device_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2944,7 +3549,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_events(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         _request_timeout: Union[
@@ -2959,13 +3564,13 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[GeofenceEventOut]:
         """Get Device Events
 
         Get geofence events for a device (PRD §4).  - Managers/owners: Can view events for any workspace device - Field workers: Can only view events for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param offset:
@@ -2993,7 +3598,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_events_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -3003,7 +3608,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[GeofenceEventOut]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3023,7 +3628,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_events_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         _request_timeout: Union[
@@ -3038,13 +3643,13 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[GeofenceEventOut]]:
         """Get Device Events
 
         Get geofence events for a device (PRD §4).  - Managers/owners: Can view events for any workspace device - Field workers: Can only view events for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param offset:
@@ -3072,7 +3677,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_events_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -3082,7 +3687,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[GeofenceEventOut]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3102,7 +3707,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_events_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
         _request_timeout: Union[
@@ -3122,8 +3727,8 @@ class DevicesApi:
 
         Get geofence events for a device (PRD §4).  - Managers/owners: Can view events for any workspace device - Field workers: Can only view events for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param offset:
@@ -3151,7 +3756,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_events_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -3161,7 +3766,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[Dict[str, object]]",
+            '200': "List[GeofenceEventOut]",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -3176,7 +3781,7 @@ class DevicesApi:
 
     def _apps_devices_api_get_device_events_serialize(
         self,
-        uuid,
+        device_id,
         limit,
         offset,
         _request_auth,
@@ -3200,8 +3805,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         if limit is not None:
             
@@ -3233,7 +3838,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/devices/{uuid}/events',
+            resource_path='/api/v1/devices/{device_id}/events',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3252,7 +3857,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_sessions(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
         _request_timeout: Union[
@@ -3272,8 +3877,8 @@ class DevicesApi:
 
         Get completed session history for a device.  Returns a list of all completed tracking sessions (shifts) with computed stats like duration, location count, and distance traveled.  - Managers/owners: Can view sessions for any workspace device - Field workers: Can only view sessions for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param offset:
@@ -3301,7 +3906,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_sessions_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -3331,7 +3936,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_sessions_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
         _request_timeout: Union[
@@ -3351,8 +3956,8 @@ class DevicesApi:
 
         Get completed session history for a device.  Returns a list of all completed tracking sessions (shifts) with computed stats like duration, location count, and distance traveled.  - Managers/owners: Can view sessions for any workspace device - Field workers: Can only view sessions for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param offset:
@@ -3380,7 +3985,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_sessions_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -3410,7 +4015,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_device_sessions_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=100, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
         _request_timeout: Union[
@@ -3430,8 +4035,8 @@ class DevicesApi:
 
         Get completed session history for a device.  Returns a list of all completed tracking sessions (shifts) with computed stats like duration, location count, and distance traveled.  - Managers/owners: Can view sessions for any workspace device - Field workers: Can only view sessions for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param offset:
@@ -3459,7 +4064,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_device_sessions_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -3484,7 +4089,7 @@ class DevicesApi:
 
     def _apps_devices_api_get_device_sessions_serialize(
         self,
-        uuid,
+        device_id,
         limit,
         offset,
         _request_auth,
@@ -3508,8 +4113,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         if limit is not None:
             
@@ -3541,7 +4146,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/devices/{uuid}/sessions',
+            resource_path='/api/v1/devices/{device_id}/sessions',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3612,9 +4217,9 @@ class DevicesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3683,9 +4288,9 @@ class DevicesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -3754,9 +4359,9 @@ class DevicesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, object]",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -4119,7 +4724,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> DeviceStatsOut:
         """Get Location Stats
 
         Get location activity statistics based on user's workspace role (PRD §4).  - Managers/owners: See stats for all workspace devices - Field workers: See stats for only their own device
@@ -4154,7 +4759,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DeviceStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4186,7 +4791,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[DeviceStatsOut]:
         """Get Location Stats
 
         Get location activity statistics based on user's workspace role (PRD §4).  - Managers/owners: See stats for all workspace devices - Field workers: See stats for only their own device
@@ -4221,7 +4826,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DeviceStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4288,7 +4893,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "DeviceStatsOut",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -4387,7 +4992,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> RecentEventsOut:
         """Get Recent Events
 
         Get recent geofence events based on user's workspace role (PRD §4).  - Managers/owners: See events for all workspace devices - Field workers: See events for only their own devices
@@ -4449,7 +5054,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "RecentEventsOut",
             '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -4491,7 +5096,7 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[RecentEventsOut]:
         """Get Recent Events
 
         Get recent geofence events based on user's workspace role (PRD §4).  - Managers/owners: See events for all workspace devices - Field workers: See events for only their own devices
@@ -4553,7 +5158,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "RecentEventsOut",
             '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -4657,7 +5262,7 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "RecentEventsOut",
             '400': "ErrorResponse",
             '401': "ErrorResponse",
             '403': "ErrorResponse",
@@ -4781,7 +5386,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_recent_locations(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=2000, strict=True, ge=1)]] = None,
         _request_timeout: Union[
             None,
@@ -4798,10 +5403,10 @@ class DevicesApi:
     ) -> RecentLocationsOut:
         """Get Recent Locations
 
-        Get recent locations for a device, independent of sessions.  Returns the most recent GPS points for the device, ordered newest-first. Useful for rendering device trails when no session history exists (e.g. simulation devices or devices that haven't started shifts).  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
+        Get recent locations for a device, independent of sessions.  Returns the most recent GPS points for the device, ordered newest-first. Useful for rendering device trails when no session history exists (e.g. devices that haven't started shifts).  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param _request_timeout: timeout setting for this request. If one
@@ -4827,7 +5432,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_recent_locations_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4856,7 +5461,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_recent_locations_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=2000, strict=True, ge=1)]] = None,
         _request_timeout: Union[
             None,
@@ -4873,10 +5478,10 @@ class DevicesApi:
     ) -> ApiResponse[RecentLocationsOut]:
         """Get Recent Locations
 
-        Get recent locations for a device, independent of sessions.  Returns the most recent GPS points for the device, ordered newest-first. Useful for rendering device trails when no session history exists (e.g. simulation devices or devices that haven't started shifts).  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
+        Get recent locations for a device, independent of sessions.  Returns the most recent GPS points for the device, ordered newest-first. Useful for rendering device trails when no session history exists (e.g. devices that haven't started shifts).  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param _request_timeout: timeout setting for this request. If one
@@ -4902,7 +5507,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_recent_locations_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4931,7 +5536,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_recent_locations_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=2000, strict=True, ge=1)]] = None,
         _request_timeout: Union[
             None,
@@ -4948,10 +5553,10 @@ class DevicesApi:
     ) -> RESTResponseType:
         """Get Recent Locations
 
-        Get recent locations for a device, independent of sessions.  Returns the most recent GPS points for the device, ordered newest-first. Useful for rendering device trails when no session history exists (e.g. simulation devices or devices that haven't started shifts).  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
+        Get recent locations for a device, independent of sessions.  Returns the most recent GPS points for the device, ordered newest-first. Useful for rendering device trails when no session history exists (e.g. devices that haven't started shifts).  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param limit:
         :type limit: int
         :param _request_timeout: timeout setting for this request. If one
@@ -4977,7 +5582,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_recent_locations_serialize(
-            uuid=uuid,
+            device_id=device_id,
             limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5001,7 +5606,7 @@ class DevicesApi:
 
     def _apps_devices_api_get_recent_locations_serialize(
         self,
-        uuid,
+        device_id,
         limit,
         _request_auth,
         _content_type,
@@ -5024,8 +5629,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         if limit is not None:
             
@@ -5053,7 +5658,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/devices/{uuid}/locations/recent',
+            resource_path='/api/v1/devices/{device_id}/locations/recent',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5072,7 +5677,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_session_detail(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         session_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -5091,8 +5696,8 @@ class DevicesApi:
 
         Get single session details.  Returns detailed information about a specific completed session, including time bounds needed for location queries.  - Managers/owners: Can view sessions for any workspace device - Field workers: Can only view sessions for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param session_id: (required)
         :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -5118,7 +5723,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_session_detail_serialize(
-            uuid=uuid,
+            device_id=device_id,
             session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5147,7 +5752,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_session_detail_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         session_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -5166,8 +5771,8 @@ class DevicesApi:
 
         Get single session details.  Returns detailed information about a specific completed session, including time bounds needed for location queries.  - Managers/owners: Can view sessions for any workspace device - Field workers: Can only view sessions for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param session_id: (required)
         :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -5193,7 +5798,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_session_detail_serialize(
-            uuid=uuid,
+            device_id=device_id,
             session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5222,7 +5827,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_session_detail_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         session_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -5241,8 +5846,8 @@ class DevicesApi:
 
         Get single session details.  Returns detailed information about a specific completed session, including time bounds needed for location queries.  - Managers/owners: Can view sessions for any workspace device - Field workers: Can only view sessions for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param session_id: (required)
         :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -5268,7 +5873,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_session_detail_serialize(
-            uuid=uuid,
+            device_id=device_id,
             session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5292,7 +5897,7 @@ class DevicesApi:
 
     def _apps_devices_api_get_session_detail_serialize(
         self,
-        uuid,
+        device_id,
         session_id,
         _request_auth,
         _content_type,
@@ -5315,8 +5920,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         if session_id is not None:
             _path_params['session_id'] = session_id
         # process the query parameters
@@ -5342,7 +5947,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/devices/{uuid}/sessions/{session_id}',
+            resource_path='/api/v1/devices/{device_id}/sessions/{session_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5361,7 +5966,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_session_locations(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         session_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=10000, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -5383,8 +5988,8 @@ class DevicesApi:
 
         Get locations for a specific session with pagination or simplification.  Returns GPS track points recorded during the session.  **Pagination mode** (default): Use `limit` and `offset` to paginate through all points.  **Simplification mode**: Set `max_points` to return a simplified track using Douglas-Peucker algorithm (PostGIS ST_Simplify). Useful for rendering long tracks without loading all points. When `max_points` is set, pagination is ignored.  Important notes for simplification mode: - `max_points` is a **target**, not a hard cap. Actual count may vary based on track shape. - When `simplified=true`, timestamps are **linearly interpolated** between session   start/end and should not be used for speed or pause analysis. - Accuracy, speed, and heading are lost during simplification (returned as null).  Note: Track history only includes location updates that pass quality filters (accuracy <= 100m, minimum movement distance). This ensures clean GPS tracks without jitter or poor-quality readings.  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param session_id: (required)
         :type session_id: str
         :param limit:
@@ -5416,7 +6021,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_session_locations_serialize(
-            uuid=uuid,
+            device_id=device_id,
             session_id=session_id,
             limit=limit,
             offset=offset,
@@ -5448,7 +6053,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_session_locations_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         session_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=10000, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -5470,8 +6075,8 @@ class DevicesApi:
 
         Get locations for a specific session with pagination or simplification.  Returns GPS track points recorded during the session.  **Pagination mode** (default): Use `limit` and `offset` to paginate through all points.  **Simplification mode**: Set `max_points` to return a simplified track using Douglas-Peucker algorithm (PostGIS ST_Simplify). Useful for rendering long tracks without loading all points. When `max_points` is set, pagination is ignored.  Important notes for simplification mode: - `max_points` is a **target**, not a hard cap. Actual count may vary based on track shape. - When `simplified=true`, timestamps are **linearly interpolated** between session   start/end and should not be used for speed or pause analysis. - Accuracy, speed, and heading are lost during simplification (returned as null).  Note: Track history only includes location updates that pass quality filters (accuracy <= 100m, minimum movement distance). This ensures clean GPS tracks without jitter or poor-quality readings.  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param session_id: (required)
         :type session_id: str
         :param limit:
@@ -5503,7 +6108,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_session_locations_serialize(
-            uuid=uuid,
+            device_id=device_id,
             session_id=session_id,
             limit=limit,
             offset=offset,
@@ -5535,7 +6140,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_get_session_locations_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         session_id: StrictStr,
         limit: Optional[Annotated[int, Field(le=10000, strict=True)]] = None,
         offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
@@ -5557,8 +6162,8 @@ class DevicesApi:
 
         Get locations for a specific session with pagination or simplification.  Returns GPS track points recorded during the session.  **Pagination mode** (default): Use `limit` and `offset` to paginate through all points.  **Simplification mode**: Set `max_points` to return a simplified track using Douglas-Peucker algorithm (PostGIS ST_Simplify). Useful for rendering long tracks without loading all points. When `max_points` is set, pagination is ignored.  Important notes for simplification mode: - `max_points` is a **target**, not a hard cap. Actual count may vary based on track shape. - When `simplified=true`, timestamps are **linearly interpolated** between session   start/end and should not be used for speed or pause analysis. - Accuracy, speed, and heading are lost during simplification (returned as null).  Note: Track history only includes location updates that pass quality filters (accuracy <= 100m, minimum movement distance). This ensures clean GPS tracks without jitter or poor-quality readings.  - Managers/owners: Can view locations for any workspace device - Field workers: Can only view locations for their own device
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param session_id: (required)
         :type session_id: str
         :param limit:
@@ -5590,7 +6195,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_get_session_locations_serialize(
-            uuid=uuid,
+            device_id=device_id,
             session_id=session_id,
             limit=limit,
             offset=offset,
@@ -5617,7 +6222,7 @@ class DevicesApi:
 
     def _apps_devices_api_get_session_locations_serialize(
         self,
-        uuid,
+        device_id,
         session_id,
         limit,
         offset,
@@ -5643,8 +6248,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         if session_id is not None:
             _path_params['session_id'] = session_id
         # process the query parameters
@@ -5682,7 +6287,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/devices/{uuid}/sessions/{session_id}/locations',
+            resource_path='/api/v1/devices/{device_id}/sessions/{session_id}/locations',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5992,9 +6597,10 @@ class DevicesApi:
 
 
     @validate_call
-    async def apps_devices_api_pause_shift(
+    async def apps_devices_api_list_session_attachments(
         self,
-        uuid: StrictStr,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6007,13 +6613,15 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ShiftActionOut:
-        """Pause Shift
+    ) -> List[StoredFileAttachmentOut]:
+        """List Session Attachments
 
-        Pause a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can pause their shift. Location uploads are paused until resumed.  State transition: ACTIVE → PAUSED
+        List attachments (StoredFile records) linked to a device session.  Role scoping (D-09): - field_worker: sees only attachments from their own sessions. - manager/owner: sees all workspace-wide attachments for the session.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6036,8 +6644,9 @@ class DevicesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._apps_devices_api_pause_shift_serialize(
-            uuid=uuid,
+        _param = self._apps_devices_api_list_session_attachments_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6045,11 +6654,10 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ShiftActionOut",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
+            '200': "List[StoredFileAttachmentOut]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6064,9 +6672,10 @@ class DevicesApi:
 
 
     @validate_call
-    async def apps_devices_api_pause_shift_with_http_info(
+    async def apps_devices_api_list_session_attachments_with_http_info(
         self,
-        uuid: StrictStr,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6079,13 +6688,15 @@ class DevicesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ShiftActionOut]:
-        """Pause Shift
+    ) -> ApiResponse[List[StoredFileAttachmentOut]]:
+        """List Session Attachments
 
-        Pause a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can pause their shift. Location uploads are paused until resumed.  State transition: ACTIVE → PAUSED
+        List attachments (StoredFile records) linked to a device session.  Role scoping (D-09): - field_worker: sees only attachments from their own sessions. - manager/owner: sees all workspace-wide attachments for the session.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6108,8 +6719,9 @@ class DevicesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._apps_devices_api_pause_shift_serialize(
-            uuid=uuid,
+        _param = self._apps_devices_api_list_session_attachments_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6117,11 +6729,10 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ShiftActionOut",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
+            '200': "List[StoredFileAttachmentOut]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6136,9 +6747,10 @@ class DevicesApi:
 
 
     @validate_call
-    async def apps_devices_api_pause_shift_without_preload_content(
+    async def apps_devices_api_list_session_attachments_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6152,12 +6764,14 @@ class DevicesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Pause Shift
+        """List Session Attachments
 
-        Pause a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can pause their shift. Location uploads are paused until resumed.  State transition: ACTIVE → PAUSED
+        List attachments (StoredFile records) linked to a device session.  Role scoping (D-09): - field_worker: sees only attachments from their own sessions. - manager/owner: sees all workspace-wide attachments for the session.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6180,8 +6794,9 @@ class DevicesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._apps_devices_api_pause_shift_serialize(
-            uuid=uuid,
+        _param = self._apps_devices_api_list_session_attachments_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6189,11 +6804,10 @@ class DevicesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ShiftActionOut",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
+            '200': "List[StoredFileAttachmentOut]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6203,9 +6817,10 @@ class DevicesApi:
         return response_data.response
 
 
-    def _apps_devices_api_pause_shift_serialize(
+    def _apps_devices_api_list_session_attachments_serialize(
         self,
-        uuid,
+        device_uuid,
+        session_id,
         _request_auth,
         _content_type,
         _headers,
@@ -6227,8 +6842,1214 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_uuid is not None:
+            _path_params['device_uuid'] = device_uuid
+        if session_id is not None:
+            _path_params['session_id'] = session_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/devices/{device_uuid}/sessions/{session_id}/attachments',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_devices_api_list_session_notes(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[SessionNoteOut]:
+        """List Session Notes
+
+        List SessionNote rows for a session (oldest first per D-20).  Role scoping (D-09 / D-14): - field_worker: only own device's session notes - manager/owner: any workspace device's session notes  Returns a uniform 403 for non-existent / cross-device / cross-workspace / unauthorized-field-worker cases (prevents session-ID enumeration via differential 403 vs 404).
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_session_notes_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SessionNoteOut]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_devices_api_list_session_notes_with_http_info(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[SessionNoteOut]]:
+        """List Session Notes
+
+        List SessionNote rows for a session (oldest first per D-20).  Role scoping (D-09 / D-14): - field_worker: only own device's session notes - manager/owner: any workspace device's session notes  Returns a uniform 403 for non-existent / cross-device / cross-workspace / unauthorized-field-worker cases (prevents session-ID enumeration via differential 403 vs 404).
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_session_notes_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SessionNoteOut]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_devices_api_list_session_notes_without_preload_content(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Session Notes
+
+        List SessionNote rows for a session (oldest first per D-20).  Role scoping (D-09 / D-14): - field_worker: only own device's session notes - manager/owner: any workspace device's session notes  Returns a uniform 403 for non-existent / cross-device / cross-workspace / unauthorized-field-worker cases (prevents session-ID enumeration via differential 403 vs 404).
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_session_notes_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SessionNoteOut]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_devices_api_list_session_notes_serialize(
+        self,
+        device_uuid,
+        session_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if device_uuid is not None:
+            _path_params['device_uuid'] = device_uuid
+        if session_id is not None:
+            _path_params['session_id'] = session_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/devices/{device_uuid}/sessions/{session_id}/notes',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_devices_api_list_session_photos(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[PhotoOut]:
+        """List Session Photos
+
+        List image-typed StoredFile attachments for a session with derived GPS coords.  Phase 120-04 (D-11). Each row is a PhotoOut whose lat/lon are resolved per D-07 (nearest DeviceLocation within ±60s of captured_at, falling back to PostGIS ST_LineInterpolatePoint on the session's track_geometry for closed sessions, falling back to null). Newest-first ordering (D-17). Presigned download URL with TTL=3600 (D-18).  Coexists with GET .../sessions/{session_id}/attachments which returns ALL attachment types — that endpoint is preserved unchanged for the v1.20 mobile consumer (Plan 105) per CONTEXT D-11.  Role scoping (D-12 = v1.20 D-09): - field_worker: only own device's photos - manager/owner: any workspace device's photos
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_session_photos_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[PhotoOut]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_devices_api_list_session_photos_with_http_info(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[PhotoOut]]:
+        """List Session Photos
+
+        List image-typed StoredFile attachments for a session with derived GPS coords.  Phase 120-04 (D-11). Each row is a PhotoOut whose lat/lon are resolved per D-07 (nearest DeviceLocation within ±60s of captured_at, falling back to PostGIS ST_LineInterpolatePoint on the session's track_geometry for closed sessions, falling back to null). Newest-first ordering (D-17). Presigned download URL with TTL=3600 (D-18).  Coexists with GET .../sessions/{session_id}/attachments which returns ALL attachment types — that endpoint is preserved unchanged for the v1.20 mobile consumer (Plan 105) per CONTEXT D-11.  Role scoping (D-12 = v1.20 D-09): - field_worker: only own device's photos - manager/owner: any workspace device's photos
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_session_photos_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[PhotoOut]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_devices_api_list_session_photos_without_preload_content(
+        self,
+        device_uuid: StrictStr,
+        session_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Session Photos
+
+        List image-typed StoredFile attachments for a session with derived GPS coords.  Phase 120-04 (D-11). Each row is a PhotoOut whose lat/lon are resolved per D-07 (nearest DeviceLocation within ±60s of captured_at, falling back to PostGIS ST_LineInterpolatePoint on the session's track_geometry for closed sessions, falling back to null). Newest-first ordering (D-17). Presigned download URL with TTL=3600 (D-18).  Coexists with GET .../sessions/{session_id}/attachments which returns ALL attachment types — that endpoint is preserved unchanged for the v1.20 mobile consumer (Plan 105) per CONTEXT D-11.  Role scoping (D-12 = v1.20 D-09): - field_worker: only own device's photos - manager/owner: any workspace device's photos
+
+        :param device_uuid: (required)
+        :type device_uuid: str
+        :param session_id: (required)
+        :type session_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_session_photos_serialize(
+            device_uuid=device_uuid,
+            session_id=session_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[PhotoOut]",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_devices_api_list_session_photos_serialize(
+        self,
+        device_uuid,
+        session_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if device_uuid is not None:
+            _path_params['device_uuid'] = device_uuid
+        if session_id is not None:
+            _path_params['session_id'] = session_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/devices/{device_uuid}/sessions/{session_id}/photos',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_devices_api_list_workspace_photos(
+        self,
+        var_from: Annotated[Optional[datetime], Field(description="Earliest captured_at (default: now - 24h)")] = None,
+        to: Annotated[Optional[datetime], Field(description="Latest captured_at (default: now)")] = None,
+        device_ids: Annotated[Optional[List[Optional[StrictStr]]], Field(description="Restrict to these device IDs (max 50)")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=500, strict=True, ge=1)]], Field(description="Soft cap; max 500 newest")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> WorkspacePhotosOut:
+        """List Workspace Photos
+
+        List workspace-wide photos with renderable GPS coords (Phase 122-01).  Returns the newest ``limit`` photos (max 500) whose captured_at is in [from, to] across all workspace devices the requester can see. Photos whose coordinate resolution returns null are excluded (D-05) — only renderable photos cross the wire for the dashboard map layer.  Role scoping (D-04 / v1.20 D-09): - field_worker: only own device's photos - manager/owner: all workspace devices  Cross-workspace ``device_ids`` are silently filtered out (no information leak via differential 403). Over 50 ``device_ids`` returns 400 TOO_MANY_DEVICE_IDS to bound query parameter abuse.  Coexists with GET /devices/{uuid}/sessions/{sid}/photos which is preserved unchanged (Phase 120-04). The two endpoints have intentionally different null-coord semantics: per-session keeps null-coord rows (still listed in the session detail panel), workspace-wide drops them (can't render).
+
+        :param var_from: Earliest captured_at (default: now - 24h)
+        :type var_from: datetime
+        :param to: Latest captured_at (default: now)
+        :type to: datetime
+        :param device_ids: Restrict to these device IDs (max 50)
+        :type device_ids: List[Optional[str]]
+        :param limit: Soft cap; max 500 newest
+        :type limit: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_workspace_photos_serialize(
+            var_from=var_from,
+            to=to,
+            device_ids=device_ids,
+            limit=limit,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkspacePhotosOut",
+            '400': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_devices_api_list_workspace_photos_with_http_info(
+        self,
+        var_from: Annotated[Optional[datetime], Field(description="Earliest captured_at (default: now - 24h)")] = None,
+        to: Annotated[Optional[datetime], Field(description="Latest captured_at (default: now)")] = None,
+        device_ids: Annotated[Optional[List[Optional[StrictStr]]], Field(description="Restrict to these device IDs (max 50)")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=500, strict=True, ge=1)]], Field(description="Soft cap; max 500 newest")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[WorkspacePhotosOut]:
+        """List Workspace Photos
+
+        List workspace-wide photos with renderable GPS coords (Phase 122-01).  Returns the newest ``limit`` photos (max 500) whose captured_at is in [from, to] across all workspace devices the requester can see. Photos whose coordinate resolution returns null are excluded (D-05) — only renderable photos cross the wire for the dashboard map layer.  Role scoping (D-04 / v1.20 D-09): - field_worker: only own device's photos - manager/owner: all workspace devices  Cross-workspace ``device_ids`` are silently filtered out (no information leak via differential 403). Over 50 ``device_ids`` returns 400 TOO_MANY_DEVICE_IDS to bound query parameter abuse.  Coexists with GET /devices/{uuid}/sessions/{sid}/photos which is preserved unchanged (Phase 120-04). The two endpoints have intentionally different null-coord semantics: per-session keeps null-coord rows (still listed in the session detail panel), workspace-wide drops them (can't render).
+
+        :param var_from: Earliest captured_at (default: now - 24h)
+        :type var_from: datetime
+        :param to: Latest captured_at (default: now)
+        :type to: datetime
+        :param device_ids: Restrict to these device IDs (max 50)
+        :type device_ids: List[Optional[str]]
+        :param limit: Soft cap; max 500 newest
+        :type limit: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_workspace_photos_serialize(
+            var_from=var_from,
+            to=to,
+            device_ids=device_ids,
+            limit=limit,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkspacePhotosOut",
+            '400': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_devices_api_list_workspace_photos_without_preload_content(
+        self,
+        var_from: Annotated[Optional[datetime], Field(description="Earliest captured_at (default: now - 24h)")] = None,
+        to: Annotated[Optional[datetime], Field(description="Latest captured_at (default: now)")] = None,
+        device_ids: Annotated[Optional[List[Optional[StrictStr]]], Field(description="Restrict to these device IDs (max 50)")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=500, strict=True, ge=1)]], Field(description="Soft cap; max 500 newest")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Workspace Photos
+
+        List workspace-wide photos with renderable GPS coords (Phase 122-01).  Returns the newest ``limit`` photos (max 500) whose captured_at is in [from, to] across all workspace devices the requester can see. Photos whose coordinate resolution returns null are excluded (D-05) — only renderable photos cross the wire for the dashboard map layer.  Role scoping (D-04 / v1.20 D-09): - field_worker: only own device's photos - manager/owner: all workspace devices  Cross-workspace ``device_ids`` are silently filtered out (no information leak via differential 403). Over 50 ``device_ids`` returns 400 TOO_MANY_DEVICE_IDS to bound query parameter abuse.  Coexists with GET /devices/{uuid}/sessions/{sid}/photos which is preserved unchanged (Phase 120-04). The two endpoints have intentionally different null-coord semantics: per-session keeps null-coord rows (still listed in the session detail panel), workspace-wide drops them (can't render).
+
+        :param var_from: Earliest captured_at (default: now - 24h)
+        :type var_from: datetime
+        :param to: Latest captured_at (default: now)
+        :type to: datetime
+        :param device_ids: Restrict to these device IDs (max 50)
+        :type device_ids: List[Optional[str]]
+        :param limit: Soft cap; max 500 newest
+        :type limit: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_list_workspace_photos_serialize(
+            var_from=var_from,
+            to=to,
+            device_ids=device_ids,
+            limit=limit,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WorkspacePhotosOut",
+            '400': "ErrorResponse",
+            '401': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_devices_api_list_workspace_photos_serialize(
+        self,
+        var_from,
+        to,
+        device_ids,
+        limit,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'device_ids': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if var_from is not None:
+            if isinstance(var_from, datetime):
+                _query_params.append(
+                    (
+                        'from',
+                        var_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('from', var_from))
+            
+        if to is not None:
+            if isinstance(to, datetime):
+                _query_params.append(
+                    (
+                        'to',
+                        to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('to', to))
+            
+        if device_ids is not None:
+            
+            _query_params.append(('device_ids', device_ids))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyBearer', 
+            'JWTBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/devices/photos',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def apps_devices_api_pause_shift(
+        self,
+        device_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ShiftActionOut:
+        """Pause Shift
+
+        Pause a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can pause their shift. Location uploads are paused until resumed.  State transition: ACTIVE → PAUSED
+
+        :param device_id: (required)
+        :type device_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_pause_shift_serialize(
+            device_id=device_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShiftActionOut",
+            '400': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def apps_devices_api_pause_shift_with_http_info(
+        self,
+        device_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ShiftActionOut]:
+        """Pause Shift
+
+        Pause a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can pause their shift. Location uploads are paused until resumed.  State transition: ACTIVE → PAUSED
+
+        :param device_id: (required)
+        :type device_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_pause_shift_serialize(
+            device_id=device_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShiftActionOut",
+            '400': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def apps_devices_api_pause_shift_without_preload_content(
+        self,
+        device_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Pause Shift
+
+        Pause a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can pause their shift. Location uploads are paused until resumed.  State transition: ACTIVE → PAUSED
+
+        :param device_id: (required)
+        :type device_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._apps_devices_api_pause_shift_serialize(
+            device_id=device_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShiftActionOut",
+            '400': "ErrorResponse",
+            '403': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+            '422': "ErrorResponse",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _apps_devices_api_pause_shift_serialize(
+        self,
+        device_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -6252,7 +8073,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/pause-shift',
+            resource_path='/api/v1/devices/{device_id}/pause-shift',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6271,7 +8092,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_resume_shift(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6289,8 +8110,8 @@ class DevicesApi:
 
         Resume a paused tracking shift (PRD §5.3).  BYOD Security: Only the device owner can resume their shift. Location uploads resume.  State transition: PAUSED → ACTIVE
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6314,7 +8135,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_resume_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6324,9 +8145,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6343,7 +8164,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_resume_shift_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6361,8 +8182,8 @@ class DevicesApi:
 
         Resume a paused tracking shift (PRD §5.3).  BYOD Security: Only the device owner can resume their shift. Location uploads resume.  State transition: PAUSED → ACTIVE
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6386,7 +8207,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_resume_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6396,9 +8217,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6415,7 +8236,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_resume_shift_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6433,8 +8254,8 @@ class DevicesApi:
 
         Resume a paused tracking shift (PRD §5.3).  BYOD Security: Only the device owner can resume their shift. Location uploads resume.  State transition: PAUSED → ACTIVE
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6458,7 +8279,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_resume_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6468,9 +8289,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6482,7 +8303,7 @@ class DevicesApi:
 
     def _apps_devices_api_resume_shift_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -6504,8 +8325,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -6529,7 +8350,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/resume-shift',
+            resource_path='/api/v1/devices/{device_id}/resume-shift',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6548,7 +8369,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_start_shift(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6566,8 +8387,8 @@ class DevicesApi:
 
         Start a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can start their shift. This enables location uploads for this device.  State transition: OFF → ACTIVE Note: If paused, use resume-shift instead.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6591,7 +8412,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_start_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6601,9 +8422,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6620,7 +8441,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_start_shift_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6638,8 +8459,8 @@ class DevicesApi:
 
         Start a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can start their shift. This enables location uploads for this device.  State transition: OFF → ACTIVE Note: If paused, use resume-shift instead.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6663,7 +8484,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_start_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6673,9 +8494,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6692,7 +8513,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_start_shift_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6710,8 +8531,8 @@ class DevicesApi:
 
         Start a tracking shift (PRD §5.3).  BYOD Security: Only the device owner can start their shift. This enables location uploads for this device.  State transition: OFF → ACTIVE Note: If paused, use resume-shift instead.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6735,7 +8556,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_start_shift_serialize(
-            uuid=uuid,
+            device_id=device_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6745,9 +8566,9 @@ class DevicesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ShiftActionOut",
             '400': "ErrorResponse",
-            '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '401': "ErrorResponse",
             '422': "ErrorResponse",
         }
         response_data = await self.api_client.call_api(
@@ -6759,7 +8580,7 @@ class DevicesApi:
 
     def _apps_devices_api_start_shift_serialize(
         self,
-        uuid,
+        device_id,
         _request_auth,
         _content_type,
         _headers,
@@ -6781,8 +8602,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -6806,7 +8627,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/start-shift',
+            resource_path='/api/v1/devices/{device_id}/start-shift',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6825,7 +8646,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_device(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         update_device_in: UpdateDeviceIn,
         _request_timeout: Union[
             None,
@@ -6844,8 +8665,8 @@ class DevicesApi:
 
         Update device name, type, or metadata.  - Managers/owners: Can edit any workspace device - Field workers: Can only edit their own device  Note: device_id (external identifier) is NOT editable for BYOD security.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param update_device_in: (required)
         :type update_device_in: UpdateDeviceIn
         :param _request_timeout: timeout setting for this request. If one
@@ -6871,7 +8692,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             update_device_in=update_device_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -6901,7 +8722,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_device_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         update_device_in: UpdateDeviceIn,
         _request_timeout: Union[
             None,
@@ -6920,8 +8741,8 @@ class DevicesApi:
 
         Update device name, type, or metadata.  - Managers/owners: Can edit any workspace device - Field workers: Can only edit their own device  Note: device_id (external identifier) is NOT editable for BYOD security.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param update_device_in: (required)
         :type update_device_in: UpdateDeviceIn
         :param _request_timeout: timeout setting for this request. If one
@@ -6947,7 +8768,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             update_device_in=update_device_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -6977,7 +8798,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_device_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         update_device_in: UpdateDeviceIn,
         _request_timeout: Union[
             None,
@@ -6996,8 +8817,8 @@ class DevicesApi:
 
         Update device name, type, or metadata.  - Managers/owners: Can edit any workspace device - Field workers: Can only edit their own device  Note: device_id (external identifier) is NOT editable for BYOD security.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param update_device_in: (required)
         :type update_device_in: UpdateDeviceIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7023,7 +8844,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_device_serialize(
-            uuid=uuid,
+            device_id=device_id,
             update_device_in=update_device_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7048,7 +8869,7 @@ class DevicesApi:
 
     def _apps_devices_api_update_device_serialize(
         self,
-        uuid,
+        device_id,
         update_device_in,
         _request_auth,
         _content_type,
@@ -7071,8 +8892,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -7111,7 +8932,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='PUT',
-            resource_path='/api/v1/devices/{uuid}',
+            resource_path='/api/v1/devices/{device_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -7130,7 +8951,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_device_location(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         location_update_in: LocationUpdateIn,
         _request_timeout: Union[
             None,
@@ -7149,8 +8970,8 @@ class DevicesApi:
 
         Update device location and trigger geofence events.  PRD §4.2 & §5.3: BYOD Security + Shift Enforcement - Only device owner can upload locations - Device must be enabled (is_active) - Shift must be active, OR timestamp falls within past shift window
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param location_update_in: (required)
         :type location_update_in: LocationUpdateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7176,7 +8997,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_device_location_serialize(
-            uuid=uuid,
+            device_id=device_id,
             location_update_in=location_update_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7207,7 +9028,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_device_location_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         location_update_in: LocationUpdateIn,
         _request_timeout: Union[
             None,
@@ -7226,8 +9047,8 @@ class DevicesApi:
 
         Update device location and trigger geofence events.  PRD §4.2 & §5.3: BYOD Security + Shift Enforcement - Only device owner can upload locations - Device must be enabled (is_active) - Shift must be active, OR timestamp falls within past shift window
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param location_update_in: (required)
         :type location_update_in: LocationUpdateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7253,7 +9074,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_device_location_serialize(
-            uuid=uuid,
+            device_id=device_id,
             location_update_in=location_update_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7284,7 +9105,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_device_location_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         location_update_in: LocationUpdateIn,
         _request_timeout: Union[
             None,
@@ -7303,8 +9124,8 @@ class DevicesApi:
 
         Update device location and trigger geofence events.  PRD §4.2 & §5.3: BYOD Security + Shift Enforcement - Only device owner can upload locations - Device must be enabled (is_active) - Shift must be active, OR timestamp falls within past shift window
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param location_update_in: (required)
         :type location_update_in: LocationUpdateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7330,7 +9151,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_device_location_serialize(
-            uuid=uuid,
+            device_id=device_id,
             location_update_in=location_update_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7356,7 +9177,7 @@ class DevicesApi:
 
     def _apps_devices_api_update_device_location_serialize(
         self,
-        uuid,
+        device_id,
         location_update_in,
         _request_auth,
         _content_type,
@@ -7379,8 +9200,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -7419,7 +9240,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/location',
+            resource_path='/api/v1/devices/{device_id}/location',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -7438,7 +9259,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_session_notes(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         notes_update_in: NotesUpdateIn,
         _request_timeout: Union[
             None,
@@ -7455,10 +9276,10 @@ class DevicesApi:
     ) -> NotesUpdateOut:
         """Update Session Notes
 
-        Update notes for the current active session.  Notes are stored on the device during the active session and persisted to the DeviceSession record when the shift ends.  BYOD Security: Only the device owner can update notes. Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
+        Update notes for the current active session.  Mobile-facing endpoint (preserved contract from v1.20). Each call:   1. Truncates the payload to 2000 chars.   2. Writes the truncated body to device.current_session_notes (mobile pre-fill cache).   3. Upserts a SessionNote row keyed on (active_session, author=request.auth)      so the manager-side GET in v1.23 sees an authored note row.  The upsert is idempotent across repeated POSTs during the same shift — calls 2..N update the same row's body and refresh created_at. A new shift gets a new SessionNote because the (session, author) key differs.  Concurrency (CR-01): the (session, author) upsert is serialized via select_for_update() on the Device row inside transaction.atomic(). Two concurrent POSTs from the same authenticated user (offline-buffered flush, mobile retry storm, multi-tab race) block at the lock so the second caller sees the first caller's row via update_or_create.get() and falls into the UPDATE branch — preventing duplicate (session, author) rows. The Device row lock serializes per-device POSTs without holding a workspace-wide lock.  BYOD Security: Only the device owner can update notes (enforced by get_device_with_permission(require_write=True)). Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param notes_update_in: (required)
         :type notes_update_in: NotesUpdateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7484,7 +9305,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_session_notes_serialize(
-            uuid=uuid,
+            device_id=device_id,
             notes_update_in=notes_update_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7514,7 +9335,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_session_notes_with_http_info(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         notes_update_in: NotesUpdateIn,
         _request_timeout: Union[
             None,
@@ -7531,10 +9352,10 @@ class DevicesApi:
     ) -> ApiResponse[NotesUpdateOut]:
         """Update Session Notes
 
-        Update notes for the current active session.  Notes are stored on the device during the active session and persisted to the DeviceSession record when the shift ends.  BYOD Security: Only the device owner can update notes. Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
+        Update notes for the current active session.  Mobile-facing endpoint (preserved contract from v1.20). Each call:   1. Truncates the payload to 2000 chars.   2. Writes the truncated body to device.current_session_notes (mobile pre-fill cache).   3. Upserts a SessionNote row keyed on (active_session, author=request.auth)      so the manager-side GET in v1.23 sees an authored note row.  The upsert is idempotent across repeated POSTs during the same shift — calls 2..N update the same row's body and refresh created_at. A new shift gets a new SessionNote because the (session, author) key differs.  Concurrency (CR-01): the (session, author) upsert is serialized via select_for_update() on the Device row inside transaction.atomic(). Two concurrent POSTs from the same authenticated user (offline-buffered flush, mobile retry storm, multi-tab race) block at the lock so the second caller sees the first caller's row via update_or_create.get() and falls into the UPDATE branch — preventing duplicate (session, author) rows. The Device row lock serializes per-device POSTs without holding a workspace-wide lock.  BYOD Security: Only the device owner can update notes (enforced by get_device_with_permission(require_write=True)). Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param notes_update_in: (required)
         :type notes_update_in: NotesUpdateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7560,7 +9381,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_session_notes_serialize(
-            uuid=uuid,
+            device_id=device_id,
             notes_update_in=notes_update_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7590,7 +9411,7 @@ class DevicesApi:
     @validate_call
     async def apps_devices_api_update_session_notes_without_preload_content(
         self,
-        uuid: StrictStr,
+        device_id: StrictStr,
         notes_update_in: NotesUpdateIn,
         _request_timeout: Union[
             None,
@@ -7607,10 +9428,10 @@ class DevicesApi:
     ) -> RESTResponseType:
         """Update Session Notes
 
-        Update notes for the current active session.  Notes are stored on the device during the active session and persisted to the DeviceSession record when the shift ends.  BYOD Security: Only the device owner can update notes. Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
+        Update notes for the current active session.  Mobile-facing endpoint (preserved contract from v1.20). Each call:   1. Truncates the payload to 2000 chars.   2. Writes the truncated body to device.current_session_notes (mobile pre-fill cache).   3. Upserts a SessionNote row keyed on (active_session, author=request.auth)      so the manager-side GET in v1.23 sees an authored note row.  The upsert is idempotent across repeated POSTs during the same shift — calls 2..N update the same row's body and refresh created_at. A new shift gets a new SessionNote because the (session, author) key differs.  Concurrency (CR-01): the (session, author) upsert is serialized via select_for_update() on the Device row inside transaction.atomic(). Two concurrent POSTs from the same authenticated user (offline-buffered flush, mobile retry storm, multi-tab race) block at the lock so the second caller sees the first caller's row via update_or_create.get() and falls into the UPDATE branch — preventing duplicate (session, author) rows. The Device row lock serializes per-device POSTs without holding a workspace-wide lock.  BYOD Security: Only the device owner can update notes (enforced by get_device_with_permission(require_write=True)). Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
 
-        :param uuid: (required)
-        :type uuid: str
+        :param device_id: (required)
+        :type device_id: str
         :param notes_update_in: (required)
         :type notes_update_in: NotesUpdateIn
         :param _request_timeout: timeout setting for this request. If one
@@ -7636,7 +9457,7 @@ class DevicesApi:
         """ # noqa: E501
 
         _param = self._apps_devices_api_update_session_notes_serialize(
-            uuid=uuid,
+            device_id=device_id,
             notes_update_in=notes_update_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7661,7 +9482,7 @@ class DevicesApi:
 
     def _apps_devices_api_update_session_notes_serialize(
         self,
-        uuid,
+        device_id,
         notes_update_in,
         _request_auth,
         _content_type,
@@ -7684,8 +9505,8 @@ class DevicesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if device_id is not None:
+            _path_params['device_id'] = device_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -7724,7 +9545,7 @@ class DevicesApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/v1/devices/{uuid}/notes',
+            resource_path='/api/v1/devices/{device_id}/notes',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

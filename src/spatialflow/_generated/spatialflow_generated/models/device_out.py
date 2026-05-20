@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from .lat_lon_out import LatLonOut
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,12 +38,12 @@ class DeviceOut(BaseModel):
     shift_paused_at: Optional[datetime] = None
     shift_ended_at: Optional[datetime] = None
     shift_resumed_at: Optional[datetime] = None
-    last_location: Optional[Dict[str, Any]] = None
+    last_location: Optional[LatLonOut] = None
     last_location_time: Optional[datetime] = None
     last_heading: Optional[Union[StrictFloat, StrictInt]] = None
     current_session_notes: Optional[StrictStr] = ''
-    in_geofence_ids: Optional[List[Optional[StrictStr]]] = None
-    in_geofence_entries: Optional[Dict[str, Optional[StrictStr]]] = None
+    in_geofence_ids: Optional[List[StrictStr]] = None
+    in_geofence_entries: Optional[Dict[str, StrictStr]] = None
     created_at: datetime
     updated_at: datetime
     __properties: ClassVar[List[str]] = ["id", "device_id", "name", "device_type", "is_active", "shift_status", "shift_started_at", "shift_paused_at", "shift_ended_at", "shift_resumed_at", "last_location", "last_location_time", "last_heading", "current_session_notes", "in_geofence_ids", "in_geofence_entries", "created_at", "updated_at"]
@@ -86,6 +87,9 @@ class DeviceOut(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of last_location
+        if self.last_location:
+            _dict['last_location'] = self.last_location.to_dict()
         # set to None if shift_started_at (nullable) is None
         # and model_fields_set contains the field
         if self.shift_started_at is None and "shift_started_at" in self.model_fields_set:
@@ -143,7 +147,7 @@ class DeviceOut(BaseModel):
             "shift_paused_at": obj.get("shift_paused_at"),
             "shift_ended_at": obj.get("shift_ended_at"),
             "shift_resumed_at": obj.get("shift_resumed_at"),
-            "last_location": obj.get("last_location"),
+            "last_location": LatLonOut.from_dict(obj["last_location"]) if obj.get("last_location") is not None else None,
             "last_location_time": obj.get("last_location_time"),
             "last_heading": obj.get("last_heading"),
             "current_session_notes": obj.get("current_session_notes") if obj.get("current_session_notes") is not None else '',

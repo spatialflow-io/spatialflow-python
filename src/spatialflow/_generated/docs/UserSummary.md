@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **admin_approved_at** | **str** |  | [optional] 
 **created_at** | **str** |  | 
 **last_login** | **str** |  | 
+**last_seen_at** | **str** |  | [optional] 
 **updated_at** | **str** |  | [optional] 
 **subscription_tier** | **str** |  | [optional] [default to 'free']
 **api_keys_count** | **int** |  | 

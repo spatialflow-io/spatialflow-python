@@ -6,6 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id_token** | **str** |  | 
+**invite_id** | **str** |  | [optional] 
+**invite_token** | **str** |  | [optional] 
 
 ## Example
 

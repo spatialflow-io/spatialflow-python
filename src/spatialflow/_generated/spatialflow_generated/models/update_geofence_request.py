@@ -20,6 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from .geometry1 import Geometry1
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +30,7 @@ class UpdateGeofenceRequest(BaseModel):
     """ # noqa: E501
     name: Optional[Annotated[str, Field(min_length=1, strict=True, max_length=100)]] = None
     description: Optional[Annotated[str, Field(strict=True, max_length=500)]] = None
-    geometry: Optional[Dict[str, Any]] = None
+    geometry: Optional[Geometry1] = None
     webhook_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = None
     webhook_events: Optional[List[StrictStr]] = None
     metadata: Optional[Dict[str, Any]] = None
@@ -76,6 +77,9 @@ class UpdateGeofenceRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of geometry
+        if self.geometry:
+            _dict['geometry'] = self.geometry.to_dict()
         # set to None if name (nullable) is None
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
@@ -130,7 +134,7 @@ class UpdateGeofenceRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "geometry": obj.get("geometry"),
+            "geometry": Geometry1.from_dict(obj["geometry"]) if obj.get("geometry") is not None else None,
             "webhook_url": obj.get("webhook_url"),
             "webhook_events": obj.get("webhook_events"),
             "metadata": obj.get("metadata"),

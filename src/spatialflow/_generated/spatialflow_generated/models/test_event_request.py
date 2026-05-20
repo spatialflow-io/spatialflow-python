@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,8 +26,9 @@ class TestEventRequest(BaseModel):
     """
     TestEventRequest
     """ # noqa: E501
+    event_type: StrictStr
     test_metadata: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["test_metadata"]
+    __properties: ClassVar[List[str]] = ["event_type", "test_metadata"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,6 +86,7 @@ class TestEventRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "event_type": obj.get("event_type"),
             "test_metadata": obj.get("test_metadata")
         })
         return _obj

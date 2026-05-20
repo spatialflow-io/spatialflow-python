@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from .geo_json_point import GeoJSONPoint
 from .geofence_test_result import GeofenceTestResult
 from .matched_geofence_item import MatchedGeofenceItem
 from typing import Optional, Set
@@ -28,7 +29,7 @@ class TestPointResponse(BaseModel):
     """
     Schema for test point response.  Provides both the legacy `results` array (unchanged for backward compatibility) and the new `matched_geofences` array with enhanced group information.
     """ # noqa: E501
-    point: Dict[str, Any]
+    point: GeoJSONPoint
     inside_geofences: StrictInt
     total_geofences: StrictInt
     results: List[GeofenceTestResult]
@@ -75,6 +76,9 @@ class TestPointResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of point
+        if self.point:
+            _dict['point'] = self.point.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in results (list)
         _items = []
         if self.results:
@@ -106,7 +110,7 @@ class TestPointResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "point": obj.get("point"),
+            "point": GeoJSONPoint.from_dict(obj["point"]) if obj.get("point") is not None else None,
             "inside_geofences": obj.get("inside_geofences"),
             "total_geofences": obj.get("total_geofences"),
             "results": [GeofenceTestResult.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None,

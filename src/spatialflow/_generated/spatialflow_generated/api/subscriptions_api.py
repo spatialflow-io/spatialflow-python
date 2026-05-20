@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from typing import Any, Dict, List
+from typing import List
 from ..models.checkout_session_request import CheckoutSessionRequest
 from ..models.checkout_session_response import CheckoutSessionResponse
 from ..models.health_response import HealthResponse
@@ -366,7 +366,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CheckoutSessionResponse",
+            '201': "CheckoutSessionResponse",
             '400': "Dict[str, object]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -440,7 +440,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CheckoutSessionResponse",
+            '201': "CheckoutSessionResponse",
             '400': "Dict[str, object]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -514,7 +514,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CheckoutSessionResponse",
+            '201': "CheckoutSessionResponse",
             '400': "Dict[str, object]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -661,7 +661,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PortalSessionResponse",
+            '201': "PortalSessionResponse",
             '400': "Dict[str, object]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -735,7 +735,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PortalSessionResponse",
+            '201': "PortalSessionResponse",
             '400': "Dict[str, object]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -809,7 +809,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PortalSessionResponse",
+            '201': "PortalSessionResponse",
             '400': "Dict[str, object]",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1699,7 +1699,7 @@ class SubscriptionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> None:
         """Handle Stripe Webhook
 
         Handle Stripe webhook events.  Note: This endpoint doesn't use standard Django Ninja response handling because it needs to work with raw request body for signature verification.
@@ -1734,7 +1734,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1766,7 +1766,7 @@ class SubscriptionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[None]:
         """Handle Stripe Webhook
 
         Handle Stripe webhook events.  Note: This endpoint doesn't use standard Django Ninja response handling because it needs to work with raw request body for signature verification.
@@ -1801,7 +1801,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
@@ -1868,7 +1868,7 @@ class SubscriptionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': None,
             '401': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
