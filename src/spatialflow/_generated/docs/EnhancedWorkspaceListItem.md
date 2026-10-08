@@ -18,8 +18,8 @@ Name | Type | Description | Notes
 **subscription_status** | **str** |  | [optional] [default to 'none']
 **usage_this_month** | **float** |  | [optional] [default to 0.0]
 **last_activity** | **str** |  | [optional] 
-**created_at** | **str** |  | 
-**updated_at** | **str** |  | 
+**created_at** | **datetime** |  | 
+**updated_at** | **datetime** |  | 
 
 ## Example
 

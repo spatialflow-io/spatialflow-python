@@ -1,6 +1,6 @@
 # Geometry1
 
-GeoJSON geometry (Polygon, MultiPolygon, or Circle)
+GeoJSON geometry (Polygon, MultiPolygon, or Circle). Required when source='draw'.
 
 ## Properties
 

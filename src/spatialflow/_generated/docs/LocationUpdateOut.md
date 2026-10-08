@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **device_id** | **str** |  | 
 **events_triggered** | **int** |  | 
 **message** | **str** |  | 
+**error_code** | **str** |  | [optional] 
+**location_results** | [**List[BatchLocationResultOut]**](BatchLocationResultOut.md) |  | [optional] 
 
 ## Example
 

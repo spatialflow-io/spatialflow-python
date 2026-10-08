@@ -7,14 +7,15 @@ from .audit_logs_api import AuditLogsApi
 from .authentication_api import AuthenticationApi
 from .billing_api import BillingApi
 from .devices_api import DevicesApi
-from .e2_e_test_api import E2ETestApi
 from .email_api import EmailApi
 from .gpx_simulator_api import GPXSimulatorApi
 from .geofences_api import GeofencesApi
 from .integrations_api import IntegrationsApi
+from .operations_api import OperationsApi
 from .policies_api import PoliciesApi
 from .public_api import PublicApi
 from .public_location_ingest_api import PublicLocationIngestApi
+from .reports_api import ReportsApi
 from .signals_api import SignalsApi
 from .storage_api import StorageApi
 from .subscriptions_api import SubscriptionsApi

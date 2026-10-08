@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **start_time** | **str** |  | 
 **end_time** | **str** |  | 
 **is_active** | **bool** |  | 
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

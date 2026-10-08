@@ -7,7 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **device_id** | **str** |  | 
 **name** | **str** |  | [optional] [default to '']
-**planned_route** | **Dict[str, object]** |  | [optional] 
+**planned_route** | [**GeoJSONLineString**](GeoJSONLineString.md) |  | [optional] 
+**corridor_width_meters** | **int** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example

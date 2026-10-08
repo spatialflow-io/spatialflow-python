@@ -15,9 +15,9 @@ Name | Type | Description | Notes
 **current_point_index** | **int** |  | 
 **progress_percent** | **float** |  | 
 **events_triggered** | **int** |  | 
-**started_at** | **str** |  | 
-**paused_at** | **str** |  | 
-**completed_at** | **str** |  | 
+**started_at** | **datetime** |  | 
+**paused_at** | **datetime** |  | 
+**completed_at** | **datetime** |  | 
 **error_message** | **str** |  | 
 
 ## Example

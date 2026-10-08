@@ -23,16 +23,21 @@ if TYPE_CHECKING:
         ApiKeyResponse,
         ApiKeyUpdateRequest,
         DashboardMetricsResponse,
-        OnboardingProgressResponse,
-        UpdateOnboardingProgressRequest,
         UpdateProfileRequest,
         UserProfileResponse,
         # Geofences
         AsyncUploadGeofencesResponse,
-        BulkGeofenceRequest,
+        BulkCreateRequest,
+        BulkCreateResponse,
+        BulkItemInput,
+        BulkResult,
         CreateGeofenceRequest,
+        GeofenceGroupsOut,
         GeofenceListResponse,
         GeofenceResponse,
+        GroupGeofencesOut,
+        GroupTestPointOut,
+        TestPointRequest,
         UpdateGeofenceRequest,
         UploadGeofencesRequest,
         UploadJobStatus,
@@ -40,6 +45,8 @@ if TYPE_CHECKING:
         ExecutionOut,
         WorkflowImportSchema,
         WorkflowIn,
+        WorkflowUpdate,
+        TestWorkflowIn,
         WorkflowListResponse,
         WorkflowOut,
         WorkflowRetryPolicyUpdateSchema,
@@ -53,20 +60,38 @@ if TYPE_CHECKING:
         WebhookListResponse,
         WebhookMetricsResponse,
         WebhookResponse,
+        WebhookSecretResponse,
         WebhookTestResponse,
         # Devices
         DeviceIn,
+        UpdateDeviceIn,
         DeviceOut,
         LocationUpdateIn,
         LocationUpdateOut,
+        DeviceSessionOut,
+        DeviceSessionsOut,
+        SessionLocationsOut,
+        SessionNoteIn,
+        SessionNoteOut,
+        ShiftActionOut,
         # Storage
-        DeleteFileResponse,
+        CompleteUploadResponse,
         FileListResponse,
         PresignedUrlRequest,
         PresignedUrlResponse,
         # Locations
         LocationIngestResponse,
         # Workspaces
+        BatchResendIn,
+        BatchResendOut,
+        CreateInvitationIn,
+        ExtendInvitationIn,
+        InvitationListResponse,
+        InvitationIssuedOut,
+        InvitationOut,
+        MemberActionOut,
+        MemberListResponse,
+        UpdateMemberRoleIn,
         UsageResponse,
         WorkspaceIn,
         WorkspaceOut,
@@ -78,9 +103,11 @@ if TYPE_CHECKING:
     )
 
 
-class BaseResource:
-    """Base class for resource wrappers."""
+def _without_none(**params: Any) -> Dict[str, Any]:
+    return {key: value for key, value in params.items() if value is not None}
 
+
+class BaseResource:
     def __init__(self, api: Any, timeout: int):
         self._api = api
         self._timeout = timeout
@@ -95,35 +122,30 @@ class BaseResource:
 
 
 class GeofencesResource(BaseResource):
-    """Geofence operations with clean API."""
-
     async def list(
         self,
         *,
         limit: int = 100,
         offset: int = 0,
-        group_id: Optional[str] = None,
         **kwargs: Any,
     ) -> GeofenceListResponse:
         """List geofences.
 
+        To list the geofences in one group, use `list_group_geofences`.
+
         Args:
             limit: Maximum number of results (default 100)
             offset: Number of results to skip (default 0)
-            group_id: Filter by group ID
-            **kwargs: Additional filter parameters
+            **kwargs: Additional filters (`active_only`, `tags`, `include_archived`)
 
         Returns:
             GeofenceListResponse with geofences and count
         """
-        call_kwargs: Dict[str, Any] = {"limit": limit, "offset": offset, **kwargs}
-        if group_id is not None:
-            call_kwargs["group_id"] = group_id
-        return await self._call("apps_geofences_api_list_geofences", **call_kwargs)
+        return await self._call(
+            "apps_geofences_api_list_geofences", limit=limit, offset=offset, **kwargs
+        )
 
-    async def create(
-        self, request: CreateGeofenceRequest, **kwargs: Any
-    ) -> GeofenceResponse:
+    async def create(self, request: CreateGeofenceRequest, **kwargs: Any) -> GeofenceResponse:
         """Create a geofence.
 
         Args:
@@ -186,21 +208,26 @@ class GeofencesResource(BaseResource):
             **kwargs,
         )
 
-    async def bulk_create(
-        self, request: BulkGeofenceRequest, **kwargs: Any
-    ) -> List[GeofenceResponse]:
-        """Bulk create geofences.
+    async def bulk_create(self, request: BulkCreateRequest, **kwargs: Any) -> BulkCreateResponse:
+        """Bulk create geofences from address items (ADDR-03 integration endpoint).
+
+        Syncs address-based geofences into SpatialFlow from CRM exports, TMS stop
+        lists, or CSV imports. Per-item atomicity: a single item failure does not
+        roll back previous items. index in results is 0-based.
 
         Args:
-            request: BulkGeofenceRequest with list of geofences
+            request: BulkCreateRequest with items list and dedup_strategy.
+                dedup_strategy: 'skip' (default) | 'override' | 'fail'
             **kwargs: Additional parameters
 
         Returns:
-            List of GeofenceResponse objects
+            BulkCreateResponse with results list; each BulkResult carries
+            index, status ('created'|'duplicate'|'error'), geofence_id,
+            error (code + message), and dedup_match (if applicable).
         """
         return await self._call(
             "apps_geofences_api_bulk_create_geofences",
-            bulk_geofence_request=request,
+            bulk_create_request=request,
             **kwargs,
         )
 
@@ -274,35 +301,71 @@ class GeofencesResource(BaseResource):
 
         return await self.create(request, **kwargs)
 
-    async def list_by_group(
-        self,
-        group_id: str,
-        *,
-        limit: int = 100,
-        offset: int = 0,
-        **kwargs: Any,
-    ) -> GeofenceListResponse:
-        """List all geofences in a specific group.
+    async def list_groups(self, **kwargs: Any) -> GeofenceGroupsOut:
+        """List geofence groups in the workspace.
+
+        Returns:
+            GeofenceGroupsOut with the groups and their geofence counts
+        """
+        return await self._call("apps_geofences_api_list_geofence_groups", **kwargs)
+
+    async def list_group_geofences(self, group_id: str, **kwargs: Any) -> GroupGeofencesOut:
+        """List the geofences in a group.
 
         Args:
             group_id: The group UUID
-            limit: Maximum number of results (default 100)
-            offset: Number of results to skip (default 0)
 
         Returns:
-            GeofenceListResponse with geofences and count
+            GroupGeofencesOut
         """
-        return await self.list(
-            limit=limit,
-            offset=offset,
+        return await self._call(
+            "apps_geofences_api_list_group_geofences",
             group_id=group_id,
             **kwargs,
         )
 
+    async def test_group_point(
+        self, group_id: str, request: TestPointRequest, **kwargs: Any
+    ) -> GroupTestPointOut:
+        """Test which geofences in a group contain a point.
+
+        Args:
+            group_id: The group UUID
+            request: TestPointRequest with lat/lng, a point, or a Point or Polygon geometry
+
+        Returns:
+            GroupTestPointOut
+        """
+        return await self._call(
+            "apps_geofences_api_test_group_point",
+            group_id=group_id,
+            test_point_request=request,
+            **kwargs,
+        )
+
+    async def assign_to_group(
+        self, geofence_id: str, group_name: str, **kwargs: Any
+    ) -> GeofenceResponse:
+        """Move an existing geofence into a group.
+
+        Updates the geofence's group_name. The backend resolves the name to
+        the group's ID, creating the group if the name is new.
+
+        Args:
+            geofence_id: The geofence ID
+            group_name: Name of the group to assign
+
+        Returns:
+            GeofenceResponse
+        """
+        from ._generated.spatialflow_generated.models import UpdateGeofenceRequest
+
+        return await self.update(
+            geofence_id, UpdateGeofenceRequest(group_name=group_name), **kwargs
+        )
+
 
 class WorkflowsResource(BaseResource):
-    """Workflow operations with clean API."""
-
     async def list(
         self,
         *,
@@ -358,14 +421,12 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    async def update(
-        self, workflow_id: str, request: WorkflowIn, **kwargs: Any
-    ) -> WorkflowOut:
+    async def update(self, workflow_id: str, request: WorkflowUpdate, **kwargs: Any) -> WorkflowOut:
         """Update a workflow.
 
         Args:
             workflow_id: The workflow ID
-            request: WorkflowIn with updated fields
+            request: WorkflowUpdate with the fields to change
             **kwargs: Additional parameters
 
         Returns:
@@ -374,7 +435,7 @@ class WorkflowsResource(BaseResource):
         return await self._call(
             "apps_workflows_api_update_workflow",
             workflow_id=workflow_id,
-            workflow_in=request,
+            workflow_update=request,
             **kwargs,
         )
 
@@ -431,18 +492,14 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    # -------------------------------------------------------------------------
-    # Execution methods
-    # -------------------------------------------------------------------------
-
     async def execute(
-        self, workflow_id: str, request: Optional[Any] = None, **kwargs: Any
+        self, workflow_id: str, request: Optional[Dict[str, Any]] = None, **kwargs: Any
     ) -> ExecutionOut:
         """Execute a workflow.
 
         Args:
             workflow_id: The workflow ID
-            request: WorkflowExecutionRequest with execution parameters
+            request: Optional payload, sent as the endpoint's `test_data`
 
         Returns:
             ExecutionOut
@@ -450,18 +507,16 @@ class WorkflowsResource(BaseResource):
         return await self._call(
             "apps_workflows_api_execute_workflow",
             workflow_id=workflow_id,
-            workflow_execution_request=request,
+            test_data=request,
             **kwargs,
         )
 
-    async def test(
-        self, workflow_id: str, request: Optional[Any] = None, **kwargs: Any
-    ) -> ExecutionOut:
+    async def test(self, workflow_id: str, request: TestWorkflowIn, **kwargs: Any) -> ExecutionOut:
         """Test a workflow with sample data.
 
         Args:
             workflow_id: The workflow ID
-            request: WorkflowTestRequest with test parameters
+            request: TestWorkflowIn with the sample `test_data`
 
         Returns:
             ExecutionOut
@@ -469,7 +524,7 @@ class WorkflowsResource(BaseResource):
         return await self._call(
             "apps_workflows_api_test_workflow",
             workflow_id=workflow_id,
-            workflow_test_request=request,
+            test_workflow_in=request,
             **kwargs,
         )
 
@@ -518,10 +573,6 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    # -------------------------------------------------------------------------
-    # Performance and statistics methods
-    # -------------------------------------------------------------------------
-
     async def get_performance(self, workflow_id: str, **kwargs: Any) -> Dict[str, Any]:
         """Get workflow performance metrics.
 
@@ -552,13 +603,7 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    # -------------------------------------------------------------------------
-    # Versioning methods
-    # -------------------------------------------------------------------------
-
-    async def list_versions(
-        self, workflow_id: str, **kwargs: Any
-    ) -> List[Dict[str, Any]]:
+    async def list_versions(self, workflow_id: str, **kwargs: Any) -> List[Dict[str, Any]]:
         """List versions of a workflow.
 
         Args:
@@ -592,18 +637,12 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    # -------------------------------------------------------------------------
-    # Import/Export and duplication methods
-    # -------------------------------------------------------------------------
-
-    async def duplicate(
-        self, workflow_id: str, request: Optional[Any] = None, **kwargs: Any
-    ) -> WorkflowOut:
+    async def duplicate(self, workflow_id: str, name: str, **kwargs: Any) -> WorkflowOut:
         """Duplicate an existing workflow.
 
         Args:
             workflow_id: The workflow ID
-            request: WorkflowDuplicateRequest with new name, etc.
+            name: Name of the copy
 
         Returns:
             WorkflowOut
@@ -611,13 +650,11 @@ class WorkflowsResource(BaseResource):
         return await self._call(
             "apps_workflows_api_duplicate_workflow",
             workflow_id=workflow_id,
-            workflow_duplicate_request=request,
+            name=name,
             **kwargs,
         )
 
-    async def export_workflow(
-        self, workflow_id: str, **kwargs: Any
-    ) -> Dict[str, Any]:
+    async def export_workflow(self, workflow_id: str, **kwargs: Any) -> Dict[str, Any]:
         """Export workflow as JSON.
 
         Args:
@@ -632,9 +669,7 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    async def import_workflow(
-        self, request: WorkflowImportSchema, **kwargs: Any
-    ) -> WorkflowOut:
+    async def import_workflow(self, request: WorkflowImportSchema, **kwargs: Any) -> WorkflowOut:
         """Import workflow from JSON.
 
         Args:
@@ -645,13 +680,11 @@ class WorkflowsResource(BaseResource):
         """
         return await self._call(
             "apps_workflows_api_import_workflow",
-            workflow_import_request=request,
+            workflow_import_schema=request,
             **kwargs,
         )
 
-    async def get_retry_policy(
-        self, workflow_id: str, **kwargs: Any
-    ) -> Dict[str, Any]:
+    async def get_retry_policy(self, workflow_id: str, **kwargs: Any) -> Dict[str, Any]:
         """Get retry policy for a workflow.
 
         Args:
@@ -684,7 +717,7 @@ class WorkflowsResource(BaseResource):
         return await self._call(
             "apps_workflows_api_update_workflow_retry_policy",
             workflow_id=workflow_id,
-            workflow_retry_policy_request=request,
+            workflow_retry_policy_update_schema=request,
             **kwargs,
         )
 
@@ -711,9 +744,7 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    async def get_bottlenecks(
-        self, workflow_id: str, **kwargs: Any
-    ) -> Dict[str, Any]:
+    async def get_bottlenecks(self, workflow_id: str, **kwargs: Any) -> Dict[str, Any]:
         """Get workflow bottleneck analysis.
 
         Args:
@@ -728,9 +759,7 @@ class WorkflowsResource(BaseResource):
             **kwargs,
         )
 
-    async def get_step_performance(
-        self, workflow_id: str, **kwargs: Any
-    ) -> Dict[str, Any]:
+    async def get_step_performance(self, workflow_id: str, **kwargs: Any) -> Dict[str, Any]:
         """Get performance metrics for each workflow step.
 
         Args:
@@ -747,8 +776,6 @@ class WorkflowsResource(BaseResource):
 
 
 class WebhooksResource(BaseResource):
-    """Webhook operations with clean API."""
-
     async def list(
         self,
         *,
@@ -773,9 +800,7 @@ class WebhooksResource(BaseResource):
             **kwargs,
         )
 
-    async def create(
-        self, request: CreateWebhookRequest, **kwargs: Any
-    ) -> WebhookResponse:
+    async def create(self, request: CreateWebhookRequest, **kwargs: Any) -> WebhookSecretResponse:
         """Create a webhook.
 
         Args:
@@ -783,7 +808,8 @@ class WebhooksResource(BaseResource):
             **kwargs: Additional parameters
 
         Returns:
-            WebhookResponse
+            WebhookSecretResponse. Its ``secret`` is the signing secret, and no other call
+            returns it.
         """
         return await self._call(
             "apps_webhooks_api_create_webhook",
@@ -838,24 +864,20 @@ class WebhooksResource(BaseResource):
             **kwargs,
         )
 
-    async def rotate_secret(self, webhook_id: str, **kwargs: Any) -> WebhookResponse:
-        """Rotate webhook signing secret.
+    async def rotate_secret(self, webhook_id: str, **kwargs: Any) -> WebhookSecretResponse:
+        """Replace the webhook's signing secret. The old one stops verifying at once.
 
         Args:
             webhook_id: The webhook ID
 
         Returns:
-            WebhookResponse with new secret
+            WebhookSecretResponse whose ``secret`` is the new signing secret, returned only here
         """
         return await self._call(
             "apps_webhooks_api_rotate_webhook_secret",
             webhook_id=webhook_id,
             **kwargs,
         )
-
-    # -------------------------------------------------------------------------
-    # Delivery tracking methods
-    # -------------------------------------------------------------------------
 
     async def list_deliveries(
         self,
@@ -921,45 +943,28 @@ class WebhooksResource(BaseResource):
             **kwargs,
         )
 
-    # -------------------------------------------------------------------------
-    # Metrics and monitoring methods
-    # -------------------------------------------------------------------------
+    async def get_metrics(self, **kwargs: Any) -> WebhookMetricsResponse:
+        """Get platform-wide webhook delivery metrics (platform `admin` only).
 
-    async def get_metrics(self, webhook_id: str, **kwargs: Any) -> WebhookMetricsResponse:
-        """Get performance metrics for a webhook.
-
-        Args:
-            webhook_id: The webhook ID
+        The endpoint aggregates deliveries across every workspace, so it is an
+        operator call, not a view of your own workspace.
 
         Returns:
             WebhookMetricsResponse
         """
-        return await self._call(
-            "apps_webhooks_api_get_webhook_metrics",
-            webhook_id=webhook_id,
-            **kwargs,
-        )
+        return await self._call("apps_webhooks_api_get_webhook_metrics", **kwargs)
 
-    async def get_success_timeline(
-        self, webhook_id: str, **kwargs: Any
-    ) -> Dict[str, Any]:
-        """Get success/failure timeline for webhook deliveries.
+    async def get_success_timeline(self, **kwargs: Any) -> Dict[str, Any]:
+        """Get the success/failure timeline of webhook deliveries in the workspace.
 
         Args:
-            webhook_id: The webhook ID
+            **kwargs: Optional `time_range` ("today", "week", "month" or "custom"),
+                plus `start_date` and `end_date` for "custom"
 
         Returns:
             Success timeline data
         """
-        return await self._call(
-            "apps_webhooks_api_get_webhook_success_timeline",
-            webhook_id=webhook_id,
-            **kwargs,
-        )
-
-    # -------------------------------------------------------------------------
-    # Dead Letter Queue (DLQ) methods
-    # -------------------------------------------------------------------------
+        return await self._call("apps_webhooks_api_get_webhook_success_timeline", **kwargs)
 
     async def list_dlq_entries(
         self,
@@ -995,7 +1000,7 @@ class WebhooksResource(BaseResource):
         """
         return await self._call(
             "apps_webhooks_api_retry_from_dlq",
-            dlq_entry_id=dlq_entry_id,
+            dlq_id=dlq_entry_id,
             **kwargs,
         )
 
@@ -1022,29 +1027,27 @@ class WebhooksResource(BaseResource):
 
 
 class DevicesResource(BaseResource):
-    """Device operations with clean API."""
-
     async def list(
         self,
         *,
-        limit: int = 100,
-        offset: int = 0,
+        is_active: Optional[bool] = None,
+        include_geofences: Optional[bool] = None,
+        group: Optional[str] = None,
         **kwargs: Any,
     ) -> List[DeviceOut]:
-        """List devices.
+        """List devices. The endpoint is not paginated and returns every match.
 
         Args:
-            limit: Maximum number of results (default 100)
-            offset: Number of results to skip (default 0)
-            **kwargs: Additional filter parameters
+            is_active: Filter by active state
+            include_geofences: Include each device's geofence memberships
+            group: Filter by device group
 
         Returns:
             List of DeviceOut
         """
         return await self._call(
             "apps_devices_api_list_devices",
-            limit=limit,
-            offset=offset,
+            **_without_none(is_active=is_active, include_geofences=include_geofences, group=group),
             **kwargs,
         )
 
@@ -1060,7 +1063,7 @@ class DevicesResource(BaseResource):
         """
         return await self._call(
             "apps_devices_api_create_device",
-            create_device_request=request,
+            device_in=request,
             **kwargs,
         )
 
@@ -1079,14 +1082,12 @@ class DevicesResource(BaseResource):
             **kwargs,
         )
 
-    async def update(
-        self, device_id: str, request: DeviceIn, **kwargs: Any
-    ) -> DeviceOut:
+    async def update(self, device_id: str, request: UpdateDeviceIn, **kwargs: Any) -> DeviceOut:
         """Update a device.
 
         Args:
             device_id: The device ID
-            request: DeviceIn with fields to update
+            request: UpdateDeviceIn with the fields to change
             **kwargs: Additional parameters
 
         Returns:
@@ -1095,7 +1096,7 @@ class DevicesResource(BaseResource):
         return await self._call(
             "apps_devices_api_update_device",
             device_id=device_id,
-            update_device_request=request,
+            update_device_in=request,
             **kwargs,
         )
 
@@ -1127,14 +1128,212 @@ class DevicesResource(BaseResource):
         return await self._call(
             "apps_devices_api_update_device_location",
             device_id=device_id,
-            location_update_request=request,
+            location_update_in=request,
+            **kwargs,
+        )
+
+    async def start_shift(self, device_id: str, **kwargs: Any) -> ShiftActionOut:
+        """Start a shift for a device.
+
+        Shift calls only act on the caller's own device; another user's device
+        raises PermissionError.
+
+        Args:
+            device_id: The device ID
+
+        Returns:
+            ShiftActionOut
+        """
+        return await self._call(
+            "apps_devices_api_start_shift",
+            device_id=device_id,
+            **kwargs,
+        )
+
+    async def pause_shift(self, device_id: str, **kwargs: Any) -> ShiftActionOut:
+        """Pause the device's active shift.
+
+        Args:
+            device_id: The device ID
+
+        Returns:
+            ShiftActionOut
+        """
+        return await self._call(
+            "apps_devices_api_pause_shift",
+            device_id=device_id,
+            **kwargs,
+        )
+
+    async def resume_shift(self, device_id: str, **kwargs: Any) -> ShiftActionOut:
+        """Resume the device's paused shift.
+
+        Args:
+            device_id: The device ID
+
+        Returns:
+            ShiftActionOut
+        """
+        return await self._call(
+            "apps_devices_api_resume_shift",
+            device_id=device_id,
+            **kwargs,
+        )
+
+    async def end_shift(self, device_id: str, **kwargs: Any) -> ShiftActionOut:
+        """End the device's shift.
+
+        Args:
+            device_id: The device ID
+
+        Returns:
+            ShiftActionOut
+        """
+        return await self._call(
+            "apps_devices_api_end_shift",
+            device_id=device_id,
+            **kwargs,
+        )
+
+    async def list_sessions(
+        self,
+        device_id: str,
+        *,
+        limit: int = 20,
+        offset: int = 0,
+        started_after: Optional[datetime] = None,
+        started_before: Optional[datetime] = None,
+        include_open: bool = False,
+        **kwargs: Any,
+    ) -> DeviceSessionsOut:
+        """List a device's completed sessions.
+
+        Args:
+            device_id: The device ID
+            limit: Maximum number of results, 1-100 (default 20)
+            offset: Number of results to skip (default 0)
+            started_after: Only sessions started at or after this time
+            started_before: Only sessions started before this time
+            include_open: Return the open session of an active or paused shift as
+                open_session. It is never part of sessions or total_count.
+
+        Returns:
+            DeviceSessionsOut with the completed sessions, total_count and open_session
+        """
+        call_kwargs: Dict[str, Any] = {
+            "limit": limit,
+            "offset": offset,
+            "include_open": include_open,
+            **kwargs,
+        }
+        if started_after is not None:
+            call_kwargs["started_after"] = started_after
+        if started_before is not None:
+            call_kwargs["started_before"] = started_before
+        return await self._call(
+            "apps_devices_api_get_device_sessions",
+            device_id=device_id,
+            **call_kwargs,
+        )
+
+    async def get_session(self, device_id: str, session_id: str, **kwargs: Any) -> DeviceSessionOut:
+        """Get a session by ID.
+
+        Args:
+            device_id: The device ID
+            session_id: The session ID
+
+        Returns:
+            DeviceSessionOut
+        """
+        return await self._call(
+            "apps_devices_api_get_session_detail",
+            device_id=device_id,
+            session_id=session_id,
+            **kwargs,
+        )
+
+    async def get_session_locations(
+        self,
+        device_id: str,
+        session_id: str,
+        *,
+        limit: int = 1000,
+        offset: int = 0,
+        snapshot_at: Optional[datetime] = None,
+        max_points: Optional[int] = None,
+        **kwargs: Any,
+    ) -> SessionLocationsOut:
+        """Get the location history recorded during a session.
+
+        Args:
+            device_id: The device ID
+            session_id: The session ID
+            limit: Maximum number of points, 1-10000 (default 1000)
+            offset: Number of points to skip (default 0)
+            snapshot_at: The snapshot_at from the first page; reuse it on later pages
+                so new points cannot shift offsets
+            max_points: Return a simplified track of about this many points (2-10000).
+                A target, not a cap. Pagination is ignored, and an open session
+                rejects it.
+
+        Returns:
+            SessionLocationsOut with locations and total_count
+        """
+        call_kwargs: Dict[str, Any] = {"limit": limit, "offset": offset, **kwargs}
+        if snapshot_at is not None:
+            call_kwargs["snapshot_at"] = snapshot_at
+        if max_points is not None:
+            call_kwargs["max_points"] = max_points
+        return await self._call(
+            "apps_devices_api_get_session_locations",
+            device_id=device_id,
+            session_id=session_id,
+            **call_kwargs,
+        )
+
+    async def list_session_notes(
+        self, device_id: str, session_id: str, **kwargs: Any
+    ) -> List[SessionNoteOut]:
+        """List the notes on a session.
+
+        Args:
+            device_id: The device UUID
+            session_id: The session ID
+
+        Returns:
+            List of SessionNoteOut
+        """
+        return await self._call(
+            "apps_devices_api_list_session_notes",
+            device_uuid=device_id,
+            session_id=session_id,
+            **kwargs,
+        )
+
+    async def add_session_note(
+        self, device_id: str, session_id: str, request: SessionNoteIn, **kwargs: Any
+    ) -> SessionNoteOut:
+        """Add a manager note to a session.
+
+        Args:
+            device_id: The device UUID
+            session_id: The session ID
+            request: SessionNoteIn with the note body
+
+        Returns:
+            SessionNoteOut
+        """
+        return await self._call(
+            "apps_devices_api_create_manager_session_note",
+            device_uuid=device_id,
+            session_id=session_id,
+            session_note_in=request,
             **kwargs,
         )
 
 
 class StorageResource(BaseResource):
-    """Storage operations with clean API."""
-
     async def create_presigned_url(
         self, request: PresignedUrlRequest, **kwargs: Any
     ) -> PresignedUrlResponse:
@@ -1153,29 +1352,37 @@ class StorageResource(BaseResource):
             **kwargs,
         )
 
-    async def list_files(
-        self,
-        *,
-        limit: int = 100,
-        offset: int = 0,
-        **kwargs: Any,
-    ) -> FileListResponse:
-        """List uploaded files.
+    async def complete_upload(self, file_id: str, **kwargs: Any) -> CompleteUploadResponse:
+        """Finalize a direct upload after S3 accepts the object.
+
+        The API verifies the object's actual size and content type before
+        marking it available to downstream consumers.
 
         Args:
-            limit: Maximum number of results (default 100)
-            offset: Number of results to skip (default 0)
-            **kwargs: Additional filter parameters
+            file_id: The stored file ID returned by create_presigned_url().
+
+        Returns:
+            CompleteUploadResponse with the verified object metadata.
+        """
+        return await self._call(
+            "apps_storage_api_complete_presigned_upload",
+            file_id=file_id,
+            **kwargs,
+        )
+
+    async def list_files(self, file_type: str, **kwargs: Any) -> FileListResponse:
+        """List uploaded files of one type.
+
+        The endpoint is not paginated; it returns at most 1,000 files and doesn't say
+        when it stops short.
+
+        Args:
+            file_type: The upload type, for example "geofences"
 
         Returns:
             FileListResponse with files and count
         """
-        return await self._call(
-            "apps_storage_api_list_files",
-            limit=limit,
-            offset=offset,
-            **kwargs,
-        )
+        return await self._call("apps_storage_api_list_files", file_type=file_type, **kwargs)
 
     async def get_download_url(self, file_id: str, **kwargs: Any) -> Dict[str, str]:
         """Get presigned download URL for a file.
@@ -1192,14 +1399,11 @@ class StorageResource(BaseResource):
             **kwargs,
         )
 
-    async def delete_file(self, file_id: str, **kwargs: Any) -> DeleteFileResponse:
-        """Delete a file.
+    async def delete_file(self, file_id: str, **kwargs: Any) -> None:
+        """Delete a stored file and its object by the ``file_id`` an upload returned.
 
         Args:
             file_id: The file ID
-
-        Returns:
-            DeleteFileResponse
         """
         return await self._call(
             "apps_storage_api_delete_file",
@@ -1211,8 +1415,8 @@ class StorageResource(BaseResource):
 class LocationsResource(BaseResource):
     """Public location ingestion API.
 
-    This resource provides access to the public location ingest endpoints,
-    which accept location data from any device without requiring pre-registration.
+    This resource provides access to the public location ingest endpoints. Each
+    location names a device registered in the API key's workspace by its device_id.
     """
 
     async def ingest(
@@ -1230,8 +1434,8 @@ class LocationsResource(BaseResource):
     ) -> LocationIngestResponse:
         """Ingest a single location point.
 
-        This uses the public ingest API which accepts any device_id
-        without requiring the device to be pre-registered.
+        This uses the public ingest API. The device must already be registered
+        and active in the API key's workspace; otherwise the location is rejected.
 
         Args:
             device_id: Unique identifier for the device
@@ -1307,9 +1511,8 @@ class LocationsResource(BaseResource):
 
 
 class WorkspacesResource(BaseResource):
-    """Workspace operations with clean API.
+    """Workspaces are the top-level organizational unit in SpatialFlow.
 
-    Workspaces are the top-level organizational unit in SpatialFlow.
     Each user belongs to a workspace that contains all their resources.
     """
 
@@ -1356,37 +1559,184 @@ class WorkspacesResource(BaseResource):
             **kwargs,
         )
 
+    async def list_members(self, **kwargs: Any) -> MemberListResponse:
+        """List the members of the current workspace.
+
+        The list is capped at 500; MemberListResponse.truncated says when it was.
+
+        Returns:
+            MemberListResponse with members and total
+        """
+        return await self._call("apps_workspaces_api_list_workspace_members", **kwargs)
+
+    async def update_member_role(
+        self, user_id: str, request: UpdateMemberRoleIn, **kwargs: Any
+    ) -> MemberActionOut:
+        """Change a member's role (owner, manager or field_worker).
+
+        Managers cannot promote to owner or change an owner or another manager.
+
+        Args:
+            user_id: The member's user ID
+            request: UpdateMemberRoleIn with the new role
+
+        Returns:
+            MemberActionOut
+        """
+        return await self._call(
+            "apps_workspaces_api_update_member_role",
+            user_id=user_id,
+            update_member_role_in=request,
+            **kwargs,
+        )
+
+    async def remove_member(self, user_id: str, **kwargs: Any) -> None:
+        """Remove a member from the workspace.
+
+        Args:
+            user_id: The member's user ID
+        """
+        return await self._call(
+            "apps_workspaces_api_remove_member",
+            user_id=user_id,
+            **kwargs,
+        )
+
+    async def list_invitations(
+        self,
+        *,
+        limit: int = 100,
+        offset: int = 0,
+        before: Optional[str] = None,
+        **kwargs: Any,
+    ) -> InvitationListResponse:
+        """List workspace invitations.
+
+        Args:
+            limit: Maximum number of results (default 100)
+            offset: Number of results to skip (default 0)
+            before: next_cursor from the previous response; pages by cursor, so rows
+                accepted or revoked mid-walk are not skipped
+
+        Returns:
+            InvitationListResponse with invitations, total and next_cursor
+        """
+        call_kwargs: Dict[str, Any] = {"limit": limit, "offset": offset, **kwargs}
+        if before is not None:
+            call_kwargs["before"] = before
+        return await self._call("apps_workspaces_api_list_invitations", **call_kwargs)
+
+    async def create_invitation(
+        self, request: CreateInvitationIn, **kwargs: Any
+    ) -> InvitationIssuedOut:
+        """Invite someone to the workspace by email.
+
+        Args:
+            request: CreateInvitationIn with email and role
+
+        Returns:
+            InvitationIssuedOut
+        """
+        return await self._call(
+            "apps_workspaces_api_create_invitation",
+            create_invitation_in=request,
+            **kwargs,
+        )
+
+    async def resend_invitation(self, invite_id: str, **kwargs: Any) -> InvitationIssuedOut:
+        """Resend an invitation email.
+
+        Args:
+            invite_id: The invitation ID
+
+        Returns:
+            InvitationIssuedOut
+        """
+        return await self._call(
+            "apps_workspaces_api_resend_invitation",
+            invite_id=invite_id,
+            **kwargs,
+        )
+
+    async def resend_missing_invitations(
+        self, request: BatchResendIn, **kwargs: Any
+    ) -> BatchResendOut:
+        """Resend invitations in bulk (at most 200 per call).
+
+        Args:
+            request: BatchResendIn with invitation_ids, or omit them to reissue the
+                newest pending page and continue with its next_cursor as before
+
+        Returns:
+            BatchResendOut
+        """
+        return await self._call(
+            "apps_workspaces_api_resend_missing_invitations",
+            batch_resend_in=request,
+            **kwargs,
+        )
+
+    async def extend_invitation(
+        self, invite_id: str, request: ExtendInvitationIn, **kwargs: Any
+    ) -> InvitationOut:
+        """Extend an invitation's expiry.
+
+        Args:
+            invite_id: The invitation ID
+            request: ExtendInvitationIn; expires_at must be in the future and at most
+                90 days from now
+
+        Returns:
+            InvitationOut
+        """
+        return await self._call(
+            "apps_workspaces_api_extend_invitation",
+            invite_id=invite_id,
+            extend_invitation_in=request,
+            **kwargs,
+        )
+
+    async def cancel_invitation(self, invite_id: str, **kwargs: Any) -> Dict[str, Any]:
+        """Cancel a pending invitation.
+
+        Args:
+            invite_id: The invitation ID
+        """
+        return await self._call(
+            "apps_workspaces_api_cancel_invitation",
+            invite_id=invite_id,
+            **kwargs,
+        )
+
 
 class IntegrationsResource(BaseResource):
-    """Integration operations with clean API.
-
-    Integrations are reusable service connections (webhooks, Slack, SMS, etc.)
+    """Integrations are reusable service connections (webhooks, Slack, SMS, etc.)
     that can be used as actions in workflows.
     """
 
     async def list(
         self,
         *,
-        limit: int = 100,
-        offset: int = 0,
-        integration_type: Optional[str] = None,
+        type: Optional[str] = None,
+        is_active: Optional[bool] = None,
+        is_verified: Optional[bool] = None,
+        search: Optional[str] = None,
         **kwargs: Any,
     ) -> List[IntegrationResponseSchema]:
-        """List integrations.
+        """List integrations. The endpoint is not paginated and returns every match.
 
         Args:
-            limit: Maximum number of results (default 100)
-            offset: Number of results to skip (default 0)
-            integration_type: Optional filter by type (webhook, slack, etc.)
+            type: Filter by type (webhook, slack, etc.)
+            is_active: Filter by active state
+            is_verified: Filter by verification state
+            search: Free-text search
 
         Returns:
             List of IntegrationResponseSchema
         """
         return await self._call(
             "apps_integrations_api_list_integrations",
-            limit=limit,
-            offset=offset,
-            integration_type=integration_type,
+            **_without_none(type=type, is_active=is_active, is_verified=is_verified, search=search),
             **kwargs,
         )
 
@@ -1453,9 +1803,7 @@ class IntegrationsResource(BaseResource):
             **kwargs,
         )
 
-    async def test(
-        self, integration_id: str, **kwargs: Any
-    ) -> TestIntegrationResponseSchema:
+    async def test(self, integration_id: str, **kwargs: Any) -> TestIntegrationResponseSchema:
         """Test an integration.
 
         Args:
@@ -1513,15 +1861,7 @@ class IntegrationsResource(BaseResource):
 
 
 class AccountResource(BaseResource):
-    """Account operations with clean API.
-
-    Provides access to user profile, API key management, dashboard metrics,
-    and onboarding progress.
-    """
-
-    # -------------------------------------------------------------------------
-    # User Profile
-    # -------------------------------------------------------------------------
+    """Provides access to user profile, API key management, and dashboard metrics."""
 
     async def get_profile(self, **kwargs: Any) -> UserProfileResponse:
         """Get the current user's profile.
@@ -1550,10 +1890,6 @@ class AccountResource(BaseResource):
             update_profile_request=request,
             **kwargs,
         )
-
-    # -------------------------------------------------------------------------
-    # API Keys
-    # -------------------------------------------------------------------------
 
     async def list_api_keys(self, **kwargs: Any) -> List[ApiKeyResponse]:
         """List all API keys for the current user.
@@ -1644,10 +1980,6 @@ class AccountResource(BaseResource):
             **kwargs,
         )
 
-    # -------------------------------------------------------------------------
-    # Dashboard and Onboarding
-    # -------------------------------------------------------------------------
-
     async def get_dashboard_metrics(self, **kwargs: Any) -> DashboardMetricsResponse:
         """Get dashboard metrics for the current user.
 
@@ -1658,47 +1990,6 @@ class AccountResource(BaseResource):
             "apps_accounts_api_get_dashboard_metrics",
             **kwargs,
         )
-
-    async def get_onboarding_progress(
-        self, **kwargs: Any
-    ) -> OnboardingProgressResponse:
-        """Get onboarding progress for the current user.
-
-        Returns:
-            OnboardingProgressResponse with completed steps, next steps, etc.
-        """
-        return await self._call(
-            "apps_accounts_api_get_onboarding_progress",
-            **kwargs,
-        )
-
-    async def update_onboarding_progress(
-        self, request: UpdateOnboardingProgressRequest, **kwargs: Any
-    ) -> OnboardingProgressResponse:
-        """Update onboarding progress.
-
-        Args:
-            request: UpdateOnboardingProgressRequest with completed steps, etc.
-
-        Returns:
-            OnboardingProgressResponse
-        """
-        return await self._call(
-            "apps_accounts_api_update_onboarding_progress",
-            update_onboarding_progress_request=request,
-            **kwargs,
-        )
-
-    async def dismiss_onboarding(self, **kwargs: Any) -> None:
-        """Dismiss the onboarding flow."""
-        return await self._call(
-            "apps_accounts_api_dismiss_onboarding",
-            **kwargs,
-        )
-
-    # -------------------------------------------------------------------------
-    # Notifications
-    # -------------------------------------------------------------------------
 
     async def get_notifications(self, **kwargs: Any) -> List[Dict[str, Any]]:
         """Get notifications for the current user.
@@ -1711,9 +2002,7 @@ class AccountResource(BaseResource):
             **kwargs,
         )
 
-    async def mark_notification_read(
-        self, notification_id: str, **kwargs: Any
-    ) -> None:
+    async def mark_notification_read(self, notification_id: str, **kwargs: Any) -> None:
         """Mark a notification as read.
 
         Args:

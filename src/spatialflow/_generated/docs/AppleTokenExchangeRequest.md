@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **authorization_code** | **str** |  | 
 **full_name** | [**AppleFullName**](AppleFullName.md) |  | [optional] 
 **nonce** | **str** |  | [optional] 
+**invite_id** | **str** |  | [optional] 
+**invite_token** | **str** |  | [optional] 
+**confirm_new_account** | **bool** |  | [optional] 
 
 ## Example
 

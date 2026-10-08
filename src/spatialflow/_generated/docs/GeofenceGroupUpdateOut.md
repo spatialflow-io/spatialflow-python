@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **group_id** | **str** |  | [optional] 
 **group_name** | **str** |  | [optional] 
-**updated_at** | **str** |  | 
+**updated_at** | **datetime** |  | 
 
 ## Example
 

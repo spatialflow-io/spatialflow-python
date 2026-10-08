@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **device_id** | **str** |  | 
 **name** | **str** |  | 
 **device_type** | **str** |  | [optional] [default to 'mobile']
+**registration_source** | **str** |  | [optional] [default to 'api']
 **metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example

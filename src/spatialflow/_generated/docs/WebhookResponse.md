@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **url** | **str** |  | 
 **events** | **List[str]** |  | 
 **headers** | **Dict[str, str]** |  | 
+**sensitive_headers_configured** | **List[str]** |  | [optional] 
 **auth_type** | **str** |  | 
 **method** | **str** |  | 
 **content_type** | **str** |  | 
@@ -27,6 +28,7 @@ Name | Type | Description | Notes
 **successful_deliveries** | **int** |  | 
 **failed_deliveries** | **int** |  | 
 **success_rate** | **float** |  | 
+**attached_geofence_count** | **int** |  | [optional] [default to 0]
 
 ## Example
 

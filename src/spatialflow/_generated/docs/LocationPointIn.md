@@ -1,6 +1,6 @@
 # LocationPointIn
 
-Single location point for ingestion.  PRD Reference: §3.4 Location Ingest Format
+Single location point for ingestion.
 
 ## Properties
 
@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **speed** | **float** |  | [optional] 
 **heading** | **float** |  | [optional] 
 **altitude** | **float** |  | [optional] 
+**battery_level** | **int** |  | [optional] 
+**battery_charging** | **bool** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example

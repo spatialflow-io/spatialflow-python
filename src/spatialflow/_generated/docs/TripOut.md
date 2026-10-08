@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **session_id** | **str** |  | [optional] 
 **has_planned_route** | **bool** |  | [optional] [default to False]
 **has_track_geometry** | **bool** |  | [optional] [default to False]
+**corridor_width_meters** | **int** |  | [optional] [default to 100]
 **metadata** | **Dict[str, object]** |  | [optional] 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 

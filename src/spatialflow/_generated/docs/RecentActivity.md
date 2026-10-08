@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **activity_type** | **str** |  | 
-**timestamp** | **str** |  | 
+**timestamp** | **datetime** |  | 
 **metadata** | **Dict[str, object]** |  | 
 
 ## Example

@@ -1,6 +1,6 @@
 # GeofenceResponse
 
-Schema for geofence response.  Supports all geometry types (PRD §3.1): - Polygon: Standard GeoJSON Polygon - MultiPolygon: Collection of polygons - Circle: Custom format with center and radius_meters
+Schema for geofence response.  Supports all geometry types: - Polygon: Standard GeoJSON Polygon - MultiPolygon: Collection of polygons - Circle: Custom format with center and radius_meters
 
 ## Properties
 
@@ -18,6 +18,18 @@ Name | Type | Description | Notes
 **is_active** | **bool** |  | 
 **group_id** | **str** |  | 
 **group_name** | **str** |  | 
+**source** | **str** |  | [optional] 
+**address** | **str** |  | [optional] 
+**buffer_meters** | **int** |  | [optional] 
+**archived** | **bool** | Whether the geofence is archived (hidden from default list and map). | [optional] [default to False]
+**point** | **List[float]** |  | [optional] 
+**tags** | **List[str]** | Names of tags attached to this geofence (case as originally entered). | [optional] 
+**source_id** | **str** |  | [optional] 
+**pre_upgrade_geometry** | **Dict[str, object]** |  | [optional] 
+**building_provenance** | **Dict[str, object]** |  | [optional] 
+**effective_radius_meters** | **float** |  | [optional] 
+**below_min_trigger_radius** | **bool** | True iff effective_radius_meters is strictly less than MIN_TRIGGER_RADIUS_METERS (50m). When True, the geofence fires within ~50m of the center. Non-blocking — the client should show a reassuring informational warning, not block Save. | [optional] [default to False]
+**is_example** | **bool** |  | [optional] [default to False]
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 
 

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **workflow_triggered** | **bool** |  | 
 **execution_results** | **Dict[str, object]** |  | [optional] 
 **test_metadata** | **Dict[str, object]** |  | [optional] 
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

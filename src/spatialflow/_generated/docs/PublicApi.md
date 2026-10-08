@@ -85,6 +85,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -149,10 +150,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -217,10 +220,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -285,10 +290,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -297,7 +304,7 @@ No authorization required
 
 Runtime Config
 
-Get runtime configuration for frontend applications.  This endpoint provides dynamic configuration that was previously only available as build-time environment variables. Allows Admin UI to control feature toggles without requiring frontend rebuilds (Issue #119).  Response includes only safe-to-expose public configuration: - Feature toggles (Route Tester, admin approval) - Analytics configuration (enabled flag, host URL - NOT API keys)  Note: API keys and sensitive values are NEVER returned from this endpoint.  Rate limited: 120/minute per IP to prevent abuse while allowing frequent frontend polling (e.g., SPA init, tab reopens).  Caching: Response is cached for 30 seconds to reduce database lookups. ConfigurationService also has its own 5-minute cache layer.
+Get runtime configuration for frontend applications.  This endpoint provides dynamic configuration that was previously only available as build-time environment variables. Allows Admin UI to control feature toggles without requiring frontend rebuilds.  Response includes only safe-to-expose public configuration: - Feature toggles (Route Tester, admin approval) - Analytics configuration (enabled flag, host URL - NOT API keys)  Note: API keys and sensitive values are NEVER returned from this endpoint.  Rate limited: 120/minute per IP to prevent abuse while allowing frequent frontend polling (e.g., SPA init, tab reopens).  Caching: Response is cached for 30 seconds to reduce database lookups. ConfigurationService also has its own 5-minute cache layer.
 
 ### Example
 
@@ -353,10 +360,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -365,7 +374,7 @@ No authorization required
 
 Signup
 
-Register for SpatialFlow.io  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
+Register for SpatialFlow.io  Rate limited: 10/hour per IP, 3/hour per email.
 
 ### Example
 
@@ -431,6 +440,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -495,10 +505,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -563,10 +575,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

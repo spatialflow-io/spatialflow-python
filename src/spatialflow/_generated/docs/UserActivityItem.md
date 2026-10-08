@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **resource_id** | **str** |  | [optional] 
 **ip_address** | **str** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

@@ -6,7 +6,6 @@ These functions help construct valid workflow payloads for common use cases.
 
 from typing import Dict, List, Literal, Optional
 
-# Import models from generated package
 from ._generated.spatialflow_generated.models import WorkflowIn
 
 __all__ = [
@@ -15,7 +14,12 @@ __all__ = [
     "TriggerType",
 ]
 
-TriggerType = Literal["geofence_enter", "geofence_exit", "geofence_dwell"]
+TriggerType = Literal[
+    "geofence_enter",
+    "geofence_exit",
+    "geofence_any",
+    "geofence_dwell",
+]
 
 
 def build_geofence_webhook_workflow(
@@ -39,7 +43,8 @@ def build_geofence_webhook_workflow(
         name: Workflow name
         geofence_ids: List of geofence UUIDs to monitor
         webhook_url: URL to call when triggered
-        trigger_type: "geofence_enter", "geofence_exit", or "geofence_dwell"
+        trigger_type: "geofence_enter", "geofence_exit", "geofence_any"
+            (either direction) or "geofence_dwell"
         description: Optional workflow description
         webhook_method: HTTP method (default: POST)
         webhook_headers: Optional HTTP headers
@@ -113,7 +118,8 @@ def build_geofence_integration_workflow(
         name: Workflow name
         geofence_ids: List of geofence UUIDs to monitor
         integration_id: ID of the integration to use as the action
-        trigger_type: "geofence_enter", "geofence_exit", or "geofence_dwell"
+        trigger_type: "geofence_enter", "geofence_exit", "geofence_any"
+            (either direction) or "geofence_dwell"
         description: Optional workflow description
 
     Returns:

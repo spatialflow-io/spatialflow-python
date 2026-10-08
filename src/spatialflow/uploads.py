@@ -29,8 +29,9 @@ async def upload_geofences(
     This is a convenience method that:
     1. Requests a presigned upload URL
     2. Uploads the file to S3
-    3. Starts the geofence import job
-    4. Polls until completion
+    3. Finalizes the upload so the API verifies the S3 object metadata
+    4. Starts the geofence import job
+    5. Polls until completion
 
     Args:
         client: SpatialFlow client instance.
@@ -65,11 +66,9 @@ async def upload_geofences(
     if not file_path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
 
-    # Get file info
     filename = file_path.name
     file_size = file_path.stat().st_size
 
-    # Determine content type
     ext = file_path.suffix.lower()
     content_types = {
         ".geojson": "application/geo+json",
@@ -90,8 +89,8 @@ async def upload_geofences(
 
     # Step 1: Get presigned upload URL
     try:
-        presigned_response = await client.storage.apps_storage_api_create_presigned_url(
-            presigned_url_request={
+        presigned_response = await client.storage.create_presigned_url(
+            request={
                 "file_type": "geofences",
                 "filename": filename,
                 "file_size": file_size,
@@ -122,7 +121,6 @@ async def upload_geofences(
     s3_timeout = aiohttp.ClientTimeout(total=upload_timeout)
     async with aiohttp.ClientSession(timeout=s3_timeout) as session:
         try:
-            # Stream the file directly without loading into memory
             with open(file_path, "rb") as f:
                 async with session.put(
                     upload_url,
@@ -130,6 +128,7 @@ async def upload_geofences(
                     headers={
                         "Content-Type": content_type,
                         "Content-Length": str(file_size),
+                        "If-None-Match": "*",
                     },
                 ) as resp:
                     if resp.status not in (200, 204):
@@ -145,15 +144,20 @@ async def upload_geofences(
                 error_code="S3_UPLOAD_ERROR",
             ) from e
 
-    # Step 3: Start the geofence import job
+    # Step 3: Finalize the upload. The API verifies the S3 object's actual size and
+    # content type before making it available to import jobs.
+    try:
+        await client.storage.complete_upload(file_id)
+    except Exception as e:
+        raise translate_exception(e) from e
+
+    # Step 4: Start the geofence import job
     upload_request = {"file_id": file_id}
     if group_name:
         upload_request["group_name"] = group_name
 
     try:
-        job_response = await client.geofences.apps_geofences_api_upload_geofences_async(
-            upload_geofences_request=upload_request
-        )
+        job_response = await client.geofences.upload(upload_request)
     except Exception as e:
         raise translate_exception(e) from e
 
@@ -166,11 +170,9 @@ async def upload_geofences(
             error_code="MISSING_JOB_ID",
         )
 
-    # Step 4: Poll for completion
+    # Step 5: Poll for completion
     async def fetch_status():
-        return await client.geofences.apps_geofences_api_get_upload_job_status(
-            job_id=job_id
-        )
+        return await client.geofences.get_upload_status(job_id)
 
     return await poll_job(
         fetch_status,

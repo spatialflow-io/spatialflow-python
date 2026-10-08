@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **subscription_tier** | **str** |  | [optional] [default to 'free']
 **last_activity** | **str** |  | [optional] 
 **inactive_days** | **int** |  | 
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

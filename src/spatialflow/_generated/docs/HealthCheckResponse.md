@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
-**timestamp** | **str** |  | 
+**timestamp** | **datetime** |  | 
 **services** | **Dict[str, str]** |  | 
 
 ## Example

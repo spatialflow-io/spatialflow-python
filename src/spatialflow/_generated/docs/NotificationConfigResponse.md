@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **is_enabled** | **bool** |  | 
 **webhook_url_configured** | **bool** |  | 
 **notify_new_signups** | **bool** |  | 
+**notify_issue_submissions** | **bool** |  | 
 **notify_admin_approvals** | **bool** |  | 
 **notify_subscription_changes** | **bool** |  | 
 **notify_payment_failures** | **bool** |  | 
@@ -19,7 +20,8 @@ Name | Type | Description | Notes
 **notify_dlq_threshold** | **bool** |  | 
 **notify_service_health** | **bool** |  | 
 **dlq_threshold** | **int** |  | 
-**updated_at** | **str** |  | [optional] 
+**route_count** | **int** |  | [optional] [default to 0]
+**updated_at** | **datetime** |  | [optional] 
 **updated_by_email** | **str** |  | [optional] 
 
 ## Example

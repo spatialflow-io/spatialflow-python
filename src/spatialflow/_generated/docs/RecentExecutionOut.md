@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **execution_id** | **str** |  | 
 **status** | **str** |  | 
 **trigger_source** | **str** |  | 
-**started_at** | **str** |  | [optional] 
+**started_at** | **datetime** |  | [optional] 
 **duration_seconds** | **float** |  | [optional] 
 
 ## Example

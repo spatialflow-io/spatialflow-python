@@ -13,6 +13,11 @@ Name | Type | Description | Notes
 **location_count** | **int** |  | 
 **distance_meters** | **float** |  | [optional] 
 **has_track_geometry** | **bool** |  | [optional] [default to False]
+**auto_closed_at** | **datetime** |  | [optional] 
+**close_reason** | **str** |  | [optional] [default to '']
+**auto_closed_from_shift_status** | **str** |  | [optional] 
+**photo_count** | **int** |  | 
+**note_count** | **int** |  | 
 
 ## Example
 

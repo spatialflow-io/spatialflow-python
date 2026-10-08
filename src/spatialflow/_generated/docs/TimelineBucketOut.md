@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**timestamp** | **str** |  | 
+**timestamp** | **datetime** |  | 
 **live_count** | **int** |  | 
 **offline_stale_count** | **int** |  | 
 **in_geofence_count** | **int** |  | 

@@ -39,12 +39,12 @@ asyncio.run(main())
 
 | Resource | Methods | Description |
 |----------|---------|-------------|
-| **Geofences** | CRUD, upload, bulk | Manage geofence boundaries |
+| **Geofences** | CRUD, upload, bulk, groups | Manage geofence boundaries |
 | **Workflows** | CRUD, execute, monitor, versioning | Automation workflows |
 | **Webhooks** | CRUD, deliveries, DLQ, metrics | Webhook endpoints and delivery tracking |
-| **Devices** | CRUD, location updates | Device management |
-| **Account** | profile, API keys, metrics, onboarding | User account management |
-| **Workspaces** | get, update, usage | Workspace settings and usage metrics |
+| **Devices** | CRUD, location updates, shifts, sessions | Device management |
+| **Account** | profile, API keys, metrics | User account management |
+| **Workspaces** | get, update, usage, members, invitations | Workspace settings and usage metrics |
 | **Locations** | ingest, batch, stats | Public location ingestion API |
 | **Integrations** | CRUD, test | Third-party service connections |
 | **Storage** | presigned URLs, files | File upload and management |
@@ -86,8 +86,8 @@ Available via `client.raw`:
 - `geofences`, `workflows`, `webhooks`, `devices`, `storage`, `locations`, `integrations`, `workspaces`, `account` (also wrapped)
 - `authentication`, `admin`, `billing`, `subscriptions`, `tiles` (raw only)
 
-> **Beta Notice:** This SDK is in beta. Some generated APIs (email, system, gpx_simulator,
-> public, default, e2e_test) are not yet exposed. Use the generated client directly for those.
+Some generated APIs (email, system, gpx_simulator, public, default, e2e_test) are not
+exposed on the client. Use the generated client directly for those.
 
 ## Documentation
 

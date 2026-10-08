@@ -21,6 +21,9 @@ Method | HTTP request | Description
 [**apps_workflows_api_get_workflow_executions**](WorkflowsApi.md#apps_workflows_api_get_workflow_executions) | **GET** /api/v1/workflows/{workflow_id}/executions | Get Workflow Executions
 [**apps_workflows_api_get_workflow_performance**](WorkflowsApi.md#apps_workflows_api_get_workflow_performance) | **GET** /api/v1/workflows/{workflow_id}/performance | Get Workflow Performance
 [**apps_workflows_api_get_workflow_retry_policy**](WorkflowsApi.md#apps_workflows_api_get_workflow_retry_policy) | **GET** /api/v1/workflows/{workflow_id}/retry-policy | Get Workflow Retry Policy
+[**apps_workflows_api_get_workflow_run**](WorkflowsApi.md#apps_workflows_api_get_workflow_run) | **GET** /api/v1/workflows/{workflow_id}/runs/{run_id} | Get Workflow Run
+[**apps_workflows_api_get_workflow_run_history**](WorkflowsApi.md#apps_workflows_api_get_workflow_run_history) | **GET** /api/v1/workflows/{workflow_id}/runs | Get Workflow Run History
+[**apps_workflows_api_get_workflow_runs_stats**](WorkflowsApi.md#apps_workflows_api_get_workflow_runs_stats) | **GET** /api/v1/workflows/runs/stats | Get Workflow Runs Stats
 [**apps_workflows_api_get_workflow_statistics**](WorkflowsApi.md#apps_workflows_api_get_workflow_statistics) | **GET** /api/v1/workflows/{workflow_id}/statistics | Get Workflow Statistics
 [**apps_workflows_api_get_workflow_step_performance**](WorkflowsApi.md#apps_workflows_api_get_workflow_step_performance) | **GET** /api/v1/workflows/{workflow_id}/performance/steps | Get Workflow Step Performance
 [**apps_workflows_api_get_workflow_template**](WorkflowsApi.md#apps_workflows_api_get_workflow_template) | **GET** /api/v1/workflows/templates/{template_id} | Get Workflow Template
@@ -30,6 +33,7 @@ Method | HTTP request | Description
 [**apps_workflows_api_list_workflow_templates**](WorkflowsApi.md#apps_workflows_api_list_workflow_templates) | **GET** /api/v1/workflows/templates | List Workflow Templates
 [**apps_workflows_api_list_workflow_versions**](WorkflowsApi.md#apps_workflows_api_list_workflow_versions) | **GET** /api/v1/workflows/{workflow_id}/versions | List Workflow Versions
 [**apps_workflows_api_list_workflows**](WorkflowsApi.md#apps_workflows_api_list_workflows) | **GET** /api/v1/workflows | List Workflows
+[**apps_workflows_api_preview_workflow**](WorkflowsApi.md#apps_workflows_api_preview_workflow) | **POST** /api/v1/workflows/{workflow_id}/preview | Preview Workflow
 [**apps_workflows_api_restore_workflow_version**](WorkflowsApi.md#apps_workflows_api_restore_workflow_version) | **POST** /api/v1/workflows/{workflow_id}/versions/{version_number}/restore | Restore Workflow Version
 [**apps_workflows_api_test_workflow**](WorkflowsApi.md#apps_workflows_api_test_workflow) | **POST** /api/v1/workflows/{workflow_id}/test | Test Workflow
 [**apps_workflows_api_toggle_workflow**](WorkflowsApi.md#apps_workflows_api_toggle_workflow) | **POST** /api/v1/workflows/{workflow_id}/toggle | Toggle Workflow
@@ -124,6 +128,7 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -211,10 +216,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
-**422** | Validation Error |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -303,10 +309,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -394,6 +402,7 @@ void (empty response body)
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -482,10 +491,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -662,10 +672,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -747,10 +759,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -836,10 +850,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -921,10 +937,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1011,10 +1029,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1100,10 +1120,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1188,10 +1210,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1279,10 +1303,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1373,11 +1399,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**200** | OK |  * X-Limit - Maximum number of returned items <br>  * X-Offset - Zero-based result offset <br>  * X-Has-More - Whether another page is available <br>  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1466,10 +1494,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1554,10 +1584,289 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_get_workflow_run**
+> RunHistoryEntryOut apps_workflows_api_get_workflow_run(workflow_id, run_id)
+
+Get Workflow Run
+
+Return one run of this workflow as a history entry, whatever its age.  ``run_id`` is the WorkflowExecution id that events report in ``workflow_runs``. A run of another workflow, another workspace, or one the caller's history scope hides is a 404, so ids don't reveal which runs exist.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.run_history_entry_out import RunHistoryEntryOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = 'workflow_id_example' # str | 
+    run_id = 'run_id_example' # str | 
+
+    try:
+        # Get Workflow Run
+        api_response = await api_instance.apps_workflows_api_get_workflow_run(workflow_id, run_id)
+        print("The response of WorkflowsApi->apps_workflows_api_get_workflow_run:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_get_workflow_run: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **str**|  | 
+ **run_id** | **str**|  | 
+
+### Return type
+
+[**RunHistoryEntryOut**](RunHistoryEntryOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_get_workflow_run_history**
+> List[RunHistoryEntryOut] apps_workflows_api_get_workflow_run_history(workflow_id, limit=limit, offset=offset, include_other_geofences=include_other_geofences)
+
+Get Workflow Run History
+
+Return a chronological (evaluated_at desc) page of THIS workflow's evaluations.  Two sources, both scoped to the workflow:  1. WorkflowEvaluationTrace, so SKIPPED events surface alongside fired runs,    answering \"why didn't my automation fire?\".  By default, trace rows about    geofences this workflow's trigger does not target are dropped: the matcher    writes one row per considered workflow, so an unscoped feed is workspace-wide    noise that repeats identically under every other workflow.  Pass    ``include_other_geofences=true`` to get them back — that is the view that    answers \"the van entered zone A, why didn't my zone-B workflow fire?\". 2. WorkflowExecution rows that no trace accounts for (manual runs, and runs that    predate trace capture), so the workflow's real runs are never missing from its    own run history.  Each entry includes evaluated_at, trigger reference, matched/skip_reason, and for matched entries the joined execution detail + per-action delivery outcomes.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.run_history_entry_out import RunHistoryEntryOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = 'workflow_id_example' # str | 
+    limit = 50 # int |  (optional) (default to 50)
+    offset = 0 # int |  (optional) (default to 0)
+    include_other_geofences = False # bool |  (optional) (default to False)
+
+    try:
+        # Get Workflow Run History
+        api_response = await api_instance.apps_workflows_api_get_workflow_run_history(workflow_id, limit=limit, offset=offset, include_other_geofences=include_other_geofences)
+        print("The response of WorkflowsApi->apps_workflows_api_get_workflow_run_history:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_get_workflow_run_history: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **str**|  | 
+ **limit** | **int**|  | [optional] [default to 50]
+ **offset** | **int**|  | [optional] [default to 0]
+ **include_other_geofences** | **bool**|  | [optional] [default to False]
+
+### Return type
+
+[**List[RunHistoryEntryOut]**](RunHistoryEntryOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  * X-Limit - Maximum number of returned items <br>  * X-Offset - Zero-based result offset <br>  * X-Has-More - Whether another page is available <br>  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_get_workflow_runs_stats**
+> WorkflowRunsStatsOut apps_workflows_api_get_workflow_runs_stats()
+
+Get Workflow Runs Stats
+
+Return workspace workflow execution stats for operations health surfaces.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.workflow_runs_stats_out import WorkflowRunsStatsOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+
+    try:
+        # Get Workflow Runs Stats
+        api_response = await api_instance.apps_workflows_api_get_workflow_runs_stats()
+        print("The response of WorkflowsApi->apps_workflows_api_get_workflow_runs_stats:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_get_workflow_runs_stats: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**WorkflowRunsStatsOut**](WorkflowRunsStatsOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1643,10 +1952,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1731,10 +2042,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1820,10 +2133,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1887,10 +2202,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1977,10 +2294,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
-**404** | Not Found |  -  |
-**401** | Unauthorized |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2071,11 +2390,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**200** | OK |  * X-Limit - Maximum number of returned items <br>  * X-Offset - Zero-based result offset <br>  * X-Has-More - Whether another page is available <br>  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2168,6 +2489,7 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2252,19 +2574,21 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_list_workflows**
-> WorkflowListResponse apps_workflows_api_list_workflows(limit=limit, offset=offset, is_active=is_active, category=category, search=search)
+> WorkflowListResponse apps_workflows_api_list_workflows(limit=limit, offset=offset, is_active=is_active, status=status, category=category, search=search)
 
 List Workflows
 
-List user's workflows with filtering.
+List user's workflows with filtering.  ``status`` mirrors the frontend status derived by ``_workflow_status`` (a Literal query param, so an unrecognized value is rejected with a 422 by Django Ninja's own validation before this body ever runs):   - \"active\": is_active=True, regardless of is_test_mode (matches _STATUS_MAP,     which maps both (True, False) and (True, True) to \"active\")   - \"paused\": is_active=False, is_test_mode=False   - \"draft\":  is_active=False, is_test_mode=True
 
 ### Example
 
@@ -2306,12 +2630,13 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     limit = 50 # int |  (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
     is_active = True # bool |  (optional)
+    status = 'status_example' # str |  (optional)
     category = 'category_example' # str |  (optional)
     search = 'search_example' # str |  (optional)
 
     try:
         # List Workflows
-        api_response = await api_instance.apps_workflows_api_list_workflows(limit=limit, offset=offset, is_active=is_active, category=category, search=search)
+        api_response = await api_instance.apps_workflows_api_list_workflows(limit=limit, offset=offset, is_active=is_active, status=status, category=category, search=search)
         print("The response of WorkflowsApi->apps_workflows_api_list_workflows:\n")
         pprint(api_response)
     except Exception as e:
@@ -2328,6 +2653,7 @@ Name | Type | Description  | Notes
  **limit** | **int**|  | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
  **is_active** | **bool**|  | [optional] 
+ **status** | **str**|  | [optional] 
  **category** | **str**|  | [optional] 
  **search** | **str**|  | [optional] 
 
@@ -2349,6 +2675,101 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_preview_workflow**
+> Dict[str, object] apps_workflows_api_preview_workflow(workflow_id, test_workflow_in)
+
+Preview Workflow
+
+Evaluate saved workflow steps without executing actions.  A separate route fails closed against old API instances during rollout; an ignored optional dry-run flag on the live route could send real alerts.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.test_workflow_in import TestWorkflowIn
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = 'workflow_id_example' # str | 
+    test_workflow_in = spatialflow_generated.TestWorkflowIn() # TestWorkflowIn | 
+
+    try:
+        # Preview Workflow
+        api_response = await api_instance.apps_workflows_api_preview_workflow(workflow_id, test_workflow_in)
+        print("The response of WorkflowsApi->apps_workflows_api_preview_workflow:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_preview_workflow: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **str**|  | 
+ **test_workflow_in** | [**TestWorkflowIn**](TestWorkflowIn.md)|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -2440,10 +2861,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2532,6 +2955,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -2626,6 +3050,7 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2715,10 +3140,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
-**422** | Validation Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2806,10 +3232,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

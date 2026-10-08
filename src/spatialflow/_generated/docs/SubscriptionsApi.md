@@ -341,6 +341,7 @@ This endpoint does not need any parameter.
 **200** | OK |  -  |
 **403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -409,6 +410,7 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -417,11 +419,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_subscriptions_api_get_usage_metrics**
-> UsageResponse apps_subscriptions_api_get_usage_metrics()
+> SubscriptionUsageResponse apps_subscriptions_api_get_usage_metrics()
 
 Get Usage Metrics
 
-Get detailed usage metrics for the current billing period.
+Get detailed usage metrics for the current month.  Events count against a monthly allowance whatever the billing interval, so a yearly plan's allowance starts over each month on its billing day. `period_start` and `period_end` bound the current month.
 
 ### Example
 
@@ -429,7 +431,7 @@ Get detailed usage metrics for the current billing period.
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.usage_response import UsageResponse
+from spatialflow_generated.models.subscription_usage_response import SubscriptionUsageResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -471,7 +473,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**UsageResponse**](UsageResponse.md)
+[**SubscriptionUsageResponse**](SubscriptionUsageResponse.md)
 
 ### Authorization
 
@@ -489,6 +491,7 @@ This endpoint does not need any parameter.
 **200** | OK |  -  |
 **403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -546,16 +549,18 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: text/plain, application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**200** | Stripe event accepted |  -  |
+**400** | Invalid Stripe payload or signature |  -  |
+**404** | Billing integration is disabled |  -  |
+**500** | Stripe event processing failed |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -621,10 +626,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

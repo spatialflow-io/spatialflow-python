@@ -7,11 +7,14 @@ Response for session locations with pagination or simplification.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **session_id** | **str** |  | 
+**snapshot_at** | **datetime** |  | [optional] 
 **locations** | [**List[LocationPointOut]**](LocationPointOut.md) |  | 
 **total_count** | **int** |  | 
 **offset** | **int** |  | 
 **limit** | **int** |  | 
 **simplified** | **bool** |  | [optional] [default to False]
+**rendered_track** | **List[List[float]]** |  | [optional] 
+**track_source** | **str** |  | [optional] [default to 'raw']
 
 ## Example
 

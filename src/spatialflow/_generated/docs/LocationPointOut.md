@@ -12,6 +12,9 @@ Name | Type | Description | Notes
 **accuracy** | **float** |  | [optional] 
 **speed** | **float** |  | [optional] 
 **heading** | **float** |  | [optional] 
+**battery_level** | **int** |  | [optional] 
+**battery_charging** | **bool** |  | [optional] 
+**is_heartbeat** | **bool** |  | [optional] [default to False]
 
 ## Example
 

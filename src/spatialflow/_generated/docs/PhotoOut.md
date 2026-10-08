@@ -1,6 +1,6 @@
 # PhotoOut
 
-Response item for GET /devices/{uuid}/sessions/{session_id}/photos (Phase 120-04, D-16).  Lat/lon are derived per D-07: - Nearest DeviceLocation within ±60s of captured_at, OR - ST_LineInterpolatePoint on session.track_geometry (closed sessions only), OR - None when neither path produces a result (D-09 — entry still appears in the listing).  session_id added in Phase 122-01 (D-03) so the dashboard popup can deep-link to the session detail panel. Backward-compatible addition: SDK consumers that do not read session_id continue to work; consumers that need it (Phase 122 frontend popup) can read it directly from this listing.
+A session photo with where and when it was taken.  Placement uses t = ``taken_at`` when it falls within the shift (from 10 minutes before its start to 5 minutes after its end, or to now while it is open), else ``uploaded_at``, when the upload finished. ``taken_at`` is returned as the phone sent it, except that a time ahead of the server when the upload began is stored as that time. Placement tries in order: the phone's capture fix when its accuracy is 100 m or better and ``taken_at``, if sent, falls within the shift (``capture``); the nearest stored fix in the session within 60 s of t (``fix``); the latest stored fix at or before t in the session, else the first one after t (``last_fix``, approximate); interpolation along a closed session's track (``track_estimate``, approximate). A photo matching none of them has null coordinates and ``location_source``.
 
 ## Properties
 
@@ -13,11 +13,15 @@ Name | Type | Description | Notes
 **size_bytes** | **int** |  | 
 **latitude** | **float** |  | [optional] 
 **longitude** | **float** |  | [optional] 
+**location_source** | **str** |  | [optional] 
+**location_approximate** | **bool** | True when the location is an estimate rather than a fix at the photo time. | 
 **download_url** | **str** |  | 
 **device_uuid** | **str** |  | 
 **device_name** | **str** |  | 
 **session_id** | **str** |  | 
-**captured_at** | **datetime** |  | 
+**captured_at** | **datetime** | taken_at when the phone sent it, else uploaded_at. | 
+**taken_at** | **datetime** |  | [optional] 
+**uploaded_at** | **datetime** | When the upload finished. | 
 
 ## Example
 

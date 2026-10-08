@@ -14,11 +14,12 @@ Name | Type | Description | Notes
 **health_status** | **str** |  | 
 **health_message** | **str** |  | 
 **usage_count** | **int** |  | 
-**last_used_at** | **str** |  | [optional] 
-**last_verified_at** | **str** |  | [optional] 
+**last_used_at** | **datetime** |  | [optional] 
+**last_verified_at** | **datetime** |  | [optional] 
 **tags** | **List[str]** |  | 
-**created_at** | **str** |  | 
-**updated_at** | **str** |  | 
+**created_at** | **datetime** |  | 
+**updated_at** | **datetime** |  | 
+**has_default_topic** | **bool** |  | 
 
 ## Example
 

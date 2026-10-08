@@ -10,7 +10,9 @@ Name | Type | Description | Notes
 **email** | **str** |  | 
 **name** | **str** |  | 
 **role** | **str** |  | 
-**joined_at** | **str** |  | 
+**joined_at** | **datetime** |  | 
+**tracking_state** | **str** |  | [optional] 
+**last_location_at** | **datetime** |  | [optional] 
 
 ## Example
 

@@ -9,11 +9,12 @@ Name | Type | Description | Notes
 **event_type** | **str** |  | 
 **device** | [**EventDeviceOut**](EventDeviceOut.md) |  | 
 **geofence** | [**EventGeofenceOut**](EventGeofenceOut.md) |  | 
-**timestamp** | **str** |  | 
+**timestamp** | **datetime** |  | 
 **location** | [**EventLocationOut**](EventLocationOut.md) |  | 
 **workflows_triggered** | **List[str]** |  | [optional] [default to []]
+**workflow_runs** | [**List[EventWorkflowRunOut]**](EventWorkflowRunOut.md) |  | [optional] [default to []]
 **webhooks_triggered** | **List[str]** |  | [optional] [default to []]
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

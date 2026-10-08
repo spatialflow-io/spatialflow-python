@@ -1,6 +1,6 @@
 # GeoJSONMultiPolygon
 
-GeoJSON MultiPolygon geometry schema (PRD §3.1)
+GeoJSON MultiPolygon geometry schema.
 
 ## Properties
 

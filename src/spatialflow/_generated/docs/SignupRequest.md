@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **utm_term** | **str** |  | [optional] 
 **utm_content** | **str** |  | [optional] 
 **website** | **str** |  | [optional] 
+**lane** | **str** |  | [optional] 
+**timezone** | **str** |  | [optional] 
 
 ## Example
 

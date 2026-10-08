@@ -1,6 +1,6 @@
 # SessionNoteIn
 
-Request body for the manager POST /devices/{uuid}/sessions/{session_id}/notes (D-04).
+Request body for the manager POST /devices/{uuid}/sessions/{session_id}/notes.
 
 ## Properties
 

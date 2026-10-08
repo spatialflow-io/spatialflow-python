@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **status** | **str** |  | 
 **current_step** | **int** |  | [optional] 
 **error_message** | **str** |  | [optional] 
-**started_at** | **str** |  | [optional] 
-**completed_at** | **str** |  | [optional] 
+**started_at** | **datetime** |  | [optional] 
+**completed_at** | **datetime** |  | [optional] 
 **duration_seconds** | **float** |  | [optional] 
 **steps** | [**List[ExecutionStepDetailOut]**](ExecutionStepDetailOut.md) |  | 
 

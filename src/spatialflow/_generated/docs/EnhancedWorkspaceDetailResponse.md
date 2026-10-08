@@ -17,8 +17,8 @@ Name | Type | Description | Notes
 **member_count** | **int** |  | 
 **subscription** | [**SubscriptionInfo**](SubscriptionInfo.md) |  | 
 **usage** | [**UsageLimits**](UsageLimits.md) |  | 
-**created_at** | **str** |  | 
-**updated_at** | **str** |  | 
+**created_at** | **datetime** |  | 
+**updated_at** | **datetime** |  | 
 
 ## Example
 

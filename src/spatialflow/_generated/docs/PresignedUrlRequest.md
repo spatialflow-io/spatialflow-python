@@ -10,6 +10,10 @@ Name | Type | Description | Notes
 **file_size** | **int** |  | 
 **related_object_type** | **str** |  | [optional] 
 **related_object_id** | **str** |  | [optional] 
+**captured_at** | **datetime** |  | [optional] 
+**capture_latitude** | **float** |  | [optional] 
+**capture_longitude** | **float** |  | [optional] 
+**capture_accuracy_m** | **float** |  | [optional] 
 
 ## Example
 

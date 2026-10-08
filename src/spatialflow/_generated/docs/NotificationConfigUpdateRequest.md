@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **webhook_url** | **str** |  | [optional] 
 **is_enabled** | **bool** |  | [optional] 
 **notify_new_signups** | **bool** |  | [optional] 
+**notify_issue_submissions** | **bool** |  | [optional] 
 **notify_admin_approvals** | **bool** |  | [optional] 
 **notify_subscription_changes** | **bool** |  | [optional] 
 **notify_payment_failures** | **bool** |  | [optional] 

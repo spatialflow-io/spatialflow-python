@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
-**checked_at** | **str** |  | 
+**checked_at** | **datetime** |  | 
 **environment** | **str** |  | 
 **version** | **str** |  | 
 **components** | [**Dict[str, SystemHealthComponent]**](SystemHealthComponent.md) |  | 

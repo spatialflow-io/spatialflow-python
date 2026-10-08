@@ -12,11 +12,11 @@ Name | Type | Description | Notes
 **email_verified** | **bool** |  | 
 **is_beta_user** | **bool** |  | [optional] [default to False]
 **admin_approved** | **bool** |  | [optional] [default to False]
-**admin_approved_at** | **str** |  | [optional] 
-**created_at** | **str** |  | 
-**last_login** | **str** |  | 
-**last_seen_at** | **str** |  | [optional] 
-**updated_at** | **str** |  | [optional] 
+**admin_approved_at** | **datetime** |  | [optional] 
+**created_at** | **datetime** |  | 
+**last_login** | **datetime** |  | 
+**last_seen_at** | **datetime** |  | [optional] 
+**updated_at** | **datetime** |  | [optional] 
 **subscription_tier** | **str** |  | [optional] [default to 'free']
 **api_keys_count** | **int** |  | 
 **workspace** | [**WorkspaceSummary**](WorkspaceSummary.md) |  | [optional] 

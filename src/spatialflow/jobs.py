@@ -44,8 +44,6 @@ class JobFailedError(SpatialFlowError):
 
 
 class JobResult:
-    """Result of a completed job."""
-
     def __init__(
         self,
         job_id: str,
@@ -73,12 +71,10 @@ class JobResult:
 
     @property
     def errors(self) -> list:
-        """List of errors that occurred during processing."""
         return self.results.get("errors", [])
 
     @property
     def warnings(self) -> list:
-        """List of warnings from processing."""
         return self.results.get("warnings", [])
 
     def __repr__(self) -> str:
@@ -159,7 +155,6 @@ async def poll_job(
 
 
 def _default_extract_job_id(response: Any) -> str:
-    """Extract job_id from response."""
     if hasattr(response, "job_id"):
         return str(response.job_id)
     if isinstance(response, dict):
@@ -168,7 +163,6 @@ def _default_extract_job_id(response: Any) -> str:
 
 
 def _default_extract_status(response: Any) -> str:
-    """Extract status from response."""
     if hasattr(response, "status"):
         return str(response.status)
     if isinstance(response, dict):
@@ -177,8 +171,6 @@ def _default_extract_status(response: Any) -> str:
 
 
 def _build_job_result(job_id: str, status: str, response: Any) -> JobResult:
-    """Build a JobResult from the response."""
-    # Handle both object attributes and dict access
     def get_field(name: str, default: Any = None) -> Any:
         if hasattr(response, name):
             return getattr(response, name)
@@ -186,7 +178,6 @@ def _build_job_result(job_id: str, status: str, response: Any) -> JobResult:
             return response.get(name, default)
         return default
 
-    # Check for failure
     if status == "failed":
         error_message = get_field("error_message")
         results = get_field("results")

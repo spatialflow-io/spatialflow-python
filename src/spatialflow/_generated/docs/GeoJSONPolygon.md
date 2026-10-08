@@ -7,7 +7,7 @@ GeoJSON Polygon geometry schema
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | 
-**coordinates** | **List[List[List[float]]]** |  | 
+**coordinates** | **List[List[List[float]]]** | Polygon rings with at most 1000 total positions, 64 rings, and 32 holes. | 
 
 ## Example
 

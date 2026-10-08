@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **activity_summary** | [**List[ActivitySummary]**](ActivitySummary.md) |  | 
 **recent_activities** | [**List[RecentActivity]**](RecentActivity.md) |  | 
 **account_created** | **str** |  | 
-**last_login** | **str** |  | 
-**last_seen_at** | **str** |  | [optional] 
+**last_login** | **datetime** |  | 
+**last_seen_at** | **datetime** |  | [optional] 
 
 ## Example
 

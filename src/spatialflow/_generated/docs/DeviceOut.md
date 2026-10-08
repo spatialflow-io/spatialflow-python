@@ -9,7 +9,9 @@ Name | Type | Description | Notes
 **device_id** | **str** |  | 
 **name** | **str** |  | 
 **device_type** | **str** |  | 
+**registration_source** | **str** |  | 
 **is_active** | **bool** |  | 
+**is_example** | **bool** |  | [optional] [default to False]
 **shift_status** | **str** |  | 
 **shift_started_at** | **datetime** |  | [optional] 
 **shift_paused_at** | **datetime** |  | [optional] 
@@ -17,8 +19,22 @@ Name | Type | Description | Notes
 **shift_resumed_at** | **datetime** |  | [optional] 
 **last_location** | [**LatLonOut**](LatLonOut.md) |  | [optional] 
 **last_location_time** | **datetime** |  | [optional] 
+**last_accuracy** | **float** |  | [optional] 
 **last_heading** | **float** |  | [optional] 
+**last_battery_level** | **int** |  | [optional] 
+**last_battery_charging** | **bool** |  | [optional] 
+**last_battery_time** | **datetime** |  | [optional] 
+**driver_name** | **str** |  | [optional] [default to '']
+**vehicle_label** | **str** |  | [optional] [default to '']
+**employee_id** | **str** |  | [optional] [default to '']
+**license_plate** | **str** |  | [optional] [default to '']
+**group** | **str** |  | [optional] [default to '']
+**status** | **str** |  | 
+**last_seen_seconds** | **int** |  | [optional] 
+**parked** | **bool** |  | [optional] [default to False]
+**today_distance_meters** | **float** |  | [optional] 
 **current_session_notes** | **str** |  | [optional] [default to '']
+**current_session** | [**CurrentSessionOut**](CurrentSessionOut.md) |  | [optional] 
 **in_geofence_ids** | **List[str]** |  | [optional] [default to []]
 **in_geofence_entries** | **Dict[str, str]** |  | [optional] 
 **created_at** | **datetime** |  | 

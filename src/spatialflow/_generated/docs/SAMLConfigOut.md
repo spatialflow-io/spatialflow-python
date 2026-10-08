@@ -12,8 +12,12 @@ Name | Type | Description | Notes
 **certificate** | **str** |  | 
 **covered_domain** | **str** |  | 
 **is_enabled** | **bool** |  | 
-**created_at** | **str** |  | 
-**updated_at** | **str** |  | 
+**domain_verified** | **bool** |  | 
+**domain_verified_at** | **datetime** |  | [optional] 
+**domain_verification_dns_name** | **str** |  | 
+**domain_verification_dns_value** | **str** |  | 
+**created_at** | **datetime** |  | 
+**updated_at** | **datetime** |  | 
 
 ## Example
 

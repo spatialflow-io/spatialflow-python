@@ -7,7 +7,6 @@ the generated API classes.
 
 
 def test_geofences_api_methods_exist():
-    """Verify geofences API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.geofences_api import (
         GeofencesApi,
     )
@@ -20,12 +19,10 @@ def test_geofences_api_methods_exist():
 
 
 def test_workflows_api_methods_exist():
-    """Verify workflow API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.workflows_api import (
         WorkflowsApi,
     )
 
-    # Basic CRUD
     assert hasattr(WorkflowsApi, "apps_workflows_api_list_workflows")
     assert hasattr(WorkflowsApi, "apps_workflows_api_create_workflow")
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow")
@@ -33,25 +30,21 @@ def test_workflows_api_methods_exist():
     assert hasattr(WorkflowsApi, "apps_workflows_api_delete_workflow")
     assert hasattr(WorkflowsApi, "apps_workflows_api_toggle_workflow")
 
-    # Execution methods
     assert hasattr(WorkflowsApi, "apps_workflows_api_execute_workflow")
     assert hasattr(WorkflowsApi, "apps_workflows_api_test_workflow")
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow_executions")
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow_execution_detail")
 
-    # Monitoring methods
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow_performance")
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow_statistics")
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow_retry_policy")
 
-    # Versioning methods
     assert hasattr(WorkflowsApi, "apps_workflows_api_list_workflow_versions")
     assert hasattr(WorkflowsApi, "apps_workflows_api_restore_workflow_version")
     assert hasattr(WorkflowsApi, "apps_workflows_api_duplicate_workflow")
     assert hasattr(WorkflowsApi, "apps_workflows_api_export_workflow")
     assert hasattr(WorkflowsApi, "apps_workflows_api_import_workflow")
 
-    # Additional monitoring/config methods
     assert hasattr(WorkflowsApi, "apps_workflows_api_update_workflow_retry_policy")
     assert hasattr(WorkflowsApi, "apps_workflows_api_list_workflow_executions")
     assert hasattr(WorkflowsApi, "apps_workflows_api_get_workflow_bottlenecks")
@@ -59,37 +52,30 @@ def test_workflows_api_methods_exist():
 
 
 def test_webhooks_api_methods_exist():
-    """Verify webhook API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.webhooks_api import (
         WebhooksApi,
     )
 
-    # Basic CRUD
     assert hasattr(WebhooksApi, "apps_webhooks_api_list_webhooks")
     assert hasattr(WebhooksApi, "apps_webhooks_api_create_webhook")
     assert hasattr(WebhooksApi, "apps_webhooks_api_get_webhook")
     assert hasattr(WebhooksApi, "apps_webhooks_api_update_webhook")
     assert hasattr(WebhooksApi, "apps_webhooks_api_delete_webhook")
-    # Note: rotate_secret method may not exist in generated API; rotation may be
-    # handled via update_webhook or a separate endpoint not yet generated
+    assert hasattr(WebhooksApi, "apps_webhooks_api_rotate_webhook_secret")
 
-    # Delivery tracking methods
     assert hasattr(WebhooksApi, "apps_webhooks_api_get_webhook_deliveries")
     assert hasattr(WebhooksApi, "apps_webhooks_api_get_webhook_delivery_detail")
     assert hasattr(WebhooksApi, "apps_webhooks_api_retry_webhook_delivery")
 
-    # Monitoring methods
     assert hasattr(WebhooksApi, "apps_webhooks_api_get_webhook_metrics")
     assert hasattr(WebhooksApi, "apps_webhooks_api_get_webhook_success_timeline")
     assert hasattr(WebhooksApi, "apps_webhooks_api_test_webhook")
 
-    # Dead Letter Queue methods
     assert hasattr(WebhooksApi, "apps_webhooks_api_list_dlq_entries")
     assert hasattr(WebhooksApi, "apps_webhooks_api_retry_from_dlq")
 
 
 def test_devices_api_methods_exist():
-    """Verify device API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.devices_api import DevicesApi
 
     assert hasattr(DevicesApi, "apps_devices_api_list_devices")
@@ -103,7 +89,6 @@ def test_devices_api_methods_exist():
 
 
 def test_locations_api_methods_exist():
-    """Verify public location ingest API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.public_location_ingest_api import (
         PublicLocationIngestApi,
     )
@@ -116,7 +101,6 @@ def test_locations_api_methods_exist():
 
 
 def test_integrations_api_methods_exist():
-    """Verify integration API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.integrations_api import (
         IntegrationsApi,
     )
@@ -130,7 +114,6 @@ def test_integrations_api_methods_exist():
 
 
 def test_storage_api_methods_exist():
-    """Verify storage API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.storage_api import StorageApi
 
     assert hasattr(StorageApi, "apps_storage_api_create_presigned_url")
@@ -140,7 +123,6 @@ def test_storage_api_methods_exist():
 
 
 def test_workspaces_api_methods_exist():
-    """Verify workspace API method names match our wrappers."""
     from spatialflow._generated.spatialflow_generated.api.workspaces_api import (
         WorkspacesApi,
     )
@@ -151,7 +133,6 @@ def test_workspaces_api_methods_exist():
 
 
 def test_workflow_in_model_accepts_dicts():
-    """Verify WorkflowIn accepts List[Dict] for nodes/edges."""
     from spatialflow._generated.spatialflow_generated.models import WorkflowIn
 
     workflow = WorkflowIn(
@@ -162,3 +143,38 @@ def test_workflow_in_model_accepts_dicts():
     assert workflow.name == "Test"
     assert len(workflow.nodes) == 1
     assert len(workflow.edges) == 1
+
+
+def test_shift_session_group_and_member_api_methods_exist():
+    from spatialflow._generated.spatialflow_generated.api.devices_api import DevicesApi
+    from spatialflow._generated.spatialflow_generated.api.geofences_api import GeofencesApi
+    from spatialflow._generated.spatialflow_generated.api.workspaces_api import WorkspacesApi
+
+    for name in (
+        "start_shift",
+        "pause_shift",
+        "resume_shift",
+        "end_shift",
+        "get_device_sessions",
+        "get_session_detail",
+        "get_session_locations",
+        "list_session_notes",
+        "create_manager_session_note",
+    ):
+        assert hasattr(DevicesApi, f"apps_devices_api_{name}")
+
+    for name in ("list_geofence_groups", "list_group_geofences", "test_group_point"):
+        assert hasattr(GeofencesApi, f"apps_geofences_api_{name}")
+
+    for name in (
+        "list_workspace_members",
+        "update_member_role",
+        "remove_member",
+        "create_invitation",
+        "list_invitations",
+        "resend_invitation",
+        "resend_missing_invitations",
+        "extend_invitation",
+        "cancel_invitation",
+    ):
+        assert hasattr(WorkspacesApi, f"apps_workspaces_api_{name}")

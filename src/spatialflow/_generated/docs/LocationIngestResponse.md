@@ -1,6 +1,6 @@
 # LocationIngestResponse
 
-Response for location ingestion (PRD §3.4 compliant).  Returns counts and event IDs/idempotency keys for tracking.
+Response for location ingestion.  Returns counts and durable receipt IDs/idempotency keys for tracking.
 
 ## Properties
 

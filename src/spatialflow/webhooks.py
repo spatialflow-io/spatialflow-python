@@ -6,8 +6,10 @@ Provides HMAC-SHA256 signature verification for webhook payloads.
 
 import hashlib
 import hmac
+import json
+import re
 import time
-from typing import Union
+from typing import Any, Union
 
 from .exceptions import SpatialFlowError
 
@@ -27,22 +29,30 @@ def verify_webhook_signature(
     """
     Verify a webhook signature and return the parsed payload.
 
-    SpatialFlow webhooks include an HMAC-SHA256 signature in the
-    `X-SF-Signature` header. This function verifies that signature
-    and optionally checks the timestamp to prevent replay attacks.
+    SpatialFlow signs each delivery with an HMAC-SHA256 of the raw request
+    body and sends it in the ``X-SF-Signature`` header, hex-encoded and
+    prefixed with ``sha256=`` (for example ``sha256=5257a869...``). This
+    function recomputes that HMAC and compares it in constant time.
 
     Args:
-        payload: The raw webhook payload (request body as string or bytes)
-        signature: The signature from X-SF-Signature header
-        secret: Your webhook signing secret
-        tolerance: Maximum age of the webhook in seconds (default 300 = 5 minutes).
-                   Set to 0 to disable timestamp checking.
+        payload: The raw webhook payload (request body as string or bytes).
+        signature: The value of the ``X-SF-Signature`` header.
+        secret: Your webhook signing secret.
+        tolerance: Deprecated and ignored. The SpatialFlow signature does not
+            include a timestamp, so there is no time-based replay window. To
+            guard against replays, deduplicate on the signed ``id`` in the
+            payload, recording it in the same transaction as the work and
+            acknowledging only committed work; the
+            ``X-Idempotency-Key`` and ``X-SF-Event-ID`` headers are not signed.
+            The default payload has an ``id``; a custom payload template must
+            include one.
 
     Returns:
-        The parsed webhook payload as a dict
+        The parsed webhook payload as a dict.
 
     Raises:
-        WebhookSignatureError: If signature is invalid or timestamp is too old
+        WebhookSignatureError: If the signature is missing, malformed, does
+            not match, or the payload is not valid JSON.
 
     Example:
         >>> from spatialflow import verify_webhook_signature
@@ -60,67 +70,129 @@ def verify_webhook_signature(
         ...             secret=WEBHOOK_SECRET,
         ...         )
         ...         # Process the verified event
-        ...         print(f"Event type: {event['type']}")
+        ...         print(f"Event type: {event['event']}")
         ...         return {"status": "ok"}
         ...     except WebhookSignatureError as e:
         ...         return {"error": str(e)}, 400
     """
-    import json
-
-    # Normalize payload to bytes
     if isinstance(payload, str):
         payload_bytes = payload.encode("utf-8")
     else:
         payload_bytes = payload
 
-    # Parse the signature header
-    # Format: t=<timestamp>,v1=<signature>
+    if not signature:
+        raise WebhookSignatureError("Missing signature header")
+
+    # The header is `sha256=<hex>`; tolerate a bare hex digest as well.
+    sig_hash = signature.strip()
+    if sig_hash.startswith("sha256="):
+        sig_hash = sig_hash[len("sha256=") :]
+
+    if not sig_hash:
+        raise WebhookSignatureError(
+            "Invalid signature format. Expected: sha256=<hex digest>"
+        )
+
+    # Decode the provided hex digest to bytes. Doing this first means a
+    # malformed header (non-hex or non-ASCII) is rejected as a
+    # WebhookSignatureError rather than letting hmac.compare_digest raise a
+    # TypeError on non-ASCII strings, and it keeps the comparison on bytes.
     try:
-        parts = dict(part.strip().split("=", 1) for part in signature.split(","))
-        timestamp_str = parts.get("t")
-        sig_hash = parts.get("v1")
+        provided_digest = bytes.fromhex(sig_hash)
+    except ValueError:
+        raise WebhookSignatureError("Invalid signature: not valid hex")
 
-        if not timestamp_str or not sig_hash:
-            raise WebhookSignatureError(
-                "Invalid signature format. Expected: t=<timestamp>,v1=<signature>"
-            )
-
-        timestamp = int(timestamp_str)
-    except (ValueError, AttributeError) as e:
-        raise WebhookSignatureError(f"Failed to parse signature header: {e}")
-
-    # Check timestamp tolerance (replay attack prevention)
-    if tolerance > 0:
-        now = int(time.time())
-        age = now - timestamp
-        if age > tolerance:
-            raise WebhookSignatureError(
-                f"Webhook timestamp too old: {age}s (tolerance: {tolerance}s)"
-            )
-        if age < -tolerance:
-            raise WebhookSignatureError(
-                f"Webhook timestamp in future: {-age}s (tolerance: {tolerance}s)"
-            )
-
-    # Compute expected signature
-    # The signed payload is: timestamp.payload
-    signed_payload = f"{timestamp}.".encode("utf-8") + payload_bytes
-    expected_sig = hmac.new(
+    expected_digest = hmac.new(
         secret.encode("utf-8"),
-        signed_payload,
+        payload_bytes,
         hashlib.sha256,
-    ).hexdigest()
+    ).digest()
 
-    # Constant-time comparison to prevent timing attacks
-    if not hmac.compare_digest(expected_sig, sig_hash):
+    # Constant-time comparison to prevent timing attacks.
+    if not hmac.compare_digest(expected_digest, provided_digest):
         raise WebhookSignatureError("Signature verification failed")
 
-    # Parse and return the payload
     try:
         return json.loads(payload_bytes.decode("utf-8"))
     except json.JSONDecodeError as e:
         raise WebhookSignatureError(f"Failed to parse webhook payload as JSON: {e}")
 
 
-# Convenience alias
 verify_signature = verify_webhook_signature
+
+
+def verify_workflow_signature(
+    payload: Union[str, bytes],
+    signature: str,
+    timestamp: str,
+    secret: str,
+    tolerance: int = 300,
+) -> Any:
+    """
+    Verify a workflow webhook action delivery and return the parsed body.
+
+    A workflow Webhook action with a signing secret sends two headers:
+    ``X-SpatialFlow-Timestamp`` (unix seconds) and ``X-SpatialFlow-Signature``
+    (``sha256=<hex>``). The signature is an HMAC-SHA256 of
+    ``"<timestamp>.<raw body>"``. This is a different contract from the
+    workspace webhook header handled by :func:`verify_webhook_signature`.
+
+    Args:
+        payload: The raw request body (str or bytes), exactly as received.
+        signature: The value of the ``X-SpatialFlow-Signature`` header.
+        timestamp: The value of the ``X-SpatialFlow-Timestamp`` header.
+        secret: The webhook signing secret.
+        tolerance: Maximum age, in seconds, of the timestamp in either
+            direction. Defaults to 300.
+
+    Returns:
+        The parsed JSON body, or the body as text when it is not JSON. The
+        workflow action sends whatever body the workflow configures, so the
+        shape is not normalized.
+
+    Raises:
+        WebhookSignatureError: If the signature or timestamp is missing or
+            malformed, the timestamp is outside the tolerance, the signature
+            does not match, or the body is not valid UTF-8.
+    """
+    if not signature:
+        raise WebhookSignatureError("Missing signature header")
+
+    timestamp = (timestamp or "").strip()
+    if not re.fullmatch(r"[0-9]{1,15}", timestamp, re.ASCII):
+        raise WebhookSignatureError("Missing or invalid timestamp header")
+    sent_at = int(timestamp)
+
+    if abs(time.time() - sent_at) > tolerance:
+        raise WebhookSignatureError("Timestamp outside the tolerance window")
+
+    sig_hash = signature.strip()
+    if sig_hash.startswith("sha256="):
+        sig_hash = sig_hash[len("sha256=") :]
+    try:
+        provided_digest = bytes.fromhex(sig_hash)
+    except ValueError:
+        raise WebhookSignatureError("Invalid signature: not valid hex")
+    if not provided_digest:
+        raise WebhookSignatureError(
+            "Invalid signature format. Expected: sha256=<hex digest>"
+        )
+
+    payload_bytes = payload.encode("utf-8") if isinstance(payload, str) else payload
+    expected_digest = hmac.new(
+        secret.encode("utf-8"),
+        timestamp.encode("ascii") + b"." + payload_bytes,
+        hashlib.sha256,
+    ).digest()
+
+    if not hmac.compare_digest(expected_digest, provided_digest):
+        raise WebhookSignatureError("Signature verification failed")
+
+    try:
+        text = payload_bytes.decode("utf-8")
+    except UnicodeDecodeError as e:
+        raise WebhookSignatureError(f"Webhook payload is not valid UTF-8: {e}")
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return text

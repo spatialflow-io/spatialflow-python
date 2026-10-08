@@ -26,7 +26,6 @@ from ._generated.spatialflow_generated.api.billing_api import BillingApi
 from ._generated.spatialflow_generated.api.subscriptions_api import SubscriptionsApi
 from ._generated.spatialflow_generated.api.tiles_api import TilesApi
 
-# Import resource wrappers for clean API
 from .resources import (
     AccountResource,
     GeofencesResource,
@@ -45,7 +44,7 @@ __all__ = ["SpatialFlow"]
 DEFAULT_BASE_URL = "https://api.spatialflow.io"
 DEFAULT_TIMEOUT = 30  # seconds
 DEFAULT_MAX_RETRIES = 3
-VERSION = "1.1.0"
+VERSION = "2.0.0"
 
 
 class SpatialFlow:
@@ -97,30 +96,22 @@ class SpatialFlow:
         if api_key and access_token:
             raise ValueError("Provide either api_key or access_token, not both")
 
-        # Build configuration
         config = Configuration(host=base_url)
 
-        # Configure authentication
         if api_key:
             config.api_key = {"APIKeyBearer": api_key}
         elif access_token:
             config.access_token = access_token
 
-        # Configure timeouts and retries
         config.retries = max_retries
 
-        # Create API client
         self._api_client = ApiClient(configuration=config)
-
-        # Set User-Agent
         self._api_client.user_agent = f"spatialflow-python/{VERSION}"
 
-        # Store config for reference
         self._base_url = base_url
         self._timeout = timeout
         self._max_retries = max_retries
 
-        # Initialize raw APIs (lazy initialization)
         self._raw_geofences: Optional[GeofencesApi] = None
         self._raw_workflows: Optional[WorkflowsApi] = None
         self._raw_webhooks: Optional[WebhooksApi] = None
@@ -136,7 +127,6 @@ class SpatialFlow:
         self._raw_subscriptions: Optional[SubscriptionsApi] = None
         self._raw_tiles: Optional[TilesApi] = None
 
-        # Initialize resource wrappers (lazy initialization)
         self._geofences: Optional[GeofencesResource] = None
         self._workflows: Optional[WorkflowsResource] = None
         self._webhooks: Optional[WebhooksResource] = None
@@ -146,10 +136,6 @@ class SpatialFlow:
         self._integrations: Optional[IntegrationsResource] = None
         self._workspaces: Optional[WorkspacesResource] = None
         self._account_resource: Optional[AccountResource] = None
-
-    # -------------------------------------------------------------------------
-    # Clean API - Recommended for most use cases
-    # -------------------------------------------------------------------------
 
     @property
     def geofences(self) -> GeofencesResource:
@@ -195,7 +181,8 @@ class SpatialFlow:
     def storage(self) -> StorageResource:
         """Access storage operations with clean API.
 
-        Methods: create_presigned_url(), list_files(), get_download_url(), delete_file()
+        Methods: create_presigned_url(), complete_upload(), list_files(),
+                 get_download_url(), delete_file()
         """
         if self._storage is None:
             self._storage = StorageResource(self._raw_storage_api, self._timeout)
@@ -207,8 +194,8 @@ class SpatialFlow:
 
         Methods: ingest(), ingest_batch(), get_stats()
 
-        This uses the public ingest API which accepts any device_id
-        without requiring the device to be pre-registered.
+        This uses the public ingest API, which accepts locations only for devices
+        registered and active in the API key's workspace.
         """
         if self._locations is None:
             self._locations = LocationsResource(self._raw_locations_api, self._timeout)
@@ -243,104 +230,86 @@ class SpatialFlow:
             )
         return self._workspaces
 
-    # -------------------------------------------------------------------------
-    # Raw API access - For advanced use cases
-    # -------------------------------------------------------------------------
-
     @property
     def _raw_geofences_api(self) -> GeofencesApi:
-        """Get raw GeofencesApi (internal use)."""
         if self._raw_geofences is None:
             self._raw_geofences = GeofencesApi(self._api_client)
         return self._raw_geofences
 
     @property
     def _raw_workflows_api(self) -> WorkflowsApi:
-        """Get raw WorkflowsApi (internal use)."""
         if self._raw_workflows is None:
             self._raw_workflows = WorkflowsApi(self._api_client)
         return self._raw_workflows
 
     @property
     def _raw_webhooks_api(self) -> WebhooksApi:
-        """Get raw WebhooksApi (internal use)."""
         if self._raw_webhooks is None:
             self._raw_webhooks = WebhooksApi(self._api_client)
         return self._raw_webhooks
 
     @property
     def _raw_devices_api(self) -> DevicesApi:
-        """Get raw DevicesApi (internal use)."""
         if self._raw_devices is None:
             self._raw_devices = DevicesApi(self._api_client)
         return self._raw_devices
 
     @property
     def _raw_account_api(self) -> AccountApi:
-        """Get raw AccountApi (internal use)."""
         if self._raw_account is None:
             self._raw_account = AccountApi(self._api_client)
         return self._raw_account
 
     @property
     def _raw_storage_api(self) -> StorageApi:
-        """Get raw StorageApi (internal use)."""
         if self._raw_storage is None:
             self._raw_storage = StorageApi(self._api_client)
         return self._raw_storage
 
     @property
     def _raw_locations_api(self) -> PublicLocationIngestApi:
-        """Get raw PublicLocationIngestApi (internal use)."""
         if self._raw_locations is None:
             self._raw_locations = PublicLocationIngestApi(self._api_client)
         return self._raw_locations
 
     @property
     def _raw_integrations_api(self) -> IntegrationsApi:
-        """Get raw IntegrationsApi (internal use)."""
         if self._raw_integrations is None:
             self._raw_integrations = IntegrationsApi(self._api_client)
         return self._raw_integrations
 
     @property
     def _raw_workspaces_api(self) -> WorkspacesApi:
-        """Get raw WorkspacesApi (internal use)."""
         if self._raw_workspaces is None:
             self._raw_workspaces = WorkspacesApi(self._api_client)
         return self._raw_workspaces
 
     @property
     def _raw_authentication_api(self) -> AuthenticationApi:
-        """Get raw AuthenticationApi (internal use)."""
         if self._raw_authentication is None:
             self._raw_authentication = AuthenticationApi(self._api_client)
         return self._raw_authentication
 
     @property
     def _raw_admin_api(self) -> AdminApi:
-        """Get raw AdminApi (internal use)."""
         if self._raw_admin is None:
             self._raw_admin = AdminApi(self._api_client)
         return self._raw_admin
 
     @property
     def _raw_billing_api(self) -> BillingApi:
-        """Get raw BillingApi (internal use)."""
         if self._raw_billing is None:
             self._raw_billing = BillingApi(self._api_client)
         return self._raw_billing
 
     @property
     def _raw_subscriptions_api(self) -> SubscriptionsApi:
-        """Get raw SubscriptionsApi (internal use)."""
         if self._raw_subscriptions is None:
             self._raw_subscriptions = SubscriptionsApi(self._api_client)
         return self._raw_subscriptions
 
     @property
     def _raw_tiles_api(self) -> TilesApi:
-        """Get raw TilesApi (internal use)."""
         if self._raw_tiles is None:
             self._raw_tiles = TilesApi(self._api_client)
         return self._raw_tiles
@@ -362,7 +331,7 @@ class SpatialFlow:
         """Access account operations with clean API.
 
         Methods: get_profile(), update_profile(), list_api_keys(), create_api_key(),
-                 get_dashboard_metrics(), get_onboarding_progress(), etc.
+                 get_dashboard_metrics(), get_notifications(), etc.
         """
         if self._account_resource is None:
             self._account_resource = AccountResource(
@@ -371,17 +340,13 @@ class SpatialFlow:
         return self._account_resource
 
     async def close(self) -> None:
-        """Close the API client and release resources."""
-        # The generated ApiClient uses urllib3 pool manager which doesn't need explicit closing
-        # This method is kept for API compatibility and future async implementations
-        pass
+        """Close the aiohttp session shared by every API; safe to call twice."""
+        await self._api_client.close()
 
     async def __aenter__(self) -> "SpatialFlow":
-        """Async context manager entry."""
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Async context manager exit."""
         await self.close()
 
 
@@ -397,70 +362,56 @@ class RawApiAccess:
 
     @property
     def geofences(self) -> GeofencesApi:
-        """Access raw GeofencesApi."""
         return self._client._raw_geofences_api
 
     @property
     def workflows(self) -> WorkflowsApi:
-        """Access raw WorkflowsApi."""
         return self._client._raw_workflows_api
 
     @property
     def webhooks(self) -> WebhooksApi:
-        """Access raw WebhooksApi."""
         return self._client._raw_webhooks_api
 
     @property
     def devices(self) -> DevicesApi:
-        """Access raw DevicesApi."""
         return self._client._raw_devices_api
 
     @property
     def account(self) -> AccountApi:
-        """Access raw AccountApi."""
         return self._client._raw_account_api
 
     @property
     def storage(self) -> StorageApi:
-        """Access raw StorageApi."""
         return self._client._raw_storage_api
 
     @property
     def locations(self) -> PublicLocationIngestApi:
-        """Access raw PublicLocationIngestApi."""
         return self._client._raw_locations_api
 
     @property
     def integrations(self) -> IntegrationsApi:
-        """Access raw IntegrationsApi."""
         return self._client._raw_integrations_api
 
     @property
     def workspaces(self) -> WorkspacesApi:
-        """Access raw WorkspacesApi."""
         return self._client._raw_workspaces_api
 
     @property
     def authentication(self) -> AuthenticationApi:
-        """Access raw AuthenticationApi."""
         return self._client._raw_authentication_api
 
     @property
     def admin(self) -> AdminApi:
-        """Access raw AdminApi."""
         return self._client._raw_admin_api
 
     @property
     def billing(self) -> BillingApi:
-        """Access raw BillingApi."""
         return self._client._raw_billing_api
 
     @property
     def subscriptions(self) -> SubscriptionsApi:
-        """Access raw SubscriptionsApi."""
         return self._client._raw_subscriptions_api
 
     @property
     def tiles(self) -> TilesApi:
-        """Access raw TilesApi."""
         return self._client._raw_tiles_api

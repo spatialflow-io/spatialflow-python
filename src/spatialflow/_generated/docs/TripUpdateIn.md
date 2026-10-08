@@ -6,7 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
-**planned_route** | **Dict[str, object]** |  | [optional] 
+**planned_route** | [**GeoJSONLineString**](GeoJSONLineString.md) |  | [optional] 
+**corridor_width_meters** | **int** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 
 ## Example

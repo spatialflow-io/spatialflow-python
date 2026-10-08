@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **to_email** | **str** |  | 
 **subject** | **str** |  | 
 **status** | **str** |  | 
-**created_at** | **str** |  | 
-**delivered_at** | **str** |  | [optional] 
+**created_at** | **datetime** |  | 
+**delivered_at** | **datetime** |  | [optional] 
 **template** | **str** |  | [optional] 
 
 ## Example

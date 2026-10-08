@@ -88,9 +88,11 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **404** | Not Found |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -254,6 +256,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -333,15 +336,17 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **501** | Not Implemented |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_tiles_api_health_check**
-> apps_tiles_api_health_check()
+> TileHealthResponse apps_tiles_api_health_check()
 
 Health Check
 
@@ -352,6 +357,7 @@ Health check endpoint for tiles service.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.tile_health_response import TileHealthResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -369,7 +375,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Health Check
-        await api_instance.apps_tiles_api_health_check()
+        api_response = await api_instance.apps_tiles_api_health_check()
+        print("The response of TilesApi->apps_tiles_api_health_check:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling TilesApi->apps_tiles_api_health_check: %s\n" % e)
 ```
@@ -382,7 +390,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**TileHealthResponse**](TileHealthResponse.md)
 
 ### Authorization
 
@@ -398,10 +406,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -476,6 +486,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |

@@ -19,12 +19,11 @@ Example:
 
 """
 
-__version__ = "1.1.0"
+__version__ = "2.0.0"
 
 # Main client (imported early to get DEFAULT_BASE_URL)
 from .client import SpatialFlow, DEFAULT_BASE_URL
 
-# Custom exceptions
 from .exceptions import (
     SpatialFlowError,
     AuthenticationError,
@@ -39,28 +38,26 @@ from .exceptions import (
     translate_exception,
 )
 
-# Webhook verification
-from .webhooks import verify_webhook_signature, WebhookSignatureError, verify_signature
+from .webhooks import (
+    verify_webhook_signature,
+    verify_workflow_signature,
+    WebhookSignatureError,
+    verify_signature,
+)
 
-# Pagination helpers
 from .pagination import (
     paginate,
     paginate_geofences,
     paginate_workflows,
     paginate_webhooks,
-    paginate_users,
-    paginate_files,
     AsyncPaginator,
     PaginatedResponse,
 )
 
-# Job polling helpers
 from .jobs import poll_job, JobResult, JobTimeoutError, JobFailedError
 
-# File upload helpers
 from .uploads import upload_geofences
 
-# Workflow builders
 from .builders import (
     build_geofence_webhook_workflow,
     build_geofence_integration_workflow,
@@ -105,6 +102,7 @@ __all__ = [
     "translate_exception",
     # Webhooks
     "verify_webhook_signature",
+    "verify_workflow_signature",
     "verify_signature",
     "WebhookSignatureError",
     # Pagination
@@ -112,8 +110,6 @@ __all__ = [
     "paginate_geofences",
     "paginate_workflows",
     "paginate_webhooks",
-    "paginate_users",
-    "paginate_files",
     "AsyncPaginator",
     "PaginatedResponse",
     # Job polling

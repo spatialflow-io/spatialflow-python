@@ -1,6 +1,6 @@
 # GeoJSONCircle
 
-Circle geometry schema (PRD §3.1).  Represented as a GeoJSON Point with an additional radius_meters property. The backend converts this to a buffered polygon for spatial queries.
+Circle geometry schema.  Represented as a GeoJSON Point with an additional radius_meters property. The backend converts this to a buffered polygon for spatial queries.
 
 ## Properties
 

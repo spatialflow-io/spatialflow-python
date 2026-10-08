@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **expires_in** | **int** |  | 
 **user** | **Dict[str, object]** |  | 
 **created** | **bool** |  | 
+**consumed_invite_id** | **str** |  | [optional] 
 
 ## Example
 

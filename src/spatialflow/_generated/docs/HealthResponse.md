@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | [optional] [default to 'healthy']
 **service** | **str** |  | [optional] [default to 'subscription']
-**timestamp** | **str** |  | [optional] 
+**timestamp** | **datetime** |  | [optional] 
 
 ## Example
 

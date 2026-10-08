@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **email** | **str** |  | 
 **role** | **str** |  | 
 **status** | **str** |  | 
-**created_at** | **str** |  | 
-**expires_at** | **str** |  | 
+**created_at** | **datetime** |  | 
+**expires_at** | **datetime** |  | 
 **invited_by_email** | **str** |  | [optional] 
 
 ## Example

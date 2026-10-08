@@ -6,7 +6,8 @@ Schema for testing a point against geofences
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**geometry** | [**GeoJSONPoint**](GeoJSONPoint.md) |  | [optional] 
+**geometry** | [**Geometry2**](Geometry2.md) |  | [optional] 
+**point** | [**TestPointCoordinate**](TestPointCoordinate.md) |  | [optional] 
 **lat** | **float** |  | [optional] 
 **lng** | **float** |  | [optional] 
 **geofence_ids** | **List[str]** |  | [optional] 

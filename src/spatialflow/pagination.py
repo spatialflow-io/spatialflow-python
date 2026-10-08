@@ -34,15 +34,14 @@ class PaginatedResponse(Generic[T]):
 
     @property
     def has_more(self) -> bool:
-        """Returns True if there are more pages available."""
         return self.next_url is not None
 
     def __iter__(self):
-        """Iterate over items in the current page."""
+        """Iterates over items in the current page only."""
         return iter(self.items)
 
     def __len__(self) -> int:
-        """Number of items in the current page."""
+        """Number of items in the current page, not the total count."""
         return len(self.items)
 
 
@@ -66,14 +65,8 @@ class AsyncPaginator(Generic[T]):
         limit: int = 100,
     ):
         """
-        Initialize the paginator.
-
         Args:
-            fetch_page: Async function that fetches a page (offset, limit) -> response
-            extract_items: Function to extract items list from response
-            extract_count: Function to extract total count from response
-            extract_next: Function to extract next page URL from response
-            limit: Number of items per page
+            fetch_page: Async function taking (offset, limit) and returning a page response
         """
         self._fetch_page = fetch_page
         self._extract_items = extract_items
@@ -83,10 +76,10 @@ class AsyncPaginator(Generic[T]):
         self._offset = 0
         self._exhausted = False
         self._total_count: Optional[int] = None
-        self._uses_cursor: Optional[bool] = None  # Track if using cursor-based pagination
+        self._uses_cursor: Optional[bool] = None
 
     async def __aiter__(self) -> AsyncIterator[T]:
-        """Async iterate over all items across all pages."""
+        """Iterates over items across all pages, fetching each page lazily."""
         while not self._exhausted:
             response = await self._fetch_page(self._offset, self._limit)
             items = self._extract_items(response)
@@ -96,29 +89,21 @@ class AsyncPaginator(Generic[T]):
             for item in items:
                 yield item
 
-            # Track if this API uses cursor-based pagination
-            # (first page with items will tell us if cursors are used)
+            # Whether this API uses cursor-based pagination is only knowable once
+            # a page with items has told us whether a next_url comes back.
             if self._uses_cursor is None and len(items) > 0:
                 self._uses_cursor = next_url is not None
 
-            # Stop pagination when:
-            # 1. We received fewer items than requested (last page)
-            # 2. For cursor-based pagination: no next cursor provided
             if len(items) < self._limit:
-                # Last page - fewer items than requested
                 self._exhausted = True
             elif self._uses_cursor and next_url is None:
-                # Cursor-based pagination: no more pages when cursor is None
                 self._exhausted = True
             else:
-                # Continue to next page
                 self._offset += self._limit
 
     @property
     def total_count(self) -> Optional[int]:
-        """
-        Total count of items (available after first page is fetched).
-        """
+        """Total count of items; None until the first page has been fetched."""
         return self._total_count
 
 
@@ -129,19 +114,11 @@ def paginate(
     items_field: str = "geofences",
 ) -> AsyncPaginator:
     """
-    Create a paginator for a list endpoint.
-
-    This is a generic paginator that works with offset-based pagination.
-    Use resource-specific helpers (paginate_geofences, paginate_workflows, etc.)
-    for convenience.
+    Generic paginator for offset-based pagination. Use the resource-specific
+    helpers (paginate_geofences, paginate_workflows, etc.) for convenience.
 
     Args:
-        fetch_page: Async function that takes (offset, limit) and returns response
-        limit: Number of items per page (default 100)
-        items_field: Name of the field containing items in the response (default "geofences")
-
-    Returns:
-        AsyncPaginator that yields items from all pages
+        items_field: Name of the field containing items in the response
 
     Example:
         >>> async def fetch(offset, limit):
@@ -167,10 +144,6 @@ def paginate_geofences(
     """
     Create a paginator for geofence list endpoints.
 
-    Args:
-        fetch_page: Async function that takes (offset, limit) and returns response
-        limit: Number of items per page (default 100)
-
     Returns:
         AsyncPaginator that yields GeofenceResponse objects
 
@@ -185,7 +158,7 @@ def paginate_geofences(
     return AsyncPaginator(
         fetch_page=fetch_page,
         extract_items=lambda r: r.geofences,
-        extract_count=lambda r: r.count,
+        extract_count=lambda r: r.total_count,
         extract_next=lambda r: None,
         limit=limit,
     )
@@ -198,17 +171,13 @@ def paginate_workflows(
     """
     Create a paginator for workflow list endpoints.
 
-    Args:
-        fetch_page: Async function that takes (offset, limit) and returns response
-        limit: Number of items per page (default 100)
-
     Returns:
         AsyncPaginator that yields WorkflowListOut objects
     """
     return AsyncPaginator(
         fetch_page=fetch_page,
         extract_items=lambda r: r.workflows,
-        extract_count=lambda r: r.count,
+        extract_count=lambda r: r.total,
         extract_next=lambda r: None,
         limit=limit,
     )
@@ -221,65 +190,13 @@ def paginate_webhooks(
     """
     Create a paginator for webhook list endpoints.
 
-    Args:
-        fetch_page: Async function that takes (offset, limit) and returns response
-        limit: Number of items per page (default 100)
-
     Returns:
         AsyncPaginator that yields WebhookResponse objects
     """
     return AsyncPaginator(
         fetch_page=fetch_page,
         extract_items=lambda r: r.webhooks,
-        extract_count=lambda r: r.count,
-        extract_next=lambda r: None,
-        limit=limit,
-    )
-
-
-def paginate_users(
-    fetch_page: Callable[[int, int], Awaitable[Any]],
-    limit: int = 100,
-) -> AsyncPaginator:
-    """
-    Create a paginator for user list endpoints.
-
-    Note: Users use cursor-based pagination with next_cursor field.
-
-    Args:
-        fetch_page: Async function that takes (offset, limit) and returns response
-        limit: Number of items per page (default 100)
-
-    Returns:
-        AsyncPaginator that yields UserSummary objects
-    """
-    return AsyncPaginator(
-        fetch_page=fetch_page,
-        extract_items=lambda r: r.users,
-        extract_count=lambda r: r.total,
-        extract_next=lambda r: r.next_cursor,
-        limit=limit,
-    )
-
-
-def paginate_files(
-    fetch_page: Callable[[int, int], Awaitable[Any]],
-    limit: int = 100,
-) -> AsyncPaginator:
-    """
-    Create a paginator for file list endpoints.
-
-    Args:
-        fetch_page: Async function that takes (offset, limit) and returns response
-        limit: Number of items per page (default 100)
-
-    Returns:
-        AsyncPaginator that yields file objects
-    """
-    return AsyncPaginator(
-        fetch_page=fetch_page,
-        extract_items=lambda r: r.files,
-        extract_count=lambda r: r.count,
+        extract_count=lambda r: r.pagination.get("total", 0),
         extract_next=lambda r: None,
         limit=limit,
     )

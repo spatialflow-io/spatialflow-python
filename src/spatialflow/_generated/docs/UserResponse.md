@@ -13,14 +13,14 @@ Name | Type | Description | Notes
 **selected_plan** | **str** |  | 
 **company** | **str** |  | 
 **language_preference** | **str** |  | 
-**created_at** | **str** |  | 
-**updated_at** | **str** |  | 
+**created_at** | **datetime** |  | 
+**updated_at** | **datetime** |  | 
 **is_superuser** | **bool** |  | 
 **is_staff** | **bool** |  | 
 **roles** | **List[str]** |  | [optional] 
 **is_beta_user** | **bool** |  | [optional] 
 **admin_approved** | **bool** |  | [optional] 
-**admin_approved_at** | **str** |  | [optional] 
+**admin_approved_at** | **datetime** |  | [optional] 
 **workspace_id** | **str** |  | [optional] 
 **workspace_slug** | **str** |  | [optional] 
 **workspace_role** | **str** |  | [optional] 

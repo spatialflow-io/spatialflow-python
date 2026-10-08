@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **unit_system** | **str** |  | 
 **is_selected** | **bool** |  | 
 **member_count** | **int** |  | [optional] [default to 0]
+**tracking_consent_required** | **bool** |  | [optional] [default to False]
 
 ## Example
 

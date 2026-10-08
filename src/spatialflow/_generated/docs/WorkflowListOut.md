@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **success_rate** | **float** |  | 
 **user_id** | **str** |  | 
 **version** | **int** |  | 
+**is_example** | **bool** |  | [optional] [default to False]
+**trigger_can_fire** | **bool** |  | [optional] 
 
 ## Example
 

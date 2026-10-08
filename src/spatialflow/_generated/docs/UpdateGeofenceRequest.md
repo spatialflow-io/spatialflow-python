@@ -1,6 +1,6 @@
 # UpdateGeofenceRequest
 
-Schema for updating an existing geofence.  Supports three geometry types (PRD §3.1): - Polygon: Standard GeoJSON Polygon - MultiPolygon: Collection of polygons - Circle: Point with radius_meters
+Schema for updating an existing geofence.  Supports three geometry types: - Polygon: Standard GeoJSON Polygon - MultiPolygon: Collection of polygons - Circle: Point with radius_meters
 
 ## Properties
 
@@ -8,12 +8,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**geometry** | [**Geometry1**](Geometry1.md) |  | [optional] 
+**geometry** | [**Geometry3**](Geometry3.md) |  | [optional] 
 **webhook_url** | **str** |  | [optional] 
 **webhook_events** | **List[str]** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 **is_active** | **bool** |  | [optional] 
 **group_name** | **str** |  | [optional] 
+**tags** | **List[str]** |  | [optional] 
+**address** | **str** |  | [optional] 
+**buffer_meters** | **int** |  | [optional] 
 
 ## Example
 

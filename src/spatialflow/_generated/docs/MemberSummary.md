@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **role** | **str** |  | 
 **email_verified** | **bool** |  | 
-**created_at** | **str** |  | 
-**last_login** | **str** |  | 
+**created_at** | **datetime** |  | 
+**last_login** | **datetime** |  | 
 
 ## Example
 

@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **apps_workspaces_api_audit_export_audit_logs**
-> apps_workspaces_api_audit_export_audit_logs(export_format=export_format, action=action, user_id=user_id, resource_type=resource_type, date_from=date_from, date_to=date_to, search=search)
+> str apps_workspaces_api_audit_export_audit_logs(export_format=export_format, action=action, user_id=user_id, resource_type=resource_type, date_from=date_from, date_to=date_to, search=search)
 
 Export Audit Logs
 
@@ -54,7 +54,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Export Audit Logs
-        await api_instance.apps_workspaces_api_audit_export_audit_logs(export_format=export_format, action=action, user_id=user_id, resource_type=resource_type, date_from=date_from, date_to=date_to, search=search)
+        api_response = await api_instance.apps_workspaces_api_audit_export_audit_logs(export_format=export_format, action=action, user_id=user_id, resource_type=resource_type, date_from=date_from, date_to=date_to, search=search)
+        print("The response of AuditLogsApi->apps_workspaces_api_audit_export_audit_logs:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuditLogsApi->apps_workspaces_api_audit_export_audit_logs: %s\n" % e)
 ```
@@ -76,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -85,17 +87,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: text/csv, application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Streaming audit-log export |  * Content-Disposition - Attachment filename <br>  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -193,6 +197,7 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

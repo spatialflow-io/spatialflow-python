@@ -87,10 +87,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -99,7 +101,7 @@ This endpoint does not need any parameter.
 
 Ingest Location
 
-Ingest a single location point.  This endpoint accepts location updates from external systems and queues them for asynchronous processing with GPS jitter reduction filters.  Authentication: API Key (Bearer token) Rate Limit: 1000 requests/minute per API key  PRD Reference: §3.4 Public Ingest API  Returns:     202 Accepted: Location queued for processing     400 Bad Request: Invalid location data     401 Unauthorized: Missing or invalid API key     429 Too Many Requests: Rate limit exceeded  Example:     ```bash     curl -X POST https://api.spatialflow.io/api/v1/locations \\       -H \"Authorization: Bearer sf_live_abc123...\" \\       -H \"Content-Type: application/json\" \\       -d '{         \"device_id\": \"truck-005\",         \"lat\": 40.7589,         \"lon\": -73.9851,         \"ts\": \"2025-10-01T14:30:00Z\",         \"accuracy\": 8.5       }'     ```
+Ingest a single location point.  This endpoint accepts location updates from external systems and queues them for asynchronous processing with GPS jitter reduction filters.  Devices must already be registered and active. API keys require devices:write. A 202 response means durable admission, including during broker outages; pending work is recovered automatically without charging retries again. Each admitted fix counts toward the monthly event quota. Usage past the quota never refuses a fix.  A shift pause is enforced as on the device location routes. While the device's shift is paused, a fix is rejected with 400 and error_code SHIFT_PAUSED. A fix timestamped inside a pause is rejected with 400 and error_code PAUSED_INTERVAL, also after that shift has ended or a newer one has started. Each shift keeps only its last resume, so everything in it before that resume counts as paused, and a shift that ended while paused counts as paused until its end. A rejected fix is not stored, charged or evaluated. If a pause begins before an admitted fix is processed, the fix is dropped instead and an exact retry returns the same error. A fix outside any shift is admitted as usual.  Authentication: API Key (Bearer token) Rate Limit: 1000 requests/minute per API key  Returns:     202 Accepted: Location queued for processing     400 Bad Request: Invalid location data, or a fix from a paused shift     401 Unauthorized: Missing or invalid API key     429 Too Many Requests: Rate limit exceeded  Example:     ```bash     curl -X POST https://api.spatialflow.io/api/v1/locations \\       -H \"Authorization: Bearer sf_live_abc123...\" \\       -H \"Content-Type: application/json\" \\       -d '{         \"device_id\": \"truck-005\",         \"lat\": 40.7589,         \"lon\": -73.9851,         \"ts\": \"2025-10-01T14:30:00Z\",         \"accuracy\": 8.5       }'     ```
 
 ### Example
 
@@ -178,11 +180,12 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
 **400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
 **429** | Too Many Requests |  -  |
 **401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -191,7 +194,7 @@ Name | Type | Description  | Notes
 
 Ingest Location Batch
 
-Ingest a batch of location points.  Accepts up to 5000 locations per batch (PRD §3.4). Each location is validated and processed asynchronously as a single batch task.  **Idempotency:** If `idempotency_key` is provided, duplicate requests with the same key within 24 hours will return the original response without reprocessing.  Authentication: API Key (Bearer token) Rate Limit: 100 batches/minute per API key  PRD Reference: §3.4 Public Ingest API  Returns:     202 Accepted: Locations queued (includes counts of accepted/rejected)     400 Bad Request: Invalid batch data     401 Unauthorized: Missing or invalid API key     429 Too Many Requests: Rate limit exceeded  Example:     ```bash     curl -X POST https://api.spatialflow.io/api/v1/locations/batch \\       -H \"Authorization: Bearer sf_live_abc123...\" \\       -H \"Content-Type: application/json\" \\       -d '{         \"locations\": [           {\"device_id\": \"truck-005\", \"lat\": 40.7589, \"lon\": -73.9851, \"ts\": \"2025-10-01T14:30:00Z\"},           {\"device_id\": \"truck-005\", \"lat\": 40.7590, \"lon\": -73.9850, \"ts\": \"2025-10-01T14:31:00Z\"}         ],         \"idempotency_key\": \"batch-20251001-001\"       }'     ```
+Ingest a batch of location points.  Accepts up to 5000 locations per batch. Each location is validated and processed asynchronously as a single batch task.  Register active devices first; API keys require devices:write. Admission counts each new fix toward the monthly event quota, which usage past the quota never refuses. A partially admitted batch returns 202 with accepted receipt IDs and indexed rejection errors, never a whole-request failure after accepting points. Exact fix retries reuse durable receipts for at least 48 hours after processing without another charge. Broker outages leave accepted work pending for automatic recovery.  A fix from a paused shift is rejected per item with the same status and error_code as POST /locations (SHIFT_PAUSED or PAUSED_INTERVAL), and is not stored, charged or evaluated.  **Idempotency:** If `idempotency_key` is provided, duplicate requests with the same key within 24 hours reuse the admission response without reprocessing. Terminal processing rejections, including a pause that began before a fix was processed, refresh the returned counts and indexed errors.  Authentication: API Key (Bearer token) Rate Limit: 100 batches/minute per API key  Returns:     202 Accepted: Locations queued (includes counts of accepted/rejected)     400 Bad Request: Invalid batch data     401 Unauthorized: Missing or invalid API key     429 Too Many Requests: Rate limit exceeded  Example:     ```bash     curl -X POST https://api.spatialflow.io/api/v1/locations/batch \\       -H \"Authorization: Bearer sf_live_abc123...\" \\       -H \"Content-Type: application/json\" \\       -d '{         \"locations\": [           {\"device_id\": \"truck-005\", \"lat\": 40.7589, \"lon\": -73.9851, \"ts\": \"2025-10-01T14:30:00Z\"},           {\"device_id\": \"truck-005\", \"lat\": 40.7590, \"lon\": -73.9850, \"ts\": \"2025-10-01T14:31:00Z\"}         ],         \"idempotency_key\": \"batch-20251001-001\"       }'     ```
 
 ### Example
 
@@ -270,11 +273,12 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
 **400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
 **429** | Too Many Requests |  -  |
 **401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

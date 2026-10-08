@@ -1,6 +1,6 @@
 # CreateGeofenceRequest
 
-Schema for creating a new geofence.  Supports three geometry types (PRD §3.1): - Polygon: Standard GeoJSON Polygon - MultiPolygon: Collection of polygons - Circle: Point with radius_meters
+Schema for creating a new geofence.  Supports three geometry types: - Polygon: Standard GeoJSON Polygon - MultiPolygon: Collection of polygons - Circle: Point with radius_meters  Also accepts source='address' + address instead of geometry.
 
 ## Properties
 
@@ -8,11 +8,16 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | 
 **description** | **str** |  | [optional] 
-**geometry** | [**Geometry**](Geometry.md) |  | 
+**geometry** | [**Geometry1**](Geometry1.md) |  | [optional] 
 **webhook_url** | **str** |  | [optional] 
 **webhook_events** | **List[str]** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 **group_name** | **str** |  | [optional] 
+**source** | **str** |  | [optional] 
+**address** | **str** |  | [optional] 
+**buffer_meters** | **int** |  | [optional] 
+**confirm_duplicate** | **bool** | Override dedup conflicts. | [optional] [default to False]
+**tags** | **List[str]** |  | [optional] 
 
 ## Example
 

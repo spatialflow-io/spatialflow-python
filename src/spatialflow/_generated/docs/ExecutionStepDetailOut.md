@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **step_name** | **str** |  | 
 **step_type** | **str** |  | 
 **status** | **str** |  | 
-**started_at** | **str** |  | [optional] 
-**completed_at** | **str** |  | [optional] 
+**started_at** | **datetime** |  | [optional] 
+**completed_at** | **datetime** |  | [optional] 
 **duration_ms** | **float** |  | [optional] 
 **error_message** | **str** |  | [optional] 
 **input_data** | **Dict[str, object]** |  | [optional] 

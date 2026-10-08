@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
 **service** | **str** |  | 
-**timestamp** | **str** |  | 
+**timestamp** | **datetime** |  | 
 
 ## Example
 

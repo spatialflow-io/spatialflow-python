@@ -7,6 +7,7 @@ Usage limits for a subscription plan.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **api_calls** | **int** | Monthly API call limit (-1 for unlimited) | 
+**events** | **int** | Monthly event limit (-1 for unlimited) | 
 **geofences** | **int** | Maximum number of geofences (-1 for unlimited) | 
 **webhooks_delivered** | **int** | Monthly webhook delivery limit (-1 for unlimited) | 
 **test_points** | **int** | Monthly test point limit (-1 for unlimited) | 

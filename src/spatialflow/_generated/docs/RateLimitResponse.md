@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error** | **str** |  | 
 **limit** | **int** |  | 
-**reset_at** | **str** |  | 
+**reset_at** | **datetime** |  | 
 
 ## Example
 

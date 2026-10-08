@@ -1,6 +1,6 @@
 # LocationBatchIn
 
-Batch of location points for bulk ingestion.  Maximum 5000 points per batch (PRD §3.4).
+Batch of location points for bulk ingestion.  Maximum 5000 points per batch.
 
 ## Properties
 

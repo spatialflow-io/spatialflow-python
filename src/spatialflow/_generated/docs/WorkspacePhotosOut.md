@@ -1,6 +1,6 @@
 # WorkspacePhotosOut
 
-Response wrapper for GET /api/v1/devices/photos (Phase 122-01, D-03).  The workspace-wide photo listing uses a soft cap of 500 newest photos per D-26: when the database has more matching rows than ``limit``, the response returns exactly ``limit`` rows ordered newest-first and ``has_more=True``. No full COUNT(*) is run; the caller can narrow the time range to see older rows. There is no offset/limit pagination for this endpoint.
+Response wrapper for GET /api/v1/devices/photos.  The workspace-wide photo listing uses a soft cap of 500 newest photos: when the database has more matching rows than ``limit``, the response returns exactly ``limit`` rows ordered newest-first and ``has_more=True``. No full COUNT(*) is run; the caller can narrow the time range to see older rows. There is no offset/limit pagination for this endpoint.
 
 ## Properties
 
@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **photos** | [**List[PhotoOut]**](PhotoOut.md) |  | 
 **has_more** | **bool** |  | 
+**unplaced_count** | **int** | Photos among the newest &#x60;limit&#x60; matches left out because they have no location. | 
 
 ## Example
 

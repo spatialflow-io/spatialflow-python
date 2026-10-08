@@ -8,7 +8,13 @@ Name | Type | Description | Notes
 **id** | **str** |  | 
 **device_id** | **str** |  | 
 **name** | **str** |  | 
+**driver_name** | **str** |  | [optional] 
 **type** | **str** |  | 
+**is_example** | **bool** |  | [optional] [default to False]
+**last_accuracy** | **float** |  | [optional] 
+**last_battery_level** | **int** |  | [optional] 
+**last_battery_charging** | **bool** |  | [optional] 
+**last_battery_time** | **datetime** |  | [optional] 
 
 ## Example
 

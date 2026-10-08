@@ -8,6 +8,11 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **device_type** | **str** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
+**driver_name** | **str** |  | [optional] 
+**vehicle_label** | **str** |  | [optional] 
+**employee_id** | **str** |  | [optional] 
+**license_plate** | **str** |  | [optional] 
+**group** | **str** |  | [optional] 
 
 ## Example
 

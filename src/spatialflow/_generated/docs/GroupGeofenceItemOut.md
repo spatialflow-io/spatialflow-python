@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **group_id** | **str** |  | 
 **group_name** | **str** |  | [optional] 
-**created_at** | **str** |  | 
-**updated_at** | **str** |  | 
+**created_at** | **datetime** |  | 
+**updated_at** | **datetime** |  | 
 
 ## Example
 

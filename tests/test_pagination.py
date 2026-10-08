@@ -1,13 +1,9 @@
-"""Tests for pagination helpers."""
-
 import pytest
 
 from spatialflow import paginate, AsyncPaginator, PaginatedResponse
 
 
 class MockResponse:
-    """Mock API response with results, count, next attributes."""
-
     def __init__(self, results, count, next=None):
         self.results = results
         self.count = count
@@ -15,10 +11,7 @@ class MockResponse:
 
 
 class TestPaginate:
-    """Test the paginate async generator."""
-
     async def test_paginate_all_items(self):
-        """Test that paginate yields all items across pages."""
         responses = [
             MockResponse(
                 results=[{"id": 1, "name": "First"}, {"id": 2, "name": "Second"}],
@@ -53,8 +46,6 @@ class TestPaginate:
         assert items[4]["name"] == "Fifth"
 
     async def test_paginate_empty_results(self):
-        """Test pagination with empty results."""
-
         async def fetch_page(offset: int, limit: int):
             return MockResponse(results=[], count=0, next=None)
 
@@ -65,8 +56,6 @@ class TestPaginate:
         assert len(items) == 0
 
     async def test_paginate_single_page(self):
-        """Test pagination with only one page."""
-
         async def fetch_page(offset: int, limit: int):
             return MockResponse(
                 results=[{"id": 1}, {"id": 2}],
@@ -81,7 +70,6 @@ class TestPaginate:
         assert len(items) == 2
 
     async def test_paginate_respects_limit(self):
-        """Test that paginate uses the provided limit."""
         captured_limits = []
 
         async def fetch_page(offset: int, limit: int):
@@ -94,7 +82,6 @@ class TestPaginate:
         assert captured_limits == [50]
 
     async def test_paginate_default_limit(self):
-        """Test that paginate uses default limit of 100."""
         captured_limits = []
 
         async def fetch_page(offset: int, limit: int):
@@ -108,10 +95,7 @@ class TestPaginate:
 
 
 class TestAsyncPaginator:
-    """Test the AsyncPaginator class."""
-
     async def test_async_paginator_iteration(self):
-        """Test AsyncPaginator async iteration."""
         call_count = 0
 
         async def fetch_page(offset: int, limit: int):
@@ -145,10 +129,7 @@ class TestAsyncPaginator:
 
 
 class TestPaginatedResponse:
-    """Test the PaginatedResponse class."""
-
     def test_paginated_response_creation(self):
-        """Test PaginatedResponse can be created with all fields."""
         response = PaginatedResponse(
             items=[1, 2, 3],
             count=10,
@@ -163,7 +144,6 @@ class TestPaginatedResponse:
         assert response.has_more is True
 
     def test_paginated_response_optional_fields(self):
-        """Test PaginatedResponse with optional fields omitted."""
         response = PaginatedResponse(
             items=[],
             count=0,
@@ -176,7 +156,6 @@ class TestPaginatedResponse:
         assert response.has_more is False
 
     def test_paginated_response_iteration(self):
-        """Test that PaginatedResponse can be iterated."""
         response = PaginatedResponse(
             items=[{"id": 1}, {"id": 2}],
             count=2,
@@ -186,7 +165,6 @@ class TestPaginatedResponse:
         assert len(items) == 2
 
     def test_paginated_response_len(self):
-        """Test that len() works on PaginatedResponse."""
         response = PaginatedResponse(
             items=[1, 2, 3],
             count=10,

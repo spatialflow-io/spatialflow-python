@@ -1,33 +1,25 @@
-"""Tests for file upload helpers."""
-
 import os
 import tempfile
-from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import ANY, AsyncMock, MagicMock, patch
 
 import pytest
 
-from spatialflow.uploads import upload_geofences, _extract_data
+from spatialflow.uploads import _extract_data, upload_geofences
 
 
 class TestExtractData:
-    """Test the _extract_data helper function."""
-
     def test_extract_from_dict(self):
-        """Test extracting data from a plain dict."""
         data = {"key": "value", "count": 42}
         result = _extract_data(data)
         assert result == data
 
     def test_extract_from_object_with_data_attr(self):
-        """Test extracting data from axios-style response with .data."""
         mock_response = MagicMock()
         mock_response.data = {"upload_url": "https://s3.example.com/file"}
         result = _extract_data(mock_response)
         assert result == {"upload_url": "https://s3.example.com/file"}
 
     def test_extract_from_object_with_dict_attr(self):
-        """Test extracting data from object with __dict__."""
         class SimpleObject:
             def __init__(self):
                 self.field1 = "value1"
@@ -39,23 +31,18 @@ class TestExtractData:
         assert result["field2"] == 123
 
     def test_extract_from_none_like(self):
-        """Test extracting data from non-dict-like object."""
         result = _extract_data(42)
         assert result == {}
 
 
 class TestUploadGeofencesValidation:
-    """Test upload_geofences validation logic."""
-
     async def test_file_not_found(self):
-        """Test that missing file raises FileNotFoundError."""
         mock_client = MagicMock()
 
         with pytest.raises(FileNotFoundError, match="File not found"):
             await upload_geofences(mock_client, "/nonexistent/file.geojson")
 
     async def test_unsupported_file_type(self):
-        """Test that unsupported file types raise ValidationError."""
         from spatialflow import ValidationError
 
         mock_client = MagicMock()
@@ -71,10 +58,8 @@ class TestUploadGeofencesValidation:
             os.unlink(temp_path)
 
     async def test_supported_file_types(self):
-        """Test that supported file types are accepted (until API call)."""
         mock_client = MagicMock()
-        # Make the storage API call fail immediately
-        mock_client.storage.apps_storage_api_create_presigned_url = AsyncMock(
+        mock_client.storage.create_presigned_url = AsyncMock(
             side_effect=Exception("API call made - file type accepted")
         )
 
@@ -93,16 +78,12 @@ class TestUploadGeofencesValidation:
 
 
 class TestUploadGeofencesMocked:
-    """Test upload_geofences with mocked dependencies."""
-
     async def test_presigned_url_missing_upload_url(self):
-        """Test that missing upload_url raises SpatialFlowError."""
         from spatialflow import SpatialFlowError
 
         mock_client = MagicMock()
 
-        # Return dict without upload_url
-        mock_client.storage.apps_storage_api_create_presigned_url = AsyncMock(
+        mock_client.storage.create_presigned_url = AsyncMock(
             return_value={"file_id": "file-123"}
         )
 
@@ -117,13 +98,11 @@ class TestUploadGeofencesMocked:
             os.unlink(temp_path)
 
     async def test_presigned_url_missing_file_id(self):
-        """Test that missing file_id raises SpatialFlowError."""
         from spatialflow import SpatialFlowError
 
         mock_client = MagicMock()
 
-        # Return dict without file_id
-        mock_client.storage.apps_storage_api_create_presigned_url = AsyncMock(
+        mock_client.storage.create_presigned_url = AsyncMock(
             return_value={"upload_url": "https://s3.example.com/upload"}
         )
 
@@ -138,11 +117,9 @@ class TestUploadGeofencesMocked:
             os.unlink(temp_path)
 
     async def test_s3_upload_called_with_presigned_url(self):
-        """Test that S3 upload is attempted with presigned URL."""
         mock_client = MagicMock()
 
-        # Return valid presigned URL response
-        mock_client.storage.apps_storage_api_create_presigned_url = AsyncMock(
+        mock_client.storage.create_presigned_url = AsyncMock(
             return_value={
                 "upload_url": "https://s3.example.com/upload",
                 "file_id": "file-123",
@@ -154,7 +131,6 @@ class TestUploadGeofencesMocked:
             temp_path = f.name
 
         try:
-            # Mock aiohttp session - make S3 upload fail with identifiable error
             with patch("spatialflow.uploads.aiohttp.ClientSession") as mock_session:
                 mock_session.return_value.__aenter__ = AsyncMock(
                     side_effect=Exception("S3 upload attempted")
@@ -163,8 +139,83 @@ class TestUploadGeofencesMocked:
                 with pytest.raises(Exception, match="S3 upload attempted"):
                     await upload_geofences(mock_client, temp_path)
 
-            # Verify storage API was called
-            mock_client.storage.apps_storage_api_create_presigned_url.assert_called_once()
+            mock_client.storage.create_presigned_url.assert_called_once()
+        finally:
+            os.unlink(temp_path)
+
+    async def test_completes_upload_before_starting_import(self):
+        mock_client = MagicMock()
+        call_order = []
+
+        mock_client.storage.create_presigned_url = AsyncMock(
+            return_value={
+                "upload_url": "https://s3.example.com/upload",
+                "file_id": "file-123",
+            }
+        )
+
+        async def complete_upload(file_id):
+            call_order.append("complete")
+            return {"file_id": file_id, "status": "complete"}
+
+        async def start_import(request):
+            call_order.append("import")
+            return {"job_id": "job-123"}
+
+        mock_client.storage.complete_upload = AsyncMock(side_effect=complete_upload)
+        mock_client.geofences.upload = AsyncMock(side_effect=start_import)
+
+        response = MagicMock(status=200)
+        put_context = MagicMock()
+
+        async def enter_put():
+            call_order.append("s3_put")
+            return response
+
+        put_context.__aenter__ = AsyncMock(side_effect=enter_put)
+        put_context.__aexit__ = AsyncMock(return_value=None)
+        session = MagicMock()
+        session.put.return_value = put_context
+        session_context = MagicMock()
+        session_context.__aenter__ = AsyncMock(return_value=session)
+        session_context.__aexit__ = AsyncMock(return_value=None)
+
+        expected_result = MagicMock()
+
+        async def finish_poll(*args, **kwargs):
+            call_order.append("poll")
+            return expected_result
+
+        with tempfile.NamedTemporaryFile(suffix=".geojson", delete=False) as f:
+            content = b'{"type": "FeatureCollection", "features": []}'
+            f.write(content)
+            temp_path = f.name
+
+        try:
+            with (
+                patch(
+                    "spatialflow.uploads.aiohttp.ClientSession",
+                    return_value=session_context,
+                ),
+                patch(
+                    "spatialflow.uploads.poll_job",
+                    new=AsyncMock(side_effect=finish_poll),
+                ),
+            ):
+                result = await upload_geofences(mock_client, temp_path)
+
+            assert result is expected_result
+            assert call_order == ["s3_put", "complete", "import", "poll"]
+            mock_client.storage.complete_upload.assert_awaited_once_with("file-123")
+            session.put.assert_called_once_with(
+                "https://s3.example.com/upload",
+                data=ANY,
+                headers={
+                    "Content-Type": "application/geo+json",
+                    "Content-Length": str(len(content)),
+                    "If-None-Match": "*",
+                },
+            )
         finally:
             os.unlink(temp_path)
 
@@ -180,7 +231,6 @@ class TestUploadGeofencesIntegration:
 
     @pytest.fixture
     async def client(self):
-        """Create SpatialFlow client for testing."""
         from spatialflow import SpatialFlow
 
         token = os.environ.get("SPATIALFLOW_API_KEY")
@@ -194,8 +244,6 @@ class TestUploadGeofencesIntegration:
             return SpatialFlow(access_token=token, base_url=base_url)
 
     async def test_upload_small_geojson(self, client, tmp_path):
-        """Test uploading a small GeoJSON file."""
-        # Create a simple GeoJSON file
         geojson_path = tmp_path / "test_geofence.geojson"
         geojson_path.write_text(
             """{

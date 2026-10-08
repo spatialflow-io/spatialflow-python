@@ -12,7 +12,9 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_bulk_approve_users**](AdminApi.md#apps_admin_portal_api_bulk_approve_users) | **POST** /api/v1/admin/users/bulk-approve | Bulk Approve Users
 [**apps_admin_portal_api_bulk_deactivate_users**](AdminApi.md#apps_admin_portal_api_bulk_deactivate_users) | **POST** /api/v1/admin/users/bulk-deactivate | Bulk Deactivate Users
 [**apps_admin_portal_api_bulk_invite_users**](AdminApi.md#apps_admin_portal_api_bulk_invite_users) | **POST** /api/v1/admin/users/bulk-invite | Bulk Invite Users
+[**apps_admin_portal_api_create_notification_route**](AdminApi.md#apps_admin_portal_api_create_notification_route) | **POST** /api/v1/admin/slack-config/routes | Create Notification Route
 [**apps_admin_portal_api_deactivate_user**](AdminApi.md#apps_admin_portal_api_deactivate_user) | **PUT** /api/v1/admin/users/{user_id}/deactivate | Deactivate User
+[**apps_admin_portal_api_delete_notification_route**](AdminApi.md#apps_admin_portal_api_delete_notification_route) | **DELETE** /api/v1/admin/slack-config/routes/{route_id} | Delete Notification Route
 [**apps_admin_portal_api_delete_user**](AdminApi.md#apps_admin_portal_api_delete_user) | **DELETE** /api/v1/admin/users/{user_id} | Delete User
 [**apps_admin_portal_api_delete_workspace**](AdminApi.md#apps_admin_portal_api_delete_workspace) | **DELETE** /api/v1/admin/workspaces/{workspace_id} | Delete Workspace
 [**apps_admin_portal_api_export_marketing_subscribers**](AdminApi.md#apps_admin_portal_api_export_marketing_subscribers) | **GET** /api/v1/admin/users/marketing-subscribers | Export Marketing Subscribers
@@ -32,6 +34,7 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_get_workspace_members**](AdminApi.md#apps_admin_portal_api_get_workspace_members) | **GET** /api/v1/admin/workspaces/{workspace_id}/members | Get Workspace Members
 [**apps_admin_portal_api_invite_user**](AdminApi.md#apps_admin_portal_api_invite_user) | **POST** /api/v1/admin/users/invite | Invite User
 [**apps_admin_portal_api_list_configurations**](AdminApi.md#apps_admin_portal_api_list_configurations) | **GET** /api/v1/admin/configurations | List Configurations
+[**apps_admin_portal_api_list_notification_routes**](AdminApi.md#apps_admin_portal_api_list_notification_routes) | **GET** /api/v1/admin/slack-config/routes | List Notification Routes
 [**apps_admin_portal_api_list_pending_users**](AdminApi.md#apps_admin_portal_api_list_pending_users) | **GET** /api/v1/admin/users/pending | List Pending Users
 [**apps_admin_portal_api_list_users**](AdminApi.md#apps_admin_portal_api_list_users) | **GET** /api/v1/admin/users | List Users
 [**apps_admin_portal_api_list_workspaces**](AdminApi.md#apps_admin_portal_api_list_workspaces) | **GET** /api/v1/admin/workspaces | List Workspaces
@@ -44,10 +47,12 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_revoke_invitation**](AdminApi.md#apps_admin_portal_api_revoke_invitation) | **DELETE** /api/v1/admin/invitations/{invite_id} | Revoke Invitation
 [**apps_admin_portal_api_send_test_email**](AdminApi.md#apps_admin_portal_api_send_test_email) | **POST** /api/v1/admin/email/test | Send Test Email
 [**apps_admin_portal_api_test_notification**](AdminApi.md#apps_admin_portal_api_test_notification) | **POST** /api/v1/admin/slack-config/test | Test Notification
+[**apps_admin_portal_api_test_notification_route**](AdminApi.md#apps_admin_portal_api_test_notification_route) | **POST** /api/v1/admin/slack-config/routes/{route_id}/test | Test Notification Route
 [**apps_admin_portal_api_transfer_workspace_ownership**](AdminApi.md#apps_admin_portal_api_transfer_workspace_ownership) | **POST** /api/v1/admin/workspaces/{workspace_id}/transfer-ownership | Transfer Workspace Ownership
 [**apps_admin_portal_api_update_configuration**](AdminApi.md#apps_admin_portal_api_update_configuration) | **PUT** /api/v1/admin/configurations/{key} | Update Configuration
 [**apps_admin_portal_api_update_member_role**](AdminApi.md#apps_admin_portal_api_update_member_role) | **PATCH** /api/v1/admin/workspaces/{workspace_id}/members/{user_id} | Update Member Role
 [**apps_admin_portal_api_update_notification_config**](AdminApi.md#apps_admin_portal_api_update_notification_config) | **PUT** /api/v1/admin/slack-config | Update Notification Config
+[**apps_admin_portal_api_update_notification_route**](AdminApi.md#apps_admin_portal_api_update_notification_route) | **PATCH** /api/v1/admin/slack-config/routes/{route_id} | Update Notification Route
 [**apps_admin_portal_api_update_user_workspace**](AdminApi.md#apps_admin_portal_api_update_user_workspace) | **PATCH** /api/v1/admin/users/{user_id}/workspace | Update User Workspace
 [**apps_admin_portal_api_update_workspace**](AdminApi.md#apps_admin_portal_api_update_workspace) | **PUT** /api/v1/admin/workspaces/{workspace_id} | Update Workspace
 
@@ -129,6 +134,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -196,10 +202,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -274,10 +282,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -358,6 +368,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -528,6 +539,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -612,6 +624,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -695,6 +708,92 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_create_notification_route**
+> NotificationRouteResponse apps_admin_portal_api_create_notification_route(notification_route_request)
+
+Create Notification Route
+
+Create an admin notification route.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_route_request import NotificationRouteRequest
+from spatialflow_generated.models.notification_route_response import NotificationRouteResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    notification_route_request = spatialflow_generated.NotificationRouteRequest() # NotificationRouteRequest | 
+
+    try:
+        # Create Notification Route
+        api_response = await api_instance.apps_admin_portal_api_create_notification_route(notification_route_request)
+        print("The response of AdminApi->apps_admin_portal_api_create_notification_route:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_create_notification_route: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **notification_route_request** | [**NotificationRouteRequest**](NotificationRouteRequest.md)|  | 
+
+### Return type
+
+[**NotificationRouteResponse**](NotificationRouteResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Created |  -  |
+**400** | Bad Request |  -  |
 **500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -787,12 +886,95 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_admin_portal_api_delete_notification_route**
+> Dict[str, object] apps_admin_portal_api_delete_notification_route(route_id)
+
+Delete Notification Route
+
+Delete an admin notification route.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    route_id = 'route_id_example' # str | 
+
+    try:
+        # Delete Notification Route
+        api_response = await api_instance.apps_admin_portal_api_delete_notification_route(route_id)
+        print("The response of AdminApi->apps_admin_portal_api_delete_notification_route:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_delete_notification_route: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **route_id** | **str**|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_admin_portal_api_delete_user**
 > Dict[str, object] apps_admin_portal_api_delete_user(user_id, confirm_workspace_deletion=confirm_workspace_deletion)
 
 Delete User
 
-Delete a user with proper cascade cleanup (Issue #67).  Workspace Deletion Policy: - Delete workspace when member count reaches ZERO (any role) - Shared workspaces with other members: remove membership only - This prevents orphaned workspaces regardless of user's role  Args:     user_id: UUID of user to delete     confirm_workspace_deletion: Query param - must be True to delete last-member workspaces  Returns:     200: Summary of deleted data     400: User is last member without confirmation, self-deletion, etc.     404: User not found     500: Server error
+Delete a user with proper cascade cleanup.  Workspace Deletion Policy: - Delete workspace when member count reaches ZERO (any role) - Shared workspaces with other members: remove membership only - This prevents orphaned workspaces regardless of user's role  Args:     user_id: UUID of user to delete     confirm_workspace_deletion: Query param - must be True to delete last-member workspaces  Returns:     200: Summary of deleted data     400: User is last member without confirmation, self-deletion, etc.     404: User not found     500: Server error
 
 ### Example
 
@@ -947,10 +1129,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1113,6 +1297,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -1192,6 +1377,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -1276,6 +1462,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -1354,6 +1541,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -1437,6 +1625,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -1520,6 +1709,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -1599,6 +1789,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -1687,6 +1878,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -1854,6 +2046,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -1945,6 +2138,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **403** | Forbidden |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -2026,10 +2220,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2113,6 +2309,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -2199,10 +2396,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2282,10 +2481,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2361,6 +2562,87 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_list_notification_routes**
+> NotificationRouteListResponse apps_admin_portal_api_list_notification_routes()
+
+List Notification Routes
+
+List admin notification routes.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_route_list_response import NotificationRouteListResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+
+    try:
+        # List Notification Routes
+        api_response = await api_instance.apps_admin_portal_api_list_notification_routes()
+        print("The response of AdminApi->apps_admin_portal_api_list_notification_routes:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_list_notification_routes: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**NotificationRouteListResponse**](NotificationRouteListResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -2445,6 +2727,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -2542,6 +2826,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -2632,10 +2917,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2973,6 +3260,7 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -3226,6 +3514,7 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3388,6 +3677,92 @@ This endpoint does not need any parameter.
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_admin_portal_api_test_notification_route**
+> NotificationTestResponse apps_admin_portal_api_test_notification_route(route_id)
+
+Test Notification Route
+
+Send a test notification to one route.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_test_response import NotificationTestResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    route_id = 'route_id_example' # str | 
+
+    try:
+        # Test Notification Route
+        api_response = await api_instance.apps_admin_portal_api_test_notification_route(route_id)
+        print("The response of AdminApi->apps_admin_portal_api_test_notification_route:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_test_notification_route: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **route_id** | **str**|  | 
+
+### Return type
+
+[**NotificationTestResponse**](NotificationTestResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**502** | Bad Gateway |  -  |
+**504** | Gateway Timeout |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -3740,6 +4115,93 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_admin_portal_api_update_notification_route**
+> NotificationRouteResponse apps_admin_portal_api_update_notification_route(route_id, notification_route_patch_request)
+
+Update Notification Route
+
+Update an admin notification route.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.notification_route_patch_request import NotificationRoutePatchRequest
+from spatialflow_generated.models.notification_route_response import NotificationRouteResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AdminApi(api_client)
+    route_id = 'route_id_example' # str | 
+    notification_route_patch_request = spatialflow_generated.NotificationRoutePatchRequest() # NotificationRoutePatchRequest | 
+
+    try:
+        # Update Notification Route
+        api_response = await api_instance.apps_admin_portal_api_update_notification_route(route_id, notification_route_patch_request)
+        print("The response of AdminApi->apps_admin_portal_api_update_notification_route:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->apps_admin_portal_api_update_notification_route: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **route_id** | **str**|  | 
+ **notification_route_patch_request** | [**NotificationRoutePatchRequest**](NotificationRoutePatchRequest.md)|  | 
+
+### Return type
+
+[**NotificationRouteResponse**](NotificationRouteResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_admin_portal_api_update_user_workspace**
 > UserWorkspaceResponse apps_admin_portal_api_update_user_workspace(user_id, update_user_workspace_request)
 
@@ -3905,10 +4367,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

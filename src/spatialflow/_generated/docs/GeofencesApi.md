@@ -4,31 +4,38 @@ All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**apps_geofences_api_archive_geofence**](GeofencesApi.md#apps_geofences_api_archive_geofence) | **POST** /api/v1/geofences/{geofence_id}/archive | Archive Geofence
 [**apps_geofences_api_bulk_create_geofences**](GeofencesApi.md#apps_geofences_api_bulk_create_geofences) | **POST** /api/v1/geofences/bulk | Bulk Create Geofences
+[**apps_geofences_api_bulk_preview_geofences**](GeofencesApi.md#apps_geofences_api_bulk_preview_geofences) | **POST** /api/v1/geofences/preview | Bulk Preview Geofences
 [**apps_geofences_api_create_geofence**](GeofencesApi.md#apps_geofences_api_create_geofence) | **POST** /api/v1/geofences/ | Create Geofence
 [**apps_geofences_api_delete_geofence**](GeofencesApi.md#apps_geofences_api_delete_geofence) | **DELETE** /api/v1/geofences/{geofence_id} | Delete Geofence
+[**apps_geofences_api_geocode_autocomplete**](GeofencesApi.md#apps_geofences_api_geocode_autocomplete) | **GET** /api/v1/geofences/geocode/autocomplete | Geocode Autocomplete
+[**apps_geofences_api_geocode_place**](GeofencesApi.md#apps_geofences_api_geocode_place) | **GET** /api/v1/geofences/geocode/place | Geocode Place
 [**apps_geofences_api_geofence_health_check**](GeofencesApi.md#apps_geofences_api_geofence_health_check) | **GET** /api/v1/geofences/health | Geofence Health Check
 [**apps_geofences_api_get_active_geofences_summary**](GeofencesApi.md#apps_geofences_api_get_active_geofences_summary) | **GET** /api/v1/geofences/active-summary | Get Active Geofences Summary
 [**apps_geofences_api_get_geofence**](GeofencesApi.md#apps_geofences_api_get_geofence) | **GET** /api/v1/geofences/{geofence_id} | Get Geofence
 [**apps_geofences_api_get_test_event_history**](GeofencesApi.md#apps_geofences_api_get_test_event_history) | **GET** /api/v1/geofences/{geofence_id}/test-events | Get Test Event History
 [**apps_geofences_api_get_upload_job_status**](GeofencesApi.md#apps_geofences_api_get_upload_job_status) | **GET** /api/v1/geofences/upload/{job_id}/status | Get Upload Job Status
 [**apps_geofences_api_list_geofence_groups**](GeofencesApi.md#apps_geofences_api_list_geofence_groups) | **GET** /api/v1/geofences/groups | List Geofence Groups
+[**apps_geofences_api_list_geofence_workflows**](GeofencesApi.md#apps_geofences_api_list_geofence_workflows) | **GET** /api/v1/geofences/{geofence_id}/workflows | List Geofence Workflows
 [**apps_geofences_api_list_geofences**](GeofencesApi.md#apps_geofences_api_list_geofences) | **GET** /api/v1/geofences/ | List Geofences
 [**apps_geofences_api_list_group_geofences**](GeofencesApi.md#apps_geofences_api_list_group_geofences) | **GET** /api/v1/geofences/groups/{group_id}/geofences | List Group Geofences
+[**apps_geofences_api_list_workspace_tags**](GeofencesApi.md#apps_geofences_api_list_workspace_tags) | **GET** /api/v1/geofences/tags | List Workspace Tags
 [**apps_geofences_api_test_group_point**](GeofencesApi.md#apps_geofences_api_test_group_point) | **POST** /api/v1/geofences/groups/{group_id}/test-point | Test Group Point
 [**apps_geofences_api_test_point**](GeofencesApi.md#apps_geofences_api_test_point) | **POST** /api/v1/geofences/test-point | Test Point
 [**apps_geofences_api_trigger_test_event**](GeofencesApi.md#apps_geofences_api_trigger_test_event) | **POST** /api/v1/geofences/{geofence_id}/test-event | Trigger Test Event
+[**apps_geofences_api_unarchive_geofence**](GeofencesApi.md#apps_geofences_api_unarchive_geofence) | **POST** /api/v1/geofences/{geofence_id}/unarchive | Unarchive Geofence
 [**apps_geofences_api_update_geofence**](GeofencesApi.md#apps_geofences_api_update_geofence) | **PUT** /api/v1/geofences/{geofence_id} | Update Geofence
 [**apps_geofences_api_update_geofence_group**](GeofencesApi.md#apps_geofences_api_update_geofence_group) | **PUT** /api/v1/geofences/{geofence_id}/group | Update Geofence Group
 [**apps_geofences_api_upload_geofences_async**](GeofencesApi.md#apps_geofences_api_upload_geofences_async) | **POST** /api/v1/geofences/upload | Upload Geofences Async
 
 
-# **apps_geofences_api_bulk_create_geofences**
-> Dict[str, object] apps_geofences_api_bulk_create_geofences(bulk_geofence_request)
+# **apps_geofences_api_archive_geofence**
+> GeofenceResponse apps_geofences_api_archive_geofence(geofence_id)
 
-Bulk Create Geofences
+Archive Geofence
 
-Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERATIONS feature to create multiple geofences in a single request. Maximum 100 geofences per request.
+Archive a geofence (soft-hide from default list and map).  Idempotent — archiving an already-archived fence returns 200 with current state. Tile cache invalidation fires via the post_save signal (archived field in _TILE_RELEVANT_FIELDS).
 
 ### Example
 
@@ -37,7 +44,7 @@ Bulk create multiple geofences.  This endpoint allows users with the BATCH_OPERA
 
 ```python
 import spatialflow_generated
-from spatialflow_generated.models.bulk_geofence_request import BulkGeofenceRequest
+from spatialflow_generated.models.geofence_response import GeofenceResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -67,11 +74,107 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    bulk_geofence_request = spatialflow_generated.BulkGeofenceRequest() # BulkGeofenceRequest | 
+    geofence_id = 'geofence_id_example' # str | 
+
+    try:
+        # Archive Geofence
+        api_response = await api_instance.apps_geofences_api_archive_geofence(geofence_id)
+        print("The response of GeofencesApi->apps_geofences_api_archive_geofence:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_archive_geofence: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **geofence_id** | **str**|  | 
+
+### Return type
+
+[**GeofenceResponse**](GeofenceResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_geofences_api_bulk_create_geofences**
+> BulkCreateResponse apps_geofences_api_bulk_create_geofences(bulk_create_request)
+
+Bulk Create Geofences
+
+Bulk create geofences from address items with dedup_strategy control.  Integration-shaped endpoint for CRM/TMS sync workflows. Per-item atomicity: a single item failure does not roll back previous items. index is 0-based in the API.  dedup_strategy is 'skip', 'override', or 'fail' and controls duplicate handling. Requests with more items than the workspace's bulk_create_max_batch_size are rejected with 413. Rate limit is 10/hour for JWT callers and 60/hour for API key callers.  Writes an audit log entry recording item count, dedup strategy, the per-outcome counts (created/duplicate/error), and duration.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.bulk_create_request import BulkCreateRequest
+from spatialflow_generated.models.bulk_create_response import BulkCreateResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    bulk_create_request = spatialflow_generated.BulkCreateRequest() # BulkCreateRequest | 
 
     try:
         # Bulk Create Geofences
-        api_response = await api_instance.apps_geofences_api_bulk_create_geofences(bulk_geofence_request)
+        api_response = await api_instance.apps_geofences_api_bulk_create_geofences(bulk_create_request)
         print("The response of GeofencesApi->apps_geofences_api_bulk_create_geofences:\n")
         pprint(api_response)
     except Exception as e:
@@ -85,11 +188,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bulk_geofence_request** | [**BulkGeofenceRequest**](BulkGeofenceRequest.md)|  | 
+ **bulk_create_request** | [**BulkCreateRequest**](BulkCreateRequest.md)|  | 
 
 ### Return type
 
-**Dict[str, object]**
+[**BulkCreateResponse**](BulkCreateResponse.md)
 
 ### Authorization
 
@@ -106,8 +209,113 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
-**403** | Forbidden |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**409** | Conflict |  -  |
+**413** | Content Too Large |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_geofences_api_bulk_preview_geofences**
+> BulkPreviewResponse apps_geofences_api_bulk_preview_geofences(bulk_preview_request)
+
+Bulk Preview Geofences
+
+Preview a bulk set of address items without writing to the database.  Returns per-item status (ok / dedup / error). Single-item re-geocode is supported by sending items with one entry. index is 0-based in the API.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.bulk_preview_request import BulkPreviewRequest
+from spatialflow_generated.models.bulk_preview_response import BulkPreviewResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    bulk_preview_request = spatialflow_generated.BulkPreviewRequest() # BulkPreviewRequest | 
+
+    try:
+        # Bulk Preview Geofences
+        api_response = await api_instance.apps_geofences_api_bulk_preview_geofences(bulk_preview_request)
+        print("The response of GeofencesApi->apps_geofences_api_bulk_preview_geofences:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_bulk_preview_geofences: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bulk_preview_request** | [**BulkPreviewRequest**](BulkPreviewRequest.md)|  | 
+
+### Return type
+
+[**BulkPreviewResponse**](BulkPreviewResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -198,12 +406,13 @@ Name | Type | Description  | Notes
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**409** | Conflict |  -  |
 **429** | Too Many Requests |  -  |
+**502** | Bad Gateway |  -  |
+**504** | Gateway Timeout |  -  |
 **500** | Internal Server Error |  -  |
 **501** | Not Implemented |  -  |
-**502** | Bad Gateway |  -  |
 **503** | Service Unavailable |  -  |
-**504** | Gateway Timeout |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -296,7 +505,202 @@ void (empty response body)
 **502** | Bad Gateway |  -  |
 **503** | Service Unavailable |  -  |
 **504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_geofences_api_geocode_autocomplete**
+> AutocompleteResponse apps_geofences_api_geocode_autocomplete(query, max_results=max_results)
+
+Geocode Autocomplete
+
+Return address autocomplete suggestions for a partial query.  Calls the configured geocoder and maps results to {suggestions: [{text, place_id}]}.  Rate-limited to 600/h per user to prevent runaway AWS Location cost.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.autocomplete_response import AutocompleteResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    query = 'query_example' # str | 
+    max_results = 5 # int |  (optional) (default to 5)
+
+    try:
+        # Geocode Autocomplete
+        api_response = await api_instance.apps_geofences_api_geocode_autocomplete(query, max_results=max_results)
+        print("The response of GeofencesApi->apps_geofences_api_geocode_autocomplete:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_geocode_autocomplete: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | **str**|  | 
+ **max_results** | **int**|  | [optional] [default to 5]
+
+### Return type
+
+[**AutocompleteResponse**](AutocompleteResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**429** | Too Many Requests |  -  |
+**502** | Bad Gateway |  -  |
+**504** | Gateway Timeout |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**503** | Service Unavailable |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_geofences_api_geocode_place**
+> GeocodePlaceResponse apps_geofences_api_geocode_place(place_id)
+
+Geocode Place
+
+Resolve a place_id (from autocomplete) to a deterministic GeocodeResult.  Calls AWS Location GetPlace API via the geocoder interface. Returns point, confidence, normalized_address, and normalized_components.  Rate-limited to 600/h per user.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.geocode_place_response import GeocodePlaceResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    place_id = 'place_id_example' # str | 
+
+    try:
+        # Geocode Place
+        api_response = await api_instance.apps_geofences_api_geocode_place(place_id)
+        print("The response of GeofencesApi->apps_geofences_api_geocode_place:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_geocode_place: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **place_id** | **str**|  | 
+
+### Return type
+
+[**GeocodePlaceResponse**](GeocodePlaceResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**429** | Too Many Requests |  -  |
+**502** | Bad Gateway |  -  |
+**504** | Gateway Timeout |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**503** | Service Unavailable |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -361,10 +765,13 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**503** | Service Unavailable |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -446,10 +853,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -542,6 +951,7 @@ Name | Type | Description  | Notes
 **502** | Bad Gateway |  -  |
 **503** | Service Unavailable |  -  |
 **504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
@@ -633,10 +1043,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -729,6 +1141,7 @@ Name | Type | Description  | Notes
 **502** | Bad Gateway |  -  |
 **503** | Service Unavailable |  -  |
 **504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
@@ -813,6 +1226,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
@@ -820,12 +1234,107 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_geofences_api_list_geofence_workflows**
+> GeofenceWorkflowReferencesOut apps_geofences_api_list_geofence_workflows(geofence_id)
+
+List Geofence Workflows
+
+List the workflows whose trigger or conditions name this geofence.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.geofence_workflow_references_out import GeofenceWorkflowReferencesOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    geofence_id = 'geofence_id_example' # str | 
+
+    try:
+        # List Geofence Workflows
+        api_response = await api_instance.apps_geofences_api_list_geofence_workflows(geofence_id)
+        print("The response of GeofencesApi->apps_geofences_api_list_geofence_workflows:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_list_geofence_workflows: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **geofence_id** | **str**|  | 
+
+### Return type
+
+[**GeofenceWorkflowReferencesOut**](GeofenceWorkflowReferencesOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_geofences_api_list_geofences**
-> GeofenceListResponse apps_geofences_api_list_geofences(limit=limit, offset=offset, active_only=active_only)
+> GeofenceListResponse apps_geofences_api_list_geofences(limit=limit, offset=offset, active_only=active_only, tags=tags, include_archived=include_archived)
 
 List Geofences
 
-Get user's polygon geofences.
+Get user's polygon geofences.  By default, archived fences are excluded. Pass ?include_archived=true to include them alongside active fences.
 
 ### Example
 
@@ -864,13 +1373,15 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.GeofencesApi(api_client)
-    limit = 50 # int |  (optional) (default to 50)
+    limit = 50 # int | Maximum 500; larger values are capped (optional) (default to 50)
     offset = 0 # int |  (optional) (default to 0)
     active_only = True # bool |  (optional) (default to True)
+    tags = ['tags_example'] # List[str] | Filter by tag names. Repeat key for AND-semantics: ?tags=foo&tags=bar. (optional)
+    include_archived = False # bool |  (optional) (default to False)
 
     try:
         # List Geofences
-        api_response = await api_instance.apps_geofences_api_list_geofences(limit=limit, offset=offset, active_only=active_only)
+        api_response = await api_instance.apps_geofences_api_list_geofences(limit=limit, offset=offset, active_only=active_only, tags=tags, include_archived=include_archived)
         print("The response of GeofencesApi->apps_geofences_api_list_geofences:\n")
         pprint(api_response)
     except Exception as e:
@@ -884,9 +1395,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] [default to 50]
+ **limit** | **int**| Maximum 500; larger values are capped | [optional] [default to 50]
  **offset** | **int**|  | [optional] [default to 0]
  **active_only** | **bool**|  | [optional] [default to True]
+ **tags** | [**List[str]**](str.md)| Filter by tag names. Repeat key for AND-semantics: ?tags&#x3D;foo&amp;tags&#x3D;bar. | [optional] 
+ **include_archived** | **bool**|  | [optional] [default to False]
 
 ### Return type
 
@@ -907,13 +1420,14 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 **501** | Not Implemented |  -  |
 **502** | Bad Gateway |  -  |
 **503** | Service Unavailable |  -  |
 **504** | Gateway Timeout |  -  |
-**403** | Forbidden |  -  |
+**400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -1002,8 +1516,101 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_geofences_api_list_workspace_tags**
+> TagListResponse apps_geofences_api_list_workspace_tags()
+
+List Workspace Tags
+
+Return the workspace tag list for chip-picker autocomplete.  Capped at 500 tags; sets truncated=True if hit. Sorted by name ASC.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.tag_list_response import TagListResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+
+    try:
+        # List Workspace Tags
+        api_response = await api_instance.apps_geofences_api_list_workspace_tags()
+        print("The response of GeofencesApi->apps_geofences_api_list_workspace_tags:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_list_workspace_tags: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**TagListResponse**](TagListResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
@@ -1108,7 +1715,7 @@ Name | Type | Description  | Notes
 
 Test Point
 
-Test a point against user's geofences.
+Report which geofences contain a point.  Tests the point against the workspace's active geofences, with schedules applied at the time of the request, or against the draft polygon passed as `geometry`. It sends no webhooks and creates no geofence events, however often it is repeated. To send a test delivery for a saved geofence, use `POST /geofences/{geofence_id}/test-event`.
 
 ### Example
 
@@ -1297,6 +1904,101 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **apps_geofences_api_unarchive_geofence**
+> GeofenceResponse apps_geofences_api_unarchive_geofence(geofence_id)
+
+Unarchive Geofence
+
+Restore an archived geofence to the active list.  Idempotent — unarchiving an already-active fence returns 200 with current state.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.geofence_response import GeofenceResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    geofence_id = 'geofence_id_example' # str | 
+
+    try:
+        # Unarchive Geofence
+        api_response = await api_instance.apps_geofences_api_unarchive_geofence(geofence_id)
+        print("The response of GeofencesApi->apps_geofences_api_unarchive_geofence:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_unarchive_geofence: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **geofence_id** | **str**|  | 
+
+### Return type
+
+[**GeofenceResponse**](GeofenceResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **apps_geofences_api_update_geofence**
 > GeofenceResponse apps_geofences_api_update_geofence(geofence_id, update_geofence_request)
 
@@ -1385,11 +2087,12 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**429** | Too Many Requests |  -  |
+**502** | Bad Gateway |  -  |
+**504** | Gateway Timeout |  -  |
 **500** | Internal Server Error |  -  |
 **501** | Not Implemented |  -  |
-**502** | Bad Gateway |  -  |
 **503** | Service Unavailable |  -  |
-**504** | Gateway Timeout |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 
@@ -1479,6 +2182,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |

@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **success_rate** | **float** |  | 
 **average_duration_ms** | **float** |  | 
 **health_status** | **str** |  | 
-**last_used_at** | **str** |  | 
-**last_health_check_at** | **str** |  | 
+**last_used_at** | **datetime** |  | 
+**last_health_check_at** | **datetime** |  | 
 **recent_errors** | **List[Dict[str, object]]** |  | 
 
 ## Example

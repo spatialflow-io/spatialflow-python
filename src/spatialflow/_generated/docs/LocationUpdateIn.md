@@ -12,7 +12,11 @@ Name | Type | Description | Notes
 **speed** | **float** |  | [optional] 
 **heading** | **float** |  | [optional] 
 **altitude** | **float** |  | [optional] 
+**battery_level** | **int** |  | [optional] 
+**battery_charging** | **bool** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
+**client_location_id** | **str** |  | [optional] 
+**reason** | **str** |  | [optional] 
 
 ## Example
 

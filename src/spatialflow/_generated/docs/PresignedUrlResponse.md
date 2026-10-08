@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **filename** | **str** |  | 
 **file_id** | **str** |  | 
 **content_type** | **str** |  | 
+**required_headers** | **Dict[str, str]** |  | 
 
 ## Example
 

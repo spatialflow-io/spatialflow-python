@@ -5,6 +5,7 @@ Provides a clean exception hierarchy for handling API errors.
 These wrap the generated exceptions with more user-friendly interfaces.
 """
 
+import json
 from typing import Any, Optional
 
 
@@ -197,7 +198,6 @@ def raise_for_status(
         headers: Response headers
         body: Response body (for extracting validation errors)
     """
-    # Extract detail from body if not provided
     if body and not detail:
         if isinstance(body, dict):
             detail = body.get("detail")
@@ -234,6 +234,16 @@ def raise_for_status(
         raise SpatialFlowError(message, **kwargs)
 
 
+def _parse_body(body: Any) -> Any:
+    """Decode a JSON response body, returning None when it is empty or not JSON."""
+    if isinstance(body, (str, bytes, bytearray)):
+        try:
+            return json.loads(body)
+        except ValueError:
+            return None
+    return body
+
+
 def translate_exception(exc: Exception) -> SpatialFlowError:
     """
     Translate generated OpenAPI exceptions to SDK exceptions.
@@ -247,7 +257,7 @@ def translate_exception(exc: Exception) -> SpatialFlowError:
     Returns:
         An appropriate SpatialFlowError subclass
     """
-    # Import here to avoid circular imports
+    # Avoid a circular import at module load time.
     from ._generated.spatialflow_generated.exceptions import (
         ApiException,
         UnauthorizedException,
@@ -257,62 +267,39 @@ def translate_exception(exc: Exception) -> SpatialFlowError:
         ServiceException,
     )
 
-    # Extract message and details from the exception
+    _DEFAULT_STATUS = {
+        UnauthorizedException: 401,
+        ForbiddenException: 403,
+        NotFoundException: 404,
+        BadRequestException: 400,
+        ServiceException: 500,
+    }
+
     message = str(exc)
-    status_code = None
-    detail = None
-    headers = None
-    body = None
 
     if isinstance(exc, ApiException):
-        status_code = exc.status
+        status_code = exc.status or _DEFAULT_STATUS.get(type(exc))
         message = exc.reason or message
         headers = dict(exc.headers) if exc.headers else None
-        body = exc.body
-
-    if isinstance(exc, UnauthorizedException):
-        return AuthenticationError(
-            message, status_code=status_code or 401, detail=detail, headers=headers
-        )
-    if isinstance(exc, ForbiddenException):
-        return PermissionError(
-            message, status_code=status_code or 403, detail=detail, headers=headers
-        )
-    if isinstance(exc, NotFoundException):
-        return NotFoundError(
-            message, status_code=status_code or 404, detail=detail, headers=headers
-        )
-    if isinstance(exc, BadRequestException):
-        return ValidationError(
-            message, status_code=status_code or 400, detail=detail, headers=headers
-        )
-    if isinstance(exc, ServiceException):
-        return ServerError(
-            message, status_code=status_code or 500, detail=detail, headers=headers
-        )
-    if isinstance(exc, ApiException):
-        # Generic API exception - use raise_for_status logic
         if status_code:
             try:
-                raise_for_status(status_code, message, headers=headers, body=body)
+                raise_for_status(
+                    status_code, message, headers=headers, body=_parse_body(exc.body)
+                )
             except SpatialFlowError as e:
                 return e
         return SpatialFlowError(message, status_code=status_code, headers=headers)
 
-    # Non-API exceptions (connection errors, timeouts, etc.)
-    # Handle Python built-in exceptions
     if isinstance(exc, TimeoutError):
         return TimeoutError(message)
     if isinstance(exc, ConnectionError):
         return ConnectionError(message)
 
-    # Handle asyncio timeouts
     import asyncio
 
     if isinstance(exc, asyncio.TimeoutError):
         return TimeoutError(f"Request timed out: {message}")
 
-    # Handle aiohttp-specific exceptions
     try:
         import aiohttp
 
@@ -322,17 +309,14 @@ def translate_exception(exc: Exception) -> SpatialFlowError:
             if isinstance(exc, aiohttp.ClientConnectorError):
                 return ConnectionError(f"Connection failed: {message}")
             if isinstance(exc, aiohttp.ClientResponseError):
-                # Map HTTP status codes to SDK exceptions
                 status = getattr(exc, "status", None)
                 if status:
                     try:
                         raise_for_status(status, message)
                     except SpatialFlowError as e:
                         return e
-            # Generic aiohttp client error
             return ConnectionError(f"HTTP client error: {message}")
     except ImportError:
         pass  # aiohttp not available
 
-    # Fallback for unknown exceptions
     return SpatialFlowError(message)

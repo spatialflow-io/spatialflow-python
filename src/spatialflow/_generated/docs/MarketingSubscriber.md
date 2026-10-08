@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **email** | **str** |  | 
 **first_name** | **str** |  | 
 **last_name** | **str** |  | 
-**subscribed_at** | **str** |  | 
+**subscribed_at** | **datetime** |  | 
 
 ## Example
 

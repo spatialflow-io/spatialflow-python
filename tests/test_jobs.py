@@ -1,15 +1,10 @@
-"""Tests for async job polling helpers."""
-
 import pytest
 
 from spatialflow import poll_job, JobResult, JobTimeoutError, JobFailedError
 
 
 class TestPollJob:
-    """Test the poll_job async function."""
-
     async def test_poll_job_completes_immediately(self):
-        """Test polling a job that completes on first check."""
         async def fetch_status():
             return {
                 "job_id": "test-123",
@@ -31,7 +26,6 @@ class TestPollJob:
         assert len(result.created_geofences) == 1
 
     async def test_poll_job_waits_for_completion(self):
-        """Test polling a job that takes multiple polls to complete."""
         poll_count = 0
 
         async def fetch_status():
@@ -54,7 +48,6 @@ class TestPollJob:
         assert poll_count == 3
 
     async def test_poll_job_timeout(self):
-        """Test that poll_job raises JobTimeoutError on timeout."""
         async def fetch_status():
             return {"job_id": "slow-job", "status": "processing"}
 
@@ -65,7 +58,6 @@ class TestPollJob:
         assert exc_info.value.last_status == "processing"
 
     async def test_poll_job_failure(self):
-        """Test that poll_job raises JobFailedError on failure."""
         async def fetch_status():
             return {
                 "job_id": "failed-job",
@@ -81,7 +73,6 @@ class TestPollJob:
         assert "Invalid file format" in exc_info.value.error_message
 
     async def test_poll_job_status_callback(self):
-        """Test that on_status callback is called on each poll."""
         statuses = []
         poll_count = 0
 
@@ -105,7 +96,6 @@ class TestPollJob:
         assert statuses == ["processing", "processing", "completed"]
 
     async def test_poll_job_custom_terminal_statuses(self):
-        """Test custom terminal statuses."""
         async def fetch_status():
             return {"job_id": "custom", "status": "cancelled"}
 
@@ -117,7 +107,6 @@ class TestPollJob:
                 poll_interval=0.02,
             )
 
-        # With custom terminal statuses, should complete
         result = await poll_job(
             fetch_status,
             timeout=10,
@@ -127,8 +116,6 @@ class TestPollJob:
         assert result.status == "cancelled"
 
     async def test_poll_job_extracts_from_object_response(self):
-        """Test extraction from object with attributes."""
-
         class MockResponse:
             job_id = "obj-123"
             status = "completed"
@@ -148,10 +135,7 @@ class TestPollJob:
 
 
 class TestJobResult:
-    """Test the JobResult class."""
-
     def test_job_result_created_geofences(self):
-        """Test created_geofences property."""
         result = JobResult(
             job_id="test",
             status="completed",
@@ -161,7 +145,6 @@ class TestJobResult:
         assert len(result.created_geofences) == 2
 
     def test_job_result_errors(self):
-        """Test errors property."""
         result = JobResult(
             job_id="test",
             status="completed",
@@ -171,7 +154,6 @@ class TestJobResult:
         assert len(result.errors) == 1
 
     def test_job_result_warnings(self):
-        """Test warnings property."""
         result = JobResult(
             job_id="test",
             status="completed",
@@ -181,7 +163,6 @@ class TestJobResult:
         assert len(result.warnings) == 2
 
     def test_job_result_repr(self):
-        """Test JobResult string representation."""
         result = JobResult(
             job_id="test-repr",
             status="completed",
@@ -197,10 +178,7 @@ class TestJobResult:
 
 
 class TestJobTimeoutError:
-    """Test the JobTimeoutError exception."""
-
     def test_job_timeout_error_message(self):
-        """Test error message format."""
         error = JobTimeoutError("job-123", 60.0, "processing")
 
         assert "job-123" in str(error)
@@ -208,7 +186,6 @@ class TestJobTimeoutError:
         assert "processing" in str(error)
 
     def test_job_timeout_error_without_status(self):
-        """Test error message without last status."""
         error = JobTimeoutError("job-456", 30.0)
 
         assert "job-456" in str(error)
@@ -216,17 +193,13 @@ class TestJobTimeoutError:
 
 
 class TestJobFailedError:
-    """Test the JobFailedError exception."""
-
     def test_job_failed_error_with_message(self):
-        """Test error with error message."""
         error = JobFailedError("job-789", "Parse error")
 
         assert "job-789" in str(error)
         assert "Parse error" in str(error)
 
     def test_job_failed_error_with_results(self):
-        """Test error includes results."""
         results = {"errors": [{"line": 1, "message": "Invalid"}]}
         error = JobFailedError("job-abc", "Validation failed", results)
 

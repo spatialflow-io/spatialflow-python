@@ -5,6 +5,7 @@ All URIs are relative to *https://api.spatialflow.io*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**apps_authentication_api_accept_invitation**](AuthenticationApi.md#apps_authentication_api_accept_invitation) | **POST** /api/v1/auth/accept-invite | Accept Invitation
+[**apps_authentication_api_accept_invitation_passwordless**](AuthenticationApi.md#apps_authentication_api_accept_invitation_passwordless) | **POST** /api/v1/auth/accept-invite/passwordless | Accept Invitation Passwordless
 [**apps_authentication_api_change_password**](AuthenticationApi.md#apps_authentication_api_change_password) | **POST** /api/v1/auth/change-password | Change Password
 [**apps_authentication_api_confirm_password_reset**](AuthenticationApi.md#apps_authentication_api_confirm_password_reset) | **POST** /api/v1/auth/password-reset/confirm | Confirm Password Reset
 [**apps_authentication_api_forgot_password**](AuthenticationApi.md#apps_authentication_api_forgot_password) | **POST** /api/v1/auth/forgot-password | Forgot Password
@@ -20,9 +21,8 @@ Method | HTTP request | Description
 [**apps_authentication_api_resend_verification_alias**](AuthenticationApi.md#apps_authentication_api_resend_verification_alias) | **POST** /api/v1/auth/resend-verification | Resend Verification Alias
 [**apps_authentication_api_resend_verification_email**](AuthenticationApi.md#apps_authentication_api_resend_verification_email) | **POST** /api/v1/auth/resend-verification-email | Resend Verification Email
 [**apps_authentication_api_reset_password**](AuthenticationApi.md#apps_authentication_api_reset_password) | **POST** /api/v1/auth/reset-password | Reset Password
+[**apps_authentication_api_sso_exchange**](AuthenticationApi.md#apps_authentication_api_sso_exchange) | **POST** /api/v1/auth/sso/exchange | Sso Exchange
 [**apps_authentication_api_sso_start**](AuthenticationApi.md#apps_authentication_api_sso_start) | **GET** /api/v1/auth/sso/start | Sso Start
-[**apps_authentication_api_verify_email**](AuthenticationApi.md#apps_authentication_api_verify_email) | **GET** /api/v1/auth/verify-email | Verify Email
-[**apps_authentication_api_verify_email_path**](AuthenticationApi.md#apps_authentication_api_verify_email_path) | **GET** /api/v1/auth/verify-email/{token} | Verify Email Path
 [**apps_authentication_api_verify_email_post**](AuthenticationApi.md#apps_authentication_api_verify_email_post) | **POST** /api/v1/auth/verify-email | Verify Email Post
 [**apps_authentication_apple_mobile_api_apple_nonce**](AuthenticationApi.md#apps_authentication_apple_mobile_api_apple_nonce) | **POST** /api/v1/auth/apple/nonce | Apple Nonce
 [**apps_authentication_apple_mobile_api_apple_token_exchange**](AuthenticationApi.md#apps_authentication_apple_mobile_api_apple_token_exchange) | **POST** /api/v1/auth/apple/token-exchange | Apple Token Exchange
@@ -44,7 +44,7 @@ Method | HTTP request | Description
 
 Accept Invitation
 
-Accept a workspace invitation and optionally set password.  Security features (Issue #67): - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Phase 77 WR-03 — strict email-match guard against authenticated session. If the request carries a valid JWT and the authenticated user's email does NOT match the invitation's email, reject with 409 + error_code INVITE_EMAIL_MISMATCH. Mirrors the guard in google_mobile_api.py and invite_sso_service.resolve_for_callback so the threat-model claim \"Email-mismatch: must NOT add user to workspace\" is enforced on the password path as well as the Google path. The mobile client now force-logs-out before reaching this endpoint (CR-01), so this is a defense-in-depth check for any other caller (web, raw API consumers).  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination     409: Authenticated session email does not match invitation email
+Accept a workspace invitation and optionally set password.  Security features: - Uses Invitation model with hashed token storage - Atomic transaction prevents race conditions on double-accept - Token validated via SHA256 hash comparison - Single-use enforcement (used_at timestamp) - Sibling invites auto-revoked on acceptance - Clears stale verification tokens on acceptance  Strict email-match guard against an authenticated session: if the request carries a valid JWT and the authenticated user's email does NOT match the invitation's email, reject with 409 + error_code INVITE_EMAIL_MISMATCH. This is enforced on the password path as well as the Google sign-in path, as a defense-in-depth check for any caller (web, raw API consumers).  Args:     data.token: Invitation token (plaintext, will be hashed for lookup)     data.invite_id: Invitation ID (UUID)     data.password: New password (optional for existing users with password)  Returns:     200: Success with access/refresh tokens     400: Invalid state (already used, revoked, expired, invalid password)     404: Invalid token/invite_id combination     409: Authenticated session email does not match invitation email
 
 ### Example
 
@@ -111,6 +111,83 @@ No authorization required
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_api_accept_invitation_passwordless**
+> Dict[str, object] apps_authentication_api_accept_invitation_passwordless(accept_invite_passwordless_schema)
+
+Accept Invitation Passwordless
+
+Accept a workspace invitation without setting a password.  The invitation link becomes the invitee's first sign-in. The account is created with set_unusable_password(); setting a password is optional and is covered later by the ordinary forgot-password flow.  The scope guard is the whole security story: this endpoint may only sign in an account that has no credential of its own. Anything with a usable password or a linked identity provider is refused with the same error codes /accept-invite already returns, so the clients need no new error handling.  Every refusal code here is one the password-less probe on /accept-invite already returns for the same token, and reaching any of them requires holding a live, unexpired, unused token minted for that exact address. This endpoint therefore discloses nothing the existing probe does not.  Returns:     200: Success with access/refresh tokens (and Set-Cookie, as /accept-invite)     400: Invalid state, or an account that must prove itself instead     404: Invalid token/invite_id combination     409: Authenticated session email does not match invitation email
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.accept_invite_passwordless_schema import AcceptInvitePasswordlessSchema
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    accept_invite_passwordless_schema = spatialflow_generated.AcceptInvitePasswordlessSchema() # AcceptInvitePasswordlessSchema | 
+
+    try:
+        # Accept Invitation Passwordless
+        api_response = await api_instance.apps_authentication_api_accept_invitation_passwordless(accept_invite_passwordless_schema)
+        print("The response of AuthenticationApi->apps_authentication_api_accept_invitation_passwordless:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_api_accept_invitation_passwordless: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accept_invite_passwordless_schema** | [**AcceptInvitePasswordlessSchema**](AcceptInvitePasswordlessSchema.md)|  | 
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**429** | Too Many Requests |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -194,6 +271,7 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -268,6 +346,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -276,7 +355,7 @@ No authorization required
 
 Forgot Password
 
-Request password reset email.  Rate limited: 10/hour per IP, 3/hour per email (Issue #67 security hardening).
+Request password reset email.  Rate limited: 10/hour per IP, 3/hour per email.
 
 ### Example
 
@@ -342,6 +421,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -416,10 +496,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -493,10 +575,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -560,10 +644,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -572,7 +658,7 @@ No authorization required
 
 Login
 
-User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 60/min per IP, 15/min per email. Per-email limit raised from 5/m (Issue #67) to 15/m (Issue #242) to reduce false lockouts from mobile retries on flaky networks, typos, and app restarts. IP limit remains the primary abuse deterrent.
+User login endpoint. Returns JWT access and refresh tokens, and sets HttpOnly cookies.  Rate limited: 60/min per IP, 15/min per email. The per-email limit was raised from 5/min to 15/min to reduce false lockouts from mobile retries on flaky networks, typos, and app restarts. IP limit remains the primary abuse deterrent.
 
 ### Example
 
@@ -639,15 +725,16 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_authentication_api_logout**
-> apps_authentication_api_logout()
+> MessageResponse apps_authentication_api_logout()
 
 Logout
 
-Logout user by revoking all refresh tokens and clearing HttpOnly cookies.
+Logout user by revoking all access/refresh credentials and clearing cookies.
 
 ### Example
 
@@ -655,6 +742,7 @@ Logout user by revoking all refresh tokens and clearing HttpOnly cookies.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.message_response import MessageResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -681,7 +769,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Logout
-        await api_instance.apps_authentication_api_logout()
+        api_response = await api_instance.apps_authentication_api_logout()
+        print("The response of AuthenticationApi->apps_authentication_api_logout:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthenticationApi->apps_authentication_api_logout: %s\n" % e)
 ```
@@ -694,7 +784,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -710,10 +800,12 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -787,6 +879,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -858,9 +951,11 @@ No authorization required
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 **429** | Too Many Requests |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -927,10 +1022,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **410** | Gone |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1004,10 +1101,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1016,7 +1115,7 @@ This endpoint does not need any parameter.
 
 Resend Verification Alias
 
-Resend verification email (unauthenticated alias for backwards compatibility).  Security (Issue #67): - Generates new token (invalidates previous) - Token stored as SHA256 hash - Token expires per settings.EMAIL_VERIFICATION_TTL_HOURS (default 24h)  Rate limited to 3 requests per hour per email to prevent abuse.
+Request a verification email without disclosing account state.
 
 ### Example
 
@@ -1076,12 +1175,13 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **429** | Too Many Requests |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1090,7 +1190,7 @@ No authorization required
 
 Resend Verification Email
 
-Resend verification email (unauthenticated endpoint with rate limiting). Allows users who haven't verified their email to request a new verification email.  Security (Issue #67): - Generates new token (invalidates previous) - Token stored as SHA256 hash - Token expires per settings.EMAIL_VERIFICATION_TTL_HOURS (default 24h)  Rate limited to 3 requests per hour per email to prevent abuse.
+Backwards-compatible verification resend path with identical policy.
 
 ### Example
 
@@ -1150,12 +1250,13 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**400** | Bad Request |  -  |
 **429** | Too Many Requests |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1222,19 +1323,97 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **410** | Gone |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_authentication_api_sso_exchange**
+> SsoExchangeResponse apps_authentication_api_sso_exchange(sso_exchange_request)
+
+Sso Exchange
+
+Exchange a one-time SSO authorization code + PKCE verifier + state for a SpatialFlow JWT pair.  The code is single-use and consumed on EVERY path (success or failure), so an intercepted code cannot be replayed and is useless without the PKCE verifier.  Returns:     200: {access_token, refresh_token, token_type, expires_in, user, created}.     400: PKCE verification failed or state mismatch.     401: Invalid/expired/already-consumed code, or inactive/unknown user.
+
+### Example
+
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.sso_exchange_request import SsoExchangeRequest
+from spatialflow_generated.models.sso_exchange_response import SsoExchangeResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AuthenticationApi(api_client)
+    sso_exchange_request = spatialflow_generated.SsoExchangeRequest() # SsoExchangeRequest | 
+
+    try:
+        # Sso Exchange
+        api_response = await api_instance.apps_authentication_api_sso_exchange(sso_exchange_request)
+        print("The response of AuthenticationApi->apps_authentication_api_sso_exchange:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthenticationApi->apps_authentication_api_sso_exchange: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sso_exchange_request** | [**SsoExchangeRequest**](SsoExchangeRequest.md)|  | 
+
+### Return type
+
+[**SsoExchangeResponse**](SsoExchangeResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**429** | Too Many Requests |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_authentication_api_sso_start**
-> apps_authentication_api_sso_start(var_return, workspace_slug)
+> apps_authentication_api_sso_start(var_return, workspace_slug, code_challenge=code_challenge, code_challenge_method=code_challenge_method, state=state)
 
 Sso Start
 
-Initiate SAML SSO from mobile app.  Validates the `return` deeplink URL against an allowlist (spatialflow://, spatialflowdev://) to prevent open-redirect abuse (D-06), then delegates to the existing SP-initiated SAML flow for the given workspace slug. On success, the SAML ACS handler will redirect back to `return` with ?token=<jwt>&refresh=<refresh> appended (D-04).  Returns:     302: Redirect to IdP login page.     400: Invalid return URL or SAML configuration error.
+Initiate SAML SSO from mobile app.  Validates the `return` deeplink URL against an allowlist to prevent open-redirect abuse, then delegates to the existing SP-initiated SAML flow for the given workspace slug.  Secure mode: when the client supplies `code_challenge` (PKCE S256) and `state`, they are stashed server-side so the ACS handler can bind them into a one-time code and redirect back with ?code=&state= (NO tokens). When absent, the ACS handler falls back to the legacy token-deeplink (gated by SSO_LEGACY_TOKEN_DEEPLINK_ENABLED) for current-mobile compat.  The `spatialflowdev://` dev scheme is only allowed when SSO_ALLOW_DEV_SCHEME is True (False in production); `spatialflow://` is always allowed.  Returns:     302: Redirect to IdP login page.     400: Invalid return URL or SAML configuration error.
 
 ### Example
 
@@ -1257,10 +1436,13 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     api_instance = spatialflow_generated.AuthenticationApi(api_client)
     var_return = 'var_return_example' # str | 
     workspace_slug = 'workspace_slug_example' # str | 
+    code_challenge = 'code_challenge_example' # str |  (optional)
+    code_challenge_method = 'code_challenge_method_example' # str |  (optional)
+    state = 'state_example' # str |  (optional)
 
     try:
         # Sso Start
-        await api_instance.apps_authentication_api_sso_start(var_return, workspace_slug)
+        await api_instance.apps_authentication_api_sso_start(var_return, workspace_slug, code_challenge=code_challenge, code_challenge_method=code_challenge_method, state=state)
     except Exception as e:
         print("Exception when calling AuthenticationApi->apps_authentication_api_sso_start: %s\n" % e)
 ```
@@ -1274,6 +1456,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **var_return** | **str**|  | 
  **workspace_slug** | **str**|  | 
+ **code_challenge** | **str**|  | [optional] 
+ **code_challenge_method** | **str**|  | [optional] 
+ **state** | **str**|  | [optional] 
 
 ### Return type
 
@@ -1298,150 +1483,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **apps_authentication_api_verify_email**
-> Dict[str, object] apps_authentication_api_verify_email(token)
-
-Verify Email
-
-Verify email address (GET method, backwards compatible).  Note: This endpoint accepts plaintext tokens for backwards compatibility with existing verification links. New tokens are stored hashed, so it tries both plaintext lookup (for old tokens) and hash lookup (for new tokens).
-
-### Example
-
-
-```python
-import spatialflow_generated
-from spatialflow_generated.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.spatialflow.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
-)
-
-
-# Enter a context with an instance of the API client
-async with spatialflow_generated.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = spatialflow_generated.AuthenticationApi(api_client)
-    token = 'token_example' # str | 
-
-    try:
-        # Verify Email
-        api_response = await api_instance.apps_authentication_api_verify_email(token)
-        print("The response of AuthenticationApi->apps_authentication_api_verify_email:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AuthenticationApi->apps_authentication_api_verify_email: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token** | **str**|  | 
-
-### Return type
-
-**Dict[str, object]**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
-**404** | Not Found |  -  |
-**422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **apps_authentication_api_verify_email_path**
-> Dict[str, object] apps_authentication_api_verify_email_path(token)
-
-Verify Email Path
-
-Verify email address (path parameter format for backwards compatibility).
-
-### Example
-
-
-```python
-import spatialflow_generated
-from spatialflow_generated.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.spatialflow.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
-)
-
-
-# Enter a context with an instance of the API client
-async with spatialflow_generated.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = spatialflow_generated.AuthenticationApi(api_client)
-    token = 'token_example' # str | 
-
-    try:
-        # Verify Email Path
-        api_response = await api_instance.apps_authentication_api_verify_email_path(token)
-        print("The response of AuthenticationApi->apps_authentication_api_verify_email_path:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AuthenticationApi->apps_authentication_api_verify_email_path: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token** | **str**|  | 
-
-### Return type
-
-**Dict[str, object]**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
-**404** | Not Found |  -  |
-**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1450,7 +1492,7 @@ No authorization required
 
 Verify Email Post
 
-Verify email address (POST method with enhanced security).  Security features (Issue #67): - Token stored as SHA256 hash (not plaintext) - Token has configurable expiration (default 24h via settings.EMAIL_VERIFICATION_TTL_HOURS) - Single-use: token cleared after successful verification - Dual rate limiting: 20/hour per IP, 5/hour per token  Args:     data.token: Verification token (plaintext, will be hashed for lookup)  Returns:     200: Success with verification status     400: Invalid, expired, or already used token     429: Rate limit exceeded
+Verify email address (POST method with enhanced security).  Security features: - Token stored as SHA256 hash (not plaintext) - Token has configurable expiration (default 24h via settings.EMAIL_VERIFICATION_TTL_HOURS) - Single-use: token cleared after successful verification - Dual rate limiting: 20/hour per IP, 5/hour per token  Args:     data.token: Verification token (plaintext, will be hashed for lookup)  Returns:     200: Success with verification status     400: Invalid, expired, or already used token     429: Rate limit exceeded
 
 ### Example
 
@@ -1516,6 +1558,7 @@ No authorization required
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1581,10 +1624,12 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **429** | Too Many Requests |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1593,7 +1638,7 @@ No authorization required
 
 Apple Token Exchange
 
-Exchange an Apple identity token (from mobile SDK) for a SpatialFlow JWT.
+Exchange an Apple identity token (from mobile SDK) for a SpatialFlow JWT.  When both `invite_id` and `invite_token` are provided, the request takes the shared explicit-invite branch (mobile_invite_exchange), which enforces the strict email match against the targeted Invitation before any User mutation and consumes the invitation on success. Without it an Apple-only invitee signed in but never joined the workspace.
 
 ### Example
 
@@ -1655,10 +1700,13 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
-**503** | Service Unavailable |  -  |
-**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**503** | Service Unavailable |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1667,7 +1715,7 @@ No authorization required
 
 Google Token Exchange
 
-Exchange a Google ID token (from mobile SDK) for a SpatialFlow JWT.  Phase 74: when both `invite_id` and `invite_token` are provided, the request is routed through invite_sso_service for strict email-match reconciliation against the targeted Invitation (INVT-IDENT-01). On mismatch, no User/SocialAccount/Membership/Invitation mutation occurs. When invite params are absent, the call falls through to today's implicit email-match auto-join via provision_workspace_for_new_user (D-22).
+Exchange a Google ID token (from mobile SDK) for a SpatialFlow JWT.  When both `invite_id` and `invite_token` are provided, the request is routed through invite_sso_service for strict email-match reconciliation against the targeted Invitation. On mismatch, no User/SocialAccount/Membership/Invitation mutation occurs. When invite params are absent, the call falls through to today's implicit email-match auto-join via provision_workspace_for_new_user.
 
 ### Example
 
@@ -1732,8 +1780,10 @@ No authorization required
 **404** | Not Found |  -  |
 **409** | Conflict |  -  |
 **503** | Service Unavailable |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1816,11 +1866,12 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_authentication_oauth_api_get_linked_accounts**
-> apps_authentication_oauth_api_get_linked_accounts()
+> LinkedAccountsResponse apps_authentication_oauth_api_get_linked_accounts()
 
 Get Linked Accounts
 
@@ -1832,6 +1883,7 @@ Get list of OAuth providers linked to user account.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.linked_accounts_response import LinkedAccountsResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -1858,7 +1910,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Get Linked Accounts
-        await api_instance.apps_authentication_oauth_api_get_linked_accounts()
+        api_response = await api_instance.apps_authentication_oauth_api_get_linked_accounts()
+        print("The response of AuthenticationApi->apps_authentication_oauth_api_get_linked_accounts:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthenticationApi->apps_authentication_oauth_api_get_linked_accounts: %s\n" % e)
 ```
@@ -1871,7 +1925,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**LinkedAccountsResponse**](LinkedAccountsResponse.md)
 
 ### Authorization
 
@@ -1887,10 +1941,12 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1899,7 +1955,7 @@ void (empty response body)
 
 Get Oauth Providers
 
-Get list of available OAuth providers.  Providers are shown only if: 1. SSO toggle is enabled in Admin UI (Issue #119) 2. Valid credentials are configured (non-placeholder)
+Get list of available OAuth providers.  Providers are shown only if: 1. SSO toggle is enabled in Admin UI 2. Valid credentials are configured (non-placeholder)
 
 ### Example
 
@@ -1955,10 +2011,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2042,6 +2100,7 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2050,7 +2109,7 @@ Name | Type | Description  | Notes
 
 Oauth Authorize
 
-Initialize OAuth flow for a provider.  When `invite_id` and `invite_token` are both provided (Phase 74 / D-02), the invitation is validated server-side and bound to the AuthOAuthState for recovery on the callback. Either-missing falls through to the standard sign-in flow (D-22 backward compat).
+Initialize OAuth flow for a provider.  When `invite_id` and `invite_token` are both provided, the invitation is validated server-side and bound to the AuthOAuthState for recovery on the callback. Either-missing falls through to the standard sign-in flow.
 
 ### Example
 
@@ -2122,6 +2181,7 @@ No authorization required
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2130,7 +2190,7 @@ No authorization required
 
 Oauth Callback
 
-Handle OAuth callback from provider. Exchanges code for tokens and creates/links user account.  OAuth state is always invalidated on callback (success, error, or exception) to prevent replay attacks. State tokens are one-time use for CSRF protection.  Phase 74: When the OAuth state has a bound Invitation (invite-driven SSO flow), recovers the FK and routes through invite_sso_service.resolve_for_callback. On email match: creates WorkspaceMembership, marks invite used, delivers JWT. On mismatch: redirects to accept-invite page with error_code (D-12).
+Handle OAuth callback from provider. Exchanges code for tokens and creates/links user account.  OAuth state is always invalidated on callback (success, error, or exception) to prevent replay attacks. State tokens are one-time use for CSRF protection.  When the OAuth state has a bound Invitation (invite-driven SSO flow), recovers the FK and routes through invite_sso_service.resolve_for_callback. On email match: creates WorkspaceMembership, marks invite used, delivers JWT. On mismatch: redirects to accept-invite page with an error code.
 
 ### Example
 
@@ -2194,11 +2254,13 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**302** | Redirect to the frontend OAuth callback or login page |  * Location - Identity provider sign-in URL <br>  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2269,10 +2331,12 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **429** | Too Many Requests |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2337,16 +2401,18 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**302** | Redirect to the identity provider |  * Location - Identity provider sign-in URL <br>  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_authentication_saml_api_metadata**
-> apps_authentication_saml_api_metadata(slug)
+> str apps_authentication_saml_api_metadata(slug)
 
 Metadata
 
@@ -2375,7 +2441,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Metadata
-        await api_instance.apps_authentication_saml_api_metadata(slug)
+        api_response = await api_instance.apps_authentication_saml_api_metadata(slug)
+        print("The response of AuthenticationApi->apps_authentication_saml_api_metadata:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthenticationApi->apps_authentication_saml_api_metadata: %s\n" % e)
 ```
@@ -2391,7 +2459,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -2400,14 +2468,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/xml, application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | SAML service-provider metadata |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
@@ -2419,7 +2489,7 @@ No authorization required
 
 Saml Acs
 
-Assertion Consumer Service endpoint.  Receives the SAML response (form POST from IdP), validates the assertion, provisions or links the user, issues JWT tokens via HttpOnly cookies, and redirects to the frontend callback URL.
+Assertion Consumer Service endpoint.  Receives the SAML response (form POST from IdP), validates the assertion, signs in a pre-authorized workspace member, issues JWT tokens via HttpOnly cookies, and redirects to the frontend callback URL.
 
 ### Example
 
@@ -2475,11 +2545,13 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
-**401** | Unauthorized |  -  |
+**302** | Redirect after processing the SAML assertion |  * Location - Frontend or mobile continuation URL <br>  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

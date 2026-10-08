@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **invitations** | [**List[InvitationOut]**](InvitationOut.md) |  | 
 **total** | **int** |  | 
+**next_cursor** | **str** |  | [optional] 
 
 ## Example
 

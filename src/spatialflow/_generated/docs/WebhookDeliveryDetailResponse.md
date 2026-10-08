@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **delivered_at** | **datetime** |  | 
 **next_retry_at** | **datetime** |  | 
 **payload** | **Dict[str, object]** |  | 
-**response_body** | **Dict[str, object]** |  | 
+**response_body** | [**ResponseBody**](ResponseBody.md) |  | 
 **response_headers** | **Dict[str, object]** |  | 
 
 ## Example

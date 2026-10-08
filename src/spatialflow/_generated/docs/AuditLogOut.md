@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **http_method** | **str** |  | 
 **path** | **str** |  | 
 **status_code** | **int** |  | [optional] 
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

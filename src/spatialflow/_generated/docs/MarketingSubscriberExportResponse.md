@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **subscribers** | [**List[MarketingSubscriber]**](MarketingSubscriber.md) |  | 
 **count** | **int** |  | 
-**exported_at** | **str** |  | 
+**exported_at** | **datetime** |  | 
 
 ## Example
 

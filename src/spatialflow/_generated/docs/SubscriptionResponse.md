@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **current_period_start** | **str** |  | [optional] 
 **current_period_end** | **str** |  | [optional] 
 **cancel_at_period_end** | **bool** |  | [optional] [default to False]
-**created_at** | **str** | ISO 8601 datetime | 
-**updated_at** | **str** | ISO 8601 datetime | 
+**created_at** | **datetime** | ISO 8601 datetime | 
+**updated_at** | **datetime** | ISO 8601 datetime | 
 
 ## Example
 

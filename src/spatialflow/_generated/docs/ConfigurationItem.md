@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **is_write_only** | **bool** |  | 
 **allow_empty** | **bool** |  | [optional] [default to False]
 **validation_rules** | **Dict[str, object]** |  | 
-**updated_at** | **str** |  | [optional] 
+**updated_at** | **datetime** |  | [optional] 
 **error** | **str** |  | [optional] 
 
 ## Example

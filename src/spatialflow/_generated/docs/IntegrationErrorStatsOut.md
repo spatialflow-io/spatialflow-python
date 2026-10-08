@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error_count_24h** | **int** |  | 
-**last_error_at** | **str** |  | [optional] 
+**last_error_at** | **datetime** |  | [optional] 
 
 ## Example
 

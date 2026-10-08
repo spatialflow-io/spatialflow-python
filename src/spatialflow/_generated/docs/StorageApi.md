@@ -4,13 +4,105 @@ All URIs are relative to *https://api.spatialflow.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**apps_storage_api_complete_presigned_upload**](StorageApi.md#apps_storage_api_complete_presigned_upload) | **POST** /api/v1/storage/uploads/{file_id}/complete | Complete Presigned Upload
 [**apps_storage_api_create_presigned_url**](StorageApi.md#apps_storage_api_create_presigned_url) | **POST** /api/v1/storage/presigned-url | Create Presigned Url
-[**apps_storage_api_delete_file**](StorageApi.md#apps_storage_api_delete_file) | **DELETE** /api/v1/storage/{file_type}/{filename} | Delete File
+[**apps_storage_api_delete_file**](StorageApi.md#apps_storage_api_delete_file) | **DELETE** /api/v1/storage/{file_id} | Delete File
 [**apps_storage_api_get_download_url**](StorageApi.md#apps_storage_api_get_download_url) | **GET** /api/v1/storage/download/{file_id} | Get Download Url
 [**apps_storage_api_get_file_types**](StorageApi.md#apps_storage_api_get_file_types) | **GET** /api/v1/storage/types | Get File Types
 [**apps_storage_api_health_check**](StorageApi.md#apps_storage_api_health_check) | **GET** /api/v1/storage/health | Health Check
 [**apps_storage_api_list_files**](StorageApi.md#apps_storage_api_list_files) | **GET** /api/v1/storage/list/{file_type} | List Files
 
+
+# **apps_storage_api_complete_presigned_upload**
+> CompleteUploadResponse apps_storage_api_complete_presigned_upload(file_id)
+
+Complete Presigned Upload
+
+Finalize a direct upload using S3 metadata as the source of truth.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.complete_upload_response import CompleteUploadResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.StorageApi(api_client)
+    file_id = 'file_id_example' # str | 
+
+    try:
+        # Complete Presigned Upload
+        api_response = await api_instance.apps_storage_api_complete_presigned_upload(file_id)
+        print("The response of StorageApi->apps_storage_api_complete_presigned_upload:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling StorageApi->apps_storage_api_complete_presigned_upload: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **file_id** | **str**|  | 
+
+### Return type
+
+[**CompleteUploadResponse**](CompleteUploadResponse.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**500** | Internal Server Error |  -  |
+**401** | Unauthorized |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_storage_api_create_presigned_url**
 > PresignedUrlResponse apps_storage_api_create_presigned_url(presigned_url_request)
@@ -105,11 +197,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_storage_api_delete_file**
-> apps_storage_api_delete_file(file_type, filename)
+> apps_storage_api_delete_file(file_id)
 
 Delete File
 
-Delete a file from storage.
+Delete a completed stored file by id, removing its object from storage.  Only the uploader or a workspace owner or manager may delete a file. An upload still pending or failed has no final object to remove; the expired-upload cleanup task discards those.  The caller's role and credentials are rechecked under locks held until the row is committed, so a demotion or revocation cannot land mid-delete. A file a queued or running geofence import still reads is refused with 409. The object is purged shortly afterwards by a queued task, with a scheduled sweep as the backstop.
 
 ### Example
 
@@ -147,12 +239,11 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.StorageApi(api_client)
-    file_type = 'file_type_example' # str | 
-    filename = 'filename_example' # str | 
+    file_id = 'file_id_example' # str | 
 
     try:
         # Delete File
-        await api_instance.apps_storage_api_delete_file(file_type, filename)
+        await api_instance.apps_storage_api_delete_file(file_id)
     except Exception as e:
         print("Exception when calling StorageApi->apps_storage_api_delete_file: %s\n" % e)
 ```
@@ -164,8 +255,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file_type** | **str**|  | 
- **filename** | **str**|  | 
+ **file_id** | **str**|  | 
 
 ### Return type
 
@@ -185,11 +275,13 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
-**400** | Bad Request |  -  |
-**500** | Internal Server Error |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**500** | Internal Server Error |  -  |
+**503** | Service Unavailable |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -278,6 +370,7 @@ Name | Type | Description  | Notes
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **500** | Internal Server Error |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
 
@@ -344,10 +437,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -412,10 +507,12 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **503** | Service Unavailable |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

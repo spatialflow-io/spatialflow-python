@@ -1,6 +1,6 @@
 # SessionNoteOut
 
-Response item for GET/POST /devices/{uuid}/sessions/{session_id}/notes (D-19).  ``author_id`` is None when the author user was deleted (FK on_delete=SET_NULL). ``author_name`` falls back to \"Unknown\" in that case. ``author_role`` is the live workspace role (\"field_worker\" | \"manager\" | \"owner\"); \"unknown\" when the author is None or no longer in the workspace.
+Response item for GET/POST /devices/{uuid}/sessions/{session_id}/notes.  ``author_id`` is None when the author user was deleted (FK on_delete=SET_NULL). ``author_name`` falls back to \"Unknown\" in that case. ``author_role`` is the live workspace role (\"field_worker\" | \"manager\" | \"owner\"); \"unknown\" when the author is None or no longer in the workspace.
 
 ## Properties
 

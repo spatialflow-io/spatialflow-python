@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sessions** | [**List[DeviceSessionOut]**](DeviceSessionOut.md) |  | 
 **total_count** | **int** |  | 
+**open_session** | [**DeviceSessionOut**](DeviceSessionOut.md) |  | [optional] 
 
 ## Example
 

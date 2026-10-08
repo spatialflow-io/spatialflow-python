@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**apps_accounts_api_account_health_check**](AccountApi.md#apps_accounts_api_account_health_check) | **GET** /api/v1/account/health | Account Health Check
 [**apps_accounts_api_create_api_key**](AccountApi.md#apps_accounts_api_create_api_key) | **POST** /api/v1/account/api-keys | Create Api Key
 [**apps_accounts_api_create_erasure_job**](AccountApi.md#apps_accounts_api_create_erasure_job) | **POST** /api/v1/account/privacy/erasure | Create Erasure Job
+[**apps_accounts_api_create_issue_report**](AccountApi.md#apps_accounts_api_create_issue_report) | **POST** /api/v1/account/issue-reports | Create Issue Report
 [**apps_accounts_api_delete_api_key**](AccountApi.md#apps_accounts_api_delete_api_key) | **DELETE** /api/v1/account/api-keys/{api_key_id} | Delete Api Key
 [**apps_accounts_api_delete_own_account**](AccountApi.md#apps_accounts_api_delete_own_account) | **DELETE** /api/v1/account/me | Delete Own Account
 [**apps_accounts_api_get_api_key**](AccountApi.md#apps_accounts_api_get_api_key) | **GET** /api/v1/account/api-keys/{api_key_id} | Get Api Key
@@ -85,10 +86,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -101,7 +104,6 @@ Generate a new API key for the authenticated user.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -121,12 +123,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -163,7 +159,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -189,7 +185,7 @@ Name | Type | Description  | Notes
 
 Create Erasure Job
 
-Create a privacy data erasure job (GDPR compliance).  This endpoint allows workspace owners and admins to delete location and event data for GDPR Article 17 (Right to be Forgotten) compliance.  **Authentication:** JWT token required **Authorization:** Owner or Admin role only  **Scope Options:** - `workspace`: Delete all data for the workspace - `device`: Delete data for specific devices (requires device_ids) - `date_range`: Delete data within a time range (requires from_date and to_date) - `tag`: Delete data with specific tags (requires tags)  **Dry Run Mode:** Set `dry_run: true` to estimate deletions without actually deleting data. Always run dry-run first to verify the scope.  **Example:** ```json {     \"scope\": \"device\",     \"device_ids\": [\"truck-005\", \"truck-009\"],     \"from_date\": \"2024-01-01T00:00:00Z\",     \"to_date\": \"2024-12-31T23:59:59Z\",     \"dry_run\": true } ```  **PRD Reference:** §4.5 Privacy Erasure API **Roadmap:** Phase 2, Task 2.1
+Create a privacy data erasure job (GDPR compliance).  This endpoint allows workspace owners and admins to delete location and event data for GDPR Article 17 (Right to be Forgotten) compliance.  **Authentication:** JWT token required **Authorization:** Owner or Admin role only  **Scope Options:** - `workspace`: Delete all data for the workspace - `device`: Delete data for specific devices (requires device_ids) - `date_range`: Delete data within a time range (requires from_date and to_date) - `tag`: Delete data with specific tags (requires tags)  **Dry Run Mode:** Set `dry_run: true` to estimate deletions without actually deleting data. Always run dry-run first to verify the scope.  **Example:** ```json {     \"scope\": \"device\",     \"device_ids\": [\"truck-005\", \"truck-009\"],     \"from_date\": \"2024-01-01T00:00:00Z\",     \"to_date\": \"2024-12-31T23:59:59Z\",     \"dry_run\": true } ```
 
 ### Example
 
@@ -265,6 +261,92 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_accounts_api_create_issue_report**
+> IssueReportResponse apps_accounts_api_create_issue_report(issue_report_request)
+
+Create Issue Report
+
+Create a private in-app issue report.  Reports are scoped to the authenticated user's active workspace, scrubbed server-side as defense in depth, persisted privately, and forwarded to SpatialFlow support by email. Email delivery failures are recorded on the report but do not block the user from receiving a reference ID.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.issue_report_request import IssueReportRequest
+from spatialflow_generated.models.issue_report_response import IssueReportResponse
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.AccountApi(api_client)
+    issue_report_request = spatialflow_generated.IssueReportRequest() # IssueReportRequest | 
+
+    try:
+        # Create Issue Report
+        api_response = await api_instance.apps_accounts_api_create_issue_report(issue_report_request)
+        print("The response of AccountApi->apps_accounts_api_create_issue_report:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AccountApi->apps_accounts_api_create_issue_report: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **issue_report_request** | [**IssueReportRequest**](IssueReportRequest.md)|  | 
+
+### Return type
+
+[**IssueReportResponse**](IssueReportResponse.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Created |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -277,7 +359,6 @@ Delete a specific API key.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -295,12 +376,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -335,7 +410,7 @@ void (empty response body)
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -348,9 +423,11 @@ void (empty response body)
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
 **404** | Not Found |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -359,11 +436,10 @@ void (empty response body)
 
 Delete Own Account
 
-Delete the authenticated user's own account. Required for App Store/Play Store compliance.
+Delete the authenticated user's own account. Required for App Store/Play Store compliance.  Returns 409 while the user is the only owner of a workspace that has other members. Promote another owner or delete the workspace first. It also returns 409 when a membership was added during the request; retry.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -381,12 +457,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -417,7 +487,7 @@ void (empty response body)
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -430,6 +500,7 @@ void (empty response body)
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
 **400** | Bad Request |  -  |
+**409** | Conflict |  -  |
 **500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -447,7 +518,6 @@ Get a specific API key by its ID.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -466,12 +536,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -508,7 +572,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -521,9 +585,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -536,7 +602,6 @@ Get all API keys for the authenticated user.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -555,12 +620,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -593,7 +652,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -605,10 +664,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -617,7 +678,7 @@ This endpoint does not need any parameter.
 
 Get Dashboard Metrics
 
-Get dashboard KPI metrics for the authenticated user.  Returns key performance indicators for the dashboard: - **Active Workflows**: Workflows that are active and were created or executed in the period - **Events Total**: Total geofence entry/exit events triggered in the period - **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)  **Time Ranges:** - `today`: From midnight to now - `7d`: Last 7 days - `30d`: Last 30 days - `custom`: Custom date range (requires start_date and end_date)  **Formulas:** - Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100 - Returns `null` when total_attempts = 0 (UI should show \"—\")  **Authentication:** JWT token required  **Example:** ``` GET /api/v1/accounts/dashboard/metrics?time_range=7d GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z ```  **Dashboard UX:** Ticket #2 - Global Time-Range Control + KPI Formulas
+Get dashboard KPI metrics for the authenticated user.  Returns key performance indicators for the dashboard: - **Active Workflows**: Workflows that are active and were created or executed in the period - **Events Total**: Total geofence entry/exit events triggered in the period - **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)  **Time Ranges:** - `today`: From midnight to now - `7d`: Last 7 days - `30d`: Last 30 days - `custom`: Custom date range (requires start_date and end_date)  **Formulas:** - Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100 - Returns `null` when total_attempts = 0 (UI should show \"—\")  **Authentication:** JWT token required  **Example:** ``` GET /api/v1/accounts/dashboard/metrics?time_range=7d GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z ```
 
 ### Example
 
@@ -705,7 +766,7 @@ Name | Type | Description  | Notes
 
 Get Erasure Job
 
-Get status of a privacy erasure job.  Returns the current status, progress, and results of an erasure job. Poll this endpoint to track job execution.  **Authentication:** JWT token required **Authorization:** Must be in the same workspace as the job  **Job Statuses:** - `pending`: Job queued, not yet started - `running`: Job is executing - `completed`: Job finished successfully - `failed`: Job encountered an error  **PRD Reference:** §4.5 Privacy Erasure API
+Get status of a privacy erasure job.  Returns the current status, progress, and results of an erasure job. Poll this endpoint to track job execution.  **Authentication:** JWT token required **Authorization:** Must be in the same workspace as the job  **Job Statuses:** - `pending`: Job queued, not yet started - `running`: Job is executing - `completed`: Job finished successfully - `failed`: Job encountered an error
 
 ### Example
 
@@ -775,15 +836,17 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-**404** | Not Found |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_get_notifications**
-> apps_accounts_api_get_notifications(unread_only=unread_only)
+> NotificationListResponse apps_accounts_api_get_notifications(unread_only=unread_only)
 
 Get Notifications
 
@@ -791,11 +854,11 @@ Get user notifications.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.notification_list_response import NotificationListResponse
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -810,12 +873,6 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
-
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
@@ -829,7 +886,9 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
     try:
         # Get Notifications
-        await api_instance.apps_accounts_api_get_notifications(unread_only=unread_only)
+        api_response = await api_instance.apps_accounts_api_get_notifications(unread_only=unread_only)
+        print("The response of AccountApi->apps_accounts_api_get_notifications:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AccountApi->apps_accounts_api_get_notifications: %s\n" % e)
 ```
@@ -845,11 +904,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**NotificationListResponse**](NotificationListResponse.md)
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -861,10 +920,12 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -877,7 +938,6 @@ Get current user profile information.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -896,12 +956,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -934,7 +988,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -946,10 +1000,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -962,7 +1018,6 @@ List API keys expiring within the specified number of days.  Default: 30 days
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -980,12 +1035,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1022,7 +1071,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1034,10 +1083,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1050,7 +1101,6 @@ Mark all notifications as read.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1068,12 +1118,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1106,7 +1150,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1118,10 +1162,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1134,7 +1180,6 @@ Mark a notification as read.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1152,12 +1197,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1194,7 +1233,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1207,9 +1246,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1222,7 +1263,6 @@ Regenerate an existing API key.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1241,12 +1281,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1283,7 +1317,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1296,9 +1330,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1311,7 +1347,6 @@ Rotate an API key.  Creates a new API key with the same permissions and marks th
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1330,12 +1365,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1374,7 +1403,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1386,9 +1415,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
-**404** | Not Found |  -  |
+**400** | Bad Request |  -  |
+**500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1402,7 +1433,6 @@ Set or update expiration date for an API key.  Pass expires_at as ISO 8601 datet
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1420,12 +1450,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1464,7 +1488,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1477,9 +1501,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **404** | Not Found |  -  |
+**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1492,7 +1518,6 @@ Update an API key's settings.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1511,12 +1536,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1555,7 +1574,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -1572,6 +1591,7 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1584,7 +1604,6 @@ Update current user profile information.
 
 ### Example
 
-* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -1603,12 +1622,6 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: APIKeyBearer
-configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -1645,7 +1658,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+[JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 

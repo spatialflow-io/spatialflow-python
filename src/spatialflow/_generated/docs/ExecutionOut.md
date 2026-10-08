@@ -15,6 +15,9 @@ Name | Type | Description | Notes
 **completed_at** | **datetime** |  | 
 **duration_seconds** | **float** |  | 
 **error_message** | **str** |  | 
+**events_count** | **int** |  | [optional] [default to 0]
+**is_preview** | **bool** |  | [optional] [default to False]
+**occupancy_summary** | [**OccupancySummaryOut**](OccupancySummaryOut.md) |  | [optional] 
 
 ## Example
 

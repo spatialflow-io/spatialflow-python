@@ -1,5 +1,3 @@
-"""Tests for workflow builder helpers."""
-
 import pytest
 
 from spatialflow import (
@@ -10,10 +8,7 @@ from spatialflow import (
 
 
 class TestBuildGeofenceWebhookWorkflow:
-    """Test build_geofence_webhook_workflow function."""
-
     def test_basic_workflow_structure(self):
-        """Test workflow builder returns expected structure."""
         result = build_geofence_webhook_workflow(
             name="Test Workflow",
             geofence_ids=["uuid-1", "uuid-2"],
@@ -26,7 +21,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert len(result.edges) == 1
 
     def test_trigger_node_structure(self):
-        """Test trigger node has correct structure."""
         result = build_geofence_webhook_workflow(
             name="Test",
             geofence_ids=["uuid-1", "uuid-2"],
@@ -44,7 +38,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert trigger["data"]["config"]["geofence_ids"] == ["uuid-1", "uuid-2"]
 
     def test_action_node_structure(self):
-        """Test action node has correct structure."""
         result = build_geofence_webhook_workflow(
             name="Test",
             geofence_ids=["uuid-1"],
@@ -60,7 +53,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert action["data"]["config"]["headers"] == {"Content-Type": "application/json"}
 
     def test_edge_structure(self):
-        """Test edge connects trigger to action."""
         result = build_geofence_webhook_workflow(
             name="Test",
             geofence_ids=["uuid-1"],
@@ -73,7 +65,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert edge["target"] == "action-1"
 
     def test_geofence_exit_trigger(self):
-        """Test exit trigger type."""
         result = build_geofence_webhook_workflow(
             name="Exit Alert",
             geofence_ids=["uuid-1"],
@@ -86,8 +77,19 @@ class TestBuildGeofenceWebhookWorkflow:
         assert trigger["data"]["config"]["type"] == "geofence_exit"
         assert "Exit" in trigger["data"]["label"]
 
+    def test_geofence_any_trigger(self):
+        """geofence_any fires on entry AND exit through one trigger node."""
+        workflow = build_geofence_webhook_workflow(
+            name="Any Alert",
+            geofence_ids=["gf-1"],
+            webhook_url="https://example.com/hook",
+            trigger_type="geofence_any",
+        )
+        trigger = workflow.nodes[0]
+        assert trigger["data"]["triggerType"] == "geofence_any"
+        assert trigger["data"]["config"]["type"] == "geofence_any"
+
     def test_geofence_dwell_trigger(self):
-        """Test dwell trigger type."""
         result = build_geofence_webhook_workflow(
             name="Dwell Alert",
             geofence_ids=["uuid-1"],
@@ -100,7 +102,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert trigger["data"]["config"]["type"] == "geofence_dwell"
 
     def test_custom_description(self):
-        """Test custom description is set."""
         result = build_geofence_webhook_workflow(
             name="Test",
             geofence_ids=["uuid-1"],
@@ -111,7 +112,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert result.description == "My custom description"
 
     def test_custom_webhook_method(self):
-        """Test custom HTTP method."""
         result = build_geofence_webhook_workflow(
             name="Test",
             geofence_ids=["uuid-1"],
@@ -123,7 +123,6 @@ class TestBuildGeofenceWebhookWorkflow:
         assert action["data"]["config"]["method"] == "PUT"
 
     def test_custom_webhook_headers(self):
-        """Test custom headers."""
         custom_headers = {
             "Authorization": "Bearer token123",
             "X-Custom": "value",
@@ -140,10 +139,7 @@ class TestBuildGeofenceWebhookWorkflow:
 
 
 class TestBuildGeofenceIntegrationWorkflow:
-    """Test build_geofence_integration_workflow function."""
-
     def test_basic_integration_workflow(self):
-        """Test integration workflow structure."""
         result = build_geofence_integration_workflow(
             name="Integration Workflow",
             geofence_ids=["uuid-1"],
@@ -155,7 +151,6 @@ class TestBuildGeofenceIntegrationWorkflow:
         assert len(result.edges) == 1
 
     def test_integration_action_node(self):
-        """Test integration action node structure."""
         result = build_geofence_integration_workflow(
             name="Test",
             geofence_ids=["uuid-1"],
@@ -167,7 +162,6 @@ class TestBuildGeofenceIntegrationWorkflow:
         assert action["data"]["config"]["integration_id"] == "int-123"
 
     def test_integration_with_exit_trigger(self):
-        """Test integration workflow with exit trigger."""
         result = build_geofence_integration_workflow(
             name="Exit Integration",
             geofence_ids=["uuid-1", "uuid-2"],
@@ -181,12 +175,14 @@ class TestBuildGeofenceIntegrationWorkflow:
 
 
 class TestTriggerType:
-    """Test TriggerType literal."""
-
     def test_valid_trigger_types(self):
-        """Test that valid trigger types are accepted."""
         # These should not raise type errors at runtime
-        for trigger_type in ["geofence_enter", "geofence_exit", "geofence_dwell"]:
+        for trigger_type in [
+            "geofence_enter",
+            "geofence_exit",
+            "geofence_any",
+            "geofence_dwell",
+        ]:
             result = build_geofence_webhook_workflow(
                 name="Test",
                 geofence_ids=["uuid-1"],
@@ -198,10 +194,7 @@ class TestTriggerType:
 
 
 class TestApiMethodsExist:
-    """Verify generated API method names match our wrappers."""
-
     def test_public_location_api_methods_exist(self):
-        """Verify generated API method names match our wrappers."""
         from spatialflow._generated.spatialflow_generated.api.public_location_ingest_api import (
             PublicLocationIngestApi,
         )
@@ -211,7 +204,6 @@ class TestApiMethodsExist:
         assert hasattr(PublicLocationIngestApi, "apps_public_locations_api_get_ingest_stats")
 
     def test_integrations_api_methods_exist(self):
-        """Verify integration API method names."""
         from spatialflow._generated.spatialflow_generated.api.integrations_api import (
             IntegrationsApi,
         )
@@ -223,7 +215,6 @@ class TestApiMethodsExist:
         assert hasattr(IntegrationsApi, "apps_integrations_api_test_integration")
 
     def test_workflows_api_toggle_exists(self):
-        """Verify toggle method exists."""
         from spatialflow._generated.spatialflow_generated.api.workflows_api import (
             WorkflowsApi,
         )
@@ -231,7 +222,6 @@ class TestApiMethodsExist:
         assert hasattr(WorkflowsApi, "apps_workflows_api_toggle_workflow")
 
     def test_workflow_in_accepts_dicts(self):
-        """Verify WorkflowIn accepts List[Dict] for nodes/edges."""
         from spatialflow._generated.spatialflow_generated.models import WorkflowIn
 
         workflow = WorkflowIn(

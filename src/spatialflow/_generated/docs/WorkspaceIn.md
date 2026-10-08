@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **support_email** | **str** |  | [optional] 
 **slack_connect_url** | **str** |  | [optional] 
 **unit_system** | **str** |  | [optional] 
+**map_home** | **Dict[str, object]** |  | [optional] 
 
 ## Example
 

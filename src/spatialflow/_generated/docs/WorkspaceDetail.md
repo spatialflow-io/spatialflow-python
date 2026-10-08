@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **website** | **str** |  | 
 **timezone** | **str** |  | 
 **member_count** | **int** |  | 
-**created_at** | **str** |  | 
+**created_at** | **datetime** |  | 
 
 ## Example
 

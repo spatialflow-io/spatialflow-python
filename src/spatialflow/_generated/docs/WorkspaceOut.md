@@ -12,10 +12,12 @@ Name | Type | Description | Notes
 **website** | **str** |  | [optional] 
 **billing_email** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**timezone** | **str** | Workspace default timezone | [optional] [default to 'UTC']
+**timezone** | **str** |  | [optional] 
 **support_email** | **str** |  | [optional] 
 **slack_connect_url** | **str** |  | [optional] 
 **unit_system** | **str** | Unit system for display (imperial: mi/mph/ft, metric: km/kph/m) | [optional] [default to 'imperial']
+**lane** | **str** |  | [optional] 
+**map_home** | **object** |  | [optional] 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 
 

@@ -7,6 +7,7 @@ Current usage metrics.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **api_calls** | **int** |  | [optional] [default to 0]
+**events** | **int** | Metered event count for the current month, from period_start to period_end | [optional] [default to 0]
 **geofences** | **int** |  | [optional] [default to 0]
 **webhooks_delivered** | **int** |  | [optional] [default to 0]
 **test_points** | **int** |  | [optional] [default to 0]
