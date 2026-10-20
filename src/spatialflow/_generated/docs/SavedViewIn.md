@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **surface** | **str** |  | 
 **name** | **str** |  | 
-**url** | **str** |  | 
+**url** | **str** | A path on this site with an optional query and fragment, such as /events?severity&#x3D;critical. Path segments are never empty or start with a dot, the path has no encoded dot, slash or backslash, and the URL has no backslash or control characters. | 
 **is_shared** | **bool** |  | [optional] [default to False]
 
 ## Example

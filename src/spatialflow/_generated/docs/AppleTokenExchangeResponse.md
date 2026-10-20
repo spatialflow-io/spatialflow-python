@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **user** | **Dict[str, object]** |  | 
 **created** | **bool** |  | 
 **consumed_invite_id** | **str** |  | [optional] 
+**already_member** | **bool** |  | [optional] 
+**role** | **str** |  | [optional] 
 
 ## Example
 

@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **employee_id** | **str** |  | [optional] [default to '']
 **license_plate** | **str** |  | [optional] [default to '']
 **group** | **str** |  | [optional] [default to '']
+**color** | **str** |  | [optional] [default to '']
 **status** | **str** |  | 
 **last_seen_seconds** | **int** |  | [optional] 
 **parked** | **bool** |  | [optional] [default to False]

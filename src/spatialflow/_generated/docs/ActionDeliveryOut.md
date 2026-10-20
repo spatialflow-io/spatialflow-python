@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **delivery_status** | **str** |  | [optional] 
 **error_message** | **str** |  | [optional] 
 **condition_passed** | **bool** |  | [optional] 
+**response_status_code** | **int** |  | [optional] 
+**response_excerpt** | **str** |  | [optional] 
 
 ## Example
 

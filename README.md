@@ -86,7 +86,7 @@ Available via `client.raw`:
 - `geofences`, `workflows`, `webhooks`, `devices`, `storage`, `locations`, `integrations`, `workspaces`, `account` (also wrapped)
 - `authentication`, `admin`, `billing`, `subscriptions`, `tiles` (raw only)
 
-Some generated APIs (email, system, gpx_simulator, public, default, e2e_test) are not
+Some generated APIs (email, system, public, default, e2e_test) are not
 exposed on the client. Use the generated client directly for those.
 
 ## Documentation

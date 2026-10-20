@@ -5,6 +5,7 @@ Provides utilities for polling long-running jobs like file uploads.
 """
 
 import asyncio
+import time
 from typing import Any, Callable, Dict, Optional, TypeVar
 
 from .exceptions import SpatialFlowError, TimeoutError
@@ -100,7 +101,8 @@ async def poll_job(
     Args:
         fetch_status: Async function that fetches the current job status.
                      Should return a response object with status information.
-        timeout: Maximum time to wait in seconds. Default: 300 (5 minutes).
+        timeout: Maximum wall-clock time to wait in seconds, status calls
+                 included. Default: 300 (5 minutes).
         poll_interval: Time between polls in seconds. Default: 2.0.
         terminal_statuses: Tuple of statuses that indicate the job is done.
                           Default: ("completed", "failed").
@@ -114,7 +116,8 @@ async def poll_job(
         JobResult with the final job state.
 
     Raises:
-        JobTimeoutError: If the job doesn't complete within the timeout.
+        JobTimeoutError: If the job doesn't complete before the deadline,
+            including when a status call is still running at that point.
         JobFailedError: If the job fails.
 
     Example:
@@ -129,12 +132,23 @@ async def poll_job(
     extract_job_id = extract_job_id or _default_extract_job_id
     extract_status = extract_status or _default_extract_status
 
-    elapsed = 0.0
+    deadline = time.monotonic() + timeout
     last_status: Optional[str] = None
     last_response: Optional[Any] = None
 
-    while elapsed < timeout:
-        response = await fetch_status()
+    def timeout_error() -> JobTimeoutError:
+        job_id = extract_job_id(last_response) if last_response is not None else "unknown"
+        return JobTimeoutError(job_id, timeout, last_status)
+
+    while (remaining := deadline - time.monotonic()) > 0:
+        call = asyncio.ensure_future(fetch_status())
+        try:
+            done, _ = await asyncio.wait({call}, timeout=remaining)
+            if not done:
+                raise timeout_error()
+            response = call.result()
+        finally:
+            call.cancel()
         last_response = response
         status = extract_status(response)
         last_status = status
@@ -146,12 +160,9 @@ async def poll_job(
             job_id = extract_job_id(response)
             return _build_job_result(job_id, status, response)
 
-        await asyncio.sleep(poll_interval)
-        elapsed += poll_interval
+        await asyncio.sleep(max(0.0, min(poll_interval, deadline - time.monotonic())))
 
-    # Timeout
-    job_id = extract_job_id(last_response) if last_response else "unknown"
-    raise JobTimeoutError(job_id, timeout, last_status)
+    raise timeout_error()
 
 
 def _default_extract_job_id(response: Any) -> str:

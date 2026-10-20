@@ -678,7 +678,7 @@ This endpoint does not need any parameter.
 
 Get Dashboard Metrics
 
-Get dashboard KPI metrics for the authenticated user.  Returns key performance indicators for the dashboard: - **Active Workflows**: Workflows that are active and were created or executed in the period - **Events Total**: Total geofence entry/exit events triggered in the period - **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)  **Time Ranges:** - `today`: From midnight to now - `7d`: Last 7 days - `30d`: Last 30 days - `custom`: Custom date range (requires start_date and end_date)  **Formulas:** - Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100 - Returns `null` when total_attempts = 0 (UI should show \"—\")  **Authentication:** JWT token required  **Example:** ``` GET /api/v1/accounts/dashboard/metrics?time_range=7d GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z ```
+Get dashboard KPI metrics for the authenticated user.  Returns key performance indicators for the dashboard: - **Active Workflows**: Workflows that are active and were created or executed in the period - **Events Total**: Total geofence entry/exit events triggered in the period - **Action Delivery Success**: Success rate for webhook deliveries and workflow step executions (north-star metric)  **Time Ranges:** - `today`: From midnight to now, in the workspace timezone (UTC when unset) - `7d`: Last 7 days - `30d`: Last 30 days - `custom`: Whole workspace-local days from start_date through end_date, inclusive   (requires start_date and end_date; one day is start_date equal to end_date)  **Formulas:** - Action Delivery Success Rate = (successful_deliveries / total_attempts) * 100 - Returns `null` when total_attempts = 0 (UI should show \"—\")  **Authentication:** JWT token required  **Example:** ``` GET /api/v1/accounts/dashboard/metrics?time_range=7d GET /api/v1/accounts/dashboard/metrics?time_range=custom&start_date=2025-01-01&end_date=2025-01-31 ```
 
 ### Example
 
@@ -711,8 +711,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.AccountApi(api_client)
     time_range = 'today' # str | Time range: today, 7d, 30d, or custom (optional) (default to 'today')
-    start_date = '2013-10-20T19:20:30+01:00' # datetime | Custom start date (ISO 8601, required if time_range=custom) (optional)
-    end_date = '2013-10-20T19:20:30+01:00' # datetime | Custom end date (ISO 8601, required if time_range=custom) (optional)
+    start_date = '2013-10-20T19:20:30+01:00' # datetime | First day of a custom range (YYYY-MM-DD or ISO 8601; only the date is used, required if time_range=custom) (optional)
+    end_date = '2013-10-20T19:20:30+01:00' # datetime | Last day of a custom range, inclusive (YYYY-MM-DD or ISO 8601; only the date is used, required if time_range=custom) (optional)
 
     try:
         # Get Dashboard Metrics
@@ -731,8 +731,8 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **time_range** | **str**| Time range: today, 7d, 30d, or custom | [optional] [default to &#39;today&#39;]
- **start_date** | **datetime**| Custom start date (ISO 8601, required if time_range&#x3D;custom) | [optional] 
- **end_date** | **datetime**| Custom end date (ISO 8601, required if time_range&#x3D;custom) | [optional] 
+ **start_date** | **datetime**| First day of a custom range (YYYY-MM-DD or ISO 8601; only the date is used, required if time_range&#x3D;custom) | [optional] 
+ **end_date** | **datetime**| Last day of a custom range, inclusive (YYYY-MM-DD or ISO 8601; only the date is used, required if time_range&#x3D;custom) | [optional] 
 
 ### Return type
 
@@ -1010,7 +1010,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_accounts_api_list_expiring_api_keys**
-> List[Optional[Dict[str, object]]] apps_accounts_api_list_expiring_api_keys(days=days)
+> List[Dict[str, object]] apps_accounts_api_list_expiring_api_keys(days=days)
 
 List Expiring Api Keys
 
@@ -1067,7 +1067,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Optional[Dict[str, object]]]**
+**List[Dict[str, object]]**
 
 ### Authorization
 

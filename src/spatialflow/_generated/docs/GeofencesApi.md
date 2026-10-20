@@ -20,6 +20,7 @@ Method | HTTP request | Description
 [**apps_geofences_api_list_geofence_workflows**](GeofencesApi.md#apps_geofences_api_list_geofence_workflows) | **GET** /api/v1/geofences/{geofence_id}/workflows | List Geofence Workflows
 [**apps_geofences_api_list_geofences**](GeofencesApi.md#apps_geofences_api_list_geofences) | **GET** /api/v1/geofences/ | List Geofences
 [**apps_geofences_api_list_group_geofences**](GeofencesApi.md#apps_geofences_api_list_group_geofences) | **GET** /api/v1/geofences/groups/{group_id}/geofences | List Group Geofences
+[**apps_geofences_api_list_group_workflows**](GeofencesApi.md#apps_geofences_api_list_group_workflows) | **GET** /api/v1/geofences/groups/workflows | List Group Workflows
 [**apps_geofences_api_list_workspace_tags**](GeofencesApi.md#apps_geofences_api_list_workspace_tags) | **GET** /api/v1/geofences/tags | List Workspace Tags
 [**apps_geofences_api_test_group_point**](GeofencesApi.md#apps_geofences_api_test_group_point) | **POST** /api/v1/geofences/groups/{group_id}/test-point | Test Group Point
 [**apps_geofences_api_test_point**](GeofencesApi.md#apps_geofences_api_test_point) | **POST** /api/v1/geofences/test-point | Test Point
@@ -1519,6 +1520,103 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_geofences_api_list_group_workflows**
+> GroupWorkflowsOut apps_geofences_api_list_group_workflows(group_id=group_id, destination_name=destination_name)
+
+List Group Workflows
+
+List the active workflows whose trigger expands any of the given groups.  ``destination_name`` also resolves the group a move would assign, so a workflow that targets it too can be told apart; its id is returned even when the group has no active members.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.group_workflows_out import GroupWorkflowsOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.GeofencesApi(api_client)
+    group_id = [] # List[Optional[str]] |  (optional) (default to [])
+    destination_name = 'destination_name_example' # str |  (optional)
+
+    try:
+        # List Group Workflows
+        api_response = await api_instance.apps_geofences_api_list_group_workflows(group_id=group_id, destination_name=destination_name)
+        print("The response of GeofencesApi->apps_geofences_api_list_group_workflows:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling GeofencesApi->apps_geofences_api_list_group_workflows: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**List[Optional[str]]**](str.md)|  | [optional] [default to []]
+ **destination_name** | **str**|  | [optional] 
+
+### Return type
+
+[**GroupWorkflowsOut**](GroupWorkflowsOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**500** | Internal Server Error |  -  |
+**501** | Not Implemented |  -  |
+**502** | Bad Gateway |  -  |
+**503** | Service Unavailable |  -  |
+**504** | Gateway Timeout |  -  |
+**400** | Bad Request |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 

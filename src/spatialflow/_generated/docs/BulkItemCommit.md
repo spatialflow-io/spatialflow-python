@@ -13,6 +13,9 @@ Name | Type | Description | Notes
 **tags** | **List[str]** |  | [optional] 
 **status** | **str** |  | 
 **override_dedup** | **bool** |  | [optional] [default to False]
+**lat** | **float** |  | [optional] 
+**lng** | **float** |  | [optional] 
+**normalized_address** | **str** |  | [optional] 
 
 ## Example
 

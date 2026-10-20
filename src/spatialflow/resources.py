@@ -209,7 +209,7 @@ class GeofencesResource(BaseResource):
         )
 
     async def bulk_create(self, request: BulkCreateRequest, **kwargs: Any) -> BulkCreateResponse:
-        """Bulk create geofences from address items (ADDR-03 integration endpoint).
+        """Bulk create geofences from address items (integration endpoint).
 
         Syncs address-based geofences into SpatialFlow from CRM exports, TMS stop
         lists, or CSV imports. Per-item atomicity: a single item failure does not
@@ -499,15 +499,18 @@ class WorkflowsResource(BaseResource):
 
         Args:
             workflow_id: The workflow ID
-            request: Optional payload, sent as the endpoint's `test_data`
+            request: Optional payload, sent in the request body as `test_data` and
+                stored as the execution's trigger data
 
         Returns:
             ExecutionOut
         """
+        from ._generated.spatialflow_generated.models import ExecuteWorkflowIn
+
         return await self._call(
             "apps_workflows_api_execute_workflow",
             workflow_id=workflow_id,
-            test_data=request,
+            execute_workflow_in=None if request is None else ExecuteWorkflowIn(test_data=request),
             **kwargs,
         )
 

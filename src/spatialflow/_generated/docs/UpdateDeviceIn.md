@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **employee_id** | **str** |  | [optional] 
 **license_plate** | **str** |  | [optional] 
 **group** | **str** |  | [optional] 
+**color** | **str** |  | [optional] 
 
 ## Example
 

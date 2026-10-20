@@ -410,9 +410,9 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **409** | Conflict |  -  |
+**422** | Unprocessable Content |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
-**422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -789,7 +789,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_devices_api_export_events_endpoint**
-> Dict[str, object] apps_devices_api_export_events_endpoint(format, from_date=from_date, to_date=to_date, device_ids=device_ids, geofence_ids=geofence_ids, event_type=event_type)
+> Dict[str, object] apps_devices_api_export_events_endpoint(format, from_date=from_date, to_date=to_date, device_ids=device_ids, geofence_ids=geofence_ids, event_type=event_type, time_range=time_range, start_date=start_date, end_date=end_date, device_id=device_id)
 
 Export Events Endpoint
 
@@ -824,16 +824,20 @@ configuration = spatialflow_generated.Configuration(
 async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.DevicesApi(api_client)
-    format = 'format_example' # str | 
-    from_date = 'from_date_example' # str |  (optional)
-    to_date = 'to_date_example' # str |  (optional)
-    device_ids = 'device_ids_example' # str |  (optional)
-    geofence_ids = 'geofence_ids_example' # str |  (optional)
-    event_type = 'event_type_example' # str |  (optional)
+    format = 'format_example' # str | Export format: csv or json.
+    from_date = 'from_date_example' # str | ISO 8601 instant; only events at or after it. Intersects with time_range when both are sent. (optional)
+    to_date = 'to_date_example' # str | ISO 8601 instant; only events at or before it. Intersects with time_range when both are sent. (optional)
+    device_ids = 'device_ids_example' # str | Comma-separated device IDs. (optional)
+    geofence_ids = 'geofence_ids_example' # str | Comma-separated geofence IDs. (optional)
+    event_type = 'event_type_example' # str | entry or exit. (optional)
+    time_range = 'time_range_example' # str | Same window as GET /devices/events/recent: today, 7d, 30d or custom. Days are cut in the workspace timezone (UTC when unset), so the export covers exactly the list's rows. (optional)
+    start_date = 'start_date_example' # str | First workspace day (YYYY-MM-DD); required with time_range=custom. (optional)
+    end_date = 'end_date_example' # str | Last workspace day (YYYY-MM-DD); required with time_range=custom. (optional)
+    device_id = 'device_id_example' # str | Exactly one device ID, which may contain commas. Intersects with device_ids when both are sent. (optional)
 
     try:
         # Export Events Endpoint
-        api_response = await api_instance.apps_devices_api_export_events_endpoint(format, from_date=from_date, to_date=to_date, device_ids=device_ids, geofence_ids=geofence_ids, event_type=event_type)
+        api_response = await api_instance.apps_devices_api_export_events_endpoint(format, from_date=from_date, to_date=to_date, device_ids=device_ids, geofence_ids=geofence_ids, event_type=event_type, time_range=time_range, start_date=start_date, end_date=end_date, device_id=device_id)
         print("The response of DevicesApi->apps_devices_api_export_events_endpoint:\n")
         pprint(api_response)
     except Exception as e:
@@ -847,12 +851,16 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **format** | **str**|  | 
- **from_date** | **str**|  | [optional] 
- **to_date** | **str**|  | [optional] 
- **device_ids** | **str**|  | [optional] 
- **geofence_ids** | **str**|  | [optional] 
- **event_type** | **str**|  | [optional] 
+ **format** | **str**| Export format: csv or json. | 
+ **from_date** | **str**| ISO 8601 instant; only events at or after it. Intersects with time_range when both are sent. | [optional] 
+ **to_date** | **str**| ISO 8601 instant; only events at or before it. Intersects with time_range when both are sent. | [optional] 
+ **device_ids** | **str**| Comma-separated device IDs. | [optional] 
+ **geofence_ids** | **str**| Comma-separated geofence IDs. | [optional] 
+ **event_type** | **str**| entry or exit. | [optional] 
+ **time_range** | **str**| Same window as GET /devices/events/recent: today, 7d, 30d or custom. Days are cut in the workspace timezone (UTC when unset), so the export covers exactly the list&#39;s rows. | [optional] 
+ **start_date** | **str**| First workspace day (YYYY-MM-DD); required with time_range&#x3D;custom. | [optional] 
+ **end_date** | **str**| Last workspace day (YYYY-MM-DD); required with time_range&#x3D;custom. | [optional] 
+ **device_id** | **str**| Exactly one device ID, which may contain commas. Intersects with device_ids when both are sent. | [optional] 
 
 ### Return type
 
@@ -886,7 +894,7 @@ Name | Type | Description  | Notes
 
 Get Active Session
 
-Get the open DeviceSession for the device's current shift.  Returns 200 + DeviceSessionOut when the device has an open session (ended_at IS NULL). Returns 404 when the device is not currently on shift (shift_status='off').  Lazy-creates a session row for legacy in-flight v1.19 shifts (device.shift_status='active' but no open DeviceSession row), using device.shift_started_at as the started_at value. This reconciliation is idempotent: a second call returns the same session row.  Role scoping (via get_device_with_permission): - field_worker: only own device (other device → 404) - manager/owner: any workspace device
+Get the open DeviceSession for the device's current shift.  Returns 200 + DeviceSessionOut when the device has an open session (ended_at IS NULL). Returns 404 when the device is not currently on shift (shift_status='off').  Lazy-creates a session row for legacy in-flight shifts (device.shift_status='active' but no open DeviceSession row), using device.shift_started_at as the started_at value. This reconciliation is idempotent: a second call returns the same session row.  Role scoping (via get_device_with_permission): - field_worker: only own device (other device → 404) - manager/owner: any workspace device
 
 ### Example
 
@@ -977,7 +985,7 @@ Name | Type | Description  | Notes
 
 Get Anomaly Status
 
-Return active anomaly state (stuck / overdue) per device for the caller's workspace.  Read-only aggregation of the two trigger-state tables (``DeviceStuckTriggerState`` and ``ShiftOverdueTriggerState``). For each device in the caller's workspace that has at least one ``is_stale=True`` row in either table, the response includes one entry with the union of active anomaly types.  Authorization: - Managers/owners: see anomalies for all workspace devices. - Field workers: only see anomalies for their own device (intersected via   ``get_devices_for_user``). - Cross-workspace state rows are never returned (queries are scoped to   ``request.auth.workspace_id`` derived from the validated JWT/API key).  Response shape: ```json {     \"devices\": [         {\"id\": \"<uuid>\", \"anomalies\": [\"overdue\", \"stuck\"]}     ] } ```  Anomalies are ordered with \"overdue\" first. Devices with no active anomalies are omitted. Empty workspaces return ``{\"devices\": []}`` (never 404).  Polled every ~15s by the dashboard; no per-request logging by design (would flood CloudWatch). Response caching is deferred.
+Return active anomaly state (stuck / overdue) per device for the caller's workspace.  Read-only aggregation of the two trigger-state tables (``DeviceStuckTriggerState`` and ``ShiftOverdueTriggerState``). For each device in the caller's workspace that has at least one ``is_stale=True`` row in either table, the response includes one entry with the union of active anomaly types. An anomaly is left out when the device's resolved ``device_anomaly`` incident (same workspace) was resolved at or after the kind's latest firing (``last_triggered_at``, else ``stuck_since_at`` / ``overdue_since_at``); a firing after the resolve shows it again, and muted incidents stay flagged.  Authorization: - Managers/owners: see anomalies for all workspace devices. - Field workers: only see anomalies for their own device (intersected via   ``get_devices_for_user``). - Cross-workspace state rows are never returned (queries are scoped to   ``request.auth.workspace_id`` derived from the validated JWT/API key).  Response shape: ```json {     \"devices\": [         {\"id\": \"<uuid>\", \"anomalies\": [\"overdue\", \"stuck\"]}     ] } ```  Anomalies are ordered with \"overdue\" first. Devices with no active anomalies are omitted. Empty workspaces return ``{\"devices\": []}`` (never 404).  Dashboards poll this; no per-request logging by design (would flood CloudWatch). Response caching is deferred.
 
 ### Example
 
@@ -2570,7 +2578,7 @@ Name | Type | Description  | Notes
 
 List Session Photos
 
-List image-typed StoredFile attachments for a session with derived GPS coords.  Each row is a PhotoOut placed by the rules its schema describes; a photo that cannot be placed is still listed, with null coordinates. Ordered by captured_at, newest first. Presigned download URL with TTL=3600.  Coexists with GET .../sessions/{session_id}/attachments which returns ALL attachment types — that endpoint is preserved unchanged for the v1.20 mobile consumer.  Role scoping: - field_worker: only own device's photos - manager/owner: any workspace device's photos
+List image-typed StoredFile attachments for a session with derived GPS coords.  Each row is a PhotoOut placed by the rules its schema describes; a photo that cannot be placed is still listed, with null coordinates. Ordered by captured_at, newest first. Presigned download URL with TTL=3600.  Coexists with GET .../sessions/{session_id}/attachments which returns ALL attachment types — that endpoint is unchanged for older mobile clients.  Role scoping: - field_worker: only own device's photos - manager/owner: any workspace device's photos
 
 ### Example
 
@@ -3215,10 +3223,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**422** | Unprocessable Content |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**404** | Not Found |  -  |
-**422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -3323,7 +3331,7 @@ Name | Type | Description  | Notes
 
 Update Session Notes
 
-Update notes for the current active session.  Mobile-facing endpoint (preserved contract from v1.20). Each call:   1. Truncates the payload to 2000 chars.   2. Writes the truncated body to device.current_session_notes (mobile pre-fill cache).   3. Upserts a SessionNote row keyed on (active_session, author=request.auth)      so the manager-side GET in v1.23 sees an authored note row.  The upsert is idempotent across repeated POSTs during the same shift — calls 2..N update the same row's body and refresh created_at. A new shift gets a new SessionNote because the (session, author) key differs.  Concurrency: the (session, author) upsert is serialized via select_for_update() on the Device row inside transaction.atomic(). Two concurrent POSTs from the same authenticated user (offline-buffered flush, mobile retry storm, multi-tab race) block at the lock so the second caller sees the first caller's row via update_or_create.get() and falls into the UPDATE branch — preventing duplicate (session, author) rows. The Device row lock serializes per-device POSTs without holding a workspace-wide lock.  BYOD Security: Only the device owner can update notes (enforced by get_device_with_permission(require_write=True)). Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
+Update notes for the current active session.  Mobile-facing endpoint. Each call:   1. Truncates the payload to 2000 chars.   2. Writes the truncated body to device.current_session_notes (mobile pre-fill cache).   3. Upserts a SessionNote row keyed on (active_session, author=request.auth)      so the manager-side GET sees an authored note row.  The upsert is idempotent across repeated POSTs during the same shift — calls 2..N update the same row's body and refresh created_at. A new shift gets a new SessionNote because the (session, author) key differs.  Concurrency: the (session, author) upsert is serialized via select_for_update() on the Device row inside transaction.atomic(). Two concurrent POSTs from the same authenticated user (offline-buffered flush, mobile retry storm, multi-tab race) block at the lock so the second caller sees the first caller's row via update_or_create.get() and falls into the UPDATE branch — preventing duplicate (session, author) rows. The Device row lock serializes per-device POSTs without holding a workspace-wide lock.  BYOD Security: Only the device owner can update notes (enforced by get_device_with_permission(require_write=True)). Must have an active or paused shift to update notes.  Notes are limited to 2000 characters.
 
 ### Example
 

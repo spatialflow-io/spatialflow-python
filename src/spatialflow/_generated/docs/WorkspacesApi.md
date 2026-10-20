@@ -1260,10 +1260,11 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
+**403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**503** | Service Unavailable |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -1516,6 +1517,7 @@ This endpoint does not need any parameter.
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
+**503** | Service Unavailable |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
@@ -1528,7 +1530,7 @@ This endpoint does not need any parameter.
 
 Select Mobile Workspace
 
-Set or confirm the selected mobile workspace and return fresh tokens.
+Set or confirm the selected mobile workspace and return fresh tokens.  Requires a bearer access token whose sign-in still has a live refresh session; otherwise returns 401. The new refresh session belongs to that same sign-in, so revoking the sign-in revokes it too.
 
 ### Example
 
@@ -1774,6 +1776,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**503** | Service Unavailable |  -  |
 **401** | Unauthorized |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |

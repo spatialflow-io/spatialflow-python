@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **device_type** | **str** |  | [optional] [default to 'mobile']
 **registration_source** | **str** |  | [optional] [default to 'api']
 **metadata** | **Dict[str, object]** |  | [optional] 
+**color** | **str** | Identity color as #RRGGBB; empty assigns one. | [optional] [default to '']
 
 ## Example
 

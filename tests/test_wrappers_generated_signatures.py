@@ -52,11 +52,13 @@ async def _call_ignoring_response_errors(call):
 async def client():
     sf = SpatialFlow(api_key="sf_test")
     sf.requests = []
+    sf.bodies = []
     sf.responses = {}
 
     async def request(method, url, **kwargs):
         parsed = urlparse(url)
         sf.requests.append((method, parsed.path, parse_qs(parsed.query)))
+        sf.bodies.append(kwargs.get("body"))
         return RESTResponse(_FakeHttpResponse(sf.responses[parsed.path]))
 
     sf._api_client.rest_client.request = request
@@ -140,12 +142,22 @@ async def test_workflow_update_sends_the_update_body(client):
     assert client.requests[0][:2] == ("PUT", "/api/v1/workflows/wf-1")
 
 
-async def test_workflow_execute_sends_test_data(client):
+async def test_workflow_execute_sends_test_data_in_the_body(client):
     client.responses["/api/v1/workflows/wf-1/execute"] = {}
 
     await _call_ignoring_response_errors(client.workflows.execute("wf-1", {"speed": 5}))
 
-    assert client.requests[0][:2] == ("POST", "/api/v1/workflows/wf-1/execute")
+    assert client.requests[0][:3] == ("POST", "/api/v1/workflows/wf-1/execute", {})
+    assert client.bodies[0] == {"test_data": {"speed": 5}}
+
+
+async def test_workflow_execute_without_test_data_sends_no_body(client):
+    client.responses["/api/v1/workflows/wf-1/execute"] = {}
+
+    await _call_ignoring_response_errors(client.workflows.execute("wf-1"))
+
+    assert client.requests[0][:3] == ("POST", "/api/v1/workflows/wf-1/execute", {})
+    assert client.bodies[0] is None
 
 
 async def test_workflow_test_sends_the_test_body(client):

@@ -1,6 +1,6 @@
 # BulkItemPreview
 
-Per-item preview result returned from POST /api/v1/geofences/preview.  index is 0-based in the API.  outcome_class and the match-metadata fields are additive: all are Optional with safe defaults so existing clients are unaffected. outcome_class values: \"success\" | \"low_confidence\" | \"interpolated\" | \"ambiguous\"                       | \"no_match\" | \"duplicate\"
+Per-item preview result returned from POST /api/v1/geofences/preview.  index is 0-based in the API.  outcome_class and the match-metadata fields are additive: all are Optional with safe defaults so existing clients are unaffected. outcome_class values: \"success\" | \"low_confidence\" | \"interpolated\" | \"ambiguous\"                       | \"approximate\" | \"place_match\" | \"no_match\" | \"duplicate\"
 
 ## Properties
 
@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **match_type** | **str** |  | [optional] 
 **interpolated** | **bool** |  | [optional] 
 **candidate_count** | **int** |  | [optional] 
+**repeat_of** | **List[int]** | Indexes of earlier ok and dedup rows in this batch with the same normalized address or a point within the dedup tolerance. The row creates no geofence while one of them is imported. | [optional] 
 
 ## Example
 

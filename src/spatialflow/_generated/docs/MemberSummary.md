@@ -11,6 +11,9 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **role** | **str** |  | 
 **email_verified** | **bool** |  | 
+**is_active** | **bool** |  | 
+**is_beta_user** | **bool** |  | [optional] [default to False]
+**admin_approved** | **bool** |  | [optional] [default to False]
 **created_at** | **datetime** |  | 
 **last_login** | **datetime** |  | 
 

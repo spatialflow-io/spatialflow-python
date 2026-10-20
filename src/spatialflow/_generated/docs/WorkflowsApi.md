@@ -33,8 +33,11 @@ Method | HTTP request | Description
 [**apps_workflows_api_list_workflow_templates**](WorkflowsApi.md#apps_workflows_api_list_workflow_templates) | **GET** /api/v1/workflows/templates | List Workflow Templates
 [**apps_workflows_api_list_workflow_versions**](WorkflowsApi.md#apps_workflows_api_list_workflow_versions) | **GET** /api/v1/workflows/{workflow_id}/versions | List Workflow Versions
 [**apps_workflows_api_list_workflows**](WorkflowsApi.md#apps_workflows_api_list_workflows) | **GET** /api/v1/workflows | List Workflows
+[**apps_workflows_api_preview_retry_failed_runs**](WorkflowsApi.md#apps_workflows_api_preview_retry_failed_runs) | **GET** /api/v1/workflows/{workflow_id}/retry-failed-runs | Preview Retry Failed Runs
 [**apps_workflows_api_preview_workflow**](WorkflowsApi.md#apps_workflows_api_preview_workflow) | **POST** /api/v1/workflows/{workflow_id}/preview | Preview Workflow
 [**apps_workflows_api_restore_workflow_version**](WorkflowsApi.md#apps_workflows_api_restore_workflow_version) | **POST** /api/v1/workflows/{workflow_id}/versions/{version_number}/restore | Restore Workflow Version
+[**apps_workflows_api_retry_failed_workflow_runs**](WorkflowsApi.md#apps_workflows_api_retry_failed_workflow_runs) | **POST** /api/v1/workflows/{workflow_id}/retry-failed-runs | Retry Failed Workflow Runs
+[**apps_workflows_api_retry_workflow_run**](WorkflowsApi.md#apps_workflows_api_retry_workflow_run) | **POST** /api/v1/workflows/{workflow_id}/runs/{run_id}/retry | Retry Workflow Run
 [**apps_workflows_api_test_workflow**](WorkflowsApi.md#apps_workflows_api_test_workflow) | **POST** /api/v1/workflows/{workflow_id}/test | Test Workflow
 [**apps_workflows_api_toggle_workflow**](WorkflowsApi.md#apps_workflows_api_toggle_workflow) | **POST** /api/v1/workflows/{workflow_id}/toggle | Toggle Workflow
 [**apps_workflows_api_update_workflow**](WorkflowsApi.md#apps_workflows_api_update_workflow) | **PUT** /api/v1/workflows/{workflow_id} | Update Workflow
@@ -124,8 +127,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
@@ -500,11 +503,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_execute_workflow**
-> Dict[str, object] apps_workflows_api_execute_workflow(workflow_id, test_data=test_data)
+> Dict[str, object] apps_workflows_api_execute_workflow(workflow_id, execute_workflow_in=execute_workflow_in)
 
 Execute Workflow
 
-Manually execute a workflow.
+Manually execute a workflow, optionally with `test_data` as its trigger data.
 
 ### Example
 
@@ -513,6 +516,7 @@ Manually execute a workflow.
 
 ```python
 import spatialflow_generated
+from spatialflow_generated.models.execute_workflow_in import ExecuteWorkflowIn
 from spatialflow_generated.rest import ApiException
 from pprint import pprint
 
@@ -543,11 +547,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = spatialflow_generated.WorkflowsApi(api_client)
     workflow_id = 'workflow_id_example' # str | 
-    test_data = None # Dict[str, object] |  (optional)
+    execute_workflow_in = spatialflow_generated.ExecuteWorkflowIn() # ExecuteWorkflowIn |  (optional)
 
     try:
         # Execute Workflow
-        api_response = await api_instance.apps_workflows_api_execute_workflow(workflow_id, test_data=test_data)
+        api_response = await api_instance.apps_workflows_api_execute_workflow(workflow_id, execute_workflow_in=execute_workflow_in)
         print("The response of WorkflowsApi->apps_workflows_api_execute_workflow:\n")
         pprint(api_response)
     except Exception as e:
@@ -562,7 +566,7 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **workflow_id** | **str**|  | 
- **test_data** | [**Dict[str, object]**](object.md)|  | [optional] 
+ **execute_workflow_in** | [**ExecuteWorkflowIn**](ExecuteWorkflowIn.md)|  | [optional] 
 
 ### Return type
 
@@ -574,7 +578,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1130,7 +1134,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_bottlenecks**
-> List[Optional[Dict[str, object]]] apps_workflows_api_get_workflow_bottlenecks(workflow_id)
+> List[Dict[str, object]] apps_workflows_api_get_workflow_bottlenecks(workflow_id)
 
 Get Workflow Bottlenecks
 
@@ -1194,7 +1198,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Optional[Dict[str, object]]]**
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -1962,7 +1966,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_get_workflow_step_performance**
-> List[Optional[Dict[str, object]]] apps_workflows_api_get_workflow_step_performance(workflow_id)
+> List[Dict[str, object]] apps_workflows_api_get_workflow_step_performance(workflow_id)
 
 Get Workflow Step Performance
 
@@ -2026,7 +2030,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Optional[Dict[str, object]]]**
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -2494,7 +2498,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_workflows_api_list_workflow_versions**
-> List[Optional[Dict[str, object]]] apps_workflows_api_list_workflow_versions(workflow_id)
+> List[Dict[str, object]] apps_workflows_api_list_workflow_versions(workflow_id)
 
 List Workflow Versions
 
@@ -2558,7 +2562,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[Optional[Dict[str, object]]]**
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -2679,6 +2683,97 @@ Name | Type | Description  | Notes
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_preview_retry_failed_runs**
+> RetryFailedRunsPreviewOut apps_workflows_api_preview_retry_failed_runs(workflow_id)
+
+Preview Retry Failed Runs
+
+Count the failed runs that POST to this path would retry.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.retry_failed_runs_preview_out import RetryFailedRunsPreviewOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = 'workflow_id_example' # str | 
+
+    try:
+        # Preview Retry Failed Runs
+        api_response = await api_instance.apps_workflows_api_preview_retry_failed_runs(workflow_id)
+        print("The response of WorkflowsApi->apps_workflows_api_preview_retry_failed_runs:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_preview_retry_failed_runs: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **str**|  | 
+
+### Return type
+
+[**RetryFailedRunsPreviewOut**](RetryFailedRunsPreviewOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Not Found |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -2862,9 +2957,197 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_retry_failed_workflow_runs**
+> RetryFailedRunsOut apps_workflows_api_retry_failed_workflow_runs(workflow_id)
+
+Retry Failed Workflow Runs
+
+Retry the oldest failed runs that can be retried, up to `batch_limit` per request.  Retries start a few seconds apart, after any retries of this workflow still waiting, so the destination isn't flooded. Each runs only if the caller can still retry runs when it starts. Returns 409 when nothing can be retried or when the workflow already has `batch_limit` retries waiting, and 503 when none could be queued. Runs listed in `not_queued` can be retried again.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.retry_failed_runs_out import RetryFailedRunsOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = 'workflow_id_example' # str | 
+
+    try:
+        # Retry Failed Workflow Runs
+        api_response = await api_instance.apps_workflows_api_retry_failed_workflow_runs(workflow_id)
+        print("The response of WorkflowsApi->apps_workflows_api_retry_failed_workflow_runs:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_retry_failed_workflow_runs: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **str**|  | 
+
+### Return type
+
+[**RetryFailedRunsOut**](RetryFailedRunsOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Created |  -  |
+**400** | Bad Request |  -  |
+**404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**503** | Service Unavailable |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_workflows_api_retry_workflow_run**
+> RunRetryOut apps_workflows_api_retry_workflow_run(workflow_id, run_id)
+
+Retry Workflow Run
+
+Retry a failed run: its stored trigger data runs through the workflow's current steps.  The retry is a new run with its own `execution.id`. Only a failed live run of an active workflow can be retried, once, and only when none of its actions ran. It runs only if the caller can still retry runs when it starts. Returns 503 when it couldn't be queued; the run can then be retried again.
+
+### Example
+
+* Api Key Authentication (APIKeyBearer):
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.run_retry_out import RunRetryOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.WorkflowsApi(api_client)
+    workflow_id = 'workflow_id_example' # str | 
+    run_id = 'run_id_example' # str | 
+
+    try:
+        # Retry Workflow Run
+        api_response = await api_instance.apps_workflows_api_retry_workflow_run(workflow_id, run_id)
+        print("The response of WorkflowsApi->apps_workflows_api_retry_workflow_run:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling WorkflowsApi->apps_workflows_api_retry_workflow_run: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workflow_id** | **str**|  | 
+ **run_id** | **str**|  | 
+
+### Return type
+
+[**RunRetryOut**](RunRetryOut.md)
+
+### Authorization
+
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Created |  -  |
+**400** | Bad Request |  -  |
 **404** | Not Found |  -  |
+**409** | Conflict |  -  |
+**503** | Service Unavailable |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -3046,8 +3329,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |
@@ -3140,8 +3423,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |

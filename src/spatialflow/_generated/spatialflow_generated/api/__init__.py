@@ -8,7 +8,6 @@ from .authentication_api import AuthenticationApi
 from .billing_api import BillingApi
 from .devices_api import DevicesApi
 from .email_api import EmailApi
-from .gpx_simulator_api import GPXSimulatorApi
 from .geofences_api import GeofencesApi
 from .integrations_api import IntegrationsApi
 from .operations_api import OperationsApi

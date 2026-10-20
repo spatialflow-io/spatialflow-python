@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 import pytest
 from unittest.mock import AsyncMock, MagicMock
 
+from spatialflow._generated.spatialflow_generated.models import ExecuteWorkflowIn
 from spatialflow.exceptions import NotFoundError, PermissionError, ValidationError
 from spatialflow.resources import (
     AccountResource,
@@ -171,7 +172,7 @@ class TestWorkflowsResourceExecution:
         mock_api.apps_workflows_api_execute_workflow.assert_called_once_with(
             _request_timeout=30,
             workflow_id="wf-123",
-            test_data=request,
+            execute_workflow_in=ExecuteWorkflowIn(test_data=request),
         )
         assert result["execution_id"] == "ex-123"
 
@@ -182,7 +183,7 @@ class TestWorkflowsResourceExecution:
         mock_api.apps_workflows_api_execute_workflow.assert_called_once_with(
             _request_timeout=30,
             workflow_id="wf-123",
-            test_data=None,
+            execute_workflow_in=None,
         )
         assert result["status"] == "pending"
 

@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **tags** | **List[str]** |  | [optional] 
 **address** | **str** |  | [optional] 
 **buffer_meters** | **int** |  | [optional] 
+**lat** | **float** |  | [optional] 
+**lng** | **float** |  | [optional] 
 
 ## Example
 

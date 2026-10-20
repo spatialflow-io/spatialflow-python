@@ -21,6 +21,7 @@ Per device per workspace-tz day: first shift start, last shift end, total on-shi
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -39,6 +40,12 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -83,7 +90,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -106,14 +113,15 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_devices_api_reports_report_detention**
-> ReportOut apps_devices_api_reports_report_detention(start=start, end=end, device_id=device_id, group=group, free_time_minutes=free_time_minutes, rate_per_hour_cents=rate_per_hour_cents, format=format)
+> ReportOut apps_devices_api_reports_report_detention(start=start, end=end, device_id=device_id, group=group, free_time_minutes=free_time_minutes, rate_per_hour_cents=rate_per_hour_cents, format=format, geofence_id=geofence_id)
 
 Detention report — one row per facility visit with billable overage
 
-Per-VISIT detention rows: arrival, departure, time on site, billable overage.  A carrier bills detention when a truck waits at a shipper or receiver beyond the contracted free window. The claim needs a timestamped arrival and departure for a single visit, so this report emits exactly one row per visit — a visit that spans midnight, or several days, stays ONE row. (`/reports/time-on-site` buckets by (device, geofence, local day) instead, which is the right shape for job-site utilisation and the wrong shape for a claim.)  Visits come from GeofenceEvent entry/exit pairing (`_pair_geofence_visits`), which scans SYMMETRICALLY past both ends of the window: it seeds a visit that was already open when the window began, and resolves a visit that closes after the window ends. Both matter because a truck that arrives at 18:00 and leaves at 03:00 is one claim, and clipping either end understates the invoice. Dwell SignalEvents are deliberately NOT used here: a dwell signal has no departure event, and a claim without a departure timestamp is not payable.  NOT clipped to shift sessions. `report_time_on_site` applies `_clip_to_shifts` because a van parked at a job site after the crew clocks out is not working time. Detention is the exact opposite: a truck still sitting at a receiver after the driver's shift ends is precisely the time being billed, and clipping it would delete the claim. Do not \"consistency-fix\" this to match time-on-site.  A visit with no exit event splits into two distinct states. If a later re-entry proves the truck left, the row is `departure_inferred=true` (NOT open) with `seconds_on_site` bounded at that re-entry. Otherwise it is `is_open=true` with `seconds_on_site` measured to the earlier of now and the range end — never a silent whole-day figure. Both keep `exited_at=null`, because there is no departure event to cite. `summary.open_visit_count` therefore counts only trucks still on site; inferred departures are counted separately.  An open visit is only as good as the device behind it, and only while that device had CONTINUOUS contact. A silence longer than `settings.DETENTION_STALE_CONTACT_HOURS` anywhere inside the visit ends the evidence there and flags the row `contact_lost=true`. Contact comes from `DeviceSession.last_contact_at` (see `_contact_intervals`) — never from `Device.last_location_time`, which a reconnect refreshes, and never from DeviceLocation rows, which the distance filter skips for a parked truck. Those rows are counted and priced in their own bucket (`contact_lost_visit_count` / `contact_lost_unresolved_cents`) and are excluded from `open_visit_count` and from the owed total.  A visit that outlives its shift therefore stops being evidenced once the shift's telemetry does. That is not a clip to shift windows — the dwell keeps running and the money is still reported — but the platform cannot claim a truck was on site during hours it was not permitted to hear from the device (the device location routes reject off-shift fixes), so that portion sits in the unresolved bucket with its floor amount rather than in the claim total.  Money is integer cents end to end. `over_free_time_seconds` is `max(0, seconds_on_site - free_time_minutes * 60)`; `amount_owed_cents` applies `rate_per_hour_cents` to it under the rounding rule in `_detention_amount_cents`. The default rate of 0 yields 0 owed, so an unpriced report shows no dollar figure rather than a fabricated one.  Evidenced money and unresolved money never mix. `summary.total_amount_owed_cents` and `summary.total_over_free_time_seconds` cover evidenced and LIVE open visits only. The two excluded magnitudes point in OPPOSITE directions and must not be described alike: `inferred_max_additional_cents` is a CEILING (the truck may have left right after arriving), while `contact_lost_unresolved_cents` is a FLOOR (the vehicle was there at least that long and may have stayed far longer — the stop is unresolved, not cheap). Per row the split is `amount_owed_cents` versus `evidenced_amount_owed_cents` (0 in both cases), so a CSV export can be summed without silently billing a guess.
+Per-VISIT detention rows: arrival, departure, time on site, billable overage.  A carrier bills detention when a truck waits at a shipper or receiver beyond the contracted free window. The claim needs a timestamped arrival and departure for a single visit, so this report emits exactly one row per visit — a visit that spans midnight, or several days, stays ONE row. (`/reports/time-on-site` buckets by (device, geofence, local day) instead, which is the right shape for job-site utilisation and the wrong shape for a claim.)  Visits come from GeofenceEvent entry/exit pairing (`_pair_geofence_visits`), which scans SYMMETRICALLY past both ends of the window: it seeds a visit that was already open when the window began, and resolves a visit that closes after the window ends. Both matter because a truck that arrives at 18:00 and leaves at 03:00 is one claim, and clipping either end understates the invoice. Dwell SignalEvents are deliberately NOT used here: a dwell signal has no departure event, and a claim without a departure timestamp is not payable.  NOT clipped to shift sessions. `report_time_on_site` applies `_clip_to_shifts` because a van parked at a job site after the crew clocks out is not working time. Detention is the exact opposite: a truck still sitting at a receiver after the driver's shift ends is precisely the time being billed, and clipping it would delete the claim. Do not \"consistency-fix\" this to match time-on-site.  A visit with no exit event splits into two distinct states. If a later re-entry proves the truck left, the row is `departure_inferred=true` (NOT open) with `seconds_on_site` bounded at that re-entry. Otherwise it is `is_open=true` with `seconds_on_site` measured to the earlier of now and the range end — never a silent whole-day figure. Both keep `exited_at=null`, because there is no departure event to cite. `summary.open_visit_count` therefore counts only trucks still on site; inferred departures are counted separately.  An open visit is only as good as the device behind it, and only while that device had CONTINUOUS contact. A silence longer than `settings.DETENTION_STALE_CONTACT_HOURS` anywhere inside the visit ends the evidence there and flags the row `contact_lost=true`. Contact comes from `DeviceSession.last_contact_at` (see `_contact_intervals`) — never from `Device.last_location_time`, which a reconnect refreshes, and never from DeviceLocation rows, which the distance filter skips for a parked truck. Those rows are counted and priced in their own bucket (`contact_lost_visit_count` / `contact_lost_unresolved_cents`) and are excluded from `open_visit_count` and from the owed total.  A visit that outlives its shift therefore stops being evidenced once the shift's telemetry does. That is not a clip to shift windows — the dwell keeps running and the money is still reported — but the platform cannot claim a truck was on site during hours it was not permitted to hear from the device (the device location routes reject off-shift fixes), so that portion sits in the unresolved bucket with its floor amount rather than in the claim total. A contact-lost visit is listed only when some of its observed time (arrival to `last_contact_at`) reaches into the requested range, so a stop that went silent before `start` does not reappear in later reports.  Money is integer cents end to end. `over_free_time_seconds` is the time over free time in whole minutes completed: `seconds_on_site` minus `free_time_minutes`, floored to a multiple of 60, so a partial minute is dropped and never negative. `amount_owed_cents` bills those minutes at `rate_per_hour_cents`, rounding the cents half up, so a row's overage times the rate equals its amount. The default rate of 0 yields 0 owed, so an unpriced report shows no dollar figure rather than a fabricated one.  Evidenced money and unresolved money never mix. `summary.total_amount_owed_cents` and `summary.total_over_free_time_seconds` cover evidenced and LIVE open visits only. The two excluded magnitudes point in OPPOSITE directions and must not be described alike: `inferred_max_additional_cents` is a CEILING (the truck may have left right after arriving), while `contact_lost_unresolved_cents` is a FLOOR (the vehicle was there at least that long and may have stayed far longer — the stop is unresolved, not cheap). `geofence_id` narrows the report to one facility before any scan or row cap, so a filtered report is not cut short by other facilities' visits. A geofence outside the caller's workspace returns an empty report, as an unknown `device_id` does.  Per row the split is `amount_owed_cents` versus `evidenced_amount_owed_cents` (0 in both cases), so a CSV export can be summed without silently billing a guess.
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -133,6 +141,12 @@ configuration = spatialflow_generated.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
+
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
@@ -149,10 +163,11 @@ async with spatialflow_generated.ApiClient(configuration) as api_client:
     free_time_minutes = 120 # int |  (optional) (default to 120)
     rate_per_hour_cents = 0 # int |  (optional) (default to 0)
     format = 'json' # str |  (optional) (default to 'json')
+    geofence_id = 'geofence_id_example' # str |  (optional)
 
     try:
         # Detention report — one row per facility visit with billable overage
-        api_response = await api_instance.apps_devices_api_reports_report_detention(start=start, end=end, device_id=device_id, group=group, free_time_minutes=free_time_minutes, rate_per_hour_cents=rate_per_hour_cents, format=format)
+        api_response = await api_instance.apps_devices_api_reports_report_detention(start=start, end=end, device_id=device_id, group=group, free_time_minutes=free_time_minutes, rate_per_hour_cents=rate_per_hour_cents, format=format, geofence_id=geofence_id)
         print("The response of ReportsApi->apps_devices_api_reports_report_detention:\n")
         pprint(api_response)
     except Exception as e:
@@ -173,6 +188,7 @@ Name | Type | Description  | Notes
  **free_time_minutes** | **int**|  | [optional] [default to 120]
  **rate_per_hour_cents** | **int**|  | [optional] [default to 0]
  **format** | **str**|  | [optional] [default to &#39;json&#39;]
+ **geofence_id** | **str**|  | [optional] 
 
 ### Return type
 
@@ -180,7 +196,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -211,6 +227,7 @@ Idle/stop rows derived from non-heartbeat DeviceLocation runs per session.  A st
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -229,6 +246,12 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -275,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -306,6 +329,7 @@ Per-device mileage = ``Sum(DeviceSession.distance_meters)`` over the range.  Exc
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -324,6 +348,12 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -368,7 +398,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -395,10 +425,11 @@ Name | Type | Description  | Notes
 
 Time-on-site / job-site report
 
-Time on each job-site geofence per device per workspace-tz day.  Derived from ``GeofenceEvent`` entry/exit pairing (event_type \"entry\"/\"exit\", NOT \"enter\"). Each entry pairs with the NEXT exit per (device, geofence); an entry still open at range end clamps its exit to ``range_end`` (open interval, not dropped). SignalEvent ``signal_type=\"dwell\"`` enriches the totals where entry/exit pairing is incomplete.  Precedence: entry/exit-derived seconds are PRIMARY. A dwell signal supplements a (device, geofence, day) bucket only when no entry/exit pairing produced a visit there (so a workflow-only dwell still surfaces job-site time).  `visit_count` counts visits that STARTED on the row's local day, so a row for a continuation day carries seconds with a zero count; `is_continuation` flags those rows so nothing can render \"a full day on site, zero visits\". For per-visit arrival/departure timestamps and billable overage, use `/reports/detention`.
+Time on each job-site geofence per device per workspace-tz day.  Derived from ``GeofenceEvent`` entry/exit pairing (event_type \"entry\"/\"exit\", NOT \"enter\"). Each entry pairs with the NEXT exit per (device, geofence). A re-entry with no exit between reads as a missed exit: it ends the open visit and starts a new one, as ``/reports/detention`` pairs them. An entry still open at range end clamps its exit to ``range_end`` (open interval, not dropped) while its device keeps reporting; once the device goes quiet for longer than ``settings.DETENTION_STALE_CONTACT_HOURS`` the visit stops at its last observation (``DeviceSession.last_contact_at``), and one last observed before ``start`` adds nothing, exactly as ``/reports/detention`` places such a stop. SignalEvent ``signal_type=\"dwell\"`` enriches the totals where entry/exit pairing is incomplete.  Precedence: entry/exit-derived seconds are PRIMARY. A dwell signal supplements a (device, geofence, day) bucket only when no entry/exit pairing produced a visit there (so a workflow-only dwell still surfaces job-site time).  A closed entry/exit pair shorter than ``MIN_VISIT_SECONDS`` is a drive-by and adds neither seconds nor a visit.  `visit_count` counts visits that STARTED on the row's local day, so a row for a continuation day carries seconds with a zero count; `is_continuation` flags those rows so nothing can render \"a full day on site, zero visits\". For per-visit arrival/departure timestamps and billable overage, use `/reports/detention`.
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -417,6 +448,12 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -461,7 +498,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 
@@ -492,6 +529,7 @@ Trip-history rows for completed/active trips in range, identity-enriched.  ``sto
 
 ### Example
 
+* Api Key Authentication (APIKeyBearer):
 * Bearer Authentication (JWTBearer):
 
 ```python
@@ -510,6 +548,12 @@ configuration = spatialflow_generated.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure API key authorization: APIKeyBearer
+configuration.api_key['APIKeyBearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyBearer'] = 'Bearer'
 
 # Configure Bearer authorization: JWTBearer
 configuration = spatialflow_generated.Configuration(
@@ -554,7 +598,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWTBearer](../README.md#JWTBearer)
+[APIKeyBearer](../README.md#APIKeyBearer), [JWTBearer](../README.md#JWTBearer)
 
 ### HTTP request headers
 

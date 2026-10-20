@@ -11,10 +11,11 @@ Name | Type | Description | Notes
 **geofences** | **int** | Maximum number of geofences (-1 for unlimited) | 
 **webhooks_delivered** | **int** | Monthly webhook delivery limit (-1 for unlimited) | 
 **test_points** | **int** | Monthly test point limit (-1 for unlimited) | 
-**rate_limit_per_hour** | **int** | Hourly rate limit | 
+**rate_limit_per_hour** | **int** | Requests an hour the API enforces per key or login, the same for every plan | 
 **devices** | **int** | Maximum devices per workspace (-1 for unlimited) | [optional] [default to 5]
-**log_retention_days** | **int** | Log retention in days (-1 for unlimited) | [optional] [default to 7]
-**location_retention_days** | **int** | Location data retention in days | [optional] [default to 90]
+**workflows** | **int** | Maximum workflows per workspace (-1 for unlimited) | [optional] [default to 2]
+**log_retention_days** | **int** | Workflow log retention in days (-1 for unlimited) | [optional] [default to 7]
+**location_retention_days** | **int** | Location history retention in days | [optional] [default to 90]
 
 ## Example
 

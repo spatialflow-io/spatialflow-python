@@ -62,7 +62,7 @@ Method | HTTP request | Description
 
 Activate User
 
-Activate a user account (set email_verified=True).
+Turn a user account on and mark its email verified.
 
 ### Example
 
@@ -539,8 +539,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -624,8 +624,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -709,8 +709,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **500** | Internal Server Error |  -  |
-**400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
@@ -807,7 +807,7 @@ Name | Type | Description  | Notes
 
 Deactivate User
 
-Deactivate a user account (set email_verified=False).
+Turn a user account off and revoke its sessions, tokens and API keys.
 
 ### Example
 
@@ -2483,10 +2483,10 @@ Name | Type | Description  | Notes
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**500** | Internal Server Error |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
-**500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2741,7 +2741,7 @@ Name | Type | Description  | Notes
 
 List Users
 
-Get paginated list of users with filtering options.
+Get paginated list of users with filtering options.  ``status`` is one of ``active``, ``unverified`` (email not verified), ``inactive`` (deactivated) or ``pending`` (beta signup awaiting approval).
 
 ### Example
 

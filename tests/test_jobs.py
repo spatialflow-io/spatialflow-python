@@ -1,3 +1,6 @@
+import asyncio
+import time
+
 import pytest
 
 from spatialflow import poll_job, JobResult, JobTimeoutError, JobFailedError
@@ -175,6 +178,87 @@ class TestJobResult:
         assert "completed" in repr_str
         assert "5" in repr_str
         assert "2" in repr_str
+
+
+class TestPollJobDeadline:
+    async def test_status_call_time_counts_toward_the_timeout(self):
+        async def fetch_status():
+            await asyncio.sleep(0.06)
+            return {"job_id": "slow", "status": "processing"}
+
+        started = time.monotonic()
+        with pytest.raises(JobTimeoutError):
+            await poll_job(fetch_status, timeout=0.2, poll_interval=0.005)
+
+        assert time.monotonic() - started < 0.45
+
+    async def test_hanging_status_call_times_out(self):
+        async def fetch_status():
+            await asyncio.Event().wait()
+
+        started = time.monotonic()
+        with pytest.raises(JobTimeoutError) as exc_info:
+            await asyncio.wait_for(
+                poll_job(fetch_status, timeout=0.1, poll_interval=0.01), 2
+            )
+
+        assert exc_info.value.job_id == "unknown"
+        assert time.monotonic() - started < 0.4
+
+    async def test_poll_interval_is_cut_short_at_the_deadline(self):
+        async def fetch_status():
+            return {"job_id": "j", "status": "processing"}
+
+        started = time.monotonic()
+        with pytest.raises(JobTimeoutError):
+            await poll_job(fetch_status, timeout=0.08, poll_interval=5)
+
+        assert time.monotonic() - started < 0.4
+
+    async def test_timeout_reports_the_last_response(self):
+        calls = 0
+
+        async def fetch_status():
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                return {"job_id": "j-9", "status": "processing"}
+            await asyncio.Event().wait()
+
+        with pytest.raises(JobTimeoutError) as exc_info:
+            await asyncio.wait_for(
+                poll_job(fetch_status, timeout=0.06, poll_interval=0.005), 2
+            )
+
+        assert exc_info.value.job_id == "j-9"
+        assert exc_info.value.last_status == "processing"
+
+    async def test_cancelling_poll_job_cancels_the_status_call(self):
+        started = asyncio.Event()
+        cancelled = asyncio.Event()
+
+        async def fetch_status():
+            started.set()
+            try:
+                await asyncio.Event().wait()
+            except asyncio.CancelledError:
+                cancelled.set()
+                raise
+
+        task = asyncio.ensure_future(poll_job(fetch_status, timeout=10, poll_interval=0.01))
+        await started.wait()
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+
+        await asyncio.wait_for(cancelled.wait(), 1)
+
+    async def test_status_call_timeout_error_is_not_a_job_timeout(self):
+        async def fetch_status():
+            raise asyncio.TimeoutError()
+
+        with pytest.raises(asyncio.TimeoutError):
+            await poll_job(fetch_status, timeout=10, poll_interval=0.01)
 
 
 class TestJobTimeoutError:

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | User-friendly name for the integration | 
+**name** | **str** |  | [optional] 
 **type** | **str** | Integration type (webhook, slack, twilio_sms, etc.) | 
 **description** | **str** |  | [optional] 
 **config** | **Dict[str, object]** | Integration-specific configuration | 

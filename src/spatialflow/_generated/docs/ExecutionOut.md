@@ -18,6 +18,10 @@ Name | Type | Description | Notes
 **events_count** | **int** |  | [optional] [default to 0]
 **is_preview** | **bool** |  | [optional] [default to False]
 **occupancy_summary** | [**OccupancySummaryOut**](OccupancySummaryOut.md) |  | [optional] 
+**retry_of** | **str** |  | [optional] 
+**retried_by** | **str** |  | [optional] 
+**retryable** | **bool** | Whether this run can be retried now. Set in run history. | [optional] [default to False]
+**retry_blocked_reason** | **str** |  | [optional] 
 
 ## Example
 

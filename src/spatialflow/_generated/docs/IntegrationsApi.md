@@ -376,6 +376,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Created |  -  |
 **400** | Bad Request |  -  |
+**409** | Conflict |  -  |
 **500** | Internal Server Error |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -826,7 +827,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_get_available_integration_types**
-> List[Optional[Dict[str, object]]] apps_integrations_api_get_available_integration_types()
+> List[Dict[str, object]] apps_integrations_api_get_available_integration_types()
 
 Get Available Integration Types
 
@@ -886,7 +887,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List[Optional[Dict[str, object]]]**
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -1809,7 +1810,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **apps_integrations_api_test_all_integrations**
-> List[Optional[Dict[str, object]]] apps_integrations_api_test_all_integrations()
+> List[Dict[str, object]] apps_integrations_api_test_all_integrations()
 
 Test All Integrations
 
@@ -1862,7 +1863,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List[Optional[Dict[str, object]]]**
+**List[Dict[str, object]]**
 
 ### Authorization
 
