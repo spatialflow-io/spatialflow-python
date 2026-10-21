@@ -2025,7 +2025,7 @@ No authorization required
 
 Link Oauth Account
 
-Link an OAuth provider to an existing authenticated user account.
+Deprecated: this endpoint no longer starts a link and always returns 400. It will be removed in the next major API and SDK release. Sign in with the provider instead.
 
 ### Example
 

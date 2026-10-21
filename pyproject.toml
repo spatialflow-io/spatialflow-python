@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spatialflow"
-version = "3.0.0"
+version = "3.1.0"
 description = "Python SDK for SpatialFlow - Real-time geospatial automation platform"
 readme = "README.md"
 license = "MIT"

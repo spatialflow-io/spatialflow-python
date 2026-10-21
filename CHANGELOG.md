@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-10-21
+
+### Added
+
+- `GET /api/v1/workflow-runs-to-retry` (spec v1.60.0): the live workflows in the workspace with failed runs that Retry failed runs could queue, by name, as `apps_operations_api_list_workflow_runs_to_retry` returning `WorkflowRunsToRetryListOut`: `results` of `WorkflowRunsToRetryOut` (`workflow_id`, `workflow_name`, `retryable_count`, `capped`), `next_cursor` and `has_more`. Pass `cursor` (and optionally `limit`) to continue, or `incident_id` to page through the workflows one incident is about with live counts. Each count looks at a bounded number of the workflow's failed runs, and `capped` marks a lower bound. Owner or manager only; other roles get 403.
+
+### Changed
+
+- `GET /api/v1/devices/dashboard-stats/timeline` (spec v1.57.0): `in_geofence_count` on each bucket (`TimelineBucketOut`) and on `previous` (`TimelinePreviousOut`) can now be null. A bucket that ends before the workspace's location retention cutoff reads null instead of 0, and `previous` reads null when any of its buckets does. Each bucket counts the devices whose position at the bucket's end is inside an active geofence, the same test as the live `in_geofence_count` on `/dashboard-stats`.
+- `GET /api/v1/devices/dashboard-stats/timeline` (spec v1.58.0): `live_count` and `offline_stale_count` on each bucket (`TimelineBucketOut`) and on `previous` (`TimelinePreviousOut`) can now be null, like `in_geofence_count`. Both read null when the bucket's live window, the two minutes before its end, starts before the workspace's location retention cutoff, since retention may have deleted the fixes they count, and `previous` reads null when any of its buckets does. Other buckets return the same values as before.
+
+### Deprecated
+
+- `POST /api/v1/auth/oauth/{provider}/link` (spec v1.59.0). It no longer starts a link: every call returns 400, and it never returned the provider's authorization URL, so no call could have completed a link. The generated `AuthenticationApi` keeps `apps_authentication_oauth_api_link_oauth_account` and `OAuthLinkResponse` with the same signature until the next major SDK release removes them. `GET /api/v1/auth/oauth/user/linked-accounts` and `DELETE /api/v1/auth/oauth/{provider}/disconnect` are unchanged.
+
+### Removed
+
+- `GET /api/v1/admin/users/stats` (spec v1.61.0): a platform-admin route that always returned an empty list. No SDK exposed it, so no SDK method is affected.
+
 ## [3.0.0] - 2026-10-19
 
 **Breaking changes.** The GPX simulator endpoints and the `gpx_simulator` API are gone from the generated client.

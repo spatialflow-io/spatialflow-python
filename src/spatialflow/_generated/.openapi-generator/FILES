@@ -16,7 +16,6 @@ docs/ActiveGeofenceSummaryItemOut.md
 docs/ActiveGeofenceSummaryOut.md
 docs/ActivitySummary.md
 docs/AdminApi.md
-docs/AdminUserStatsResponse.md
 docs/AnomalyDeviceOut.md
 docs/AnomalyStatusOut.md
 docs/ApiDocsOut.md
@@ -379,7 +378,6 @@ docs/UsageResponse.md
 docs/UserActionResponse.md
 docs/UserActivityItem.md
 docs/UserActivityResponse.md
-docs/UserApiStats.md
 docs/UserApprovalRequest.md
 docs/UserInviteRequest.md
 docs/UserInviteResponse.md
@@ -414,6 +412,8 @@ docs/WorkflowListResponse.md
 docs/WorkflowOut.md
 docs/WorkflowRetryPolicyUpdateSchema.md
 docs/WorkflowRunsStatsOut.md
+docs/WorkflowRunsToRetryListOut.md
+docs/WorkflowRunsToRetryOut.md
 docs/WorkflowStatisticsOut.md
 docs/WorkflowStepRetrySchema.md
 docs/WorkflowTemplateDetailOut.md
@@ -480,7 +480,6 @@ spatialflow_generated/models/action_retry_config_schema.py
 spatialflow_generated/models/active_geofence_summary_item_out.py
 spatialflow_generated/models/active_geofence_summary_out.py
 spatialflow_generated/models/activity_summary.py
-spatialflow_generated/models/admin_user_stats_response.py
 spatialflow_generated/models/anomaly_device_out.py
 spatialflow_generated/models/anomaly_status_out.py
 spatialflow_generated/models/api_docs_out.py
@@ -826,7 +825,6 @@ spatialflow_generated/models/usage_response.py
 spatialflow_generated/models/user_action_response.py
 spatialflow_generated/models/user_activity_item.py
 spatialflow_generated/models/user_activity_response.py
-spatialflow_generated/models/user_api_stats.py
 spatialflow_generated/models/user_approval_request.py
 spatialflow_generated/models/user_invite_request.py
 spatialflow_generated/models/user_invite_response.py
@@ -860,6 +858,8 @@ spatialflow_generated/models/workflow_list_response.py
 spatialflow_generated/models/workflow_out.py
 spatialflow_generated/models/workflow_retry_policy_update_schema.py
 spatialflow_generated/models/workflow_runs_stats_out.py
+spatialflow_generated/models/workflow_runs_to_retry_list_out.py
+spatialflow_generated/models/workflow_runs_to_retry_out.py
 spatialflow_generated/models/workflow_statistics_out.py
 spatialflow_generated/models/workflow_step_retry_schema.py
 spatialflow_generated/models/workflow_template_detail_out.py

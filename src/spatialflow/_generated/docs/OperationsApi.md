@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**apps_operations_api_list_incident_groups**](OperationsApi.md#apps_operations_api_list_incident_groups) | **GET** /api/v1/incidents/groups | List Incident Groups
 [**apps_operations_api_list_incidents**](OperationsApi.md#apps_operations_api_list_incidents) | **GET** /api/v1/incidents/ | List Incidents
 [**apps_operations_api_list_saved_views**](OperationsApi.md#apps_operations_api_list_saved_views) | **GET** /api/v1/saved-views/ | List Saved Views
+[**apps_operations_api_list_workflow_runs_to_retry**](OperationsApi.md#apps_operations_api_list_workflow_runs_to_retry) | **GET** /api/v1/workflow-runs-to-retry | List Workflow Runs To Retry
 [**apps_operations_api_mute_incident**](OperationsApi.md#apps_operations_api_mute_incident) | **POST** /api/v1/incidents/{incident_id}/mute | Mute Incident
 [**apps_operations_api_resolve_incident**](OperationsApi.md#apps_operations_api_resolve_incident) | **POST** /api/v1/incidents/{incident_id}/resolve | Resolve Incident
 [**apps_operations_api_stream_badges**](OperationsApi.md#apps_operations_api_stream_badges) | **GET** /api/v1/stream/badges | Stream Badges
@@ -770,6 +771,94 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**422** | Validation Error |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apps_operations_api_list_workflow_runs_to_retry**
+> WorkflowRunsToRetryListOut apps_operations_api_list_workflow_runs_to_retry(cursor=cursor, limit=limit, incident_id=incident_id)
+
+List Workflow Runs To Retry
+
+Live workflows with failed runs that Retry failed runs could queue, by name.  Owner or manager only. Each count looks at a bounded number of the workflow's failed runs, so `capped` marks a lower bound. A page can hold fewer than `limit` workflows and still have a `next_cursor`: pass it as `cursor` to continue.  With `incident_id`, pages through the workflows that incident is about instead of the whole workspace.
+
+### Example
+
+* Bearer Authentication (JWTBearer):
+
+```python
+import spatialflow_generated
+from spatialflow_generated.models.workflow_runs_to_retry_list_out import WorkflowRunsToRetryListOut
+from spatialflow_generated.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.spatialflow.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = spatialflow_generated.Configuration(
+    host = "https://api.spatialflow.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: JWTBearer
+configuration = spatialflow_generated.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with spatialflow_generated.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = spatialflow_generated.OperationsApi(api_client)
+    cursor = 'cursor_example' # str |  (optional)
+    limit = 50 # int |  (optional) (default to 50)
+    incident_id = 'incident_id_example' # str |  (optional)
+
+    try:
+        # List Workflow Runs To Retry
+        api_response = await api_instance.apps_operations_api_list_workflow_runs_to_retry(cursor=cursor, limit=limit, incident_id=incident_id)
+        print("The response of OperationsApi->apps_operations_api_list_workflow_runs_to_retry:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling OperationsApi->apps_operations_api_list_workflow_runs_to_retry: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **cursor** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional] [default to 50]
+ **incident_id** | **str**|  | [optional] 
+
+### Return type
+
+[**WorkflowRunsToRetryListOut**](WorkflowRunsToRetryListOut.md)
+
+### Authorization
+
+[JWTBearer](../README.md#JWTBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**403** | Forbidden |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 **500** | Internal Server Error |  -  |

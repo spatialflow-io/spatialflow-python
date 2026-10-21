@@ -28,7 +28,6 @@ Method | HTTP request | Description
 [**apps_admin_portal_api_get_user_activity**](AdminApi.md#apps_admin_portal_api_get_user_activity) | **GET** /api/v1/admin/users/{user_id}/activity | Get User Activity
 [**apps_admin_portal_api_get_user_detail**](AdminApi.md#apps_admin_portal_api_get_user_detail) | **GET** /api/v1/admin/users/{user_id} | Get User Detail
 [**apps_admin_portal_api_get_user_usage**](AdminApi.md#apps_admin_portal_api_get_user_usage) | **GET** /api/v1/admin/users/{user_id}/usage | Get User Usage
-[**apps_admin_portal_api_get_users_with_stats**](AdminApi.md#apps_admin_portal_api_get_users_with_stats) | **GET** /api/v1/admin/users/stats | Get Users With Stats
 [**apps_admin_portal_api_get_workspace**](AdminApi.md#apps_admin_portal_api_get_workspace) | **GET** /api/v1/admin/workspaces/{workspace_id} | Get Workspace
 [**apps_admin_portal_api_get_workspace_analytics**](AdminApi.md#apps_admin_portal_api_get_workspace_analytics) | **GET** /api/v1/admin/workspaces/analytics | Get Workspace Analytics
 [**apps_admin_portal_api_get_workspace_members**](AdminApi.md#apps_admin_portal_api_get_workspace_members) | **GET** /api/v1/admin/workspaces/{workspace_id}/members | Get Workspace Members
@@ -2049,98 +2048,6 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
-**422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **apps_admin_portal_api_get_users_with_stats**
-> AdminUserStatsResponse apps_admin_portal_api_get_users_with_stats(days=days, limit=limit, offset=offset, sort=sort, user_ids=user_ids)
-
-Get Users With Stats
-
-Get users with API call counts for admin dashboard.  Returns aggregated API call counts per user within the specified date range.  Args:     days: Number of days to look back (default 30, max 90)     limit: Maximum results per page (default 50, max 100)     offset: Number of results to skip for pagination     sort: Sort by \"api_calls\" (descending) or \"email\" (ascending)     user_ids: Optional comma-separated UUIDs to scope to specific users  Returns:     200: List of users with their API call counts     403: User is not an admin     500: Internal server error
-
-### Example
-
-* Bearer Authentication (JWTBearer):
-
-```python
-import spatialflow_generated
-from spatialflow_generated.models.admin_user_stats_response import AdminUserStatsResponse
-from spatialflow_generated.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.spatialflow.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = spatialflow_generated.Configuration(
-    host = "https://api.spatialflow.io"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization: JWTBearer
-configuration = spatialflow_generated.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with spatialflow_generated.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = spatialflow_generated.AdminApi(api_client)
-    days = 30 # int |  (optional) (default to 30)
-    limit = 50 # int |  (optional) (default to 50)
-    offset = 0 # int |  (optional) (default to 0)
-    sort = 'api_calls' # str |  (optional) (default to 'api_calls')
-    user_ids = 'user_ids_example' # str |  (optional)
-
-    try:
-        # Get Users With Stats
-        api_response = await api_instance.apps_admin_portal_api_get_users_with_stats(days=days, limit=limit, offset=offset, sort=sort, user_ids=user_ids)
-        print("The response of AdminApi->apps_admin_portal_api_get_users_with_stats:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AdminApi->apps_admin_portal_api_get_users_with_stats: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **days** | **int**|  | [optional] [default to 30]
- **limit** | **int**|  | [optional] [default to 50]
- **offset** | **int**|  | [optional] [default to 0]
- **sort** | **str**|  | [optional] [default to &#39;api_calls&#39;]
- **user_ids** | **str**|  | [optional] 
-
-### Return type
-
-[**AdminUserStatsResponse**](AdminUserStatsResponse.md)
-
-### Authorization
-
-[JWTBearer](../README.md#JWTBearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**403** | Forbidden |  -  |
-**500** | Internal Server Error |  -  |
-**400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
-**404** | Not Found |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
