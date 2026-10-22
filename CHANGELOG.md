@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-10-22
+
+### Added
+
+- `POST /api/v1/devices/batch-update` (spec v1.62.0): each point in `locations` (`LocationUpdateIn`) takes an optional `fix_id`, a UUID string naming the fix. A later point with the same `fix_id` for the same device is answered with status `duplicate` and is not stored, evaluated or counted again, even when its other fields differ. The match holds for at least 48 hours after the first copy is processed. A `fix_id` that is not a UUID rejects only its own point, with error code `INVALID_FIX_ID`. `POST /api/v1/devices/{device_id}/location` ignores the field.
+
 ## [3.1.0] - 2026-10-21
 
 ### Added

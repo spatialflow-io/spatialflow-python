@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **battery_charging** | **bool** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 **client_location_id** | **str** |  | [optional] 
+**fix_id** | **str** |  | [optional] 
 **reason** | **str** |  | [optional] 
 
 ## Example
